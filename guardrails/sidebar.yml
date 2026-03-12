@@ -1,0 +1,6 @@
+---
+section: guardrails
+title: Leitplanken implementieren
+entries:
+- title: Definieren Sie Ihre Leitplankenrichtlinien in AIDE
+  url: "/guardrails/define-data-policies.html"

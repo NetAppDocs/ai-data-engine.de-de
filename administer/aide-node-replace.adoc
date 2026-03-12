@@ -1,0 +1,86 @@
+---
+sidebar: sidebar 
+permalink: administer/aide-node-replace.html 
+keywords:  
+summary:  
+---
+= Ersetzen Sie einen Knoten in Ihrem AIDE Cluster
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie müssen einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster ersetzen, wenn er nicht mehr funktioniert oder aufgrund eines Hardwareausfalls, Upgrades oder Wartungsarbeiten ausgetauscht werden muss. Dies stellt sicher, dass der AIDE Cluster gesund und funktionsfähig bleibt. Das Verfahren kann durchgeführt werden, ohne laufende Dienste zu unterbrechen.
+
+
+
+== Bereiten Sie den Austausch eines Knotens vor
+
+Bevor Sie einen Knoten in Ihrem AIDE Cluster austauschen, gibt es mehrere Dinge zu beachten.
+
+.System Manager-Anmeldeinformationen
+Sie benötigen _storage administrator_-Berechtigungen, um AIDE-Clusterknotenaustauschaufgaben durchzuführen.
+
+
+
+=== Einschränkungen
+
+Sie sollten sich der folgenden Einschränkungen bewusst sein, wenn Sie einen Knoten in Ihrem AIDE Cluster ersetzen:
+
+* Der Austausch von Knoten wird nur über die CLI und optional die REST API unterstützt.
+* Sie können den Knotenaustausch nicht mit dem System Manager durchführen.
+* Der neue Knoten sollte mit der Softwareversion des Clusters übereinstimmen; ONTAP wird ihn bei Bedarf aktualisieren.
+* Der ausgefallene Knoten darf nicht eingeschaltet werden, während er mit dem Cluster-Netzwerk verbunden ist, um IP-Adresskonflikte zu vermeiden.
+
+
+
+
+=== Anforderungen
+
+Sie benötigen Folgendes:
+
+* Seriennummer für den neuen Ersatzknoten
+
+
+
+
+== Ersetzen Sie einen DCN-Knoten in Ihrem AIDE-Cluster
+
+Sie können einen DCN-Knoten in Ihrem AIDE-Cluster mit folgendem Verfahren ersetzen.
+
+.Schritte
+. Entfernen Sie den defekten Knoten physisch
++
+Schalten Sie den Knoten aus und trennen Sie ihn vom Clusternetzwerk. Stellen Sie sicher, dass der Knoten während des Austauschvorgangs nicht im Netzwerk hochgefahren ist.
+
+. Löschen Sie den ausgefallenen Knoten aus dem Cluster mit dem folgenden Befehl:
++
+`dcn cluster node delete -name <node_name> -force true`
+
++
+Geben Sie den tatsächlichen Namen für den <node_name> Wert an.
+
+. Schließen Sie den neuen Knoten physisch an den Cluster an
++
+Stellen Sie sicher, dass der Knoten verkabelt, eingeschaltet und auffindbar ist.
+
+. Zeigen Sie die auffindbaren und nicht konfigurierten Knoten an, um zu überprüfen, dass der neue Knoten online ist:
++
+`dcn cluster node show -membership available`
+
+. Fügen Sie den Knoten mit dem folgenden Befehl zum Cluster hinzu:
++
+`dcn cluster node create -serial-number <new_node_serial>`
+
++
+ONTAP weist dem neuen Knoten eine IP-Adresse zu. Wenn die Softwareversion des Knotens nicht mit der des Clusters übereinstimmt, aktualisiert ONTAP den Knoten automatisch.
+
+. Überprüfen Sie den Clusterzustand und die Knotenintegration mit einem der folgenden Befehle:
++
+`dcn cluster node show`
+
++
+`dcn cluster node show -instance`
+
+

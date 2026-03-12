@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: install-setup/install-workflow.html 
+keywords: aide, ai, data engine, ai data engine, dcn, data compute node, afx, afx 1k, install, setup, workflow, 
+summary: Beginnen Sie mit der Installation und Einrichtung Ihrer Datenrechenknoten und stellen Sie diese in Ihrer ONTAP Umgebung bereit. 
+---
+= Installations- und Einrichtungsworkflow für Datenrechenknoten für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Zur Installation und Konfiguration Ihrer Data Compute Nodes (DCN) überprüfen Sie die Hardwareanforderungen, bereiten Ihren Standort vor, installieren und verkabeln die Hardwarekomponenten, schalten das System ein und richten Ihr ONTAP Cluster ein.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]link:install-setup-requirements.html["Überprüfen Sie die Hardware-Installationsanforderungen"]
+[role="quick-margin-para"]
+Stellen Sie sicher, dass Sie über ein vorhandenes AFX 1K-Speichersystem verfügen, und überprüfen Sie anschließend die Hardwareanforderungen für die Installation der Datenrechenknoten für AIDE. Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["Installieren Sie Ihr AFX 1K Storage-System"^].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"]link:prepare-hardware.html["Bereiten Sie die Installation Ihrer Data Compute Nodes vor"]
+[role="quick-margin-para"]
+Zur Vorbereitung der Installation Ihrer Datenrechenknoten müssen Sie den Standort vorbereiten, die Umgebungs- und Stromanforderungen prüfen und sicherstellen, dass ausreichend Platz im Serverschrank vorhanden ist. Dann entpacken Sie die Geräte, vergleichen deren Inhalt mit dem Lieferschein und registrieren die Hardware, um Supportleistungen in Anspruch nehmen zu können.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"]link:deploy-hardware.html["Installieren Sie die Hardware für Ihre Data Compute Nodes"]
+[role="quick-margin-para"]
+Installieren Sie die Schienensätze für Ihre Datenrechenknoten. Sichern Sie Ihre Datenrechenknoten im Schrank. Bringen Sie abschließend Kabelmanagement-Geräte an der Rückseite des Systems an, um eine organisierte Kabelführung zu gewährleisten.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"]link:cable-hardware.html["Verkabeln Sie Ihre Datenrechenknoten"]
+[role="quick-margin-para"]
+Um die Hardware zu verkabeln, verbinden Sie zuerst die Datenrechenknoten mit Ihrem Daten- und Clusternetzwerk, dann verbinden Sie die Datenrechenknoten mit den Cluster-Switches.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"]link:power-on-hardware.html["Schalten Sie Ihre Datenrechenknoten ein"]
+[role="quick-margin-para"]
+Nachdem Sie die Rack-Hardware installiert und Ihre Datenrechenknoten verkabelt haben, sollten Sie Ihre DCNs und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, falls diese noch nicht eingeschaltet sind.

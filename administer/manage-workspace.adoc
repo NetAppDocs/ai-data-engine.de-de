@@ -1,0 +1,167 @@
+---
+sidebar: sidebar 
+permalink: administer/manage-workspace.html 
+keywords: aide, ai data engine, workspaces, metadata engine, manage workspaces, add data containers, users 
+summary: Verwalten Sie den Lebenszyklus von AI Data Engine Workspaces, einschließlich Anzeigen, Bearbeiten, Hinzufügen von Datencontainern, Verwalten von Benutzern und Löschen von Workspaces. 
+---
+= AI Data Engine Arbeitsbereiche verwalten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ein Arbeitsbereich ist eine Gruppe von Datenquellen (Volumes), die die AI Data Engine (AIDE) verwendet, um einen Metadatenkatalog für ein bestimmtes Projekt oder einen bestimmten Anwendungsfall zu erstellen und zu aktualisieren. Als Speicheradministrator können Sie ONTAP System Manager verwenden, um den Zustand des Arbeitsbereichs zu überwachen, die Konfiguration anzupassen, Datenquellen zu steuern, Benutzer zu verwalten und Arbeitsbereiche zu löschen, wenn sie nicht mehr benötigt werden.
+
+.Bevor Sie beginnen
+* Sie benötigen _storage administrator_-Berechtigungen, um Arbeitsbereiche zu verwalten.
+
+
+
+
+== Arbeitsbereichsstatus überprüfen
+
+Überprüfen Sie die Arbeitsbereich-Gesundheit, die Kapazitätsauslastung und den Metadatenstatus, um sicherzustellen, dass die Metadata Engine wie erwartet funktioniert und keine unerwarteten Ressourcen verbraucht.
+
+.Schritte
+. Wählen Sie im ONTAP System Manager im Navigationsbereich *Data engine > Workspaces* aus.
+. Überprüfen Sie die Zusammenfassung oben auf der Seite für die Gesamtzahl der Arbeitsbereiche, den allgemeinen Zustand der Arbeitsbereiche und die Kapazitätsauslastung.
+. Für arbeitsbereichsspezifische Informationen wählen Sie einen Arbeitsbereichsnamen aus. Bestätigen Sie auf der Registerkarte *Übersicht*:
++
+** Arbeitsbereichsstatus und -größe.
+** Datencontainer (Volumes), die im Arbeitsbereich enthalten sind.
+** Anzahl der Elemente und Zeitpunkt der letzten Aktualisierung pro Datenquelle.
+** Alle Warnungen auf Arbeitsbereichsebene.
+
+
++
+
+NOTE: Wenn ein Arbeitsbereich oder eine Datensammlung einen Fehlerstatus anzeigt, vergewissern Sie sich, dass alle Quellvolumes online und zugänglich sind.
+
+. Wählen Sie die Registerkarte *Data collections* aus, um Folgendes anzuzeigen:
++
+** Alle mit diesem Arbeitsbereich verknüpften Datensammlungen.
+** Status (wie  `Published` oder  `Error`), Größe und Zeitpunkt der letzten Aktualisierung.
++
+
+NOTE: System Manager ist für Datensammlungen schreibgeschützt. Dateningenieure können Datensammlungen in der AI Data Engine Console erstellen und verwalten.
+
+
+
+. Wählen Sie die Registerkarte *Users* aus, um Folgendes anzuzeigen:
++
+** Die Liste der Benutzer mit Zugriff auf diesen Arbeitsbereich.
+
+
+. Wählen Sie die Registerkarte *Aktivität* aus, um Ereignisse und Aufgaben anzuzeigen, die sich nur auf diesen Arbeitsbereich beziehen.
+
+
+
+
+== Arbeitsbereichseigenschaften bearbeiten und Aktualisierungsintervall bearbeiten
+
+Sie können den Namen, die Beschreibung, das Aktualisierungsintervall und (sofern lizenziert) die Guardrail-Richtlinie eines Arbeitsbereichs anpassen.
+
+.Schritte
+. Wählen Sie unter *Data engine > Workspaces* image:icon_kabob.gif["drei vertikale blaue Punkte"] neben einem Workspace und wählen Sie *Edit*.
+. Arbeitsbereichseigenschaften bearbeiten:
++
+** Aktualisieren Sie *Name* und *Description* nach Bedarf.
+** Passen Sie das *Aktualisierungsintervall* (Metadatenaktualisierungshäufigkeit) innerhalb des zulässigen Bereichs (Stunden und Tage) an.
+** Wenn eine AIDE-Lizenz installiert ist, können Sie *Guardrail policy* auswählen.
+
+
+. Wählen Sie *Save*.
+
+
+
+NOTE: Änderungen am Aktualisierungsintervall oder an der Metadatenverarbeitung können sich darauf auswirken, wie häufig Remote-SnapMirror Beziehungen für diesen Arbeitsbereich aktualisiert werden.
+
+
+
+== Fügen Sie einem bestehenden Arbeitsbereich Datencontainer hinzu
+
+Sie können zusätzliche eingebundene Volumes (lokal oder von einem verbundenen Remote-Cluster) hinzufügen, sodass deren Metadaten im Workspace-Katalog enthalten sind.
+
+. Führen Sie unter *Data engine > Workspaces* einen der folgenden Schritte aus:
++
+** Wählen Sie image:icon_kabob.gif["drei vertikale blaue Punkte"] neben dem Arbeitsbereich und wählen Sie *Datencontainer hinzufügen*.
+** Öffnen Sie den Arbeitsbereich, wählen Sie die Registerkarte *Übersicht* und wählen Sie dann im Abschnitt Datencontainer *Hinzufügen* aus.
+
+
+. Im Dialogfeld *Datencontainer zum Arbeitsbereich hinzufügen*:
++
+** Lokalisieren Sie lokale Datenträger auf dem AIDE Cluster.
+** Erweitern Sie die Peering-Cluster, um Remote-Volumes auszuwählen (Remote-Volumes erfordern Cluster- und SVM-Peering).
+
+
++
+
+NOTE: Es können nur geeignete, Online-Volumes ausgewählt werden, die nicht global ausgeschlossen sind und noch nicht Teil des Arbeitsbereichs sind.
+
+. Wenn Sie zur Remote-Volume-Zuordnung aufgefordert werden:
++
+** Wählen Sie die Ziel-Storage-VM im AIDE Cluster aus, um SnapMirror-Ziele für die ausgewählten Remote-Volumes zu empfangen.
+
+
+. Wählen Sie *Add*.
+. Verwenden Sie die Registerkarte *Aktivität* im Arbeitsbereich oder *Data engine > Aktivität*, um die Metadatenextraktion und alle SnapMirror Initialisierungen für neue Datenquellen zu verfolgen.
+
+
+
+
+== Datencontainer aus einem Arbeitsbereich entfernen
+
+Sie können einen Datencontainer entfernen, wenn er für den Zweck des Arbeitsbereichs nicht mehr relevant ist oder wenn Sie den Umfang der Metadatenverwaltung für diesen Arbeitsbereich reduzieren möchten. Durch das Entfernen eines Datencontainers wird die Metadatenaktualisierung für dieses Volume gestoppt und seine Metadaten werden aus dem Metadatenkatalog entfernt.
+
+
+IMPORTANT: Löschen Sie kein Quellvolume aus ONTAP, das einem Arbeitsbereich hinzugefügt wurde. Wenn Sie das Volume löschen, gerät der Arbeitsbereich in einen Fehlerzustand. Entfernen Sie immer zuerst den Datencontainer aus dem Arbeitsbereich, bevor Sie zugrunde liegende ONTAP Volumes löschen.
+
+.Schritte
+. Navigieren Sie zu *Data engine > Workspaces* und wählen Sie den Arbeitsbereich aus, der den Datencontainer enthält.
+. Suchen Sie auf der Registerkarte *Overview* den zu entfernenden Datencontainer.
+. Wählen Sie *Entfernen* neben dem Datencontainer.
+. Überprüfen Sie den Bestätigungsdialog und wählen Sie *Remove*.
+
+
+
+NOTE: Das Entfernen eines Datencontainers aus einem Arbeitsbereich löscht weder das zugrunde liegende ONTAP Volume noch dessen SnapMirror Beziehung. Es betrifft lediglich die Metadatennutzung innerhalb der AI Data Engine.
+
+
+
+== Workspace-Benutzer verwalten
+
+Sie können Dateningenieuren und Datenwissenschaftlern Zugriff auf einen Arbeitsbereich gewähren oder entziehen. Diese Benutzer sind in Ihrem Identitätsanbieter (OIDC) definiert und ONTAP Rollen zugeordnet. Siehe link:../workspaces/assign-users-to-workspace.html["Benutzer zu Arbeitsbereichen zuweisen"] Dokumentation, um zu erfahren, wie Sie den Benutzerzugriff verwalten.
+
+
+
+== Einen Arbeitsbereich löschen
+
+Sie können einen Arbeitsbereich löschen, um die Arbeitsbereichsdefinition und die zugehörigen AIDE Metadaten zu entfernen. Alle mit dem Arbeitsbereich verknüpften Datensammlungen und Vektoreinbettungen werden ebenfalls entfernt.
+
+
+NOTE: Zugrunde liegende ONTAP Daten (Volumes, SnapMirror relationships) werden nicht gelöscht.
+
+.Schritte
+. Führen Sie unter *Data engine > Workspaces* einen der folgenden Schritte aus:
++
+** Löschen Sie einen einzelnen Arbeitsbereich, wählen Sie image:icon_kabob.gif["drei vertikale blaue Punkte"] und wählen Sie *Löschen*.
+** Mehrere Arbeitsbereiche löschen: Aktivieren Sie die Kontrollkästchen für die Arbeitsbereiche und wählen Sie dann *Löschen*.
+
+
+. Überprüfen Sie im Bestätigungsdialog die Auswirkungen der Aktion, bevor Sie fortfahren:
++
+** Die Metadaten des Workspace werden dauerhaft gelöscht.
+** Die mit dem Arbeitsbereich verknüpften Datensammlungen und Embeddings werden dauerhaft gelöscht.
+
+
++
+
+NOTE: Es gibt keine Option zum Soft-Delete oder Wiederherstellen.
+
+. Setzen Sie das Häkchen, um Ihr Verständnis zu bestätigen, und wählen Sie *Löschen*.
+
+
+.Verwandte Informationen
+* link:../workspaces/assign-users-to-workspace.html["Benutzer zu Arbeitsbereichen zuweisen"]
+

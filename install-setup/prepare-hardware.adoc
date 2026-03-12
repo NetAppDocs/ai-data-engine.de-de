@@ -1,0 +1,122 @@
+---
+sidebar: sidebar 
+permalink: install-setup/prepare-hardware.html 
+keywords: aide, ai, data engine, ai data engine, dcn, data compute node, prepare, hardware installation, afx, afx 1k, 
+summary: Bereiten Sie die Installation der Datenrechenknoten für AI Data Engine in Ihrer ONTAP Umgebung vor und registrieren Sie die Hardware, um Supportleistungen zu erhalten. 
+---
+= Bereiten Sie die Installation Ihrer Datenrechenknoten für AI Data Engine vor
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bereiten Sie die Installation Ihrer Datenrechenknoten für AI Data Engine vor, indem Sie den Standort vorbereiten, die Kartons entpacken und den Inhalt der Kartons mit dem Lieferschein vergleichen sowie das System registrieren, um Supportleistungen in Anspruch nehmen zu können.
+
+
+
+== Schritt 1: Bereiten Sie den Standort vor
+
+Um Ihre Daten-Compute-Nodes zu installieren, stellen Sie sicher, dass der Standort und der Schrank oder das Rack, das Sie verwenden möchten, die Spezifikationen für Ihre Konfiguration erfüllen.
+
+.Schritte
+. Verwenden Sie  https://hwu.netapp.com["NetApp Hardware Universe"^] , um zu bestätigen, dass Ihr Standort die Umwelt- und Elektroanforderungen für Ihre Datenrechenknoten erfüllt.
+. Stellen Sie sicher, dass innerhalb der bestehenden AFX 1K Storage-Systeminstallation ausreichend Schrankplatz für Ihre Data Compute Nodes vorhanden ist.
++
+** 1U für jeden Daten-Compute-Node
+** 2U für jeden AFX 1K-Controller-Knoten
+** 2U pro NX224 shelf
+** 1U oder 2U pro Switch, abhängig vom Switch-Modell.
+
+
+
+
+
+
+== Schritt 2: Entpacken Sie die Kartons
+
+Nachdem Sie sichergestellt haben, dass der Standort und der Schrank oder das Rack, das Sie für Ihre Datenrechenknoten verwenden möchten, die erforderlichen Spezifikationen erfüllen, entpacken Sie alle Kartons und vergleichen Sie den Inhalt mit den Angaben auf dem Lieferschein.
+
+.Schritte
+. Öffnen Sie alle Kartons vorsichtig und legen Sie den Inhalt in einer organisierten Weise aus.
+. Vergleichen Sie die entpackten Artikel mit dem Lieferschein und notieren Sie etwaige Abweichungen.
++
+Sie können Ihre Packliste abrufen, indem Sie den QR-Code an der Seite des Versandkartons scannen.
+
++
+Die folgenden Elemente sind einige der Inhalte, die Sie in den Boxen sehen könnten.
+
++
+[cols="12,9,4"]
+|===
+
+
+| *Hardware* | *Kabel* |  
+
+
+ a| 
+** Blende
+** Schienenbausätze mit Anleitung
+** Data-Compute-Knoten
+
+ a| 
+** Netzkabel
+
+|  
+|===
+
+
+
+
+== Schritt 3: Registrieren Sie Ihre Daten-Compute-Nodes
+
+Nachdem Sie sichergestellt haben, dass Ihre Site die Anforderungen an die Spezifikationen Ihres Data Compute Node erfüllt und Sie überprüft haben, dass Sie alle bestellten Teile erhalten haben, sollten Sie Ihr System registrieren.
+
+.Schritte
+. Suchen Sie die Seriennummern Ihrer Daten-Compute-Nodes.
++
+Die Seriennummern finden Sie an den folgenden Stellen:
+
++
+** Auf dem Lieferschein
+** In Ihrer Bestätigungs-E-Mail
+** Auf jedem Datenrechenknoten oder auf einigen Systemen auf dem Systemmanagement-Modul jedes Datenrechenknotens.
++
+image::../media/drw_ssn_label.svg[Beispiel für die Systemseriennummer]
+
+
+
+. Navigieren Sie zu  http://mysupport.netapp.com/["NetApp Support Site"^].
+. Prüfen Sie, ob Sie Ihr Speichersystem registrieren müssen:
++
+[cols="1a,2a"]
+|===
+| Wenn Sie ein/e... | Folgen Sie diesen Schritten... 
+
+
+ a| 
+Bestehender NetApp-Kunde
+ a| 
+.. Sign in mit Ihrem Benutzernamen und Passwort.
+.. Wählen Sie *Systems* > *My Systems*.
+.. Bestätigen Sie, dass die neue Seriennummer aufgeführt ist.
+.. Falls die Seriennummer nicht aufgeführt ist, befolgen Sie die Anweisungen für neue NetApp Kunden.
+
+
+
+
+ a| 
+Neuer NetApp-Kunde
+ a| 
+.. Klicken Sie auf *Register Now*, um ein Konto zu erstellen.
+.. Wählen Sie *Systeme* > *Systeme registrieren*.
+.. Geben Sie die Seriennummer des Storage-Systems und die angeforderten Details ein.
+
+
+Sobald NetApp Ihre Registrierung genehmigt, können Sie die benötigte Software herunterladen. Die Genehmigung kann bis zu 24 Stunden dauern.
+
+|===
+
+
+.Was kommt als Nächstes?
+Nachdem Sie die Installation Ihrer Datenrechenknoten vorbereitet haben, link:deploy-hardware.html["Installieren Sie die Data Compute Nodes"].

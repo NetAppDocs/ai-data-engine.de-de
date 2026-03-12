@@ -1,0 +1,150 @@
+---
+sidebar: sidebar 
+permalink: get-started/aide-architecture.html 
+keywords: aide, architecture, ontap, physical components, logical components, networking, security 
+summary: AIDE basiert auf einer skalierbaren, fehlertoleranten Architektur, die Speicher und Rechenleistung trennt und so hohe Leistung und Flexibilität für KI-Workloads ermöglicht. 
+---
+= AI Data Engine Architektur
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AIDE basiert auf einer skalierbaren, fehlertoleranten Architektur, die Speicher und Rechenleistung trennt und so hohe Leistung und Flexibilität für KI-Workloads ermöglicht.
+
+
+
+== Physikalische Komponenten
+
+image::../media/aide-system-architecture.png[AI Data Engine Architekturdiagramm]
+
+
+
+=== AFX-Controller-Knoten
+
+AFX-Controller-Knoten führen eine spezialisierte Variante der ONTAP Software aus, die entwickelt wurde, um die Anforderungen der AFX-Umgebung zu unterstützen. Clients greifen über mehrere Protokolle, einschließlich NFS und SMB, auf die Knoten zu. Jeder Knoten hat eine vollständige Sicht auf den Speicher, auf den er basierend auf den Client-Anfragen zugreifen kann. Die Knoten sind zustandsbehaftet mit nichtflüchtigem Speicher, um kritische Zustandsinformationen zu speichern, und beinhalten zusätzliche Verbesserungen, die speziell auf die Ziel-Workloads zugeschnitten sind.
+
+Für AIDE-Bereitstellungen sind mindestens vier AFX-Controller-Knoten erforderlich, um hohe Verfügbarkeit und Leistung sicherzustellen.
+
+
+
+=== Datenrechenknoten
+
+Datenrechenknoten (DCNs) sind Linux-basierte Server mit hoher CPU-, RAM- und GPU-Leistung, die speziell für KI-Datenverarbeitungsaufgaben vorgesehen sind. Sie hosten KI-spezifische Dienste wie Metadatenkatalogisierung, Vektorsuche und Einbettungspipelines.
+
+Für AIDE-Bereitstellungen werden genau _drei_ DCNs benötigt.
+
+
+
+=== Cluster-/Storage-Switches
+
+Redundante Hochgeschwindigkeits-Switches (100GbE oder höher) verbinden ONTAP und DCNs für Datentransfer mit niedriger Latenz und hohe Verfügbarkeit.
+
+
+
+=== Storage-Shelfs
+
+NVMe-oF-Einschübe mit SSDs hoher Dichte bieten ultra-niedrige Latenz und Redundanz und unterstützen PB-skalierbaren Speicher.
+
+
+
+== Netzwerk
+
+Alle DCNs und ONTAP-Speicherknoten sind über redundante, Hochgeschwindigkeits-Cluster-Switches (mindestens 100GbE) verbunden. Diese Architektur trennt Rechen- und Speicherressourcen, sodass jede unabhängig skaliert werden kann und sowohl die Leistung als auch die Ressourcenauslastung optimiert werden.
+
+Die Netzwerkverbindung zwischen DCNs und ONTAP-Knoten ist durch dedizierte VLANs und IPspaces auf den Cluster-Switches isoliert. Dadurch wird sichergestellt, dass alle Kommunikationsarten, wie Datenzugriff, Management-APIs und interner Dienstverkehr, sicher und effizient bleiben und andere Netzwerkoperationen nicht beeinträchtigen.
+
+
+
+== AI Data Engine Hauptmerkmale
+
+Die AI Data Engine (AIDE) Hauptfunktionen arbeiten zusammen, um den AI Data Engine Datenlebenszyklus zu automatisieren, zu sichern und zu beschleunigen. Jede Funktion ist als Satz von Microservices implementiert, die auf DCNs laufen, in ONTAP Storage integriert sind und über REST-APIs und Management-Schnittstellen bereitgestellt werden.
+
+
+
+=== Metadata Engine
+
+Die Metadata Engine generiert automatisch eine strukturierte, aktuelle und interaktive Ansicht Ihres NetApp Datenbestands.
+
+.Lizenz und Zugang
+Die Metadata Engine ist in der ONTAP One-Basislizenz enthalten und ist nach der Installation von AIDE verfügbar.
+
+Sie können über ONTAP System Manager darauf zugreifen.
+
+.Fähigkeiten
+* Katalogisiert Metadaten für alle Datenquellen, einschließlich Volumes, die lokal auf dem AFX-Cluster gespeichert sind, und solche, die von entfernten ONTAP Clustern synchronisiert werden.
+* Extrahiert automatisch Metadaten und füllt den Katalog, während Daten aufgenommen oder geändert werden.
+* Bietet REST-API-Zugriff zum Abfragen von Metadaten und ermöglicht Datenexperten und Speicheradministratoren, Daten zu entdecken, zu klassifizieren und zu verstehen.
+* Lagert Metadatenabfragen vom Datenpfad aus und reduziert so die NFS-Verkehrslast auf Speichersystemen.
+* Unterstützt große Metadatensätze mit Indizierung und Suchfunktionen.
+* Integriert sich in Workspace- und Datenerfassungsabstraktionen, um Zugriffskontrolle und Governance durchzusetzen.
+
+
+
+
+=== Datensynchronisierung
+
+Data Sync ist ein automatisierter Hintergrunddienst, der sicherstellt, dass der Metadatenkatalog und die Datensammlungen aktuell und konsistent mit den zugrunde liegenden Datenquellen bleiben, selbst wenn sich die Quelldaten ändern.
+
+.Lizenz und Zugang
+Die Data Sync-Funktionalität ist nicht in der ONTAP One-Basislizenz enthalten und erfordert eine separate AIDE-Lizenz.
+
+.Fähigkeiten
+* Synchronisiert Daten von entfernten oder lokalen ONTAP Clustern mithilfe richtliniengesteuerter SnapMirror-Replikation. Daten von entfernten Clustern werden für die AIDE-Verarbeitung in den lokalen AFX-Cluster kopiert.
+* Aktualisiert inkrementell basierend auf erkannten Änderungen und propagiert nur die modifizierten Daten.
+* Gewährleistet sichere, inkrementelle Datenmobilität und Synchronisierung über den gesamten Datenbestand hinweg.
+* Plant und überwacht Synchronisierungsintervalle mit konfigurierbaren Aktualisierungsraten pro Arbeitsbereich.
+* Integriert sich in Workflows zur Erstellung von Arbeitsbereichen, um Metadaten zu extrahieren und zu aktualisieren, wenn neue Datenquellen hinzugefügt werden.
+
+
+
+
+=== Data Guardrails
+
+Der Data Guardrails Dienst bietet kontinuierliche, automatisierte Steuerung und Schutz für sensible Daten während des gesamten KI-Lebenszyklus.
+
+.Lizenz und Zugang
+Data Guardrails Funktionalität ist nicht in der ONTAP One Base-Lizenz enthalten und erfordert eine separate AIDE Lizenz.
+
+Sie können auf die Guardrails-Funktionalität über die AI Data Engine Console zugreifen.
+
+.Fähigkeiten
+* Scannt, klassifiziert und kategorisiert kontinuierlich Daten.
+* Identifiziert sensible Daten und Risiken mithilfe integrierter und anpassbarer Klassifikatoren für Aufgaben wie PII-Erkennung.
+* Automatisiert den Umgang mit sensiblen Daten durch richtlinienbasierte Schwärzung, Maskierung und Zugriffsbeschränkungen.
+* Setzt Unternehmens- und Regulierungsstandards durch an Arbeitsbereiche angehängte Guardrail-Richtlinien durch.
+* Beschränkt den Zugriff auf sensible Dateien oder Datenträger gemäß der Konfiguration, mit Audit-Protokollierung und Compliance-Berichterstattung.
+* Integriert sich in die Arbeitsbereichs- und Datenerfassungsverwaltung, um Data Guardrails konsistent über AI Data Workflows hinweg anzuwenden.
+
+
+
+
+=== Data Curator
+
+Der Data Curator Service ermöglicht schnelle Datenentdeckung, Suche, Vektorisierung und Abruf für AI- und GenAI-Anwendungen.
+
+.Lizenz und Zugang
+Data Curator Funktionalität ist nicht in der ONTAP One Basislizenz enthalten und erfordert eine separate AIDE Lizenz.
+
+Sie können auf Data Curator über die AI Data Engine Console zugreifen.
+
+.Fähigkeiten
+* Durchsucht den Speicher nach relevanten Daten mithilfe des zentralen Metadatenkatalogs.
+* Bietet Tools für Datenwissenschaftler, um kuratierte Datensammlungen zu erstellen.
+* Erzeugt automatisch Vektoreinbettungen auf der Speicherschicht.
+* Bietet einen sicheren Abruf-Endpunkt für KI-Anwendungen, unterstützt vektorsemantische Suche und Neubewertung.
+* Lässt sich in KI-Tools und -Technologien integrieren, einschließlich Retrieval-Augmented Generation (RAG)-Pipelines und agentic AI-Frameworks.
+* Bietet REST-APIs für den programmatischen Zugriff auf Datensammlungen, Vektorsuche und Abrufendpunkte.
+
+
+
+
+== Sicherheit und Mandantenfähigkeit
+
+Die Plattform setzt sowohl rollenbasierte Zugriffssteuerung (RBAC) als auch ressourcenbasierte Zugriffskontrolllisten (ACLs) durch. Alle API- und Benutzeraktionen werden protokolliert, und alle Daten werden im Ruhezustand und während der Übertragung verschlüsselt. Einzelne Mandanten sind für Daten und Metadaten isoliert.
+
+.Verwandte Informationen
+* link:../install-setup/install-license-task.html["Installieren Sie eine AIDE-Lizenz"]
+* link:../vectorization/zero-to-rag.html["Data-to-RAG-Schnellstart"]
+

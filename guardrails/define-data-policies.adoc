@@ -1,0 +1,177 @@
+---
+sidebar: sidebar 
+permalink: guardrails/define-data-policies.html 
+keywords: aide, policies, global exclusion, classifiers, guardrails, ai data engine, data governance 
+summary: Definieren Sie globale Datenrichtlinien in AI Data Engine Console, um zu steuern, welche Daten für AI verwendet werden können, wie sie klassifiziert werden und wie Data Guardrails bei Abfragen durchgesetzt werden. 
+---
+= Definieren Sie Ihre Data Guardrails-Richtlinien in AI Data Engine für Ihren Datenbestand
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Daten- oder Plattformbesitzer verwenden Sie AI Data Engine (AIDE) Console, um festzulegen, welche Daten für KI in Frage kommen, welche Daten immer tabu sind und welche Sicherheitsregeln gelten, wenn diese Daten für Klassifizierung und Retrieval-Augmented Generation (RAG) verwendet werden.
+
+Verwenden Sie diese Verfahren, um diese Richtlinien in AIDE Console zu definieren, damit ONTAP System Manager sie auf alle Daten in Arbeitsbereichen anwenden kann.
+
+.Bevor Sie beginnen
+* Sie benötigen _Storage Administrator_-Berechtigungen in AI Data Engine Console (`\https://<cluster_management_ip>/console`, um globale Richtlinien zu erstellen und zu verwalten.
+* Sie verfügen über einen AIDE Cluster mit bereitgestellten und fehlerfreien Data Compute Nodes.
+* link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] ist konfiguriert, und Ihre IdP-Rolle ist einer AIDE admin Rolle zugeordnet, die die Verwaltung von Datenrichtlinien ermöglicht.
+* Die AI Data Engine software-Lizenz ist installiert, sodass Data Guardrails und Inferenzfunktionen aktiviert sind.
+* Es existiert mindestens ein Arbeitsbereich, oder Sie haben sich mit dem Administrator abgestimmt, um zu verstehen, welche Datenquellen (Volumes) in Arbeitsbereichen verwendet werden.
+
+
+
+
+== Richtlinientypen verstehen
+
+AIDE Console stellt diese Richtlinientypen dar, die Ihre Datenlandschaft prägen:
+
+* *Klassifikatoren*: Aktivieren Sie Klassifikatoren, um PII, Sicherheitsprobleme oder andere Muster in allen Arbeitsbereichen zu erkennen.
+* *Classifier-Kategorien*: Gruppieren Sie Classifier in Compliance-Kategorien für Organisation und Management.
+* *Guardrail policies*: Sicherheits- und Schwärzungsregeln, die zum Zeitpunkt des Abrufs oder der Schlussfolgerung angewendet werden.
+
+
+Sie können ONTAP System Manager nicht verwenden, um diese Data Guardrails zu erstellen oder zu verwalten. Er liest sie nur aus und erzwingt sie, wenn ein Speicheradministrator sie auf Arbeitsbereiche anwendet. Die gesamte Richtliniendefinition und -wartung erfolgt in AIDE Console.
+
+
+
+== Klassifikatoren aktivieren
+
+Klassifikatoren analysieren sowohl Metadaten als auch Inhalte, um Dateien und Objekte zu annotieren (zum Beispiel, um PII oder sensible Kategorien zu erkennen). Bevor Klassifikatoren auf Workspace-Daten ausgeführt werden können, müssen Sie sie in AIDE Console aktivieren.
+
+.Über diese Aufgabe
+Das Verhalten von Klassifikatoren wird global in der AI Data Engine Console gesteuert. Alle aktivierten Klassifikatoren werden in jedem Workspace ausgeführt. Da sie global angewendet werden, können sie nicht für einen einzelnen Workspace aktiviert oder deaktiviert werden. Sie können nur global aktiviert oder deaktiviert werden.
+
+.Schritte
+. Navigieren Sie in der AIDE Console zu *Data Guardrails > Classifiers*.
+. Wählen Sie eine Klassifikatorkategorie aus, um die darin enthaltenen Klassifikatoren anzuzeigen.
+. Wählen Sie die Kontrollkästchen für die Klassifikatoren aus, die Sie aktivieren möchten, oder wählen Sie alle Zeilen aus, um Klassifikatoren in großen Mengen zu aktivieren.
+. Wählen Sie *Enable*.
++
+
+TIP: Verwenden Sie die Option „Massenauswahl“, um mehrere Klassifikatoren gleichzeitig zu aktivieren. Jedes Mal, wenn Sie einen Klassifikator aktivieren, wird eine Aktualisierung in allen Arbeitsbereichen ausgelöst. Um unnötige Aktualisierungen zu vermeiden, aktivieren Sie mehrere Klassifikatoren gleichzeitig, anstatt sie einzeln zu aktivieren.
+
+
+
+.Ergebnis
+Alle neu erstellten und bestehenden Arbeitsbereiche führen die aktivierten Klassifikatoren während der Metadatenverarbeitung aus.
+
+Klassifizierungs-Tags werden in den Metadatenkatalog geschrieben und stehen Dateningenieuren beim Erstellen von Datensammlungen zum Filtern zur Verfügung.
+
+
+
+== Klassifiziererkategorien verwalten
+
+Klassifikatoren werden in Kategorien (wie „PII“ oder „Finanzdaten“) organisiert. Kategorien helfen Ihnen, zusammengehörige Klassifikatoren für eine einfachere Verwaltung und Compliance-Transparenz zu gruppieren. Sie können die von AIDE bereitgestellten Standardkategorien verwenden oder benutzerdefinierte Kategorien erstellen, um Ihre Compliance-Anforderungen zu erfüllen.
+
+.Schritte
+. Navigieren Sie in der AIDE Console zu *Data Guardrails > Classifiers*.
+. Sehen Sie sich die vorhandenen Klassifizierungskategorien an. Es gibt zwei Hauptkategorien der Klassifizierung:
++
+** Inhalt oder Daten: Erkennt bestimmte Arten von Daten in Dateien.
+** Dokument: Klassifiziert den Dokumenttyp basierend auf dem Inhalt.
+
+
+. Prüfen Sie, ob die standardmäßigen Unterkategorien des Klassifikators ausreichen oder ob Sie eine eigene Unterkategorie erstellen möchten.
++
+** Wenn Sie eine Standardklassifizierungsunterkategorie verwenden (zum Beispiel *General Privacy*):
++
+... Wählen Sie den Kategorienamen in Klassifikatorkategorien aus, um die zugehörigen Klassifikatoren anzuzeigen.
+... Untersuchen Sie die Liste der Klassifikatoren.
+... Wählen Sie *Add*, um nicht aufgeführte Klassifikatoren aus der vollständigen Liste der verfügbaren Klassifikatoren zu finden und hinzuzufügen.
+
+
+** Wenn Sie eine benutzerdefinierte Kategorie erstellen möchten, wählen Sie image:icon_add_white_bg.png["blaues Pluszeichen gefolgt von dem Wort Add"].
++
+... Fügen Sie einen eindeutigen Namen, eine Beschreibung hinzu und ordnen Sie der Kategorie verfügbare Klassifikatoren zu.
+... *Hinzufügen* auswählen
+
+
+
+
+. Um einen Klassifikator innerhalb einer Kategorie zu deaktivieren, wählen Sie image:icon_kabob_horizontal.png["drei horizontale blaue Punkte"] für den Klassifikator und wählen Sie *Deaktivieren*. Sie können auch alle Zeilen auswählen, um Statusänderungen in einem Schritt vorzunehmen.
+
+
+.Ergebnis
+Kategorien strukturieren Klassifikatoren für Compliance-Transparenz. Dateningenieure können Klassifizierungs-Tags beim Filtern und Erstellen von Datensammlungen verwenden.
+
+
+
+== Guardrail-Richtlinien erstellen und verwalten
+
+Guardrail-Richtlinien legen fest, wie AIDE reagiert, wenn Klassifikatoren sensible Inhalte erkennen oder wenn Eingabeaufforderungen und Suchergebnisse gegen Inhaltsregeln verstoßen.
+
+Typische Data Guardrails-Verhaltensweisen sind:
+
+* Maskierung oder Schwärzung von PII aus abgerufenen Ausschnitten.
+* Blockieren von Antworten, die gegen die Compliance-Regeln verstoßen.
+* Protokollierung oder Kennzeichnung von Verstößen für Audit-Zwecke.
+
+
+.Über diese Aufgabe
+Sie erstellen und verwalten Data Guardrails-Richtlinien ausschließlich in der AI Data Engine Console.
+
+Sie können Arbeitsbereiche im ONTAP System Manager jeweils nur mit einer einzigen Guardrail-Richtlinie verknüpfen.
+
+.Schritte
+. Navigieren Sie in der AIDE Console zu *Data Guardrails* > *Guardrail policies*.
+. Wählen Sie *Add*.
+. Geben Sie einen Namen und eine Beschreibung ein, die den Geltungsbereich klar beschreiben (zum Beispiel  `Customer PII redaction for support KB`).
+. Konfigurieren Sie die datenklassifikatorgesteuerten Bedingungen, die für die Aktivierung der Data Guardrails erforderlich sind:
++
+.. Definieren Sie die Bedingungen für die Aktivierung der Data Guardrails:
++
+... Wählen Sie die Klassifizierungskategorie oder den Klassifizierungstyp für jede Bedingung aus.
+... Fügen Sie nach Bedarf zusätzliche Bedingungen hinzu und definieren Sie diese.
+... Definieren Sie spezifische Suchkriterien in *Suchen* und wählen Sie dann *Akzeptieren*.
+
+
+.. Definieren Sie Aktionen für die Guardrail-Richtlinie, wie das Anonymisieren von Inhalten oder das Blockieren und Entfernen einer Datei aus einer Datensammlung.
+
+
+. Wählen Sie den Arbeitsbereich aus, auf den der Guardrail angewendet wird.
+. Legen Sie den Richtlinienstatus fest:
++
+** *Enabled*: Aktiviert die Richtlinie sofort.
+** *Testmodus*: Ermöglicht es Ihnen, die Auswirkungen der Richtlinie zu validieren, bevor Sie sie aktivieren.
+** *Deaktiviert*: Speichert die Guardrail, ohne sie zu erzwingen.
+
+
+. Wählen Sie *Hinzufügen*, um die Richtlinie zu speichern und auf den Arbeitsbereich anzuwenden.
++
+
+TIP: Verwenden Sie den *Testmodus* mit einem Pilotarbeitsbereich und einer nicht-produktiven Datenerfassung, um zu verstehen, wie viele Antworten betroffen wären, bevor Sie die strikte Durchsetzung aktivieren.
+
+
+
+.Ergebnis
+Die neue Leitplankenrichtlinie ist aktiv und auf den ausgewählten Arbeitsbereich beschränkt.
+
+
+
+== Wie Richtlinien mit Workspaces interagieren
+
+Nachdem die Richtlinien festgelegt wurden:
+
+* Der Speicheradministrator verwendet ONTAP System Manager, um Arbeitsbereiche zu erstellen, Datencontainer auszuwählen und eine Guardrail-Policy zuzuordnen.
+* Klassifikatoren werden automatisch auf Workspace-Inhalten ausgeführt, basierend auf dem, was Sie aktiviert haben.
+* Die an den Arbeitsbereich angehängten Data Guardrails beeinflussen das Verhalten der Retrieval-Endpunkte.
+
+
+Für Dateningenieure und Datenwissenschaftler:
+
+* Der sichtbare Datenbestand (Arbeitsbereiche und Datensammlungen) ist bereits nach Rollenzuweisung gefiltert.
+* Die von Ihnen abgefragten Metadaten (z. B. PII-Tags) werden durch die aktivierten Klassifikatoren gesteuert.
+* Die Antworten, die Ihre RAG-Pipelines erhalten, werden durch die auf Workspace-Ebene konfigurierten Data Guardrails eingeschränkt.
+
+
+
+
+== Verwandte Informationen
+
+* link:../vectorization/view-data-collections.html["Datensammlungen in AI Data Engine anzeigen"]
+* link:../vectorization/zero-to-rag.html["Data-to-RAG-Schnellstart für AI Data Engine"]
+

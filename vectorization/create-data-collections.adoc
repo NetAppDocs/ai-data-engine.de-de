@@ -1,0 +1,134 @@
+---
+sidebar: sidebar 
+permalink: vectorization/create-data-collections.html 
+keywords: aide, create data collection, rag, data engineer, data scientist, embeddings, ai data engine, indexing 
+summary: 'Erstellen und veröffentlichen Sie Datensammlungen aus Workspace-Metadaten in AI Data Engine Console, um retrieval-augmented generation (RAG) und andere AI-Workloads zu unterstützen.' 
+---
+= Erstellen Sie Datensammlungen in AI Data Engine Console
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Datensammlungen sind die zentralen RAG-Bausteine der AI Data Engine (AIDE). Als Dateningenieur oder Data Scientist definieren Sie, welche Dateien zu einer Sammlung gehören, konfigurieren Einbettungs- und Indizierungsoptionen und veröffentlichen die Sammlung, sodass Anwendungen sie über einen Retrieval-Endpunkt abfragen können.
+
+Sie führen alle Datenerfassungsaufgaben in der AI Data Engine Console aus.
+
+.Bevor Sie beginnen
+* Sie benötigen Berechtigungen als _data engineer_ oder _data scientist_ in der AI Data Engine Console (`\https://<cluster_management_ip>/console`).
+* Sie haben Zugriff auf mindestens einen Arbeitsbereich, in dem Metadaten extrahiert und im  `Ready` Status vorliegen.
+* Sie haben die Metadaten des Arbeitsbereichs untersucht und Abfragen oder Filter identifiziert, die sinnvolle Datenteilmengen definieren.
+* Die AI Data Engine software-Lizenz ist installiert und die Inferenzfunktionen sind aktiviert.
+
+
+
+
+== Erstellen einer Datensammlung aus Workspace-Metadaten
+
+.Schritte
+. Navigieren Sie zu *Data Curator > Workspaces* und wählen Sie den Workspace aus, der Ihre Zieldaten enthält.
+. Wählen Sie *Add data collection*.
+. Gehen Sie auf der Seite *Create new data collection* wie folgt vor:
++
+.. Geben Sie einen Namen und eine Beschreibung für die Sammlung ein (zum Beispiel, `Support_KB_RAG_EN`).
+.. Wählen Sie aus, ob die Sammlung wie folgt sein soll:
++
+*** *Dynamisch*: Neue Dateien werden automatisch erkannt und der Datensammlung anhand der von Ihnen definierten Filterkriterien hinzugefügt. Dies geschieht während Aktualisierungen des Arbeitsbereichs.
+*** *Statisch*: Sie wählen aus, welche Dateien in die Sammlung aufgenommen werden. Sie können die Dateien bearbeiten, wenn sich die Datensammlung im `draft` Status befindet. Nachdem die Datensammlung in den `Published` Status übergegangen ist, kann sie nicht mehr bearbeitet werden.
+
+
+
+
+. Geben Sie die Quellteilmenge an:
++
+.. Verwenden Sie Schlüsselwörter und Filter (Dateityp, Zeitstempel und andere Attribute), um die relevanten Dateien zu finden, die einbezogen werden sollen.
++
+
+NOTE: Sie können einen Dateinamen auswählen, um ein Vorschaufenster des Inhalts zu öffnen.
+
+
+
+. Fügen Sie diese Dateien der Datensammlung hinzu.
+. Wählen Sie *Speichern*, um die Sammlung abzuschließen.
+
+
+.Ergebnis
+Sie haben den Umfang der Datenerfassung definiert und die erforderlichen Dateien hinzugefügt. AIDE generiert Einbettungen und erstellt den Vektorindex, wenn Sie die Sammlung veröffentlichen.
+
+
+TIP: Erstellen Sie kleine, fokussierte Sammlungen (z. B. pro Anwendungsfall oder Domäne) anstatt einer einzigen „Alles“-Sammlung. Dies verbessert die Relevanz der Suchergebnisse und die Verwaltbarkeit.
+
+
+
+== Veröffentlichen Sie eine Datensammlung
+
+Veröffentlichen Sie die Datensammlung, um sie über einen RAG-Abfrageendpunkt für KI-Anwendungen abfragbar zu machen. Die Veröffentlichung generiert Vektoreinbettungen aus Ihren ausgewählten Dateien und indiziert sie für die semantische Suche. Nachdem die Sammlung den  `Ready` Status erreicht hat, steht ihr Endpunkt Datenwissenschaftlern zur Integration in Notebooks, Pipelines und KI-Anwendungen für Retrieval-Augmented Generation (RAG) und Suche zur Verfügung.
+
+
+TIP: Für große Sammlungen sollten Sie die anfängliche Veröffentlichung und größere Neuveröffentlichungen während Nebenzeiten einplanen, um Ressourcenkonflikte zu minimieren.
+
+.Schritte
+. Navigieren Sie zu *Data Curator > Data collections* und wählen Sie das Optionsmenü (image:icon_kabob_horizontal.png["drei horizontale blaue Punkte"]) für Ihre Datensammlung aus.
+. Wählen Sie *Publish*.
+. Wählen Sie eine Standard- oder benutzerdefinierte Optimierungskonfiguration aus.
+. Wählen Sie *Publish*, um die Datentransformation zu starten.
+. Öffnen Sie in der AIDE Console die Sammlungsdetailansicht (*Data Curator > Data collections*) für Statusaktualisierungen.
+
+
+.Ergebnis
+Die Sammlung erreicht den  `Ready` Status und steht nachgelagerten Anwendungen und Datenwissenschaftlern zur Verfügung.
+
+Unter *Data Curator > Data collections* können Sie *Copy URI* auswählen, um die Informationen zu erhalten, die für den Zugriff auf die Datensammlung über eine API erforderlich sind.
+
+
+
+== Aktualisieren oder Löschen einer Datensammlung
+
+Im Laufe der Zeit kann es erforderlich sein, Datensammlungen zu verfeinern oder außer Betrieb zu nehmen. Das Verfeinern einer Sammlung kann das Anpassen von Filtern zum Hinzufügen oder Entfernen von Dateien, das Ändern von Einbettungseinstellungen oder das Aktualisieren der Sammlungsbeschreibung umfassen. Das Löschen einer Sammlung entfernt sie dauerhaft und macht ihren Abruf-Endpunkt nicht mehr verfügbar.
+
+
+
+=== Eine Datensammlung aktualisieren
+
+Sie können eine Datensammlung aktualisieren, wenn sie sich im  `draft`-Status befindet.
+
+.Schritte
+. Navigieren Sie zu *Data Curator > Data collections*.
+. Wählen Sie die Sammlung aus, die Sie ändern möchten.
+. Wählen Sie *Edit*.
+. Passen Sie eines der folgenden Elemente an:
++
+** Name und Beschreibung
+** Filter (Pfade, Dateitypen, Klassifizierungs-Tags).
+** Einbettungs- und Chunking-Einstellungen.
+
+
+. Speichern Sie Ihre Änderungen.
+. Veröffentlichen Sie die Sammlung erneut, damit die neue Definition und die Einbettungen wirksam werden.
+
+
+.Ergebnis
+Ein neuer Indizierungsauftrag wird mit der aktualisierten Konfiguration ausgeführt, und die Sammlung kehrt in einen `Ready` Zustand zurück, wenn sie abgeschlossen ist.
+
+
+
+=== Eine Sammlung löschen
+
+Das Löschen einer Sammlung ist endgültig. Stellen Sie sicher, dass keine Produktionsanwendung mehr vom Abrufendpunkt der Sammlung abhängt, bevor Sie sie löschen.
+
+.Schritte
+. Navigieren Sie zu *Data Curator > Data collections* und wählen Sie das Optionsmenü (image:icon_kabob_horizontal.png["drei horizontale blaue Punkte"]) für die Sammlung aus.
+. Wählen Sie *Delete*.
+. Bestätigen Sie die Löschung.
+
+
+.Ergebnis
+Die Sammlungsdefinition und ihre Einbettungen werden aus AI Data Engine entfernt. Anwendungen, die versuchen, den ehemaligen Abrufendpunkt abzufragen, schlagen nach dem Entfernen der Sammlung fehl.
+
+
+
+== Was kommt als Nächstes?
+
+* link:view-data-collections.html["Datensammlungen anzeigen"]
+

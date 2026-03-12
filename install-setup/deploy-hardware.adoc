@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: install-setup/deploy-hardware.html 
+keywords: aide, ai, data engine, ai data engine, dcn, data compute node, afx, afx 1k, install, setup, hardware, deploy, 
+summary: Erfahren Sie, wie Sie die Schienensätze installieren und die Datenrechenknoten im Schrank befestigen. 
+---
+= Installieren Sie Ihre Daten-Compute-Nodes für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Installieren und sichern Sie Ihre Data Compute Nodes im Schrank.
+
+.Bevor Sie beginnen
+* Vergewissern Sie sich, dass die Anleitung dem Schienenbausatz beiliegt.
+* Verstehen Sie die Sicherheitsbedenken im Zusammenhang mit dem Gewicht des Datenrechenknotens, des Speichersystems und des Speicherregals.
+* Beachten Sie, dass der Luftstrom durch das Speichersystem von vorne eintritt, wo die Blende oder die Endkappen installiert sind, und hinten wieder austritt, wo sich die Ports befinden.
+
+
+
+NOTE: Im Allgemeinen sollten die Switches mittig im Schrank installiert werden. Die Ablagefächer sollten unterhalb des Switches und oberhalb eines zweiten installierten Switches installiert werden. Die Controller-Knoten können oberhalb oder unterhalb der Switches im Schrank installiert werden. Datenverarbeitungsknoten können oberhalb oder unterhalb der Controller-Knoten im Schrank installiert werden.
+
+.Schritte
+. Installieren Sie die Schienenbausätze für Ihre Data Compute Nodes nach Bedarf anhand der den Kits beiliegenden Anweisungen.
+. Installieren und sichern Sie Ihre Daten-Compute-Nodes im Schrank:
++
+.. Positionieren Sie den Daten-Compute-Node auf den Schienen in der Mitte des Schranks und stützen Sie dann das Appliance von unten ab und schieben Sie es an seinen Platz.
+.. Befestigen Sie den Datenrechenknoten mit den mitgelieferten Befestigungsschrauben am Schrank.
+
+
+. Bringen Sie die Blende an der Vorderseite des Datenrechenknotens an.
+
+
+.Was kommt als Nächstes?
+Nachdem Sie die Datenrechenknoten installiert haben, link:cable-hardware.html["Verkabeln Sie die Daten-Compute-Nodes für AIDE"].

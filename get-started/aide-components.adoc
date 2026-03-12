@@ -1,0 +1,106 @@
+---
+sidebar: sidebar 
+permalink: get-started/aide-components.html 
+keywords: aide, architecture, ontap, logical components, networking, security 
+summary: Jede AIDE Komponente spielt eine spezifische Rolle bei der Datenentdeckung, Kuration, Governance und Integration mit Anwendungen, wobei die Interaktionen je nach Benutzerrolle variieren. 
+---
+= AI Data Engine Komponenten und rollenbasierte Interaktionen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine (AIDE) besteht aus zahlreichen Kernkomponenten, die zusammenarbeiten, um eine umfassende Datenmanagement- und -verarbeitungsplattform für KI-Workloads bereitzustellen. Zu diesen Komponenten gehören Arbeitsbereiche, Datensammlungen, Vektordatenbanken, Schutzmechanismen, Metadatenkataloge, Abruf-Endpunkte und Klassifikatoren. Jede Komponente spielt eine spezifische Rolle bei der effizienten Datenfindung, Kuration, Verwaltung und Integration mit KI/ML-Anwendungen.
+
+Jeder AIDE-Benutzer interagiert je nach seiner Rolle unterschiedlich mit den AIDE-Komponenten.
+
+
+
+== Speicher- und datenfokussierte Benutzerrollen
+
+AIDE führt neue Benutzerrollen ein und unterstützt gleichzeitig weiterhin die traditionellen ONTAP-Systemadministratorrollen:
+
+
+
+=== Speicherbenutzer
+
+* *Speicheradministrator*: Verwaltet AFX- und AIDE-Cluster-Einrichtung, Netzwerk, Speicherbereitstellung und Benutzerzugriff.
+
+
+
+
+=== Datennutzer
+
+* *Data engineer*: Erstellt und optimiert KI/ML-Pipelines, verwaltet Datensammlungen und integriert KI-Modelle.
+* *Data scientist*: Entdeckt, kuratiert und analysiert Datensätze, erstellt Datensammlungen und nutzt Retrieval-Endpunkte für GenAI-Anwendungen.
+
+
+[cols="2h,3"]
+|===
+| Rolle (RBAC name) | Beschreibung 
+
+
+| Speicheradministrator (`admin` | Verwaltet AFX- und AIDE-Cluster-Einrichtung, Netzwerk, Speicherbereitstellung und Benutzerzugriff. Weist Benutzern rollenbasierte Zugriffssteuerungsrollen (RBAC) zu, die den Grad des Zugriffs auf AIDE-Schnittstellen und -Funktionen bestimmen. Diese Administratorrolle hat vollständigen Verwaltungszugriff über ONTAP System Manager und AI Data Engine Console. 
+
+
+| Data Engineer (`data-engineer`) | Erstellt und optimiert KI/ML-Pipelines, verwaltet Datensammlungen und integriert KI-Modelle. Diese Rolle hat Zugriff auf die AI Data Engine Console für Data-Engineering-Workflows. 
+
+
+| Datenwissenschaftler(`data-scientist`) | Identifiziert, kuratiert und analysiert Datensätze, erstellt Datensammlungen und nutzt Abruf-Endpunkte für GenAI-Anwendungen. Diese Rolle hat Zugriff auf die AI Data Engine Console für Data-Science-Workflows. 
+|===
+
+
+== AIDE Systemkomponenten
+
+Jeder AIDE-Benutzer (Speicheradministratoren, Dateningenieure und Datenwissenschaftler) interagiert entsprechend seiner Rolle mit den AIDE-Komponenten.
+
+
+
+=== Arbeitsbereiche
+
+Ein Workspace ist ein logisches Datensegment innerhalb des Clusters, das Volumes für ein bestimmtes Projekt, Team oder einen Workflow gruppiert. Workspaces definieren den Umfang der Datensichtbarkeit, des Zugriffs und der Governance in AIDE.
+
+
+
+=== Metadatenkatalog
+
+Eine zentrale, skalierbare Datenbank speichert Metadatensätze für alle Dateien und Objekte im lokalen Cluster, einschließlich Daten, die von entfernten ONTAP-Clustern mithilfe von ONTAP SnapMirror oder Cluster-Peering synchronisiert wurden. Sie ermöglicht eine umfassende, interaktive Suche und Filterung.
+
+
+
+=== Klassifikatoren
+
+Klassifikatoren sind Werkzeuge (integriert oder benutzerdefiniert), die Dateien nach bestimmten Arten von sensiblen Daten (zum Beispiel PII, Finanzdaten, Gesundheitsdaten) durchsuchen und kennzeichnen oder Dokumente nach Typ kategorisieren (zum Beispiel Rechts-, Personal-, Vertriebsdokumente).
+
+
+
+=== Datensammlungen
+
+Eine Datensammlung ist eine kuratierte Gruppe zusammengehöriger Dateien oder Objekte aus einem Arbeitsbereich, die durch eine benutzerdefinierte Abfrage für die Verwendung in GenAI-Workflows definiert wird. Der Inhalt der Dateien in der Datensammlung steht nach der Veröffentlichung über APIs für GenAI-Anwendungen zur semantischen Suche zur Verfügung.
+
+
+
+=== Vektor-Datenbank
+
+Die Vektor-Datenbank speichert Einbettungen, die aus Datensammlungen generiert werden, und ermöglicht so eine leistungsstarke semantische Suche und Abfrage für AI- und GenAI-Anwendungen.
+
+
+
+=== Leitplanken
+
+Leitplanken sind richtlinienbasierte Mechanismen, die die Datenverwaltung, Klassifizierung und den Schutz (wie Schwärzung oder Zugriffsbeschränkungen) während des gesamten KI-Daten-Lebenszyklus durchsetzen.
+
+
+
+=== Abrufendpunkt (RAG endpoint)
+
+Ein Retrieval-Endpunkt (manchmal auch Retrieval-Augmented Generation oder „RAG“-Endpunkt genannt) ist eine sichere API, die es KI- und GenAI-Anwendungen ermöglicht, auf relevante Daten, Kontext oder Einbettungen aus kuratierten Sammlungen und der Vektor-Datenbank zuzugreifen.
+
+RAG-Endpunkte sind für die Unterstützung fortschrittlicher KI-Workflows konzipiert, beispielsweise für die semantische Suche und kontextbezogene Antworten in generativen KI-Modellen. Durch die Anbindung Ihrer KI-Anwendungen an einen Retrieval-Endpunkt können Sie die Genauigkeit und Relevanz der Modelle verbessern, indem Sie Echtzeit-Zugriff auf kuratierte, KI-bereite Datensätze ermöglichen, die von AIDE verwaltet werden.
+
+.Verwandte Informationen
+* link:aide-components-storage-admin.html["Wie AIDE-Speicheradministratoren mit AIDE-Komponenten arbeiten"]
+* link:aide-components-data-users.html["Wie AIDE-Dateningenieure mit AIDE-Komponenten arbeiten"]
+* link:aide-components-data-users.html["Wie AIDE-Datenwissenschaftler mit AIDE-Komponenten arbeiten"]
+

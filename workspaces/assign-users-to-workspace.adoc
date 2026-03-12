@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: workspaces/assign-users-to-workspace.html 
+keywords: aide, workspaces, assign users, user management, ai data engine 
+summary: Nachdem Sie einen Arbeitsbereich erstellt haben, können Sie Benutzer zuweisen, die innerhalb dieses Arbeitsbereichs mit AI-Ressourcen arbeiten werden. 
+---
+= Benutzerzugriff auf AI Data Engine Arbeitsbereiche zuweisen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Speicheradministrator weisen Sie Benutzern je nach Rolle – Dateningenieure, Datenwissenschaftler oder andere Rollen, abhängig von der Struktur und den Bedürfnissen Ihrer Organisation – einen Arbeitsbereich zu. Benutzer melden sich mit ihren Zugangsdaten an der AI Data Engine (AIDE) Console an und greifen auf die Datencontainerressourcen innerhalb des zugewiesenen Arbeitsbereichs zu.
+
+ONTAP System Manager ermöglicht es Ihnen, zu verwalten, welche Benutzer Zugriff auf AI Data Engine Arbeitsbereiche haben. Sie können Benutzer hinzufügen oder entfernen, um zu steuern, wer die Arbeitsbereichsdaten und -aktivitäten anzeigen, bearbeiten und damit interagieren kann.
+
+.Bevor Sie beginnen
+* Sie benötigen _storage administrator_-Berechtigungen, um den Benutzerzugriff auf Arbeitsbereiche zu verwalten.
+* Bestätigen Sie, dass Sie den Arbeitsbereich erstellt haben und dass er im Arbeitsbereichsinventar aktiv ist.
+* Vergewissern Sie sich, dass alle relevanten Datencontainer dem Arbeitsbereich hinzugefügt wurden und zugänglich sind.
+* link:../install-setup/configure-oidc.html["Bestätigen Sie, dass OIDC für den Cluster aktiviert und konfiguriert ist"]. Die Rollenzuordnung von IdP zu ONTAP-Rollen muss für jeden relevanten Data Engineer und Data Scientist IdP-Benutzer bzw. jede Gruppe abgeschlossen werden.
+
+
+.Schritte
+* Einen Benutzer zu einem Arbeitsbereich hinzufügen:
++
+.. Navigieren Sie im ONTAP System Manager zu *Data Engine > Workspaces*.
+.. Wählen Sie den Arbeitsbereichsnamen aus, um die Detailseite zu öffnen.
+.. Wechseln Sie zur Registerkarte „Benutzer“.
+.. Wählen Sie die Schaltfläche *Hinzufügen* aus, um den Dialog zum Hinzufügen von Benutzern zu öffnen.
+.. Geben Sie die Details eines oder mehrerer Benutzer ein. Geben Sie die Details als durch Kommas getrennte Liste von OIDC-Benutzern ein.
+.. Wählen Sie *Add*, um dem Benutzer Zugriff auf den Arbeitsbereich zu gewähren.
+
+
+* Einen Benutzer aus einem Arbeitsbereich entfernen:
++
+.. Suchen Sie auf der Registerkarte „Benutzer“ der Workspace-Detailseite den Benutzer, den Sie entfernen möchten, und wählen Sie ihn aus.
+.. Wählen Sie die Schaltfläche *Remove*.
+.. Bestätigen Sie die Entfernung im Dialog.
+.. Das System entfernt den Benutzer umgehend und entzieht ihm den Zugriff auf den Arbeitsbereich.
+
+
+
+
+.Ergebnis
+Nur Benutzer, die auf der Registerkarte „Benutzer“ des Arbeitsbereichs aufgeführt sind, können auf die Daten und Aktivitäten des Arbeitsbereichs zugreifen und mit ihnen interagieren.

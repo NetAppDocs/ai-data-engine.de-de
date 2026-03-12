@@ -1,0 +1,56 @@
+---
+sidebar: sidebar 
+permalink: install-setup/aide-hardware-requirements.html 
+keywords: ai data engine, aide, hardware, requirements, afx, dcn, data compute node 
+summary: Prüfen Sie die Anforderungen für die Installation von AI Data Engine, einschließlich des AFX-Speichersystems und der Data Compute Nodes. 
+---
+= Voraussetzungen für die Installation von AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prüfen Sie die Anforderungen für die Installation der AI Data Engine. AIDE benötigt ein AFX-Speichersystem, mindestens drei Data Compute Node, Netzwerk-Switches und Kabel.
+
+
+
+== Hardwareanforderungen
+
+Die AI Data Engine benötigt ein AFX-Speichersystem und mindestens drei Data Compute Nodes. Das AFX-System stellt die Speicherinfrastruktur bereit, während die Data Compute Nodes die AIDE-Softwarekomponenten hosten, die Datenmanagement, Datenkuratierung und AI-Funktionen ermöglichen.
+
+* *AFX-Speichersystem*: Besteht aus einem AFX-Controller, einem Festplattengehäuse und Netzwerk-Switch. Das AFX-Speichersystem ist für die AIDE-Bereitstellung erforderlich.
+* *Datenrechenknoten*: Es werden mindestens drei Datenrechenknoten benötigt. Die Datenrechenknoten sind von NetApp bereitgestellte Hardwareknoten, die die AIDE-Software hosten, einschließlich der Metadata Engine, Data Sync, Data Curator und Data Guardrails.
++
+** Jeder Data Compute Node verfügt über die I/O-Steckplätze 4 und 5 für die Konnektivität. Steckplatz 3 ist für die GPU reserviert. Steckplätze 1 und 2 sind nicht belegt oder zugänglich.
+** Die Ports e4a und e5a werden für Clusterverbindungen verwendet.
+** Die Ports e4b und e5b werden für Host-Netzwerkverbindungen verwendet.
+
+
+
+
+
+
+== Anforderungen an Netzwerk-Switch
+
+AI Data Engine benötigt Netzwerk-Switches, um den Netzwerkzugriff für Hosts und die Kommunikation zwischen den Data Compute Nodes zu ermöglichen.
+
+* Client-Switches für die Host-Netzwerkkonnektivität (Cisco Nexus 9332D-GX2B oder Cisco Nexus 9364D-GX2A)
+* Cluster-Switches für die Inter-Node-Kommunikation (Cisco Nexus 9332D-GX2B oder Cisco Nexus 9364D-GX2A)
+* Optionale Management-Switches für Netzwerkmanagement
+
+
+
+
+== Verkabelungsanforderungen
+
+Folgende Kabel werden benötigt, um die Data Compute Node mit den Netzwerk-Switches und dem Management-Netzwerk zu verbinden.
+
+* 400-GbE-zu-100-GbE (4x100GbE) Breakout-Kabel zum Verbinden von Knoten mit Client- und Cluster-Switches
+
+
+
+
+== Unterstützung mehrerer Cluster
+
+Nachdem AIDE mit AFX bereitgestellt wurde, kann es eine Verbindung zu und Verwaltung von Daten anderer ONTAP 9.18.1- und späterer Cluster mithilfe von SnapMirror und Cluster-Peering herstellen.

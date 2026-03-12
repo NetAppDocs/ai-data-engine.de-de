@@ -1,0 +1,138 @@
+---
+sidebar: sidebar 
+permalink: administer/view-events-log.html 
+keywords: aide, aide system, events, audit log, jobs, activity 
+summary: Sie können die Ereignisse, Jobs und Revisionsprotokoll-Nachrichten, die von AIDE generiert werden, überprüfen, um interne Verarbeitungsprozesse zu verfolgen und potenzielle Probleme zu diagnostizieren. Das AIDE System kann so konfiguriert werden, dass diese Informationen zusammen mit anderen zugehörigen Daten zur weiteren Verarbeitung und Archivierung weitergeleitet werden. 
+---
+= AIDE-Systemereignisse, Jobs und Revisionsprotokoll
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Speicheradministrator können Sie die von AIDE generierten Ereignisse, Jobs und Revisionsprotokollnachrichten überprüfen, um interne Prozesse zu verfolgen und potenzielle Probleme zu diagnostizieren. Das AIDE System kann so konfiguriert werden, dass diese Informationen zusammen mit anderen zugehörigen Daten zur weiteren Verarbeitung und Archivierung weitergeleitet werden.
+
+.Bevor Sie beginnen
+* Sie benötigen _Storage-Administrator_-Berechtigungen, um administrative Aufgaben im Zusammenhang mit AIDE ONTAP durchzuführen.
+
+
+
+
+== Überwachen Sie AIDE-Aktivitäten, -Ereignisse und -Jobs
+
+Sie können die zentrale *Activity*-Ansicht verwenden, um AIDE-spezifische Ereignisse und Aufgaben in allen Arbeitsbereichen zu überwachen oder Aktivitäten zu überprüfen, die auf einzelne Arbeitsbereiche beschränkt sind.
+
+
+
+=== Clusterweite AIDE Aktivität anzeigen
+
+Überwachen Sie Workspace-Operationen, beheben Sie Probleme bei der Metadatenextraktion und verfolgen Sie die Veröffentlichung der Datenerfassung in Ihrer gesamten AIDE Deployment.
+
+. Wählen Sie im ONTAP System Manager im Navigationsbereich *Data engine* und anschließend *Activity* aus.
+. Wählen Sie die Registerkarte *Events* aus:
++
+** Überprüfen Sie aktuelle AIDE-spezifische Ereignisse wie die folgenden:
++
+*** Erstellung, Aktualisierung oder Löschung eines Arbeitsbereichs
+*** Operationen zum Hinzufügen/Entfernen von Datencontainern
+*** Veröffentlichung der Datenerfassung (falls vorhanden)
+
+
+** Verwenden Sie Filter (nach Schweregrad, Objekttyp, Workspace oder Zeitbereich), um sich auf aktive oder kritische Ereignisse zu konzentrieren.
+
+
+. Wählen Sie ein einzelnes Ereignis aus, um es zu öffnen und zu überprüfen:
++
+** Beschreibung und Zeitstempel
+** Betroffener Arbeitsbereich, Datenerfassung oder Datenquelle
+** Empfohlene Aktion, falls angegeben
+
+
+. Wählen Sie die Registerkarte *Jobs* aus:
++
+** Überwachen Sie langlaufende Jobs wie:
++
+*** Erste Metadatenextraktion für einen Arbeitsbereich
+*** Arbeitsbereichsaktualisierung / Katalogaktualisierung Jobs
+*** Datenerfassungs-, Veröffentlichungs- oder Aktualisierungsjobs
+
+
+** Überprüfen Sie den Jobstatus und den Fortschritt.
+
+
+. Wählen Sie einen Auftrag aus, um die Peek-Ansicht zu öffnen und ihn zu überprüfen:
++
+** Start- und Endzeit
+** Fortschrittsprozentsatz und Phase (zum Beispiel, *Scannen*, *Veröffentlichen*)
+** Betroffener Arbeitsbereich, Datenerfassung oder Datenquelle
+** Fehlermeldungen für fehlgeschlagene Jobs
+
+
+
+
+
+
+=== Arbeitsbereichsspezifische Aktivitäten anzeigen
+
+Um Probleme in einem bestimmten Workspace zu beheben, öffnen Sie die Workspace-Details (*Data engine > Workspaces*, wählen Sie einen Workspace aus) und verwenden Sie die Registerkarte *Aktivität*:
+
+* Überprüfen Sie Ereignisse und Jobs, die nur auf diesen Arbeitsbereich beschränkt sind.
+* Nutzen Sie diese Ansicht, um Probleme wie einen einzelnen Arbeitsbereich zu isolieren, der im  `Processing` Zustand feststeckt.
+
+
+
+
+== Clusterweite Ereignisse anzeigen
+
+Prüfen Sie die Ereignismeldungen, um einen wertvollen Überblick über die Systemaktivität zu erhalten. Jedes Ereignis enthält eine Beschreibung und eine eindeutige Kennung sowie eine empfohlene Vorgehensweise.
+
+. Im ONTAP System Manager wählen Sie *Events & jobs* und dann *Events*.
+. Prüfen Sie die empfohlenen Maßnahmen oben auf der Seite und reagieren Sie darauf, wie z. B. das Aktivieren der automatischen Aktualisierung.
+. Wählen Sie die Registerkarte *Events log*, um eine Liste der Meldungen anzuzeigen.
+. Wählen Sie eine Ereignismeldung aus, um sie genauer zu untersuchen, einschließlich der Sequenznummer, Beschreibung, Ereignis und empfohlenen Maßnahmen.
+. Optional können Sie die Registerkarte *Active IQ suggestions* auswählen und sich bei Active IQ registrieren, um detaillierte Risikoinformationen für den Cluster zu erhalten.
+
+
+
+
+== Clusterweite Jobs anzeigen
+
+Alle auf dem AIDE-Cluster laufenden Jobs anzeigen, einschließlich AIDE-spezifischer Jobs und allgemeiner ONTAP-Jobs.
+
+. Im ONTAP System Manager wählen Sie *Events & Jobs* und dann *Jobs*.
+. Passen Sie die Anzeige individuell an sowie suchen und laden Sie die Jobinformationen nach Bedarf herunter.
+
+
+
+
+== Revisionsprotokoll anzeigen
+
+Nutzen Sie das Revisionsprotokoll, um eine Aufzeichnung der Systemaktivitäten basierend auf der Verwendung von Zugriffsprotokollen wie HTTP zu überprüfen.
+
+. Im ONTAP System Manager wählen Sie *Ereignisse & Jobs* und dann *Revisionsprotokolle*.
+. Wählen Sie *Settings*, um die Vorgänge zu aktivieren oder zu deaktivieren, die verfolgt werden.
+
+
+
+
+== Benachrichtigungen verwalten
+
+Konfigurieren Sie Benachrichtigungsziele, um AIDE-Ereignisse und Revisionsprotokolle automatisch weiterzuleiten.
+
+.Schritte
+. Im ONTAP System Manager wählen Sie *Cluster* und dann *Settings*.
+. Navigieren Sie zu *Benachrichtigungsverwaltung* und wählen Sie image:icon_kabob.gif["drei vertikale blaue Punkte"].
+. Wählen Sie die entsprechende Aktion aus, um die von AIDE verwendeten Ziele anzuzeigen oder zu konfigurieren:
++
+.. Ereignisziele: Wählen Sie *View event destinations*
+.. Revisionsprotokoll-Ziele: Wählen Sie *Revisionsziele anzeigen*
+
+
+. Wählen Sie *Hinzufügen* aus, wenn zutreffend, und geben Sie die Zielinformationen an.
+. Wählen Sie *Save*.
+
+
+.Verwandte Informationen
+* https://docs.netapp.com/us-en/ontap/event-performance-monitoring/index.html["ONTAP Ereignis-, Leistungs- und Gesundheitsüberwachung"^]
+

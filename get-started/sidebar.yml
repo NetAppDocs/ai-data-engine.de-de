@@ -1,0 +1,52 @@
+---
+section: get-started
+title: Los geht's
+entries:
+- title: Erfahren Sie mehr über Ihr AI Data Engine System
+  entries:
+  - title: Erfahren Sie mehr über AIDE
+    url: "/get-started/learn-about.html"
+  - title: AIDE Architektur
+    url: "/get-started/aide-architecture.html"
+  - title: AIDE-Komponenten und Verantwortlichkeiten nach Rolle
+    entries:
+    - title: AIDE Komponenten und Rollen
+      url: "/get-started/aide-components.html"
+    - title: AIDE Schnittstellen
+      url: "/get-started/aide-interfaces.html"
+    - title: Speicheradministratoren und Komponenten
+      url: "/get-started/aide-components-storage-admin.html"
+    - title: Dateningenieure und Datenwissenschaftler und Komponenten
+      url: "/get-started/aide-components-data-users.html"
+- title: Schnellstart
+  url: "/get-started/quick-start.html"
+- title: Installieren Sie AIDE
+  entries:
+  - title: Installationsanforderungen
+    url: "/install-setup/aide-hardware-requirements.html"
+  - title: Installieren Sie Ihr AFX storage system
+    url: "/install-setup/aide-afx-install.html"
+  - title: Installieren Sie Ihre Datenrechenknoten
+    entries:
+    - title: Workflow installieren
+      url: "/install-setup/install-workflow.html"
+    - title: Hardwareanforderungen überprüfen
+      url: "/install-setup/install-setup-requirements.html"
+    - title: Bereiten Sie die Installation vor
+      url: "/install-setup/prepare-hardware.html"
+    - title: Installieren Sie Datenrechenknoten
+      url: "/install-setup/deploy-hardware.html"
+    - title: Überprüfen Sie die Verkabelungsanforderungen
+      url: "/install-setup/cable-overview.html"
+    - title: Kabelhardware
+      url: "/install-setup/cable-hardware.html"
+    - title: System einschalten
+      url: "/install-setup/power-on-hardware.html"
+- title: Richten Sie Ihr AIDE System ein
+  entries:
+  - title: AIDE mit einem AFX-Cluster einrichten
+    url: "/install-setup/cluster-setup-afx.html"
+  - title: Installieren Sie eine AIDE-Lizenz
+    url: "/install-setup/install-license-task.html"
+  - title: OIDC-Authentifizierung konfigurieren
+    url: "/install-setup/configure-oidc.html"

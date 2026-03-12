@@ -1,0 +1,50 @@
+---
+sidebar: sidebar 
+permalink: get-started/aide-components-storage-admin.html 
+keywords: aide, architecture, ontap, storage administrator, system manager, workspaces, guardrails 
+summary: Erfahren Sie, wie Speicheradministratoren mit AIDE Komponenten interagieren, um die Clusterinfrastruktur zu verwalten, Arbeitsbereiche bereitzustellen und Governance-Richtlinien durchzusetzen. 
+---
+= Erfahren Sie, wie AI Data Engine-Speicheradministratoren mit AIDE-Komponenten arbeiten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Speicheradministrator verwalten Sie die AIDE Infrastruktur über ONTAP und die AIDE Console, stellen Arbeitsbereiche bereit, fügen Guardrail-Richtlinien hinzu und überwachen den Systemzustand. Ihre Aufgabe besteht darin, eine zuverlässige, sichere und konforme Datenspeicherung für AI-Workloads zu gewährleisten.
+
+
+
+== Zugriff auf die Komponente des Storage Administrators
+
+[cols="2h,2,3"]
+|===
+| Komponente | Zugriffsebene | Workflow des Speicheradministrators 
+
+
+| ONTAP System Manager | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden ONTAP System Manager als Ihre primäre Schnittstelle für die Clusterverwaltung, die Bereitstellung von Arbeitsbereichen, die Verwaltung von Guardrail-Richtlinien und die Überwachung des Systemzustands. 
+
+
+| AI Data Engine Console | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die AI Data Engine Console, um Arbeitsbereiche zu überwachen, den Sammlungsstatus anzuzeigen und die Systemaktivitäten in der gesamten AIDE-Umgebung zu überwachen. 
+
+
+| ONTAP REST API | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die REST API, um Infrastrukturaufgaben zu automatisieren, Arbeitsbereiche und Guardrail-Richtlinien programmatisch zu verwalten und die AIDE Administration mit externen Tools und Workflows zu integrieren. 
+
+
+| Arbeitsbereiche | Verwalten (erstellen, bearbeiten, löschen) | Sie erstellen und verwalten Arbeitsbereiche mit ONTAP System Manager. Sie wählen aus, welche Datenquellen einbezogen werden, weisen Dateningenieuren und Data Scientists Berechtigungen zu und fügen Guardrail-Richtlinien hinzu, um Governance und Compliance durchzusetzen. Sie überwachen außerdem die Gesundheit und den Zugriff der Arbeitsbereiche. 
+
+
+| Datensammlungen | Ansicht (nur lesen) | Sie sehen den Status und die Integrität von Datensammlungen in jedem Arbeitsbereich mit System Manager. Sie stellen sicher, dass die zugrunde liegenden Datenquellen verfügbar und geschützt sind, erstellen oder ändern jedoch keine Sammlungen. 
+
+
+| Leitplanken | Verwalten (erstellen, bearbeiten, löschen) | Sie definieren und ordnen Schutzrichtlinien mithilfe von System Manager Arbeitsbereichen zu. Sie überwachen den Status der Schutzrichtlinien und Compliance-Berichte. Sie stellen sicher, dass die Richtlinien durchgesetzt und bei Bedarf aktualisiert werden. 
+
+
+| Metadatenkatalog | Überwachen (Gesundheit, Status, Aktivität anzeigen) | Sie stellen sicher, dass der Metadatenkatalog gefüllt und aktuell ist. Sie überwachen den Zustand des Katalogs und unterstützen die Zugriffskontrolle. 
+
+
+| Vektor-Datenbank | Bereitstellen/Überwachen (bereitstellen, konfigurieren, Status anzeigen) | Sie stellen die Vektor-Datenbank-Infrastruktur bereit und überwachen sie, wobei Sie sicherstellen, dass Datenverarbeitungsknoten mit GPU-Ressourcen und ordnungsgemäße Lizenzierung vorhanden sind. Sie unterstützen die Umgebung, verwalten aber Embeddings oder Abfragen nicht direkt. 
+
+
+| Klassifikatoren | Verwalten (erstellen, bearbeiten, löschen) | Sie erstellen, konfigurieren und verwalten Klassifikatoren und deren Kategorien. Sie wenden Klassifikatoren auf Arbeitsbereiche an und überwachen deren Effektivität. 
+|===

@@ -1,0 +1,89 @@
+---
+sidebar: sidebar 
+permalink: workspaces/create-workspace.html 
+keywords: aide, workspaces, create workspace, ai data engine 
+summary: Nachdem Sie einen Cluster erstellt haben, können Sie Arbeitsbereiche erstellen, mit denen Sie Daten segmentieren, den Datenzugriff steuern und Daten ausschließen, auf die AIDE nicht zugreifen soll. 
+---
+= Erstellen Sie einen Arbeitsbereich in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie einen Cluster eingerichtet haben, können Sie einen Arbeitsbereich erstellen. Arbeitsbereiche ermöglichen es Ihnen, Daten im Cluster zu segmentieren, den Datenzugriff für einzelne Benutzer zu steuern und Daten auszuschließen, auf die AI Data Engine (AIDE) nicht zugreifen soll.
+
+Wenn Sie Speicher verwalten, verwenden Sie ONTAP System Manager, um Arbeitsbereiche zu erstellen und zu verwalten.
+
+Organisationen erstellen Arbeitsbereiche basierend auf Teams, Projekten, Datensensibilitätsstufen oder anderen relevanten Kriterien. Beispielsweise könnten Sie im Gesundheitswesen klinische Daten in einem Arbeitsbereich segmentieren, aber Daten aus den Bereichen IT, Recht oder anderen Abteilungen ausklammern.
+
+.Über diese Aufgabe
+Systemverarbeitungslimits beeinflussen die Erstellung von Arbeitsbereichen (typischerweise bis zu 15 GB pro Tag und Cluster). Wenn Sie mehrere Arbeitsbereiche parallel oder in schneller Folge erstellen, kann die Verarbeitung jedes Arbeitsbereichs länger dauern, und Sie könnten erhebliche Verzögerungen erleben.
+
+Überwachen Sie den Status der Arbeitsbereichserstellung auf der Arbeitsbereichsinventarseite. Für beste Ergebnisse vermeiden Sie es, viele Arbeitsbereiche gleichzeitig zu erstellen, wenn Sie sofortigen Zugriff auf diese Funktionen benötigen.
+
+.Bevor Sie beginnen
+* Sie benötigen _Storage Administrator_-Berechtigungen, um Arbeitsbereiche zu erstellen und Datensammlungen zuzuordnen.
+* Sie haben die entfernten (per Peering verbundenen) und lokalen Datenquellen bestimmt, die Sie mit dem Workspace und mit AI Data Engine verwenden möchten.
+* Sie haben link:prepare-data-for-aide.html["mindestens einen Datencontainer erstellt"], die der Arbeitsbereich nutzen kann, wie z. B. ein lokales Volume oder ein Volume aus einem verbundenen Cluster.
++
+
+IMPORTANT: Fügen Sie einem Arbeitsbereich ein Volume hinzu, das Sie während der erwarteten Lebensdauer dieses Arbeitsbereichs nicht löschen werden. Wenn Sie ein Volume nach dem Hinzufügen zu einem Arbeitsbereich löschen, wird der Arbeitsbereich in einen Fehlerzustand versetzt. Bestätigen Sie die längerfristige Nutzbarkeit des Volumes, bevor Sie einen Arbeitsbereich einrichten.
+
+
+
+* Stellen Sie sicher, dass NFS auf dem Volume aktiviert ist, aber dass CIFS nicht aktiviert ist. Workspaces unterstützen nur Volumes mit NFS. Volumes mit CIFS (SMB) werden nicht unterstützt.
+
+
+
+
+== Einen Arbeitsbereich erstellen
+
+Erstellen Sie einen Arbeitsbereich und verknüpfen Sie Datencontainer, die die Daten enthalten, die Sie mit AI Data Engine verwenden möchten.
+
+.Schritte
+. Navigieren Sie im ONTAP System Manager zu *Data Engine > Workspaces*.
+. Wählen Sie *Add*.
+. Im Dialogfeld *Arbeitsbereich hinzufügen* wählen Sie mindestens einen verfügbaren Datencontainer aus, um ihn mit dem Arbeitsbereich zu verknüpfen.
+. Konfigurieren Sie link:prepare-data-for-aide.html["verbundene Cluster"] so, dass auf die Daten dieser Cluster innerhalb des Arbeitsbereichs zugegriffen werden kann.
+. Wenn Sie den Benutzerzugriff auf den Arbeitsbereich konfigurieren möchten, können Sie dies jetzt tun oder link:assign-users-to-workspace.html["Warten Sie, bis der Arbeitsbereich erstellt ist"].
+. Konfigurieren Sie ein Aktualisierungsintervall, wie oft der Arbeitsbereich mit den zugehörigen Datencontainern synchronisiert wird, um neue oder aktualisierte Daten zu erfassen (zum Beispiel sechs Stunden).
++
+
+TIP: Wählen Sie ein Intervall, das ein ausgewogenes Verhältnis zwischen Datenaktualität und Systemleistung gewährleistet. Wenn Sie einen Datencontainer mehreren Arbeitsbereichen hinzufügen, verwendet das System automatisch das aggressivste (kürzeste) Intervall. Weitere Informationen finden Sie in der Dokumentation zu <<Aktualisierungen und Versionierung von Arbeitsbereichen,Aktualisierung und Versionierung von Arbeitsbereichen>>.
+
+. Wählen Sie *Continue*.
+. Geben Sie im Dialogfeld *Finalize workspace* einen Arbeitsbereichsnamen und eine Beschreibung ein.
+. Wählen Sie *Add*, um den Arbeitsbereich zu erstellen.
+
+
+.Ergebnis
+Der Arbeitsbereichserstellungsprozess dauert je nach zugehörigem Datensatz und dessen Dateianzahl, Dateigröße und anderen Faktoren mehrere Minuten bis Stunden.
+
+Das System extrahiert automatisch Metadaten für alle Datenquellen und speichert sie in einem Metadatenkatalog, mit dem Benutzer die für ihre Projekte benötigten Dateien finden können. Nachdem Sie Benutzer dem Arbeitsbereich zugewiesen haben, können Dateningenieure die zum Arbeitsbereich gehörenden Komponenten über die AI Data Engine Console einrichten und mit ihnen interagieren.
+
+Der neue Arbeitsbereich wird auf der Seite „Arbeitsbereiche“ im `Creating` Status angezeigt, bis der Prozess abgeschlossen ist und sich der Status in `ready` ändert.
+
+
+
+== Arbeitsbereichsdetails überprüfen
+
+Nach der Erstellung des Arbeitsbereichs überprüfen Sie die Details des Arbeitsbereichs.
+
+.Schritte
+. Überprüfen Sie die Details des Arbeitsbereichs, einschließlich der Gesamtgröße, des Prozentsatzes der genutzten Clusterkapazität und des Datums der letzten Aktualisierung des Arbeitsbereichs.
+. Wählen Sie den Arbeitsbereichsnamen aus, um die Detailseite zu öffnen.
+. Auf der Registerkarte „Übersicht“ können Sie Details zum Arbeitsbereich einsehen, darunter zugehörige Datencontainer, Benutzer und Aktivität.
+
+
+
+
+== Aktualisierungen und Versionierung von Arbeitsbereichen
+
+Bei jeder Aktualisierung eines Arbeitsbereichs wird eine unveränderliche Version erstellt, die den aktuellen Zustand aller Dateien und Objekte im Arbeitsbereich erfasst. Versionen enthalten vollständige Metadaten, Verweise auf während der Extraktion verwendete Snapshots und eine Job-ID zur Nachverfolgbarkeit. Dies unterstützt Datenherkunft, Reproduzierbarkeit und Auditierung.
+
+Aktualisierungen erfolgen entweder nach dem von Ihnen konfigurierten Zeitplan (z. B. alle sechs Stunden) oder wenn Sie sie manuell auslösen. Das minimale unterstützte Aktualisierungsintervall beträgt eine Stunde; das maximale beträgt ein Jahr. Wenn ein Datencontainer in mehreren Arbeitsbereichen enthalten ist, verwendet das System für die Planung der Metadatenextraktion das häufigste, kürzeste Aktualisierungsintervall.
+
+Standardmäßig speichert das System vorherige, aktuelle und nächste (in Bearbeitung befindliche) Versionen. Das System speichert ältere Versionen gemäß den Richtlinien Ihrer Organisation und kann sie bei Bedarf entfernen.
+
+Sie können alle Versionen eines Arbeitsbereichs auflisten und die Unterschiede zwischen den Versionen anzeigen, um festzustellen, welche Dateien oder Objekte hinzugefügt, geändert oder gelöscht wurden. So können Sie Änderungen im Zeitverlauf nachverfolgen und die Entwicklung Ihrer Arbeitsbereichsdaten nachvollziehen.

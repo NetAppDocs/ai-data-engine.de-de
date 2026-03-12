@@ -1,0 +1,107 @@
+---
+sidebar: sidebar 
+permalink: install-setup/cable-hardware.html 
+keywords: aide, ai, data engine, ai data engine dcn, data compute node, afx, afx 1k, cable controllers, Cisco Nexus 9332D-GX2B, Cisco Nexus 9364D-GX2A, switches, switch, cable hardware, cable storage shelves, cable data compute nodes, cable network, cable cluster, cable host network 
+summary: Erfahren Sie, wie Sie die AIDE-Kabel an Ihr Netzwerk anschließen und die Data Compute Nodes verkabeln. 
+---
+= Verkabeln Sie Ihre Data Compute Node für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Verbinden Sie Ihre Data Compute Nodes mit den Netzwerk-Switches des Host-Netzwerks und des Clusters, um die Verarbeitung von KI-Workloads und die Integration mit Ihrem AFX 1K-Speichersystem zu ermöglichen. Dieses Verfahren verwendet 100GbE-Verbindungen sowohl für den Netzwerkzugriff als auch für die Clusterkommunikation, sodass die Nodes die bestehende Clusterinfrastruktur nutzen können, ohne das AFX-System herunterzufahren.
+
+.Über diese Aufgabe
+Diese Verfahren zeigen gängige Konfigurationen. Die spezifische Verkabelung hängt von den für Ihr Speichersystem bestellten Komponenten ab. Ausführliche Konfigurationsdetails und Steckplatzprioritäten finden Sie unter link:https://hwu.netapp.com["NetApp Hardware Universe"^].
+
+
+NOTE: Sie müssen das AFX 1K storage system beim Verkabeln der Data Compute Node nicht ausschalten. Sie können die Data Compute Node zu einem bestehenden AFX 1K storage system hinzufügen, das bereits eingeschaltet und konfiguriert ist.
+
+.Bevor Sie beginnen
+* Sie haben bereits ein AFX 1K-Speichersystem installiert. Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["Installieren Sie Ihr AFX 1K Storage-System"^].
+* Die erforderlichen Netzwerk-Switches sind installiert und konfiguriert. Wenden Sie sich an Ihren Netzwerkadministrator, um Informationen zum Anschluss des Systems an Ihre Netzwerk-Switches zu erhalten.
+* Sie haben die link:../install-setup/cable-overview.html["Verkabelungsanforderungen für die Data Compute Node"^] überprüft.
+
+
+
+
+== Schritt 1: Verbinden Sie die Data Compute Nodes mit dem Hostnetzwerk
+
+Sie können die Data Compute Node-Ports mit Ihrem Host-Netzwerk verbinden.
+
+.Schritte
+. Verbinden Sie Port e4b der folgenden Data Compute Nodes mit dem Ethernet-Datennetzwerk Netzwerk-Switch A:
++
+** Data Compute Node 1, Port e4b
+** Data Compute Node 2, Port e4b
++
+*100GbE-Kabel*
+
++
+image::../media/oie_cable100_gbe_qsfp28.png[100-Gb-Ethernet-Kabel]
+
++
+image::../media/drw_aide_network_cabling_a_ieops_2647.svg[Kabel zu Ethernet-Netzwerk]
+
+
+
+. Verbinden Sie Port e5b der folgenden Data Compute Nodes mit dem Ethernet-Datennetzwerk-Switch B:
++
+** Data Compute Node 1, Port e5b
+** Data Compute Node 2, Port e5b
++
+*100GbE-Kabel*
+
++
+image::../media/oie_cable100_gbe_qsfp28.png[100-Gb-Ethernet-Kabel]
+
++
+image::../media/drw_aide_network_cabling_b_ieops-2648.svg[Kabel zu Ethernet-Netzwerk]
+
+
+
+
+
+
+
+== Schritt 2: Verkabeln Sie die Verbindungen des Data Compute Node-Clusters
+
+Für Data Compute Nodes werden die e4a/e5a-Ports für die Clusterverbindungen verwendet.
+
+.Schritte
+. Verbinden Sie Port e4a der folgenden Data Compute Node mit einem Nicht-ISL-Port am Cluster Netzwerk-Switch A:
++
+** Data Compute Node 1, Port e4a
+** Data Compute Node 2, Port e4a
++
+*100GbE-Kabel*
+
++
+image::../media/oie_cable100_gbe_qsfp28.png[100-Gb-Ethernet-Kabel]
+
++
+image::../media/drw_aide_switched_cluster_cabling_a_ieops-2649.svg[Kabel zu Ethernet-Netzwerk]
+
+
+
+. Verbinden Sie Port e5a der folgenden Data Compute Node mit einem Nicht-ISL-Port am Cluster Netzwerk-Switch B:
++
+** Data Compute Node 1, Port e5a
+** Data Compute Node 2, Port e5a
++
+*100GbE-Kabel*
+
++
+image::../media/oie_cable100_gbe_qsfp28.png[100-Gb-Ethernet-Kabel]
+
++
+image::../media/drw_aide_switched_cluster_cabling_b_ieops-2650.svg[Kabel zu Ethernet-Netzwerk]
+
+
+
+
+
+.Was kommt als Nächstes?
+Nachdem Sie die Hardware verkabelt haben, link:power-on-hardware.html["Schalten Sie Ihre Data Compute Node ein"].

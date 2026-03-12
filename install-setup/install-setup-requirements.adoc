@@ -1,0 +1,63 @@
+---
+sidebar: sidebar 
+permalink: install-setup/install-setup-requirements.html 
+keywords: aide, ai, data engine, ai data engine, dcn, data compute node, afx, afx 1k, install, setup, requirements, cautions, 
+summary: Überprüfen Sie die benötigte Ausrüstung und die Hebevorsichtsmaßnahmen für Ihre Data Compute Nodes für AI Data Engine. 
+---
+= Installationsanforderungen für Datenrechenknoten für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Überprüfen Sie die benötigte Ausrüstung und die Hebevorsichtsmaßnahmen für Ihre Data Compute Nodes für AI Data Engine.
+
+
+
+== Voraussetzungen
+
+Bevor Sie die Datenrechenknoten für AIDE installieren, stellen Sie sicher, dass Sie Folgendes haben:
+
+* Ein AFX 1K Storage-System.
++
+
+NOTE: Informationen zur Installation des AFX 1K-Speichersystems finden Sie im link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["Installieren Sie Ihr AFX 1K Storage-System"^].
+
+
+
+
+
+== Für die Installation benötigte Ausrüstung
+
+Zur Installation der Data Compute Nodes für AIDE benötigen Sie die folgende Ausrüstung und Werkzeuge.
+
+* Zugriff auf einen Webbrowser zur Konfiguration Ihrer Datenrechenknoten
+* Elektrostatische Entladung (ESD) Armband
+* Taschenlampe
+* Laptop oder Konsole mit USB-/serieller Verbindung
+* Kreuzschlitzschraubendreher Nr. 2
+
+
+
+
+== Vorsichtsmaßnahmen beim Heben
+
+Die Datenverarbeitungsknoten sind schwer. Seien Sie beim Anheben und Bewegen dieser Gegenstände vorsichtig.
+
+
+
+=== Daten-Compute-Knotengewichte
+
+Treffen Sie die notwendigen Vorsichtsmaßnahmen beim Bewegen oder Anheben Ihres Data Compute Node.
+
+Ein Datenrechenknoten kann bis zu 46,3 lbs (21 kg) wiegen. Zum Anheben des Datenrechenknotens sollten zwei Personen oder ein hydraulischer Lift verwendet werden.
+
+image::../media/drw_compute_node_lifting_weight_ieops-2743.svg[Daten-Compute-Knoten Hebegewicht]
+
+.Verwandte Informationen
+* https://library.netapp.com/ecm/ecm_download_file/ECMP12475945["Sicherheitsinformationen und behördliche Hinweise"^]
+
+
+.Was kommt als Nächstes?
+Nachdem Sie die Hardwareanforderungen geprüft haben, link:prepare-hardware.html["Bereiten Sie die Installation Ihrer Data Compute Nodes vor"].

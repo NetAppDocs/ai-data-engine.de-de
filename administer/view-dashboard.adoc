@@ -1,0 +1,171 @@
+---
+sidebar: sidebar 
+permalink: administer/view-dashboard.html 
+keywords: aide, aide system, dashboard, view dashboard, cluster status 
+summary: Greifen Sie als ersten Schritt auf den ONTAP System Manager zu, bevor Sie mit Ihren AIDE Verwaltungsaufgaben beginnen. 
+---
+= AIDE-System- und Clusterstatus anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Speicheradministrator können Sie mit ONTAP System Manager auf das Dashboard zugreifen und den Clusterstatus anzeigen. Dies ist ein guter erster Schritt, bevor Sie mit Ihren AIDE-Verwaltungsaufgaben beginnen oder wenn Sie ein Betriebsproblem vermuten.
+
+.Bevor Sie beginnen
+* Sie benötigen _Storage-Administrator_-Berechtigungen, um administrative Aufgaben im Zusammenhang mit AIDE ONTAP durchzuführen.
+
+
+
+
+== Überwachen Sie den Zustand und die Kapazität von AIDE über das Dashboard.
+
+. Stellen Sie eine Verbindung zum ONTAP System Manager über die Cluster Management-Adresse her:
++
+`\https://$FQDN_OR_IP/`
+
+. Sign in mit einem Administratorkonto.
+. Wählen Sie *Dashboard* im linken Navigationsbereich.
+. Überprüfen Sie die Kachel *Health*:
++
+** Bestätigen Sie die allgemeine Cluster-Gesundheit.
+** Überprüfen Sie die Anzahl und den Status der **Data compute nodes**.
+** Auf Warnmeldungen prüfen:
++
+*** DCN-Knotenprobleme oder Verbindungsprobleme
+*** Arbeitsbereiche oder Datensammlungen mit Fehlern (zum Beispiel Fehler bei der Veröffentlichung von Sammlungen)
+
+
+
+
+. Überprüfen Sie die *Capacity*-Kachel:
++
+** Beachten Sie die Gesamtkapazität des Clusters und die genutzte Kapazität.
+** Für AIDE-Cluster überprüfen Sie Folgendes:
++
+*** Von AIDE-Metadaten und Anwendungs-Volumes belegte Kapazität (metadata Storage VM)
+*** Von Arbeitsbereichen und Datensammlungen genutzte Kapazität (falls verfügbar)
+
+
+
+
+. Optional können Sie die *Netzwerk*- und *Leistung*-Kacheln überprüfen, um das clusterweite Verhalten zu verstehen, das sich auf AIDE workloads auswirken könnte (zum Beispiel Netzwerküberlastung oder Schutzverzögerung).
+
+
+
+
+== DCN-Gesundheits- und Nutzungsdaten anzeigen
+
+. Wählen Sie im Navigationsbereich *Cluster* und anschließend *Übersicht* aus.
+. Wählen Sie die Registerkarte *Data compute* aus.
++
+Diese Registerkarte zeigt alle DCN-Knoten im Cluster mit:
+
++
+** Knotenname, Modell, Seriennummer und Softwareversion
+** Gesamtknotenzustand
+** CPU- und Speicherauslastung
+** GPU-Auslastung (falls GPUs vorhanden sind)
+** Alle Fehlerindikatoren auf Knotenebene
+
+
+. Erweitern Sie einen DCN node, um die Detailansicht zu öffnen und zu überprüfen:
++
+** System-CPU- und Speicherauslastung
+** GPU-Speichernutzung
+** Gemeldete Hardware- oder Serviceprobleme
+
+
+. Wählen Sie auf der Seite *Cluster > Übersicht* *Verkabelung* aus, um zu überprüfen, ob DCN-Knoten korrekt mit den Cluster-Switches verkabelt sind und um etwaige Port- oder Verbindungsprobleme zu identifizieren.
+
+
+
+
+== Arbeitsbereiche und Metadaten-Fußabdruck überwachen
+
+. Wählen Sie im Navigationsbereich *Data engine* und anschließend *Workspaces* aus.
+. Überprüfen Sie die Zusammenfassung des Arbeitsbereichs oben auf der Seite:
++
+** Anzahl der Arbeitsbereiche und deren Zustände (zum Beispiel  `Processing`, `Healthy`, `Error`).
+** Gesamtgröße des Arbeitsbereichs.
+** Prozentsatz der von allen Arbeitsbereichen verbrauchten Clusterkapazität.
+
+
+. Überprüfen Sie das Arbeitsbereichsraster:
++
+** Bestätigen Sie, dass die kritischen Arbeitsbereiche den Status *Healthy* anzeigen.
+** Überprüfen Sie die Arbeitsbereichsgrößen und den Kapazitätsverbrauch.
+** Suchen Sie nach Arbeitsbereichen in `Error` oder lang andauernden `Processing` Zuständen.
+
+
+. Um die Details für einen bestimmten Arbeitsbereich anzuzeigen, wählen Sie dessen Namen aus:
++
+** Bestätigen Sie auf der Registerkarte *Overview* Folgendes:
++
+*** Arbeitsbereichsstatus und -größe
+*** Eingeschlossene Datencontainer (Volumes) und deren Elementanzahl
+*** Letzte Aktualisierungszeit für jede Datenquelle
+
+
+** Bestätigen Sie auf der Registerkarte *Data collections* Folgendes:
++
+*** Welche Datensammlungen existieren für diesen Arbeitsbereich (Datensammlungen sind im System Manager schreibgeschützt)
+*** Ihr Status, ihre Größe und der Zeitpunkt der letzten Aktualisierung
+
+
+** Überprüfen Sie auf der Registerkarte *Benutzer*, welche Benutzer der AI Data Engine Console Zugriff haben.
+
+
+
+
+
+
+== Metadaten Storage-VM und von AIDE verwalteten Schutz überwachen
+
+. Wählen Sie im Navigationsbereich *Cluster* und anschließend *Storage VMs* aus.
+. Suchen Sie die Storage VM mit Subtyp `data-engine` (die Metadata SVM):
++
+** Bestätigen Sie, dass die Metadaten-SVM online ist.
+** Optional können Sie die Details öffnen, um die Zähler für Folgendes anzuzeigen:
++
+*** Volumes
+*** LIFs mit Typ `Data compute network` (verwendet für DCN-ONTAP-Kommunikation)
+
+
+
+
+. Wählen Sie *Schutz* und dann *Beziehungen*, um den Schutz für Remote-Datenquellen anzuzeigen, die in Arbeitsbereichen verwendet werden:
++
+** Identifizieren Sie von AIDE erstellte SnapMirror-Beziehungen anhand des Namensmusters:
++
+*** Zielvolumen: `<source_volume_name>_dest_<source_volume_UUID>`
+*** Richtlinie: `<source_volume_name>_dest_aide_policy_<source_volume_UUID>`
+
+
+** Nutzen Sie diese Ansicht, um zu überprüfen, ob die Beziehungen intakt sind und ob die Verzögerungszeit den Erwartungen an die Aktualisierung des Arbeitsbereichs entspricht.
+
+
+
+
+
+IMPORTANT: Ändern Sie die Metadaten-Storage-VM, die von AIDE erstellten SnapMirror-Beziehungen oder die von AIDE verwalteten Snapshots (oder deren Zeitpläne) nicht direkt in ONTAP. Änderungen können den AIDE-Versionverlauf beeinträchtigen. link:../administer/manage-workspace.html#edit-workspace-properties-and-refresh-schedule["Arbeitsbereichsaktualisierungseinstellungen anpassen"] wenn Sie das Aktualisierungsverhalten anpassen müssen.
+
+
+
+== AIDE-bezogene Warnungen und Benachrichtigungen prüfen
+
+. Im Navigationsbereich wählen Sie *Events & Jobs* und anschließend *System alerts*.
+. Überprüfen Sie alle aktiven Warnmeldungen im Zusammenhang mit:
++
+** DCN node health oder Konnektivität
+** Netzwerkprobleme der Data Engine
+** Fehler im Arbeitsbereich oder bei der Datenerfassung
+** Softwareversionskonflikte zwischen ONTAP und DCN cluster
+
+
+. Konfigurieren Sie bei Bedarf Benachrichtigungsziele (zum Beispiel E-Mail, Syslog) in *Cluster > Settings > Notification management*, um sicherzustellen, dass AIDE-bezogene Warnmeldungen an Ihre Operations-Tools weitergeleitet werden.
+
+
+.Verwandte Informationen
+https://docs.netapp.com/us-en/ontap-afx/get-started/prepare-cluster-admin.html["Bereiten Sie sich auf die Administration Ihres AFX-Speichersystems vor"^]

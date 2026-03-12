@@ -1,0 +1,50 @@
+---
+sidebar: sidebar 
+permalink: get-started/aide-components-data-users.html 
+keywords: aide, data engineer, data scientist, ai data engine console, data collections, vector database, metadata catalog, rag endpoints 
+summary: Erfahren Sie, wie Dateningenieure und Datenwissenschaftler mit AIDE Komponenten interagieren, um Daten zu entdecken, Sammlungen zu erstellen und zu kuratieren, Pipelines zu verwalten, semantische Suche durchzuführen und KI-Workflows zu integrieren. 
+---
+= Erfahren Sie, wie Dateningenieure und Datenwissenschaftler mit den AIDE-Komponenten von AI Data Engine arbeiten.
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Data Engineer oder Data Scientist nutzen Sie die AI Data Engine Console, um Arbeitsbereiche zu erkunden, zu denen Sie Zugriff erhalten haben, Datenkollektionen zu erstellen und zu verwalten, semantische Suchen durchzuführen und Retrieval-Endpunkte in AI/ML-Workflows zu integrieren.
+
+Data Engineers konzentrieren sich darauf, Rohdaten in KI-fähige Datensätze umzuwandeln, indem sie Sammlungen erstellen, Einbettungspipelines konfigurieren und steuern, welche Benutzer auf veröffentlichte Sammlungen zugreifen können. Data Scientists konzentrieren sich darauf, kuratierte Datensätze für Analysen, Modelltraining und GenAI-Anwendungen zu nutzen, ohne Zugriffskontrolle oder Infrastruktur verwalten zu müssen.
+
+
+
+== Zugriff auf Datenbenutzerkomponenten
+
+[cols="2h,2,3,3"]
+|===
+| Komponente | Zugriffsebene | Arbeitsablauf des Data Engineers | Arbeitsablauf eines Data Scientist 
+
+
+| AI Data Engine Console | Verwalten (erstellen, bearbeiten, löschen) | Die AI Data Engine Console ist Ihre primäre Schnittstelle für alltägliche Aufgaben, einschließlich Datenermittlung, Sammlungsverwaltung, Pipeline-Konfiguration und Veröffentlichung von RAG- oder Retrieval-Endpunkten für die Arbeitsbereiche, zu denen Sie berechtigt sind. | Die AI Data Engine Console ist Ihre primäre Schnittstelle für die Datenexploration, Verfeinerung und Versionierung von Sammlungen innerhalb von Arbeitsbereichen, auf die Sie zugreifen können, sowie für die Verbindung von kuratierten Datensätzen und Abrufendpunkten mit Analyse-, Modellierung- und GenAI-Workflows. 
+
+
+| ONTAP REST API | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die REST API, um Vorgänge im Lebenszyklus von Sammlungen zu automatisieren, Einbettungspipelines auszulösen und zu überwachen sowie Daten-Workflows programmatisch mit externen Tools zu integrieren. | Sie verwenden die REST API, um programmatisch auf Datensammlungen zuzugreifen, Vektorsuchabfragen auszuführen und Abrufendpunkte in AI/ML-Anwendungen und agentenbasierte Frameworks zu integrieren. 
+
+
+| Arbeitsbereiche | Ansehen/Verwenden (nur lesen) | Sie erkunden Ihre zugewiesenen Arbeitsbereiche, um verfügbare Datenquellen zu identifizieren und zu verstehen, bevor Sie Collections erstellen. | Sie durchsuchen Ihre zugewiesenen Arbeitsbereiche, um Dateien und Objekte zu finden, die für bestimmte Forschungs- oder Modellierungsaufgaben relevant sind. 
+
+
+| Datensammlungen | Verwalten (erstellen, bearbeiten, löschen) | Sie erstellen Datensammlungen, indem Sie Quelldaten mithilfe von Tags, Klassifizierung und anderen Attributen auswählen und filtern, und Sie verwalten den vollständigen Lebenszyklus der Sammlung von der Erstellung und Versionierung bis zur Veröffentlichung als RAG-Endpunkte für die KI-Nutzung. Sie verwalten außerdem, welche Data Scientists und andere Nutzer auf jede Sammlung zugreifen können. | Sie erstellen, wählen aus, annotieren, versionieren und verfeinern Datensammlungen in den Arbeitsbereichen, auf die Sie Zugriff haben. Sie verwenden diese Sammlungen als Grundlage für semantische Such- und GenAI-Workflows. 
+
+
+| Metadatenkatalog | Abfrage/Nutzung (Verbrauch für Workflows) | Sie verwenden den Metadatenkatalog, um Datenquellen für die Aufnahme zu bewerten und auszuwählen, Abfragen auszuführen, um relevante Dateien zu finden und zu bestätigen, dass sie die Anforderungen der Sammlungen erfüllen, die Sie in Ihren zugewiesenen Arbeitsbereichen erstellen. | Sie durchsuchen und filtern Metadaten in den Arbeitsbereichen, auf die Sie Zugriff haben, um Dateien und Objekte zu finden, die für die Analyse oder das Modelltraining benötigt werden, und verlassen sich dabei auf die Katalogstruktur, die von Dateningenieuren erstellt und gepflegt wurde. 
+
+
+| Vektor-Datenbank  a| 
+* Einbettungen/Suche verwalten (Data Engineer)
+* Verwenden/Suchen (Data Scientist)
+
+| Sie lösen Einbettungspipelines aus, überwachen den Vektorisierungsstatus, konfigurieren Chunking- und Einbettungsparameter und stellen Abruf-Endpunkte bereit, die auf Vektorsuche basieren. Anwendungen und Agenten fragen diese Endpunkte dann über die API für semantische Suche und RAG-Workflows ab. | Sie führen semantische Suchanfragen gegen Einbettungen durch, die von Dateningenieuren verwalteten Pipelines generiert werden, und integrieren die Abrufergebnisse in GenAI- oder RAG-Workflows für kontextbezogene Modellantworten. Sie konfigurieren weder Chunking, Einbettungen noch Pipeline-Parameter. 
+
+
+| Klassifikatoren | Verwendung (klassifizierte Daten verwenden) | Sie verwenden die Ergebnisse der Klassifizierung, um Quelldaten während der Vorbereitung der Datenerfassung zu annotieren und zu kennzeichnen und so sicherzustellen, dass die in Ihre Pipelines eingehenden Inhalte für nachgelagerte KI-Workflows ordnungsgemäß gekennzeichnet sind. | Sie verwenden vorklassifizierte Daten, um sicherzustellen, dass nur konforme und relevante Inhalte in Ihren Analysen und Ihrer Modellierung verwendet werden. 
+|===

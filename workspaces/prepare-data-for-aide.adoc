@@ -1,0 +1,58 @@
+---
+sidebar: sidebar 
+permalink: workspaces/prepare-data-for-aide.html 
+keywords: aide, workspaces, create data container, ai data engine 
+summary: Nachdem Sie einen Cluster erstellt haben, können Sie einen Datencontainer erstellen, der die Daten enthält, die Sie mit AI Data Engine verwenden möchten. 
+---
+= Daten für AI Data Engine vorbereiten
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie einen Cluster erstellt haben, richten Sie einen Datencontainer ein, der die Daten enthält, die Sie mit AI Data Engine (AIDE) verwenden möchten. Dieser Datencontainer muss ein ONTAP Volume sein, entweder ein lokales Volume oder ein Volume aus einem verbundenen ONTAP Cluster, das ONTAP 9 ausführt.
+
+Anstatt ONTAP-Clusterdaten manuell in AIDE hochzuladen, müssen Sie die Zielcluster und SVMs mit dem AIDE Cluster peeren und dann entscheiden, welche NFS-Volumes Sie mit dem AIDE-Metadatenkatalog verwenden möchten. Nachdem Sie den Datencontainer erstellt haben, können Sie einen Arbeitsbereich erstellen und den Datencontainer mit diesem Arbeitsbereich verknüpfen. Benutzer dieses Arbeitsbereichs können dann auf die mit dem Arbeitsbereich verbundenen Datensammlungen und Ressourcen für ihre AI-Workloads zugreifen und mit ihnen interagieren.
+
+.Über diese Aufgabe
+Sie müssen jede SVM, die die Daten enthält, die Sie mit AI Data Engine verwenden möchten, peeren. Das Peeren nur des Clusters ist nicht ausreichend. Dadurch wird sichergestellt, dass die AI Data Engine wie vorgesehen auf Ihre Daten zugreifen, sie integrieren und indizieren kann.
+
+Sie sollten die SVM im AIDE Cluster, die als SnapMirror Ziel fungieren wird, per Peering verbinden.
+
+Sie müssen keine SnapMirror-Beziehungen zwischen den ONTAP Clustern und dem AIDE Cluster herstellen. Diese Beziehungen werden während der Erstellung des Arbeitsbereichs automatisch erstellt.
+
+.Bevor Sie beginnen
+* Sie benötigen _Storage-Administrator_-Rechte, um Cluster und SVMs zu verbinden und Datencontainer auszuwählen.
+* Sie haben die ONTAP Cluster und SVMs identifiziert, die die Daten enthalten, die Sie mit AI Data Engine verwenden möchten.
+* Sie haben bestätigt, dass die Datenquellen-Volumes die folgenden Anforderungen erfüllen:
++
+** Volumes sind online und zugänglich.
+** Das NFS-Protokoll ist aktiviert. Nur NFS-aktivierte Volumes werden als Datencontainer für AI Data Engine unterstützt. SMB- und CIFS-Volumes werden nicht unterstützt.
+** Volumen sind keine FlexCache Volumen.
+** Datenquellen sind Lese-/Schreibvolumes. Datenschutzvolumes werden nicht unterstützt.
+
+
+
+
+.Schritte
+. https://docs.netapp.com/us-en/ontap-afx/protect-data/create-peer-relationship.html["Verbinden Sie jeden ONTAP Cluster und jede SVM als Peers"^] die Daten enthält, die Sie mit AI Data Engine verwenden möchten.
+. link:../install-setup/cluster-setup-afx.html["Wählen Sie die Volumes aus, die Sie mit AI Data Engine verwenden möchten"].
++
+Notieren Sie für jeden Volume die folgenden Informationen:
+
++
+** Volumenname
+** UUID
+** SVM-Name und UUID
+** Cluster name und UUID
+
+
+
+
+.Was kommt als Nächstes?
+link:create-workspace.html["Einen Arbeitsbereich erstellen"] und ordnen Sie die von Ihnen erstellten Datencontainer einem Arbeitsbereich zu.
+
+.Verwandte Informationen
+* https://docs.netapp.com/us-en/ontap-afx/manage-data/prepare-manage-data.html#data-migration-options["Optionen für die Datenmigration"^]
+

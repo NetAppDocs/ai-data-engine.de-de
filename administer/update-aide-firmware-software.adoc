@@ -1,0 +1,47 @@
+---
+sidebar: sidebar 
+permalink: administer/update-aide-firmware-software.html 
+keywords: update, firmware, system files, automatic updates, automated updates, aide, disable, 
+summary: Aktualisieren Sie die DCN-Firmware und die AI Data Engine Console Software mithilfe der automatischen Aktualisierungsfunktion des ONTAP System Manager oder führen Sie die Aktualisierungen manuell durch. 
+---
+= Aktualisieren Sie die AI Data Engine software
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Speicheradministrator können Sie AI Data Engine (AIDE) Software, Data Compute Node (DCN) Firmware und andere Systemdateien auf Ihrem AIDE-System mit ONTAP System Manager aktualisieren.
+
+AIDE unterstützt die automatische Software-Update-Funktionalität von ONTAP nicht. Sie können sich für Benachrichtigungen von link:https://mysupport.netapp.com/site/downloads["NetApp Support Site Downloads"^] anmelden, aber alle Updates der AIDE software werden manuell vom Administrator durchgeführt.
+
+.Über diese Aufgabe
+Das kombinierte AI Data Engine software package ist deutlich größer als ein typisches ONTAP update package (AIDE package ist ungefähr 40GB). Planen Sie längere Upload- und Installationszeiten ein, wenn Sie die AIDE software aktualisieren.
+
+.Bevor Sie beginnen
+* Sie benötigen _Storage Administrator_-Berechtigungen, um die DCN-Firmware und die AI Data Engine software zu aktualisieren.
+* Sie benötigen Ihre NetApp Support Site-Zugangsdaten für Ihr aktives Konto.
+* link:upgrades-aide-summary.html#compatibility-matrix["Stellen Sie die Kompatibilität zwischen ONTAP, DCN-Firmware und AI Data Engine software sicher, wenn Sie Updates planen."].
+
+
+
+IMPORTANT: Die Rückgängigmachungsfunktion wird für DCN Firmware- oder AI Data Engine software-Updates nicht unterstützt. Nach der Installation eines Updates können Sie nicht zu einer vorherigen Version zurückkehren.
+
+.Schritte
+. https://mysupport.netapp.com/site/products/all/details/aide/downloads-tab["Laden Sie die kombinierte DCN Firmware- und AIDE software-Update-Datei auf einen lokalen Client herunter"^].
+. Im System Manager wählen Sie *Cluster > Settings > Software updates*.
+. Neben *Software updates* wählen Sie image:icon_arrow.gif["blauer Pfeil, der nach rechts zeigt"].
+. Unter AI Data Engine-Updates wählen Sie *Add AI Data Engine software files* aus und wählen Sie das Update-Paket aus.
+. Nach Abschluss des Paket-Uploads wählen Sie *Update*, um mit der Installation der Updates auf den DCN-Knoten zu beginnen.
++
+
+NOTE: AIDE Console ist nicht verfügbar oder zugänglich, wenn die DCN-Knotenaktualisierung läuft.
+
+
+
+.Ergebnis
+Die DCNs werden mit AI Data Engine software aktualisiert und die aktualisierte Version wird für jeden Knoten angezeigt.
+
+.Verwandte Informationen
+* https://docs.netapp.com/us-en/ontap-afx/administer/upgrade-ontap.html["ONTAP-Software für AFX-Systeme aktualisieren"^]
+

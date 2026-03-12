@@ -1,0 +1,60 @@
+---
+sidebar: sidebar 
+permalink: install-setup/power-on-hardware.html 
+keywords: aide, ai, data engine, ai data engine dcn, data compute node, afx, afx 1k, power on, 
+summary: Schalten Sie jedes Shelf ein, um eine eindeutige Shelf-ID zuzuweisen, schalten Sie die AFX Controller-Nodes ein und sichern Sie die Stromkabel. 
+---
+= Schalten Sie Ihre Datenrechenknoten für AI Data Engine ein
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie die Rack-Hardware installiert und Ihre Datenrechenknoten verkabelt haben, sollten Sie Ihre DCNs und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, falls diese noch nicht eingeschaltet sind.
+
+.Bevor Sie beginnen
+* Stellen Sie sicher, dass Ihre Regale eingeschaltet sind und jedem eine eindeutige Regal-ID zugewiesen wurde. Informationen zur Zuweisung von Regal-IDs für das AFX-Lagersystem finden Sie in der link:https://docs.netapp.com/us-en/ontap-afx/install-setup/power-on-hardware.html#step-1-power-on-the-shelf-and-assign-shelf-id["Weisen Sie eindeutige Shelf-IDs zu"^].
+
+
+.Schritte
+Nachdem Sie Ihre Storage Shelves eingeschaltet und die eindeutigen IDs zugewiesen haben, schalten Sie Ihre DCNs und die Storage Controller Nodes ein, falls diese noch nicht eingeschaltet sind.
+
+. Schließen Sie Ihren Laptop an den seriellen Konsolenanschluss an. Dadurch können Sie die Bootsequenz überwachen, wenn die Controller eingeschaltet werden.
++
+.. Stellen Sie den seriellen Konsolenanschluss am Laptop auf 115.200 Baud mit N-8-1 ein.
++
+Siehe die Online-Hilfe Ihres Laptops für Anweisungen zur Konfiguration des seriellen Konsolenanschlusses.
+
+.. Verbinden Sie das Konsolenkabel mit dem Laptop, und verbinden Sie den seriellen Konsolenanschluss am Controller mit dem Konsolenkabel, das mit Ihrem Storage-System geliefert wurde.
+.. Verbinden Sie den Laptop mit dem Switch im Management-Subnetz.
++
+image::../media/drw_afx_1k_console_connection_ieops-2708.svg[Konsolenverbindungen]
+
+
+
+
+
+. Weisen Sie dem Laptop eine TCP/IP-Adresse zu, wobei Sie eine verwenden, die sich im Management-Subnetz befindet.
+. Stecken Sie die Netzkabel in die Netzteile der Controller und verbinden Sie sie dann mit Stromquellen an verschiedenen Stromkreisen.
++
+image::../media/drw_affa1k_power_source_icon_ieops-1700.svg[Ein Stromanschlussdiagramm]
+
++
+** Das System beginnt zu starten. Der erste Startvorgang kann bis zu acht Minuten dauern.
+** Die LEDs blinken auf und die Lüfter starten, was darauf hinweist, dass die Controller eingeschaltet werden.
+** Die Lüfter können beim Start laut sein, was normal ist.
+
+
+
+
+. Stecken Sie die Netzkabel in die Netzteile der Daten-Compute-Nodes und verbinden Sie sie dann mit Stromquellen an verschiedenen Stromkreisen.
+. Sichern Sie die Netzkabel mit der Sicherungsvorrichtung an jedem Netzteil.
+. Schalten Sie die Datenrechenknoten ein.
++
+Um an den Netzschalter zu gelangen, müssen Sie möglicherweise die Blende entfernen; denken Sie in diesem Fall daran, sie anschließend wieder anzubringen.
+
+
+
+.Was kommt als Nächstes?
+Nachdem Sie Ihre Datenrechenknoten eingeschaltet haben, link:../install-setup/cluster-setup-afx.html["ONTAP AIDE Cluster einrichten"].

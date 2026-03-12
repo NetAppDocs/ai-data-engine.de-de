@@ -1,0 +1,24 @@
+---
+section: administer
+title: Verwalten und überwachen
+entries:
+- title: Clusterprozesse überwachen
+  entries:
+  - title: Dashboard- und Clusterstatus anzeigen
+    url: "/administer/view-dashboard.html"
+  - title: Einblicke ansehen
+    url: "/administer/view-insights.html"
+  - title: Ereignisse, Aufträge und Revisionsprotokoll anzeigen
+    url: "/administer/view-events-log.html"
+- title: Arbeitsbereiche verwalten
+  url: "/administer/manage-workspace.html"
+- title: Aktualisieren und warten Sie Ihr AIDE-System
+  entries:
+  - title: AIDE-Systemaktualisierungen und Kompatibilität
+    url: "/administer/upgrades-aide-summary.html"
+  - title: AIDE-Software aktualisieren
+    url: "/administer/update-aide-firmware-software.html"
+  - title: Fügen Sie Ihrem AIDE-Cluster Knoten hinzu
+    url: "/administer/dcn-add-node.html"
+  - title: Ersetzen Sie einen AIDE-Knoten
+    url: "/administer/aide-node-replace.html"

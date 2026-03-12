@@ -1,0 +1,120 @@
+---
+sidebar: sidebar 
+permalink: vectorization/view-data-collections.html 
+keywords: aide, data collections, monitor collections, vector database, ai data engine, data engineer, data scientist, activity 
+summary: Verwenden Sie die AI Data Engine Tools, um Datensammlungen anzuzeigen, Indizierungs- und Veröffentlichungsvorgänge zu verfolgen und den Vektor-Fußabdruck in verschiedenen Arbeitsbereichen zu verstehen. 
+---
+= Datensammlungen in AI Data Engine anzeigen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Dateningenieure oder Datenwissenschaftler Datensammlungen aus Arbeitsbereichen erstellt und veröffentlicht haben, benötigen Sie Einblick in deren Status, Größe und Auswirkungen auf den AI Data Engine cluster.
+
+Wenn Sie Speicheradministrator, Dateningenieur oder Datenwissenschaftler sind, können Sie Datensammlungen in ONTAP System Manager und AIDE Console anzeigen.
+
+.Bevor Sie beginnen
+* Sie benötigen entweder _storage administrator_ Berechtigungen im ONTAP System Manager oder _data engineer_ oder _data scientist_ Berechtigungen in der AI Data Engine Console (`\https://<cluster_management_ip>/console`), um Datensammlungen anzuzeigen.
+* Mindestens ein Arbeitsbereich existiert mit erfolgreich extrahierten Metadaten.
+* Dateningenieure oder Datenwissenschaftler haben mindestens eine Datensammlung aus der AI Data Engine Console erstellt und veröffentlicht.
+* Die AI Data Engine software-Lizenz ist installiert und die Inferenzfunktionen sind aktiviert, sodass Vektorisierungs- und Abrufendpunkte aktiv sind.
+
+
+
+
+== Clusterweite Datensammlungen anzeigen
+
+Für Speicheradministratoren bietet ONTAP System Manager eine clusterweite Übersicht über Datensammlungen und deren Speicherbedarf, erlaubt es Administratoren jedoch nicht, diese zu erstellen oder zu ändern.
+
+.Schritte
+. Navigieren Sie im System Manager zu *Data Engine > Data collections*.
+. Überprüfen Sie die Bestandsübersicht oben auf der Seite:
++
+** Gesamtzahl der Datenerhebungen nach Status
+** Gesamtspeicherplatz, der von der Vektor-Datenbank über alle Sammlungen hinweg belegt wird
+** Vektorraum als Prozentsatz der Gesamtkapazität des Clusters
+
+
+. Wählen Sie eine einzelne Datenerfassung und Überprüfung aus:
++
+** Sammlungsname und Beschreibung
+** UUID
+** Zugehöriger Arbeitsbereich
+** Status
+** Sammlungsgröße
+** Schöpfer
+** Letzte Aktualisierungszeit
+
+
+
+
+.Ergebnis
+Sie haben nun einen Überblick über alle Datensammlungen im Cluster und deren Speicherbedarf. Nutzen Sie diese Ansicht, um Sammlungen zu identifizieren, die groß, veraltet oder in einem nicht bereiten Zustand sind.
+
+Sie können außerdem sehen, ob eine einzelne Datensammlung aktiv aktualisiert wird und ob Ausfälle die Nutzung von RAG blockieren.
+
+
+
+== Überwachen Sie sammlungsbezogene Jobs und Ereignisse
+
+Als Speicheradministrator können Sie Jobs, die Sammlungen erstellen und aktualisieren, von der clusterweiten *Aktivitäts*-Seite und von den Arbeitsbereichsdetails aus überwachen.
+
+.Schritte
+. Navigieren Sie im System Manager zu *Data Engine > Activity*.
+. Auf der Registerkarte *Events*:
++
+.. Filtern nach Typ (zum Beispiel Arbeitsbereich, Datenerfassung) oder Schweregrad.
+.. Erweitern Sie jedes Ereignis im Zusammenhang mit Datensammlungen (zum Beispiel „Data collection publish failed“), um weitere Details anzuzeigen.
+
+
+. Auf der Registerkarte *Jobs*:
++
+.. Filter, um sich auf Datenerfassungs-, Indizierungs- und Veröffentlichungsaufgaben zu konzentrieren.
+.. Öffnen Sie für jeden Job die Peek-Ansicht, um Folgendes zu sehen:
++
+*** Prozentsatz des Fortschritts.
+*** Start- und Endzeiten.
+*** Alle gemeldeten Fehlermeldungen oder Warnungen.
+
+
+
+
+. Optional können Sie zum betroffenen Arbeitsbereich zurückkehren (*Data Engine > Workspaces*) und dessen Registerkarte *Aktivität* öffnen, um Ereignisse und Aufträge anzuzeigen, die nur für diesen Arbeitsbereich gelten.
+
+
+.Ergebnis
+Sie können den Lebenszyklus von Datensammlungen verfolgen, ins Stocken geratene oder fehlgeschlagene Jobs identifizieren und Kontextinformationen sammeln, um sie an Dateningenieure, Datenwissenschaftler oder den Support weiterzugeben.
+
+
+TIP: Wenn eine Datenerfassung sich über einen längeren Zeitraum im  `Publishing` Status befindet, prüfen Sie auf der Seite „Aktivität“, ob ein entsprechender langlaufender Auftrag vorliegt, bevor Sie von einem Fehler ausgehen.
+
+
+
+== Datensammlungen aus AIDE Console anzeigen
+
+Dateningenieure und Datenwissenschaftler überwachen Datensammlungen typischerweise direkt von der AIDE Console, wo sie erstellt und veröffentlicht werden.
+
+.Schritte
+. Melden Sie sich bei der AI Data Engine Console als Data Engineer oder Data Scientist an.
+. Navigieren Sie zu *Data Collections* und wählen Sie die gewünschte Datensammlung aus.
+. Für jede Kollektion:
++
+.. Überprüfen Sie den Status (`Draft`, `Publishing`, `Ready`, oder `Failed`).
+.. Wählen Sie den Namen der Datensammlung aus, um die Definitionsdetails (Filter, eingeschlossene Dateitypen, Klassifikatoroptionen, Einbettungseinstellungen) anzuzeigen.
+.. Prüfen Sie die Zeitstempel für die letzte Veröffentlichung oder Aktualisierung.
+
+
+. Öffnen Sie bei Bedarf die Jobdetails oder Protokolle (sofern verfügbar), um Fehler oder unvollständige Ausführungen zu verstehen.
+
+
+.Ergebnis
+Dateningenieure und Datenwissenschaftler können Sammlungsdefinitionen iterativ bearbeiten und erneut veröffentlichen, während sie Status und Zustand überwachen, ohne Speicheradministratoren einbeziehen zu müssen.
+
+
+
+== Was kommt als Nächstes?
+
+* link:create-data-collections.html["Erstellen Sie Datensammlungen für RAG in AIDE Console"]
+

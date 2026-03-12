@@ -1,0 +1,54 @@
+---
+sidebar: sidebar 
+permalink: vectorization/zero-to-rag.html 
+keywords: ai, data engine, aide, quick start, rag, retrieval augmented generation, data collection, workspace, data scientist, data engineer, storage admin 
+summary: 'Gehen Sie von einem neu bereitgestellten AI Data Engine (AIDE) System zu einem funktionierenden Retrieval-Augmented Generation (RAG) Endpunkt unter Verwendung von Arbeitsbereichen, Datensammlungen und Schutzmechanismen.' 
+searchtitle: Data-to-RAG-Schnellstart für AI Data Engine 
+---
+= Data-to-RAG-Schnellstart für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Gehen Sie mit diesem Workflow von einem neu bereitgestellten AI Data Engine (AIDE) System zu einem funktionsfähigen Retrieval-Augmented Generation (RAG) Endpunkt. Verstehen Sie, wie Speicheradministratoren, Dateningenieure und Data Scientists mithilfe von ONTAP System Manager und AIDE Console zusammenarbeiten.
+
+.Bevor Sie beginnen
+* Sie haben Data compute nodes (DCNs) zum ONTAP Cluster installiert und hinzugefügt.
+* Sie haben die AI Data Engine software für Vektorisierung und Leitplanken installiert und lizenziert.
+* Sie haben link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] konfiguriert und Rollen für Administratoren, Dateningenieure und Datenwissenschaftler zugeordnet.
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"] Datenumfang und Governance definieren
+[role="quick-margin-list"]
+Als Speicheradministrator oder Sicherheitsadministrator möchten Sie die Umgebung in AIDE Console und ONTAP System Manager vorbereiten:
+
+* link:../workspaces/create-workspace.html["Erstellen Sie einen oder mehrere Arbeitsbereiche"] from lokalen und entfernten Datenquellen.
+* link:../guardrails/define-data-policies.html["Klassifikatoren und Guardrail-Richtlinien konfigurieren"] in der AIDE Console.
+* link:../workspaces/assign-users-to-workspace.html["Weisen Sie Dateningenieuren und Datenwissenschaftlern Zugriff auf die Workspaces zu"].
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"]Arbeitsbereichsmetadaten erkunden
+[role="quick-margin-list"]
+Als Data Engineer oder Data Scientist möchten Sie die Metadaten des Arbeitsbereichs mithilfe der AIDE Console untersuchen:
+
+* link:explore-workspace-metadata.html["Arbeitsbereichsmetadaten erkunden"] um die verfügbaren Inhalte zu verstehen.
+* Definieren Sie eine oder mehrere logische Teilmengen von Daten, die RAG speisen sollen (zum Beispiel Supportartikel, Produkthandbücher oder anonymisierte klinische Notizen).
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"] Erstellen und Veröffentlichen einer Datensammlung
+[role="quick-margin-list"]
+Als Data Engineer oder Data Scientist möchten Sie die ausgewählte Teilmenge in eine RAG-ready Sammlung umwandeln:
+
+* link:create-data-collections.html["Erstellen einer Datensammlung"] aus dem Arbeitsbereich unter Verwendung ausgewählter Filter.
+* link:create-data-collections.html#publish-a-data-collection["Veröffentlichen Sie die Datensammlung"] und überwachen Sie die Indizierung, bis sie den  `Ready` Zustand erreicht.
+* Kopieren Sie die Retrieval-Endpunkt-URI für die ausgewählte Collection und stellen Sie sie den Data Scientists oder Anwendungsentwicklern zur Verfügung.
+* link:view-data-collections.html["Status der Datenerfassung und Vektor-Fußabdruck anzeigen"] nach Bedarf.
+
+
+.Was kommt als Nächstes?
+* link:../guardrails/define-data-policies.html["Definieren Sie Ihren Datenbestand und Ihre Schutzrichtlinien in AI Data Engine"]
+* link:explore-workspace-metadata.html["Erkunden Sie Arbeitsbereichs-Metadaten in der AI Data Engine Console"]
+* link:create-data-collections.html["Erstellen Sie Datensammlungen in AI Data Engine Console"]
+

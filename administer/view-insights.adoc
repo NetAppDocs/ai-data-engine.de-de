@@ -1,0 +1,25 @@
+---
+sidebar: sidebar 
+permalink: administer/view-insights.html 
+keywords: aide, aide system, insights, view insights 
+summary: Mit der Insights-Funktion des ONTAP System Managers können Sie empfohlene Konfigurationsaktualisierungen anzeigen, die den NetApp Best Practices entsprechen. Diese Änderungen können die Sicherheit und Leistung sowie andere Bereiche Ihres AIDE Clusters optimieren. 
+---
+= Insights anzeigen, um Ihr AIDE System zu optimieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Speicheradministrator können Sie die Funktion „Insights“ des ONTAP System Managers nutzen, um empfohlene Konfigurationsaktualisierungen anzuzeigen, die den NetApp Best Practices entsprechen. Diese Änderungen können die Sicherheit und Leistung Ihres AIDE Clusters optimieren.
+
+.Über diese Aufgabe
+Die einzelnen Erkenntnisse werden als separate Kachel oder Karte auf der Seite dargestellt, die Sie umsetzen oder verwerfen können. Sie können außerdem den zugehörigen Dokumentationslink auswählen, um mehr über eine bestimmte Technologie zu erfahren.
+
+.Schritte
+. Im System Manager wählen Sie *Analysis* und dann *Insights*.
+. Prüfen Sie die verfügbaren Empfehlungen.
+
+
+.Was kommt als Nächstes
+Führen Sie eine der empfohlenen Maßnahmen durch, um bewährte Konfigurationspraktiken umzusetzen.

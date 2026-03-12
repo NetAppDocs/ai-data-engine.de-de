@@ -1,0 +1,62 @@
+---
+sidebar: sidebar 
+permalink: vectorization/explore-workspace-metadata.html 
+keywords: aide, explore metadata, workspace, metadata catalog, ai data engine, data engineer, data scientist, search 
+summary: Als Data Engineer oder Data Scientist verwenden Sie AI Data Engine Console, um Workspace-Metadaten zu erkunden, relevante Dateien und Objekte zu entdecken und Kandidaten-Teilmengen für Datensammlungen vorzubereiten. 
+---
+= Erkunden Sie Arbeitsbereichs-Metadaten in der AI Data Engine Console
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als Data Engineer oder Data Scientist besteht Ihre erste Aufgabe in AI Data Engine (AIDE) darin, zu verstehen, welche Daten in Ihren Arbeitsbereichen verfügbar sind. Sie verwenden die AI Data Engine Console, um den Metadatenkatalog abzufragen, nach relevanten Dateien zu suchen und Datenteilmengen zu identifizieren, die Sie in Datensammlungen umwandeln.
+
+.Bevor Sie beginnen
+* Sie benötigen _data engineer_ oder _data scientist_ Berechtigungen in AI Data Engine Console und Zugriff auf mindestens einen Workspace.
+* Ein Speicheradministrator hat:
++
+** Ein oder mehrere Arbeitsbereiche im ONTAP System Manager wurden erstellt.
+** Ihrem Benutzer oder Ihrer Gruppe wurde Zugriff auf die relevanten Arbeitsbereiche zugewiesen.
+
+
+* Die Metadatenextraktion für den Arbeitsbereich ist abgeschlossen und der Arbeitsbereich befindet sich im  `Ready` Zustand.
+* Klassifikatoren sind aktiviert, sodass Metadaten Klassifizierungs-Tags (zum Beispiel PII-Indikatoren) enthalten.
+
+
+
+
+== Sign in to AIDE Console als Dateningenieur oder Datenwissenschaftler
+
+.Schritte
+. Öffnen Sie im Browser die AIDE Console URL:
++
+`\https://<cluster_management_ip>/console`
+
+. Authentifizieren Sie sich über den OIDC-Anbieter Ihrer Organisation.
+. Prüfen Sie, ob Ihre Rolle als Data Engineer oder Data Scientist erkannt wird (z. B. anhand des verfügbaren Arbeitsbereichs und der Datenerfassungsaktionen). Weitere Informationen finden Sie unter link:../get-started/aide-components-data-users.html["AIDE Rollendokumentation"] , um zu erfahren, wie Data Engineers und Data Scientists mit AIDE Komponenten arbeiten.
+
+
+.Ergebnis
+Sie sind in der AI Data Engine Console angemeldet und sehen nur die Arbeitsbereiche, für die Ihnen Zugriff gewährt wurde.
+
+
+
+== Ihre zugänglichen Arbeitsbereiche anzeigen
+
+.Schritte
+. Navigieren Sie in der AIDE Console zu *Data Curator > Workspaces*.
+. Überprüfen Sie die Liste der Arbeitsbereiche, auf die Sie zugreifen können.
+. Wählen Sie einen Arbeitsbereich aus, um dessen Details anzuzeigen.
+
+
+.Ergebnis
+Sie haben nun eine auf den Arbeitsbereich beschränkte Ansicht des Datenbestands, den die Speicheradministratoren für Ihre Projekte zur Verfügung gestellt haben.
+
+
+
+== Was kommt als Nächstes?
+
+* link:create-data-collections.html["Erstellen Sie Datensammlungen für RAG aus einem Workspace"]
+

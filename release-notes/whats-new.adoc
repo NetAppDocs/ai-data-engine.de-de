@@ -1,0 +1,88 @@
+---
+permalink: release-notes/whats-new.html 
+sidebar: sidebar 
+keywords: release notes, new features, AI Data Engine, AIDE, metadata engine, ONTAP 9.18.1 
+summary: 'Erfahren Sie mehr über die neuen Funktionen der AI Data Engine (AIDE).' 
+---
+= Was ist neu in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine (AIDE) 9.18.1 ist die erste Version der NetApp-Plattform für AI Data Engine Datenmanagement. Diese Version führt eine Metadata Engine und Management-Workflows ein, mit denen Organisationen unstrukturierte Daten für AI-Workloads katalogisieren und organisieren können und so die Grundlage für erweiterte Governance- und Vektorisierungsfunktionen schaffen. Erweiterte Governance (Guardrails) und Vektorisierung stehen Kunden mit den entsprechenden AI Data Engine Lizenzen zur Verfügung.
+
+
+
+== Was ist neu in der ersten Version von AIDE 9.18.1
+
+AIDE 9.18.1 führt die folgenden grundlegenden Funktionen ein:
+
+.link:../get-started/aide-architecture.html#metadata-engine["Metadata Engine für die KI-Katalogisierung"]
+Die erste Version beinhaltet eine Metadata Engine, die Dateien und Objekte über ONTAP Cluster hinweg katalogisiert.
+
+Zu den wichtigsten Merkmalen gehören:
+
+* Automatisierte Extraktion von Metadaten (Kern- und erweiterten Attributen, Objekt-Tags) aus lokalen und entfernten ONTAP Volumes auf Peered-Clustern.
+* Zentralisierte Abfrage- und Filter-REST-APIs für Anwendungen, die einen globalen Überblick über Unternehmensdaten benötigen.
+* Skalierbarer Metadatenspeicher.
+* Automatische Metadatenextraktion, die während der Workspace-Erstellung ausgelöst wird.
+
+
+.link:../workspaces/create-workspace.html["Arbeitsbereichsverwaltung"]
+Arbeitsbereiche ermöglichen die logische Gruppierung von Datenquellen (Volumes) für AI-Projekte.
+
+Die erste Version unterstützt Folgendes:
+
+* Erstellung von Arbeitsbereichen, die sich über lokale und entfernte ONTAP Volumes erstrecken (mithilfe von Cluster Peering).
+* Zuordnung von Zugriffskontrollen zu Arbeitsbereichen, Unterstützung von Mehrbenutzer- und mandantenfähigen Umgebungen.
+* Automatische Metadatenextraktion und Katalogbefüllung bei der Erstellung des Workspace.
+
+
+.link:../get-started/aide-architecture.html#data-sync["Data Sync für automatisierte Datenaktualität"]
+Data Sync hält Metadatenkataloge und Datensammlungen aktuell, wenn sich Quelldaten ändern, ohne manuelle Eingriffe.
+
+Zu den wichtigsten Merkmalen gehören:
+
+* Automatisierte Synchronisierung von Daten aus entfernten oder lokalen ONTAP Clustern mittels richtliniengesteuerter SnapMirror-Replikation.
+* Inkrementelle Aktualisierungen, die nur geänderte Daten weitergeben und den Aufwand reduzieren.
+* Konfigurierbare Aktualisierungsintervalle pro Arbeitsbereich.
+* Überwachung des Synchronisierungsstatus und der Aktivität auf Workspace-Ebene.
+
+
+.link:../install-setup/cluster-setup-afx.html["Cluster-Einrichtung und -Verwaltung"]
+Die erste Version umfasst die folgenden Arbeitsabläufe:
+
+* Erkennung und Hinzufügung von Data Compute Nodes (DCNs) während der Cluster-Einrichtung.
+* Erstellung dedizierter Metadatenspeicher-VMs für die Metadata Engine.
+* Konfiguration der Data Engine Service-Schnittstellen für den clusterweiten Metadatenzugriff.
+* Peering mit anderen ONTAP Clustern, um die Katalogisierung von Metadaten über den gesamten Datenbestand hinweg zu erweitern.
+
+
+.link:../install-setup/configure-oidc.html["OpenID Connect (OIDC) Authentifizierung"]
+* OIDC/OAuth-basierte Authentifizierung für sicheren Zugriff auf ONTAP System Manager und Data Engine Console mit Microsoft Entra ID und Active Directory Federation Services (ADFS).
+* Rollenbasierte Zugriffskontrollen für Arbeitsbereichs- und Metadatenverwaltung.
+
+
+.link:../vectorization/zero-to-rag.html["Erweiterte Datenkuratierungs- und Governance-Funktionen"]
+Folgende Funktionen stehen Kunden mit den entsprechenden AI Data Engine Lizenzen zur Verfügung:
+
+* *Vektorisierung und RAG*: Erstellung von Datensammlungen, Einbettungen und Abrufendpunkten in der AI Data Engine Console unter Verwendung von Metadaten aus AIDE Workspaces.
+* *Leitplankenbasierte Governance*: Definition von Leitplankenrichtlinien in der AI Data Engine Console und Zuordnung dieser Richtlinien zu Arbeitsbereichen im ONTAP System Manager.
+
+
+
+
+=== Unterstützte Hardware und Plattformen
+
+AI Data Engine 9.18.1 läuft auf ONTAP AI Datenplattform-Clustern, die Folgendes kombinieren:
+
+* AFX 1K Speicherknoten
+* NetApp Datenverarbeitungsknoten
+
+
+.Verwandte Informationen
+* link:known-limitations.html["Bekannte Einschränkungen der AI Data Engine"]
+* link:../get-started/learn-about.html["Erfahren Sie mehr über die Architektur und Komponenten der AI Data Engine"]
+

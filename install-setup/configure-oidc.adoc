@@ -1,0 +1,115 @@
+---
+permalink: install-setup/configure-oidc.html 
+sidebar: sidebar 
+keywords: openid connect, oidc, oauth 2.0, authentication, aide, system manager, entra id, adfs 
+summary: 'Als ONTAP-Clusteradministrator können Sie mit ONTAP System Manager die OpenID Connect (OIDC) Authentifizierung für einen AI Data Engine (AIDE) Cluster konfigurieren. Dies bietet eine sichere und zentrale Anmeldung über einen externen Identitätsanbieter (IdP).' 
+---
+= OpenID Connect für AIDE in ONTAP konfigurieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als ONTAP-Clusteradministrator können Sie mit ONTAP System Manager die OpenID Connect (OIDC) Authentifizierung für einen AI Data Engine (AIDE) Cluster konfigurieren. Dies bietet eine sichere und zentrale Anmeldung über einen externen Identitätsanbieter (IdP).
+
+
+CAUTION: Sie müssen OIDC konfigurieren, um auf die AI Data Engine Console zuzugreifen. Wenn OIDC konfiguriert ist, erfolgt die gesamte Authentifizierung über OIDC. Wenn OIDC nicht konfiguriert ist, steht die Konsole Administratoren sowie Data Engineers und Data Scientists nicht zur Verfügung. In diesem Fall wird die Anmeldung am System Manager auf die lokale Authentifizierung zurückgesetzt.
+
+Beachten Sie außerdem Folgendes zur OIDC-Konfiguration für AIDE-Zugriff:
+
+* Sie können eine bestehende OIDC-Konfiguration nicht ändern. Wenn Sie eine Änderung vornehmen müssen, löschen Sie zuerst die Konfiguration und erstellen Sie eine neue mit den gewünschten Einstellungen.
+* Wenn Sie OIDC deaktivieren oder entfernen, wird System Manager auf die lokale ONTAP Benutzerauthentifizierung zurückgesetzt.
+
+
+
+
+== OIDC-Übersicht
+
+OpenID Connect (OIDC) ist ein Authentifizierungsprotokoll, das auf dem OAuth 2.0-Framework basiert. Es erweitert OAuth 2.0, das primär für die Autorisierung verwendet wird, um eine Identitätsschicht. OIDC führt das Konzept eines ID-Tokens ein, eines JSON Web Tokens (JWT), das Angaben über das Authentifizierungsereignis und die Identität des Benutzers enthält.
+
+Sie müssen einen externen Identitätsanbieter (IdP) auswählen und konfigurieren, der von AFX mit AIDE unterstützt wird. Der IdP authentifiziert Benutzer und stellt Token aus, die AFX über System Manager verwenden kann, um Zugriff auf die AIDE Console zu gewähren.
+
+
+
+== Konfigurieren Sie Identitätsanbieter von Drittanbietern
+
+Um sich mit OIDC zu authentifizieren, müssen Sie zunächst einen externen IdP konfigurieren. Die ONTAP-Implementierung von OIDC verwendet Rollenansprüche in den Token, um RBAC durchzusetzen. Stellen Sie bei der Einrichtung eines IdP sicher, dass dieser so konfiguriert ist, dass er Rollenansprüche im id token und access token zurückgibt. ONTAP unterstützt zwei IdPs für OIDC-Authentifizierung: Entra ID und Active Directory Federation Services (AD FS).
+
+
+
+=== Entra ID
+
+Sie können Entra ID mit den folgenden Schritten auf hoher Ebene konfigurieren:
+
+. Erstellen Sie eine neue App Registration auf der Entra ID-Konfigurationsseite.
+. Setzen Sie den Wert für Redirect URI (Web) auf  `\https://$CLUSTER_MGMT_IP/oidc/callback`, wobei Sie die entsprechende Cluster-Management-IP-Adresse oder den FQDN einsetzen.
+. Erstellen Sie die erforderlichen Rollen unter App Roles und weisen Sie diese Ihren Benutzern zu.
+. Aktualisieren Sie die Token-Ansprüche unter Token Configuration, um Rollen in id-token und access-token zurückzugeben.
+
+
+Siehe  https://learn.microsoft.com/en-us/power-pages/security/authentication/openid-settings["Richten Sie einen OpenID Connect-Anbieter mit Entra ID ein"^] für weitere Informationen.
+
+
+
+=== Active Directory Federation Services
+
+Sie können AD FS mit den folgenden Schritten auf hoher Ebene konfigurieren:
+
+. Erstellen Sie eine neue Anwendungsgruppe und wählen Sie *Server application accessing a web API* aus.
+. Setzen Sie den Wert für Redirect URI (Web) auf  `\https://$CLUSTER_MGMT_IP/oidc/callback`, wobei Sie die entsprechende Cluster-Management-IP-Adresse oder den FQDN einsetzen.
+. Konfigurieren Sie Claims so, dass Rollen in Tokens zurückgegeben werden.
+
+
+Siehe  https://learn.microsoft.com/en-us/azure/active-directory-b2c/identity-provider-adfs?pivots=b2c-user-flow["AD FS als OpenID Connect-Identitätsanbieter hinzufügen"^] für weitere Informationen.
+
+
+
+== OIDC in System Manager konfigurieren
+
+Nach der Konfiguration Ihres IdP können Sie die OIDC-Authentifizierung im System Manager einrichten, um einen sicheren Zugriff auf die AIDE Console zu ermöglichen.
+
+.Bevor Sie beginnen
+* Sie benötigen Administratorzugriff auf System Manager.
+* Ihr OIDC-Identitätsanbieter muss konfiguriert und erreichbar sein.
+
+
+.Schritte
+. Im System Manager wählen Sie *Cluster* und dann *Einstellungen* aus; suchen Sie die OpenID Connect card.
+. Wenn OIDC bereits konfiguriert ist, können Sie die Konfiguration bearbeiten oder deaktivieren. Wenn OIDC nicht konfiguriert ist, wählen Sie image:icon_gear_white_bg.png["Zahnradsymbol"] aus, um den Einrichtungsprozess zu starten.
+. Geben Sie unter „OpenID Connect konfigurieren“ Werte für die folgenden Felder an:
++
+** Anbieter
+** Emittent
+** JSON Web Key Set URI
+** Autorisierungsendpunkt
+** Token-Endpunkt
+** Endpunkt zum Beenden der Sitzung
+** Access Token Issuer (optional)
+
+
+. Geben Sie unter Client configuration Werte für die folgenden Felder an:
++
+** Client-ID
+** Remote-Benutzeranspruch
+** Aktualisierungsintervall
+
+
+. Geben Sie unter Connection details Werte für die folgenden Felder an:
++
+** Cluster-IP-Adresse oder FQDN
+** Ausgehender Proxy (optional)
+
+
+. Unter „Externe Rollenzuordnung“ wählen Sie eine vorhandene Rollenzuordnung aus oder definieren eine neue Rolle für den ONTAP `admin` Benutzer.
+. Wählen Sie *Jetzt aktivieren* und dann *Speichern*. System Manager wird aktualisiert, um die neuen Authentifizierungseinstellungen anzuwenden.
+. Melden Sie sich mit Ihren IdP-Zugangsdaten an; nach erfolgreicher Authentifizierung werden Sie zum System Manager zurückgeleitet.
+
+
+
+
+== Verwandte Informationen
+
+* https://openid.net/["OpenID Foundation"^]
+* https://docs.netapp.com/us-en/ontap/authentication/overview-oauth2.html["ONTAP OAuth 2.0-Implementierung"^]
+
