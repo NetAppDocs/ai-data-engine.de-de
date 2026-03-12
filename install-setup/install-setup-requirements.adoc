@@ -22,7 +22,7 @@ Bevor Sie die Datenrechenknoten für AIDE installieren, stellen Sie sicher, dass
 * Ein AFX 1K Storage-System.
 +
 
-NOTE: Informationen zur Installation des AFX 1K-Speichersystems finden Sie im link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["Installieren Sie Ihr AFX 1K Storage-System"^].
+NOTE: Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["AFX 1K Speichersystem-Installationsdokumentation"^].
 
 
 

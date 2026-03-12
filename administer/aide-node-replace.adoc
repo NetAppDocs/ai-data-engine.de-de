@@ -84,3 +84,7 @@ ONTAP weist dem neuen Knoten eine IP-Adresse zu. Wenn die Softwareversion des Kn
 `dcn cluster node show -instance`
 
 
+
+.Verwandte Informationen
+* link:../administer/dcn-add-node.html["Erweitern Sie Ihren Compute-Cluster"]
+

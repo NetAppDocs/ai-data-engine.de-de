@@ -14,7 +14,7 @@ summary: Schalten Sie jedes Shelf ein, um eine eindeutige Shelf-ID zuzuweisen, s
 Nachdem Sie die Rack-Hardware installiert und Ihre Datenrechenknoten verkabelt haben, sollten Sie Ihre DCNs und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, falls diese noch nicht eingeschaltet sind.
 
 .Bevor Sie beginnen
-* Stellen Sie sicher, dass Ihre Regale eingeschaltet sind und jedem eine eindeutige Regal-ID zugewiesen wurde. Informationen zur Zuweisung von Regal-IDs für das AFX-Lagersystem finden Sie in der link:https://docs.netapp.com/us-en/ontap-afx/install-setup/power-on-hardware.html#step-1-power-on-the-shelf-and-assign-shelf-id["Weisen Sie eindeutige Shelf-IDs zu"^].
+* Stellen Sie sicher, dass Ihre Regale eingeschaltet sind und jedem eine eindeutige Regal-ID zugewiesen wurde. Informationen zur Zuweisung von Regal-IDs für das AFX-Lagersystem finden Sie in der link:https://docs.netapp.com/us-en/ontap-afx/install-setup/power-on-hardware.html#step-1-power-on-the-shelf-and-assign-shelf-id["Dokumentation zur Vergabe eindeutiger Regal-IDs"^].
 
 
 .Schritte

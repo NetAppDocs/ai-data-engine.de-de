@@ -20,9 +20,9 @@ Diese Verfahren zeigen gängige Konfigurationen. Die spezifische Verkabelung hä
 NOTE: Sie müssen das AFX 1K storage system beim Verkabeln der Data Compute Node nicht ausschalten. Sie können die Data Compute Node zu einem bestehenden AFX 1K storage system hinzufügen, das bereits eingeschaltet und konfiguriert ist.
 
 .Bevor Sie beginnen
-* Sie haben bereits ein AFX 1K-Speichersystem installiert. Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["Installieren Sie Ihr AFX 1K Storage-System"^].
+* Sie haben bereits ein AFX 1K-Speichersystem installiert. Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["AFX 1K Speichersystem-Installationsdokumentation"^].
 * Die erforderlichen Netzwerk-Switches sind installiert und konfiguriert. Wenden Sie sich an Ihren Netzwerkadministrator, um Informationen zum Anschluss des Systems an Ihre Netzwerk-Switches zu erhalten.
-* Sie haben die link:../install-setup/cable-overview.html["Verkabelungsanforderungen für die Data Compute Node"^] überprüft.
+* Sie haben die link:../install-setup/cable-overview.html["Verkabelungsanforderungen für die Data Compute Node"] überprüft.
 
 
 
