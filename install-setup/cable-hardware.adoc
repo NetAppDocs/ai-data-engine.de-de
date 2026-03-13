@@ -26,6 +26,9 @@ NOTE: Sie müssen das AFX 1K storage system beim Verkabeln der Data Compute Node
 
 
 
+NOTE: Mindestens drei Data Compute Nodes sind erforderlich, um die AI Data Engine bereitzustellen.
+
+
 
 == Schritt 1: Verbinden Sie die Data Compute Nodes mit dem Hostnetzwerk
 
@@ -68,7 +71,7 @@ image::../media/drw_aide_network_cabling_b_ieops-2648.svg[Kabel zu Ethernet-Netz
 
 == Schritt 2: Verkabeln Sie die Verbindungen des Data Compute Node-Clusters
 
-Für Data Compute Nodes werden die e4a/e5a-Ports für die Clusterverbindungen verwendet.
+Für Datenrechenknoten verwenden Sie 4x100GbE-Breakout-Kabel, um die e4a/e5a-Ports für die Clusterverbindungen anzuschließen.
 
 .Schritte
 . Verbinden Sie Port e4a der folgenden Data Compute Node mit einem Nicht-ISL-Port am Cluster Netzwerk-Switch A:
@@ -76,7 +79,7 @@ Für Data Compute Nodes werden die e4a/e5a-Ports für die Clusterverbindungen ve
 ** Data Compute Node 1, Port e4a
 ** Data Compute Node 2, Port e4a
 +
-*100GbE-Kabel*
+*4x100GbE Breakout-Kabel*
 
 +
 image::../media/oie_cable100_gbe_qsfp28.png[100-Gb-Ethernet-Kabel]
@@ -91,7 +94,7 @@ image::../media/drw_aide_switched_cluster_cabling_a_ieops-2649.svg[Kabel zu Ethe
 ** Data Compute Node 1, Port e5a
 ** Data Compute Node 2, Port e5a
 +
-*100GbE-Kabel*
+*4x100GbE Breakout-Kabel*
 
 +
 image::../media/oie_cable100_gbe_qsfp28.png[100-Gb-Ethernet-Kabel]
