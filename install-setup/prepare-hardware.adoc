@@ -11,7 +11,7 @@ summary: Bereiten Sie die Installation der Datenrechenknoten für AI Data Engine
 
 
 [role="lead"]
-Bereiten Sie die Installation Ihrer Datenrechenknoten für AI Data Engine vor, indem Sie den Standort vorbereiten, die Kartons entpacken und den Inhalt der Kartons mit dem Lieferschein vergleichen sowie das System registrieren, um Supportleistungen in Anspruch nehmen zu können.
+Bereiten Sie die Installation Ihrer Datenrechenknoten für AI Data Engine (AIDE) vor, indem Sie den Standort vorbereiten, die Kartons entpacken und den Inhalt der Kartons mit dem Lieferschein vergleichen und das System registrieren, um Zugang zu Supportleistungen zu erhalten.
 
 
 

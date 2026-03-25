@@ -12,7 +12,7 @@ searchtitle: Erfahren Sie mehr über AI Data Engine
 
 
 [role="lead"]
-Die NetApp AI Data Engine (AIDE) ist eine Plattform der Enterprise-Klasse, die entwickelt wurde, um die KI-gesteuerte Datenverarbeitung, Verwaltung und Governance zu beschleunigen und zu vereinfachen. AIDE kann dabei helfen, große Mengen unstrukturierter Daten in strukturierte, KI-bereite Datensätze zu transformieren. Sie ist darauf ausgelegt, die Anforderungen moderner Machine-Learning- (ML) und generativer KI- (GenAI) Workloads zu erfüllen und sowohl traditionelle IT-Operationen als auch neue KI-zentrierte Rollen zu unterstützen.
+NetApp AI Data Engine (AIDE) ist eine Plattform der Enterprise-Klasse, die entwickelt wurde, um KI-gestützte Datenverarbeitung, -verwaltung und -governance zu beschleunigen und zu vereinfachen. AIDE kann dabei helfen, große Mengen unstrukturierter Daten in strukturierte, KI-bereite Datensätze zu transformieren. Sie ist darauf ausgelegt, die Anforderungen moderner Machine-Learning- (ML) und generativer KI- (GenAI) Workloads zu erfüllen und sowohl traditionelle IT-Operationen als auch neue KI-zentrierte Rollen zu unterstützen.
 
 
 
@@ -30,7 +30,7 @@ AIDE wurde entwickelt, um Organisationen bei der Verwaltung von Daten für AI-Wo
 
 == High-Level-Designmerkmale
 
-Die folgenden Designmerkmale definieren, wie AI Data Engine aufgebaut ist, um den Anforderungen von AI-Workloads gerecht zu werden:
+Die folgenden Designmerkmale definieren, wie AIDE aufgebaut ist, um den Anforderungen von KI-Workloads gerecht zu werden:
 
 * *Microservices-basierte Dienste*: Nutzt Kubernetes zur Orchestrierung modularer, robuster Dienste für Katalogisierung von Metadaten, Vektorsuche und Infrastrukturmanagement.
 * *Sicherheit der Enterprise-Klasse*: Implementiert Verschlüsselung, rollenbasierte Zugriffssteuerung (RBAC) und Auditing für alle Daten und Metadaten.
@@ -53,7 +53,7 @@ NOTE: S3-Buckets werden nicht als Datenquellen für Workspaces oder Datensammlun
 . **Arbeitsbereichserstellung**: Speicheradministratoren definieren Arbeitsbereiche im ONTAP System Manager, gruppieren zusammengehörige ONTAP Volumes für bestimmte Projekte, Teams oder Workflows. Zugriffsberechtigungen und Governance-Richtlinien werden auf Arbeitsbereichsebene zugewiesen.
 . **Metadatenextraktion**: AIDE scannt automatisch Dateien und Objekte in Arbeitsbereichen, extrahiert Metadaten (Dateityp, Größe, Zeitstempel, benutzerdefinierte Attribute) und speichert sie in einem zentralen Katalog. Dies geschieht kontinuierlich, während sich Daten ändern.
 . **Klassifizierung und Governance**: Klassifizierer durchsuchen Daten nach sensiblen Informationen (PII, Finanzdaten) oder Dokumenttypen (rechtlich, HR). Guardrail-Richtlinien erzwingen automatisch Schwärzungen oder Zugriffsbeschränkungen.
-. **Erstellung von Datensammlungen**: Dateningenieure und Datenwissenschaftler verwenden die AI Data Engine Console, um den Metadatenkatalog abzufragen, Ergebnisse zu filtern und kuratierte Datensammlungen für spezifische AI-Aufgaben zusammenzustellen.
+. **Erstellung von Datensammlungen**: Dateningenieure und Datenwissenschaftler verwenden AIDE Console, um den Metadata Engine-Katalog abzufragen, Ergebnisse zu filtern und kuratierte Datensammlungen für spezifische AI-Aufgaben zusammenzustellen.
 . **Vektorisierung**: Für Sammlungen, die eine semantische Suche erfordern, generiert AIDE Einbettungen mithilfe ausgewählter KI-Modelle. Vektoren werden in der Vektordatenbank für eine leistungsstarke Suche gespeichert.
 . **KI/ML-Nutzung**: Anwendungen greifen über mehrere Pfade auf Daten zu:
 +

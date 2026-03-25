@@ -70,7 +70,7 @@ Sie können die Storage VM (SVM) Netzwerkprotokolle konfigurieren.
 
 . Wählen Sie *Update data compute software* aus.
 +
-Wenn ein Data Compute Software-Image zur Aktualisierung verfügbar ist, wird diese Option aktiviert. Wählen Sie diese Option, um die Data Compute Software-Update-Seite zu öffnen. Weitere Informationen finden Sie unter link:../administer/update-aide-firmware-software.html["Aktualisieren Sie die AI Data Engine software"].
+Wenn ein Data Compute Software-Image zur Aktualisierung verfügbar ist, wird diese Option aktiviert. Wählen Sie diese Option, um die Data Compute Software-Update-Seite zu öffnen. Weitere Informationen finden Sie unter link:../administer/update-aide-firmware-software.html["AIDE-Software aktualisieren"].
 
 . Wählen Sie *Configure data engine networking*.
 +
@@ -94,7 +94,7 @@ Dadurch wird die Data Engine-Arbeitsbereiche-Seite geöffnet, auf der Sie link:.
 
 . Wählen Sie *Configure OpenID Connect*.
 +
-Sie müssen link:../install-setup/configure-oidc.html["OpenID-Authentifizierung konfigurieren"] aktivieren, um den Zugriff auf die AIDE Console zu ermöglichen.
+Sie müssen link:../install-setup/configure-oidc.html["OpenID-Authentifizierung konfigurieren"] aktivieren, um den Zugriff auf AIDE Console zu ermöglichen.
 
 
 
@@ -110,10 +110,10 @@ Nachdem Ihr AIDE Cluster eingerichtet und in das AFX-Speichersystem integriert w
 .Schritte
 . link:../install-setup/install-license-task.html["Fügen Sie die erforderlichen AIDE-Lizenzen hinzu"].
 +
-Es gibt eine AI Data Engine-Lizenz, die Sie für den vollen Funktionsumfang von AIDE, einschließlich Vektorisierungs- und Schutzplankenfunktionen, installieren müssen.
+Es gibt eine AIDE-Lizenz, die Sie für den vollen Funktionsumfang von AIDE, einschließlich Vektorisierungs- und Guardrails-Funktionen, installieren müssen.
 
 . link:../install-setup/configure-oidc.html["OIDC-Authentifizierung konfigurieren"].
 +
-Stellen Sie sicher, dass OIDC für alle Bereitstellungen konfiguriert ist. Sie müssen OIDC konfigurieren, um auf die AI Data Engine Console zuzugreifen.
+Stellen Sie sicher, dass OIDC für alle Bereitstellungen konfiguriert ist. Sie müssen OIDC konfigurieren, um auf AIDE Console zugreifen zu können.
 
 

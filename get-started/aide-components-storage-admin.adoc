@@ -11,7 +11,7 @@ summary: Erfahren Sie, wie Speicheradministratoren mit AIDE Komponenten interagi
 
 
 [role="lead"]
-Als Speicheradministrator verwalten Sie die AIDE Infrastruktur über ONTAP und die AIDE Console, stellen Arbeitsbereiche bereit, fügen Guardrail-Richtlinien hinzu und überwachen den Systemzustand. Ihre Aufgabe besteht darin, eine zuverlässige, sichere und konforme Datenspeicherung für AI-Workloads zu gewährleisten.
+Als Speicheradministrator verwalten Sie die AIDE-Infrastruktur über ONTAP und die AI Data Engine (AIDE) Console, stellen Arbeitsbereiche bereit, fügen Data Guardrails-Richtlinien hinzu und überwachen die Systemgesundheit. Ihre Aufgabe besteht darin, eine zuverlässige, sichere und konforme Datenspeicherung für AI-Workloads zu gewährleisten.
 
 
 
@@ -25,7 +25,7 @@ Als Speicheradministrator verwalten Sie die AIDE Infrastruktur über ONTAP und d
 | ONTAP System Manager | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden ONTAP System Manager als Ihre primäre Schnittstelle für die Clusterverwaltung, die Bereitstellung von Arbeitsbereichen, die Verwaltung von Guardrail-Richtlinien und die Überwachung des Systemzustands. 
 
 
-| AI Data Engine Console | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die AI Data Engine Console, um Arbeitsbereiche zu überwachen, den Sammlungsstatus anzuzeigen und die Systemaktivitäten in der gesamten AIDE-Umgebung zu überwachen. 
+| AIDE Console | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die AIDE Console, um Arbeitsbereiche zu überwachen, den Sammlungsstatus anzuzeigen und die Systemaktivitäten in der gesamten AIDE Umgebung zu überwachen. 
 
 
 | ONTAP REST API | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die REST API, um Infrastrukturaufgaben zu automatisieren, Arbeitsbereiche und Guardrail-Richtlinien programmatisch zu verwalten und die AIDE Administration mit externen Tools und Workflows zu integrieren. 

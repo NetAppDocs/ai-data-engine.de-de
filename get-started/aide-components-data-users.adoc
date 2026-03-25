@@ -11,7 +11,7 @@ summary: Erfahren Sie, wie Dateningenieure und Datenwissenschaftler mit AIDE Kom
 
 
 [role="lead"]
-Als Data Engineer oder Data Scientist nutzen Sie die AI Data Engine Console, um Arbeitsbereiche zu erkunden, zu denen Sie Zugriff erhalten haben, Datenkollektionen zu erstellen und zu verwalten, semantische Suchen durchzuführen und Retrieval-Endpunkte in AI/ML-Workflows zu integrieren.
+Als Data Engineer oder Data Scientist verwenden Sie AI Data Engine (AIDE) Console, um Arbeitsbereiche zu erkunden, zu denen Ihnen Zugriff gewährt wurde, Datensammlungen zu erstellen und zu verwalten, semantische Suchen durchzuführen und Abruf-Endpunkte in KI/ML-Workflows zu integrieren.
 
 Data Engineers konzentrieren sich darauf, Rohdaten in KI-fähige Datensätze umzuwandeln, indem sie Sammlungen erstellen, Einbettungspipelines konfigurieren und steuern, welche Benutzer auf veröffentlichte Sammlungen zugreifen können. Data Scientists konzentrieren sich darauf, kuratierte Datensätze für Analysen, Modelltraining und GenAI-Anwendungen zu nutzen, ohne Zugriffskontrolle oder Infrastruktur verwalten zu müssen.
 
@@ -24,7 +24,7 @@ Data Engineers konzentrieren sich darauf, Rohdaten in KI-fähige Datensätze umz
 | Komponente | Zugriffsebene | Arbeitsablauf des Data Engineers | Arbeitsablauf eines Data Scientist 
 
 
-| AI Data Engine Console | Verwalten (erstellen, bearbeiten, löschen) | Die AI Data Engine Console ist Ihre primäre Schnittstelle für alltägliche Aufgaben, einschließlich Datenermittlung, Sammlungsverwaltung, Pipeline-Konfiguration und Veröffentlichung von RAG- oder Retrieval-Endpunkten für die Arbeitsbereiche, zu denen Sie berechtigt sind. | Die AI Data Engine Console ist Ihre primäre Schnittstelle für die Datenexploration, Verfeinerung und Versionierung von Sammlungen innerhalb von Arbeitsbereichen, auf die Sie zugreifen können, sowie für die Verbindung von kuratierten Datensätzen und Abrufendpunkten mit Analyse-, Modellierung- und GenAI-Workflows. 
+| AIDE Console | Verwalten (erstellen, bearbeiten, löschen) | AIDE Console ist Ihre primäre Schnittstelle für alltägliche Aufgaben, einschließlich Datenermittlung, Sammlungsverwaltung, Pipeline-Konfiguration und Veröffentlichung von RAG- oder Retrieval-Endpunkten für die Arbeitsbereiche, zu denen Sie berechtigt sind. | AIDE Console ist Ihre primäre Schnittstelle für die Datenexploration, Verfeinerung und Versionierung von Sammlungen innerhalb von Arbeitsbereichen, auf die Sie zugreifen können, und für die Verbindung von kuratierten Datensätzen und Abrufendpunkten mit Analyse-, Modellierungs- und GenAI-Workflows. 
 
 
 | ONTAP REST API | Verwalten (erstellen, bearbeiten, löschen) | Sie verwenden die REST API, um Vorgänge im Lebenszyklus von Sammlungen zu automatisieren, Einbettungspipelines auszulösen und zu überwachen sowie Daten-Workflows programmatisch mit externen Tools zu integrieren. | Sie verwenden die REST API, um programmatisch auf Datensammlungen zuzugreifen, Vektorsuchabfragen auszuführen und Abrufendpunkte in AI/ML-Anwendungen und agentenbasierte Frameworks zu integrieren. 

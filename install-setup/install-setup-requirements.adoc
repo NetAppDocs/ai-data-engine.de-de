@@ -11,7 +11,7 @@ summary: Überprüfen Sie die benötigte Ausrüstung und die Hebevorsichtsmaßna
 
 
 [role="lead"]
-Überprüfen Sie die benötigte Ausrüstung und die Hebevorsichtsmaßnahmen für Ihre Data Compute Nodes für AI Data Engine.
+Prüfen Sie die benötigte Ausrüstung und die Hebevorkehrungen für Ihre Datenrechenknoten für AI Data Engine (AIDE).
 
 
 

@@ -16,7 +16,7 @@ Nachdem Sie einen Cluster erstellt haben, richten Sie einen Datencontainer ein, 
 Anstatt ONTAP-Clusterdaten manuell in AIDE hochzuladen, müssen Sie die Zielcluster und SVMs mit dem AIDE Cluster peeren und dann entscheiden, welche NFS-Volumes Sie mit dem AIDE-Metadatenkatalog verwenden möchten. Nachdem Sie den Datencontainer erstellt haben, können Sie einen Arbeitsbereich erstellen und den Datencontainer mit diesem Arbeitsbereich verknüpfen. Benutzer dieses Arbeitsbereichs können dann auf die mit dem Arbeitsbereich verbundenen Datensammlungen und Ressourcen für ihre AI-Workloads zugreifen und mit ihnen interagieren.
 
 .Über diese Aufgabe
-Sie müssen jede SVM, die die Daten enthält, die Sie mit AI Data Engine verwenden möchten, peeren. Das Peeren nur des Clusters ist nicht ausreichend. Dadurch wird sichergestellt, dass die AI Data Engine wie vorgesehen auf Ihre Daten zugreifen, sie integrieren und indizieren kann.
+Sie müssen jede SVM, die die Daten enthält, die Sie mit AIDE verwenden möchten, peeren. Das Peeren nur des Clusters ist nicht ausreichend. Dadurch wird sichergestellt, dass AIDE wie vorgesehen auf Ihre Daten zugreifen, sie einbinden und indizieren kann.
 
 Sie sollten die SVM im AIDE Cluster, die als SnapMirror Ziel fungieren wird, per Peering verbinden.
 
@@ -24,11 +24,11 @@ Sie müssen keine SnapMirror-Beziehungen zwischen den ONTAP Clustern und dem AID
 
 .Bevor Sie beginnen
 * Sie benötigen _Storage-Administrator_-Rechte, um Cluster und SVMs zu verbinden und Datencontainer auszuwählen.
-* Sie haben die ONTAP Cluster und SVMs identifiziert, die die Daten enthalten, die Sie mit AI Data Engine verwenden möchten.
+* Sie haben die ONTAP Cluster und SVMs identifiziert, die die Daten enthalten, die Sie mit AIDE verwenden möchten.
 * Sie haben bestätigt, dass die Datenquellen-Volumes die folgenden Anforderungen erfüllen:
 +
 ** Volumes sind online und zugänglich.
-** Das NFS-Protokoll ist aktiviert. Nur NFS-aktivierte Volumes werden als Datencontainer für AI Data Engine unterstützt. SMB- und CIFS-Volumes werden nicht unterstützt.
+** Das NFS-Protokoll ist aktiviert. Nur NFS-aktivierte Volumes werden als Datencontainer für AIDE unterstützt. SMB- und CIFS-Volumes werden nicht unterstützt.
 ** Volumen sind keine FlexCache Volumen.
 ** Datenquellen sind Lese-/Schreibvolumes. Datenschutzvolumes werden nicht unterstützt.
 
@@ -36,8 +36,8 @@ Sie müssen keine SnapMirror-Beziehungen zwischen den ONTAP Clustern und dem AID
 
 
 .Schritte
-. https://docs.netapp.com/us-en/ontap-afx/protect-data/create-peer-relationship.html["Verbinden Sie jeden ONTAP Cluster und jede SVM als Peers"^] die Daten enthält, die Sie mit AI Data Engine verwenden möchten.
-. link:../install-setup/cluster-setup-afx.html["Wählen Sie die Volumes aus, die Sie mit AI Data Engine verwenden möchten"].
+. https://docs.netapp.com/us-en/ontap-afx/protect-data/create-peer-relationship.html["Verbinden Sie jeden ONTAP Cluster und jede SVM als Peers"^] die Daten enthält, die Sie mit AIDE verwenden möchten.
+. link:../install-setup/cluster-setup-afx.html["Wählen Sie die Volumes aus, die Sie mit AIDE verwenden möchten"].
 +
 Notieren Sie für jeden Volume die folgenden Informationen:
 

@@ -41,13 +41,13 @@ AIDE führt neue Benutzerrollen ein und unterstützt gleichzeitig weiterhin die 
 | Rolle (RBAC name) | Beschreibung 
 
 
-| Speicheradministrator (`admin` | Verwaltet AFX- und AIDE-Cluster-Einrichtung, Netzwerk, Speicherbereitstellung und Benutzerzugriff. Weist Benutzern rollenbasierte Zugriffssteuerungsrollen (RBAC) zu, die den Grad des Zugriffs auf AIDE-Schnittstellen und -Funktionen bestimmen. Diese Administratorrolle hat vollständigen Verwaltungszugriff über ONTAP System Manager und AI Data Engine Console. 
+| Speicheradministrator (`admin` | Verwaltet AFX- und AIDE-Cluster-Einrichtung, Netzwerk, Speicherbereitstellung und Benutzerzugriff. Weist Benutzern RBAC-Rollen zu, die den Grad des Zugriffs auf AIDE-Oberflächen und -Funktionen bestimmen. Diese Administratorrolle hat vollständigen Verwaltungszugriff über ONTAP System Manager und AIDE Console. 
 
 
-| Data Engineer (`data-engineer`) | Erstellt und optimiert KI/ML-Pipelines, verwaltet Datensammlungen und integriert KI-Modelle. Diese Rolle hat Zugriff auf die AI Data Engine Console für Data-Engineering-Workflows. 
+| Data Engineer (`data-engineer`) | Erstellt und optimiert KI/ML-Pipelines, verwaltet Datensammlungen und integriert KI-Modelle. Diese Rolle hat Zugriff auf die AIDE Console für Data-Engineering-Workflows. 
 
 
-| Datenwissenschaftler(`data-scientist`) | Identifiziert, kuratiert und analysiert Datensätze, erstellt Datensammlungen und nutzt Abruf-Endpunkte für GenAI-Anwendungen. Diese Rolle hat Zugriff auf die AI Data Engine Console für Data-Science-Workflows. 
+| Datenwissenschaftler(`data-scientist`) | Entdeckt, kuratiert und analysiert Datensätze, erstellt Datensammlungen und nutzt Abruf-Endpunkte für GenAI-Anwendungen. Diese Rolle hat Zugriff auf die AIDE Console für Data-Science-Workflows. 
 |===
 
 

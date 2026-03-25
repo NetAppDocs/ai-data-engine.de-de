@@ -15,7 +15,7 @@ Sie müssen eine NetApp-Lizenz installieren, um auf die vollständigen Funktione
 
 
 
-== Bereiten Sie die Lizenzierung der AI Data Engine vor
+== Bereiten Sie sich auf die Lizenzierung von AI Data Engine vor
 
 Eine Lizenz ist ein Nachweis für eine oder mehrere Softwareberechtigungen. Alle AFX-Lizenzen werden als NetApp Lizenzdatei (NLF) bereitgestellt, bei der es sich um eine einzelne Datei handelt, die mehrere Funktionen aktiviert. Es gibt mehrere Dinge, die Sie beachten sollten, bevor Sie eine Lizenz auf Ihrem AFX-Speichersystem zur Unterstützung von AIDE installieren.
 
@@ -29,7 +29,7 @@ Es gibt zwei Haupttypen von Lizenzen, die benötigt werden, um AIDE über Ihr AF
 Die Metadata Engine Basic-Lizenz ist typischerweise werkseitig als Teil der ONTAP One-Lizenz installiert. Sie ermöglicht den Zugriff auf die Metadata Engine-Funktionalität, die die wesentliche Grundlage für AIDE-Operationen bietet. Alle Kernfunktionen, die zur Verwaltung Ihres ONTAP-Systems benötigt werden, sind ebenfalls enthalten.
 
 .AI Data Engine
-Sie müssen die AI Data Engine-Lizenz erwerben und installieren, um auf die Premium-Dienste zuzugreifen, die zur Aktivierung der vollständigen Funktionen von AIDE erforderlich sind. Die Lizenz schaltet Ihre Datenrechenknoten frei und ermöglicht AI-Funktionen wie Vektorisierung, Governance Guardrails, Inferenz und eine integrierte UI-Erfahrung. Die Lizenz beinhaltet eine GPU-Anzahl sowie ein Ablaufdatum.
+Sie müssen die AIDE-Lizenz erwerben und installieren, um auf die Premium-Dienste zuzugreifen, die erforderlich sind, um die vollständigen Funktionen von AIDE zu aktivieren. Die Lizenz schaltet Ihre Datenrechenknoten frei und ermöglicht KI-Funktionen wie Vektorisierung, Governance Guardrails, Inferenz und eine integrierte UI-Erfahrung. Die Lizenz beinhaltet eine GPU-Anzahl sowie ein Ablaufdatum.
 
 
 

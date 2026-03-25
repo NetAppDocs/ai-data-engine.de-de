@@ -11,35 +11,35 @@ summary:
 
 
 [role="lead"]
-Rechtliche Hinweise bieten Zugriff auf Urheberrechtsvermerke, Marken, Patente und mehr.
+e9c44bbfd795a5d63d74c6a77afee70d
 
 
 
-== Copyright
+== 6016a2b341113bf496b719905398ecd2
 
-link:https://www.netapp.com/company/legal/copyright/["https://www.netapp.com/company/legal/copyright/"^]
-
-
-
-== Marken
-
-NETAPP, das NETAPP-Logo und die auf der NetApp Trademarks-Seite aufgeführten Marken sind Marken von NetApp, Inc. Andere Firmen- und Produktnamen können Marken ihrer jeweiligen Eigentümer sein.
-
-link:https://www.netapp.com/company/legal/trademarks/["https://www.netapp.com/company/legal/trademarks/"^]
+a1a9afcf552a769c282769271829889a
 
 
 
-== Patente
+== 126a02652da6de02962cf1b654fd6376
 
-Eine aktuelle Liste der NetApp owned patents finden Sie unter:
+c4ce4761e466527d26b3e3d5ed1006fd
 
-link:https://www.netapp.com/pdf.html?item=/media/11887-patentspage.pdf["https://www.netapp.com/pdf.html?item=/media/11887-patentspage.pdf"^]
+5d545fe5152641e2ebe654e336e520e5
 
 
 
-== Datenschutzrichtlinie
+== be89498d2f8a22ce47c02ba9795fe2af
 
-link:https://www.netapp.com/company/legal/privacy-policy/["https://www.netapp.com/company/legal/privacy-policy/"^]
+d0b19d36be2c5f16e9aef46c8a452d3d
+
+dd38f906b37d412de7d1c1dcf4cbf31c
+
+
+
+== 56c34c6410dd45c5cec44149ad0ce037
+
+2352c4e1f4d0024ade0869e00e6243f4
 
 
 

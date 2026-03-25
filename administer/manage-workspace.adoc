@@ -11,7 +11,7 @@ summary: Verwalten Sie den Lebenszyklus von AI Data Engine Workspaces, einschlie
 
 
 [role="lead"]
-Ein Arbeitsbereich ist eine Gruppe von Datenquellen (Volumes), die die AI Data Engine (AIDE) verwendet, um einen Metadatenkatalog für ein bestimmtes Projekt oder einen bestimmten Anwendungsfall zu erstellen und zu aktualisieren. Als Speicheradministrator können Sie ONTAP System Manager verwenden, um den Zustand des Arbeitsbereichs zu überwachen, die Konfiguration anzupassen, Datenquellen zu steuern, Benutzer zu verwalten und Arbeitsbereiche zu löschen, wenn sie nicht mehr benötigt werden.
+Ein Arbeitsbereich ist eine Gruppe von Datenquellen (Volumes), die AI Data Engine (AIDE) verwendet, um einen Metadatenkatalog für ein bestimmtes Projekt oder einen Anwendungsfall zu erstellen und zu aktualisieren. Als Speicheradministrator können Sie mit ONTAP System Manager den Zustand des Arbeitsbereichs überwachen, die Konfiguration anpassen, Datenquellen steuern, Benutzer verwalten und Arbeitsbereiche löschen, wenn sie nicht mehr benötigt werden.
 
 .Bevor Sie beginnen
 * Sie benötigen _storage administrator_-Berechtigungen, um Arbeitsbereiche zu verwalten.
@@ -44,7 +44,7 @@ NOTE: Wenn ein Arbeitsbereich oder eine Datensammlung einen Fehlerstatus anzeigt
 ** Status (wie  `Published` oder  `Error`), Größe und Zeitpunkt der letzten Aktualisierung.
 +
 
-NOTE: System Manager ist für Datensammlungen schreibgeschützt. Dateningenieure können Datensammlungen in der AI Data Engine Console erstellen und verwalten.
+NOTE: System Manager ist für Datensammlungen schreibgeschützt. Dateningenieure können Datensammlungen in AIDE Console erstellen und verwalten.
 
 
 
@@ -125,7 +125,7 @@ IMPORTANT: Löschen Sie kein Quellvolume aus ONTAP, das einem Arbeitsbereich hin
 
 
 
-NOTE: Das Entfernen eines Datencontainers aus einem Arbeitsbereich löscht weder das zugrunde liegende ONTAP Volume noch dessen SnapMirror Beziehung. Es betrifft lediglich die Metadatennutzung innerhalb der AI Data Engine.
+NOTE: Das Entfernen eines Datencontainers aus einem Arbeitsbereich löscht weder das zugrunde liegende ONTAP Volume noch dessen SnapMirror Beziehung. Es wirkt sich lediglich auf die Metadatennutzung innerhalb von AIDE aus.
 
 
 

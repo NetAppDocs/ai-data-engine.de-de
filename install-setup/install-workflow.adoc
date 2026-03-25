@@ -19,7 +19,7 @@ Stellen Sie sicher, dass Sie über ein vorhandenes AFX 1K-Speichersystem verfüg
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"]link:prepare-hardware.html["Bereiten Sie die Installation Ihrer Data Compute Nodes vor"]
 [role="quick-margin-para"]
-Zur Vorbereitung der Installation Ihrer Datenrechenknoten müssen Sie den Standort vorbereiten, die Umgebungs- und Stromversorgungsanforderungen prüfen und sicherstellen, dass ausreichend Platz in den Serverschränken vorhanden ist. Entpacken Sie anschließend die Geräte, vergleichen Sie den Inhalt mit dem Lieferschein und registrieren Sie die Hardware, um Supportleistungen in Anspruch nehmen zu können. Mindestens drei Datenrechenknoten sind erforderlich, um die AI Data Engine bereitzustellen.
+Zur Vorbereitung der Installation Ihrer Datenrechenknoten müssen Sie den Standort vorbereiten, die Umgebungs- und Stromversorgungsanforderungen prüfen und sicherstellen, dass ausreichend Platz in den Serverschränken vorhanden ist. Anschließend entpacken Sie die Geräte, vergleichen deren Inhalt mit dem Lieferschein und registrieren die Hardware, um Supportleistungen in Anspruch nehmen zu können. Mindestens drei Datenrechenknoten sind erforderlich, um AIDE bereitzustellen.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"]link:deploy-hardware.html["Installieren Sie die Hardware für Ihre Data Compute Nodes"]
 [role="quick-margin-para"]

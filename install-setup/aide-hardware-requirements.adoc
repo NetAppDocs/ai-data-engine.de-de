@@ -11,13 +11,13 @@ summary: Prüfen Sie die Anforderungen für die Installation von AI Data Engine,
 
 
 [role="lead"]
-Prüfen Sie die Anforderungen für die Installation der AI Data Engine. AIDE benötigt ein AFX-Speichersystem, mindestens drei Data Compute Node, Netzwerk-Switches und Kabel.
+Prüfen Sie die Anforderungen für die Installation der AI Data Engine (AIDE). AIDE benötigt ein AFX-Speichersystem, mindestens drei Datenrechenknoten, Netzwerkswitches und Kabel.
 
 
 
 == Hardwareanforderungen
 
-Die AI Data Engine benötigt ein AFX-Speichersystem und mindestens drei Data Compute Nodes. Das AFX-System stellt die Speicherinfrastruktur bereit, während die Data Compute Nodes die AIDE-Softwarekomponenten hosten, die Datenmanagement, Datenkuratierung und AI-Funktionen ermöglichen.
+AIDE benötigt ein AFX-Speichersystem und mindestens drei Datenrechenknoten. Das AFX-System stellt die Speicherinfrastruktur bereit, während die Datenrechenknoten die AIDE-Softwarekomponenten hosten, die Datenmanagement, Kuration und KI-Funktionen ermöglichen.
 
 * *AFX-Speichersystem*: Besteht aus einem AFX-Controller, einem Festplattengehäuse und Netzwerk-Switch. Das AFX-Speichersystem ist für die AIDE-Bereitstellung erforderlich.
 * *Datenrechenknoten*: Es werden mindestens drei Datenrechenknoten benötigt. Die Datenrechenknoten sind von NetApp bereitgestellte Hardwareknoten, die die AIDE-Software hosten, einschließlich der Metadata Engine, Data Sync, Data Curator und Data Guardrails.
@@ -33,7 +33,7 @@ Die AI Data Engine benötigt ein AFX-Speichersystem und mindestens drei Data Com
 
 == Anforderungen an Netzwerk-Switch
 
-AI Data Engine benötigt Netzwerk-Switches, um den Netzwerkzugriff für Hosts und die Kommunikation zwischen den Data Compute Nodes zu ermöglichen.
+AIDE benötigt Netzwerk-Switches, um die Host-Netzwerkverbindung und die Kommunikation zwischen den Data Compute Nodes zu ermöglichen.
 
 * Client-Switches für die Host-Netzwerkkonnektivität (Cisco Nexus 9332D-GX2B oder Cisco Nexus 9364D-GX2A)
 * Cluster-Switches für die Inter-Node-Kommunikation (Cisco Nexus 9332D-GX2B oder Cisco Nexus 9364D-GX2A)

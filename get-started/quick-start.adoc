@@ -11,7 +11,7 @@ summary: Um mit einem AI Data Engine System zu beginnen, installieren Sie die Ha
 
 
 [role="lead"]
-Um Ihr AI Data Engine system in Betrieb zu nehmen, müssen Sie Ihre Hardwarekomponenten installieren, Ihren Cluster einrichten, den Datenzugriff von Ihren Hosts auf das Speichersystem einrichten und Ihren Speicher bereitstellen.
+Um Ihr AI Data Engine (AIDE)-System in Betrieb zu nehmen, müssen Sie Ihre Hardwarekomponenten installieren, Ihren Cluster einrichten, den Datenzugriff von Ihren Hosts auf das Speichersystem einrichten und Ihren Speicher bereitstellen.
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]Wird AIDE mit einem neuen oder einem bestehenden AFX-Cluster installiert?
 [role="quick-margin-para"]
@@ -27,7 +27,7 @@ Verwenden Sie ONTAP System Manager, um sich durch einen schnellen und einfachen 
 
 .image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] Arbeitsbereiche und Datenzugriff einrichten
 [role="quick-margin-para"]
-link:../workspaces/create-workspace.html["Richten Sie einen Arbeitsbereich und Benutzer für diesen Arbeitsbereich ein, die auf AI Data Engine Daten zugreifen können."].
+link:../workspaces/create-workspace.html["Richten Sie einen Arbeitsbereich und Benutzer für diesen Arbeitsbereich ein, die auf AIDE-Daten zugreifen können."].
 
 .Was kommt als Nächstes?
-Sie können jetzt den ONTAP System Manager verwenden, um Ihre AI Data Engine zu verwalten und Ihren Dateningenieuren und Datenwissenschaftlern den Einstieg in ihre Arbeitsbereiche und Konfigurationen zu ermöglichen.
+Sie können jetzt den ONTAP System Manager verwenden, um Ihre AIDE zu verwalten und Ihren Data Engineers und Data Scientists den Einstieg in ihre Arbeitsbereiche und Konfigurationen zu ermöglichen.

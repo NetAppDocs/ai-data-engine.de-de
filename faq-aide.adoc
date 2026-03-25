@@ -17,7 +17,7 @@ Diese FAQ beantwortet häufig gestellte Fragen zur NetApp AI Data Engine (AIDE),
 
 == AIDE-Grundlagen
 
-.Was ist NetApp AI Data Engine (AIDE)?
+.Was ist NetApp AI Data Engine?
 NetApp AI Data Engine (AIDE) ist ein speicherintegrierter AI Data Engine-Datendienst, der den gesamten KI-Lebenszyklus abdeckt – von der Ermittlung und Aufbereitung von Rohdaten bis hin zur Bereitstellung von Retrieval-Endpunkten, um generative KI (GenAI), Retrieval-Augmented Generation (RAG), agentic AI und AI factories zu unterstützen. AIDE automatisiert Sync und Änderungserkennung und bietet eine einheitliche, aktuelle Ansicht ausgewählter Daten für die Datenentdeckung und Kuration.
 
 .Wie funktioniert AIDE?
@@ -27,7 +27,7 @@ AIDE integriert sich direkt mit NetApp ONTAP-Speichersystemen, um eine globale, 
 
 == Benutzer und Rollen
 
-.Wer verwendet die AI Data Engine?
+.Wer verwendet AI Data Engine?
 Zu den Hauptnutzern von AIDE gehören:
 
 . *ONTAP Speicheradministratoren*: Verwaltung der Infrastruktur, KI-spezifischer Speicheranforderungen, Sicherheit und Compliance.
@@ -45,7 +45,7 @@ AIDE benötigt für die Bereitstellung AFX-Systeme (einschließlich AFX-Controll
 AIDE läuft auf einem NetApp data compute node (DCN). Drei DCNs sind erforderlich. Der DCN hostet die AIDE Software, die die Metadata Engine, Data Sync, Data Curator und Data Guardrails umfasst.
 
 .Kann ich mein eigenes DCN verwenden?
-Nein. Das DCN ist ein von NetApp bereitgestellter Datenverarbeitungshardwareknoten und der einzige Bereitstellungsmechanismus für die AI Data Engine.
+Nein. Das DCN ist ein von NetApp bereitgestellter Datenverarbeitungshardwareknoten und der einzige Bereitstellungsmechanismus für AIDE.
 
 .Was ist die minimale Anzahl an DCNs, die erforderlich ist?
 Genau drei DCNs sind erforderlich.
@@ -60,8 +60,8 @@ Nein. AIDE benötigt AFX für die Bereitstellung. AIDE verwendet Trident, um die
 
 == Verwaltung und Schnittstellen
 
-.Ist die AIDE Console Teil der NetApp Console oder eine separate Managementoberfläche?
-Die AIDE Console ist eine separate Managementoberfläche, die auf DCNs ausgeführt wird. Sie verwenden die AIDE Console, um AIDE Services wie Data Guardrails und Data Curator zu verwalten. Sie können auch ONTAP System Manager verwenden, um den AIDE Cluster zu überwachen.
+.Ist die AIDE Console Teil der NetApp Console oder eine separate Schnittstelle?
+AIDE Console ist eine separate Managementoberfläche, die auf DCNs ausgeführt wird. Sie verwenden AIDE Console, um AIDE-Services wie Data Guardrails und Data Curator zu verwalten. Sie können auch ONTAP System Manager verwenden, um den AIDE-Cluster zu überwachen.
 
 
 
@@ -85,7 +85,7 @@ Es gibt vier Hauptfunktionen von AIDE:
 
 
 .Data Guardrails
-* Identifiziert und schützt sensible Daten automatisch während des gesamten KI-Lebenszyklus. Es ist über die AI Data Engine Console zugänglich.
+* Identifiziert und schützt automatisch sensible Daten während des gesamten KI-Lebenszyklus. Ist über die AIDE Console zugänglich.
 * Scannt, klassifiziert und kategorisiert kontinuierlich Daten.
 * Identifiziert sensible Daten (wie z. B. personenbezogene Daten) und Risiken.
 * Ermöglicht die Erstellung von Richtlinien für die automatische Verarbeitung von sensiblen Daten im Einklang mit den Unternehmens- und Regulierungsstandards.
@@ -111,7 +111,7 @@ AIDE kann über SnapMirror und Cluster-Peering eine Verbindung zu mehreren ONTAP
 AIDE speichert Metadaten auf dem verbundenen AFX-Cluster mithilfe eines von AFX bereitgestellten persistenten Volumes. Die DCNs verwenden lokalen Speicher für interne Operationen.
 
 .Klassifiziert die AIDE Metadata Engine Daten?
-Nein. Die Metadata Engine katalogisiert Dateisystem-Metadaten und stellt APIs zur Abfrage dieser katalogisierten Metadaten bereit.
+Nein. AIDE Metadata Engine katalogisiert Dateisystem-Metadaten und stellt APIs zur Abfrage dieser katalogisierten Metadaten bereit.
 
 .Welche Datenquellen werden unterstützt?
 AIDE unterstützt ONTAP Volumes (lokal oder remote) als Datenquellen. Remote ONTAP Cluster müssen ONTAP 9 ausführen und über Cluster-Peering und SnapMirror verbunden sein.

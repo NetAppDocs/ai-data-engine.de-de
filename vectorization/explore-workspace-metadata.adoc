@@ -14,7 +14,7 @@ summary: Als Data Engineer oder Data Scientist verwenden Sie AI Data Engine Cons
 Als Data Engineer oder Data Scientist besteht Ihre erste Aufgabe in AI Data Engine (AIDE) darin, zu verstehen, welche Daten in Ihren Arbeitsbereichen verfügbar sind. Sie verwenden die AI Data Engine Console, um den Metadatenkatalog abzufragen, nach relevanten Dateien zu suchen und Datenteilmengen zu identifizieren, die Sie in Datensammlungen umwandeln.
 
 .Bevor Sie beginnen
-* Sie benötigen _data engineer_ oder _data scientist_ Berechtigungen in AI Data Engine Console und Zugriff auf mindestens einen Workspace.
+* Sie benötigen Berechtigungen als _data engineer_ oder _data scientist_ in AIDE Console sowie Zugriff auf mindestens einen Arbeitsbereich.
 * Ein Speicheradministrator hat:
 +
 ** Ein oder mehrere Arbeitsbereiche im ONTAP System Manager wurden erstellt.

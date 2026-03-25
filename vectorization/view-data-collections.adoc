@@ -11,15 +11,15 @@ summary: Verwenden Sie die AI Data Engine Tools, um Datensammlungen anzuzeigen, 
 
 
 [role="lead"]
-Nachdem Dateningenieure oder Datenwissenschaftler Datensammlungen aus Arbeitsbereichen erstellt und veröffentlicht haben, benötigen Sie Einblick in deren Status, Größe und Auswirkungen auf den AI Data Engine cluster.
+Nachdem Dateningenieure oder Datenwissenschaftler Datensammlungen aus Arbeitsbereichen erstellt und veröffentlicht haben, benötigen Sie Einblick in deren Status, Größe und Auswirkungen auf den AI Data Engine (AIDE) Cluster.
 
 Wenn Sie Speicheradministrator, Dateningenieur oder Datenwissenschaftler sind, können Sie Datensammlungen in ONTAP System Manager und AIDE Console anzeigen.
 
 .Bevor Sie beginnen
-* Sie benötigen entweder _storage administrator_ Berechtigungen im ONTAP System Manager oder _data engineer_ oder _data scientist_ Berechtigungen in der AI Data Engine Console (`\https://<cluster_management_ip>/console`), um Datensammlungen anzuzeigen.
+* Sie benötigen entweder _storage administrator_ Berechtigungen im ONTAP System Manager oder _data engineer_ oder _data scientist_ Berechtigungen in der AIDE Console (`\https://<cluster_management_ip>/console` , um Datensammlungen anzuzeigen.
 * Mindestens ein Arbeitsbereich existiert mit erfolgreich extrahierten Metadaten.
-* Dateningenieure oder Datenwissenschaftler haben mindestens eine Datensammlung aus der AI Data Engine Console erstellt und veröffentlicht.
-* Die AI Data Engine software-Lizenz ist installiert und die Inferenzfunktionen sind aktiviert, sodass Vektorisierungs- und Abrufendpunkte aktiv sind.
+* Dateningenieure oder Datenwissenschaftler haben mindestens eine Datensammlung aus AIDE Console erstellt und veröffentlicht.
+* Die AIDE Softwarelizenz ist installiert und die Inferenzfunktionen sind aktiviert, sodass Vektorisierungs- und Abrufendpunkte aktiv sind.
 
 
 

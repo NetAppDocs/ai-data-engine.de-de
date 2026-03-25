@@ -16,10 +16,10 @@ Als Daten- oder Plattformbesitzer verwenden Sie AI Data Engine (AIDE) Console, u
 Verwenden Sie diese Verfahren, um diese Richtlinien in AIDE Console zu definieren, damit ONTAP System Manager sie auf alle Daten in Arbeitsbereichen anwenden kann.
 
 .Bevor Sie beginnen
-* Sie benötigen _Storage Administrator_-Berechtigungen in AI Data Engine Console (`\https://<cluster_management_ip>/console`, um globale Richtlinien zu erstellen und zu verwalten.
+* Sie benötigen Administratorrechte für Speicherverwaltung in AIDE Console (`\https://<cluster_management_ip>/console`) , um globale Richtlinien zu erstellen und zu verwalten.
 * Sie verfügen über einen AIDE Cluster mit bereitgestellten und fehlerfreien Data Compute Nodes.
 * link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] ist konfiguriert, und Ihre IdP-Rolle ist einer AIDE admin Rolle zugeordnet, die die Verwaltung von Datenrichtlinien ermöglicht.
-* Die AI Data Engine software-Lizenz ist installiert, sodass Data Guardrails und Inferenzfunktionen aktiviert sind.
+* Die Softwarelizenz für AIDE ist so installiert, dass die Data Guardrails- und Inferenzfunktionen aktiviert sind.
 * Es existiert mindestens ein Arbeitsbereich, oder Sie haben sich mit dem Administrator abgestimmt, um zu verstehen, welche Datenquellen (Volumes) in Arbeitsbereichen verwendet werden.
 
 
@@ -172,6 +172,6 @@ Für Dateningenieure und Datenwissenschaftler:
 
 == Verwandte Informationen
 
-* link:../vectorization/view-data-collections.html["Datensammlungen in AI Data Engine anzeigen"]
-* link:../vectorization/zero-to-rag.html["Data-to-RAG-Schnellstart für AI Data Engine"]
+* link:../vectorization/view-data-collections.html["Datensammlungen in AIDE anzeigen"]
+* link:../vectorization/zero-to-rag.html["Data-to-RAG-Schnellstart für AIDE"]
 

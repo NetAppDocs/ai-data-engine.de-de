@@ -16,7 +16,7 @@ Gehen Sie mit diesem Workflow von einem neu bereitgestellten AI Data Engine (AID
 
 .Bevor Sie beginnen
 * Sie haben Data compute nodes (DCNs) zum ONTAP Cluster installiert und hinzugefügt.
-* Sie haben die AI Data Engine software für Vektorisierung und Leitplanken installiert und lizenziert.
+* Sie haben die AIDE Software für Vektorisierung und Data Guardrails installiert und lizenziert.
 * Sie haben link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] konfiguriert und Rollen für Administratoren, Dateningenieure und Datenwissenschaftler zugeordnet.
 
 
@@ -48,7 +48,7 @@ Als Data Engineer oder Data Scientist möchten Sie die ausgewählte Teilmenge in
 
 
 .Was kommt als Nächstes?
-* link:../guardrails/define-data-policies.html["Definieren Sie Ihren Datenbestand und Ihre Schutzrichtlinien in AI Data Engine"]
-* link:explore-workspace-metadata.html["Erkunden Sie Arbeitsbereichs-Metadaten in der AI Data Engine Console"]
-* link:create-data-collections.html["Erstellen Sie Datensammlungen in AI Data Engine Console"]
+* link:../guardrails/define-data-policies.html["Definieren Sie Ihren Datenbestand und Guardrail-Richtlinien in AIDE"]
+* link:explore-workspace-metadata.html["Arbeitsbereichsmetadaten in AIDE Console untersuchen"]
+* link:create-data-collections.html["Erstellen Sie Datensammlungen in AIDE Console"]
 

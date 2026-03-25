@@ -24,7 +24,7 @@ Systemverarbeitungslimits beeinflussen die Erstellung von Arbeitsbereichen (typi
 
 .Bevor Sie beginnen
 * Sie benötigen _Storage Administrator_-Berechtigungen, um Arbeitsbereiche zu erstellen und Datensammlungen zuzuordnen.
-* Sie haben die entfernten (per Peering verbundenen) und lokalen Datenquellen bestimmt, die Sie mit dem Workspace und mit AI Data Engine verwenden möchten.
+* Sie haben die entfernten (verbundenen) und lokalen Datenquellen bestimmt, die Sie mit dem Arbeitsbereich und mit AIDE verwenden möchten.
 * Sie haben link:prepare-data-for-aide.html["mindestens einen Datencontainer erstellt"], die der Arbeitsbereich nutzen kann, wie z. B. ein lokales Volume oder ein Volume aus einem verbundenen Cluster.
 +
 
@@ -39,7 +39,7 @@ IMPORTANT: Fügen Sie einem Arbeitsbereich ein Volume hinzu, das Sie während de
 
 == Einen Arbeitsbereich erstellen
 
-Erstellen Sie einen Arbeitsbereich und verknüpfen Sie Datencontainer, die die Daten enthalten, die Sie mit AI Data Engine verwenden möchten.
+Erstellen Sie einen Arbeitsbereich und verknüpfen Sie Datencontainer, die die Daten enthalten, die Sie mit AIDE verwenden möchten.
 
 .Schritte
 . Navigieren Sie im ONTAP System Manager zu *Data Engine > Workspaces*.
@@ -60,7 +60,7 @@ TIP: Wählen Sie ein Intervall, das ein ausgewogenes Verhältnis zwischen Datena
 .Ergebnis
 Der Arbeitsbereichserstellungsprozess dauert je nach zugehörigem Datensatz und dessen Dateianzahl, Dateigröße und anderen Faktoren mehrere Minuten bis Stunden.
 
-Das System extrahiert automatisch Metadaten für alle Datenquellen und speichert sie in einem Metadatenkatalog, mit dem Benutzer die für ihre Projekte benötigten Dateien finden können. Nachdem Sie Benutzer dem Arbeitsbereich zugewiesen haben, können Dateningenieure die zum Arbeitsbereich gehörenden Komponenten über die AI Data Engine Console einrichten und mit ihnen interagieren.
+Das System extrahiert automatisch Metadaten für alle Datenquellen und speichert sie in einem Metadatenkatalog, mit dem Benutzer die für ihre Projekte benötigten Dateien finden können. Nachdem Sie Benutzer dem Arbeitsbereich zugewiesen haben, können Dateningenieure die mit dem Arbeitsbereich verbundenen Komponenten über die AIDE Console einrichten und verwenden.
 
 Der neue Arbeitsbereich wird auf der Seite „Arbeitsbereiche“ im `Creating` Status angezeigt, bis der Prozess abgeschlossen ist und sich der Status in `ready` ändert.
 

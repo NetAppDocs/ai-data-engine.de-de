@@ -11,9 +11,9 @@ summary: Nachdem Sie einen Arbeitsbereich erstellt haben, können Sie Benutzer z
 
 
 [role="lead"]
-Als Speicheradministrator weisen Sie Benutzern je nach Rolle – Dateningenieure, Datenwissenschaftler oder andere Rollen, abhängig von der Struktur und den Bedürfnissen Ihrer Organisation – einen Arbeitsbereich zu. Benutzer melden sich mit ihren Zugangsdaten an der AI Data Engine (AIDE) Console an und greifen auf die Datencontainerressourcen innerhalb des zugewiesenen Arbeitsbereichs zu.
+Als Speicheradministrator weisen Sie Benutzern je nach Rolle – beispielsweise Dateningenieuren, Datenwissenschaftlern oder anderen Rollen, abhängig von der Struktur und den Bedürfnissen Ihres Unternehmens – einen Arbeitsbereich zu. Benutzer melden sich mit ihren Zugangsdaten an der AI Data Engine (AIDE) Console an und greifen auf die Datencontainer-Ressourcen innerhalb des zugewiesenen Arbeitsbereichs zu.
 
-ONTAP System Manager ermöglicht es Ihnen, zu verwalten, welche Benutzer Zugriff auf AI Data Engine Arbeitsbereiche haben. Sie können Benutzer hinzufügen oder entfernen, um zu steuern, wer die Arbeitsbereichsdaten und -aktivitäten anzeigen, bearbeiten und damit interagieren kann.
+ONTAP System Manager ermöglicht es Ihnen, zu verwalten, welche Benutzer Zugriff auf AIDE Workspaces haben. Sie können Benutzer hinzufügen oder entfernen, um zu steuern, wer Daten und Aktivitäten in Workspaces anzeigen, bearbeiten und damit interagieren darf.
 
 .Bevor Sie beginnen
 * Sie benötigen _storage administrator_-Berechtigungen, um den Benutzerzugriff auf Arbeitsbereiche zu verwalten.

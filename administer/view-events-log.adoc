@@ -4,14 +4,14 @@ permalink: administer/view-events-log.html
 keywords: aide, aide system, events, audit log, jobs, activity 
 summary: Sie können die Ereignisse, Jobs und Revisionsprotokoll-Nachrichten, die von AIDE generiert werden, überprüfen, um interne Verarbeitungsprozesse zu verfolgen und potenzielle Probleme zu diagnostizieren. Das AIDE System kann so konfiguriert werden, dass diese Informationen zusammen mit anderen zugehörigen Daten zur weiteren Verarbeitung und Archivierung weitergeleitet werden. 
 ---
-= AIDE-Systemereignisse, Jobs und Revisionsprotokoll
+= AI Data Engine Systemereignisse, Jobs und Revisionsprotokoll anzeigen
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-Als Speicheradministrator können Sie die von AIDE generierten Ereignisse, Jobs und Revisionsprotokollnachrichten überprüfen, um interne Prozesse zu verfolgen und potenzielle Probleme zu diagnostizieren. Das AIDE System kann so konfiguriert werden, dass diese Informationen zusammen mit anderen zugehörigen Daten zur weiteren Verarbeitung und Archivierung weitergeleitet werden.
+Als Speicheradministrator können Sie die von AI Data Engine (AIDE) generierten Ereignisse, Aufträge und Revisionsprotokoll-Meldungen einsehen, um interne Verarbeitungsprozesse zu verfolgen und potenzielle Probleme zu diagnostizieren. Das AIDE-System kann so konfiguriert werden, dass diese Informationen zusammen mit anderen zugehörigen Daten zur weiteren Verarbeitung und Archivierung weitergeleitet werden.
 
 .Bevor Sie beginnen
 * Sie benötigen _Storage-Administrator_-Berechtigungen, um administrative Aufgaben im Zusammenhang mit AIDE ONTAP durchzuführen.
