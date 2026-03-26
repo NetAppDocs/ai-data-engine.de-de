@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: administer/aide-node-replace.html 
-keywords: aide, node replacement, DCN, cluster 
-summary: 'Ersetzen Sie einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster.' 
+keywords: ai data engine, aide, data compute node, dcn, replace node, node replacement, cluster maintenance 
+summary: 'Sie müssen einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster ersetzen, wenn er nicht mehr funktioniert oder aufgrund eines Hardwareausfalls, Upgrades oder Wartungsarbeiten ausgetauscht werden muss. Dies stellt sicher, dass der AIDE Cluster gesund und funktionsfähig bleibt. Das Verfahren kann durchgeführt werden, ohne laufende Dienste zu unterbrechen.' 
 ---
 = Ersetzen Sie einen Knoten in Ihrem AI Data Engine Cluster
 :allow-uri-read: 
@@ -19,8 +19,15 @@ Sie müssen einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster
 
 Bevor Sie einen Knoten in Ihrem AIDE Cluster austauschen, gibt es mehrere Dinge zu beachten.
 
-.System Manager-Anmeldeinformationen
-Sie benötigen _storage administrator_-Berechtigungen, um AIDE-Clusterknotenaustauschaufgaben durchzuführen.
+
+
+=== Anforderungen
+
+Sie benötigen Folgendes:
+
+* Benutzeranmeldeinformationen mit _Storage-Administrator_-Rechten
+* Seriennummer für den neuen Ersatzknoten
+
 
 
 
@@ -32,15 +39,6 @@ Sie sollten sich der folgenden Einschränkungen bewusst sein, wenn Sie einen Kno
 * Sie können den Knotenaustausch nicht mit dem System Manager durchführen.
 * Der neue Knoten sollte mit der Softwareversion des Clusters übereinstimmen; ONTAP wird ihn bei Bedarf aktualisieren.
 * Der ausgefallene Knoten darf nicht eingeschaltet werden, während er mit dem Cluster-Netzwerk verbunden ist, um IP-Adresskonflikte zu vermeiden.
-
-
-
-
-=== Anforderungen
-
-Sie benötigen Folgendes:
-
-* Seriennummer für den neuen Ersatzknoten
 
 
 

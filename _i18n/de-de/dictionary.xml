@@ -5,7 +5,6 @@
   <block id="0f6902c11864c7f6ea3e7e97543390ff" category="section-title">Bereiten Sie den Austausch eines Knotens vor</block>
   <block id="192d4730c4474133e43ad79a17bc2b0a" category="paragraph">Bevor Sie einen Knoten in Ihrem AIDE Cluster austauschen, gibt es mehrere Dinge zu beachten.</block>
   <block id="3d0290aecf6f3d97cfe6bc8642514dfb" category="paragraph-title">System Manager-Anmeldeinformationen</block>
-  <block id="214815a740557c20d025260617d488f6" category="paragraph">Sie benötigen _storage administrator_-Berechtigungen, um AIDE-Clusterknotenaustauschaufgaben durchzuführen.</block>
   <block id="e3e16bb73c0250a6a229fb457b4f957e" category="section-title">Einschränkungen</block>
   <block id="c236764b0a821599642d7a5689c7dec8" category="paragraph">Sie sollten sich der folgenden Einschränkungen bewusst sein, wenn Sie einen Knoten in Ihrem AIDE Cluster ersetzen:</block>
   <block id="3bc43fb96432ecb013dfd886119f4664" category="list-text">Der Austausch von Knoten wird nur über die CLI und optional die REST API unterstützt.</block>
@@ -879,8 +878,6 @@
   <block id="b3eac18ae7c204c556f62dd66a01d35d" category="list-text">Melden Sie sich mit Ihren IdP-Zugangsdaten an; nach erfolgreicher Authentifizierung werden Sie zum System Manager zurückgeleitet.</block>
   <block id="83ae1104f2752dedd3f734e862e77079" category="inline-link">OpenID Foundation</block>
   <block id="d6dc3de1eee9ae466c18b32abc3802b3" category="list-text"><block ref="d6dc3de1eee9ae466c18b32abc3802b3" category="inline-link-rx"></block></block>
-  <block id="79ae1a530fac5c3d3243825c084b579d" category="inline-link">ONTAP OAuth 2.0-Implementierung</block>
-  <block id="f3bab0602006a91da3ab07cad24e13f8" category="list-text"><block ref="f3bab0602006a91da3ab07cad24e13f8" category="inline-link-rx"></block></block>
   <block id="00f45165b3cfbcdf086cee49c25c82c9" category="summary">Erfahren Sie, wie Sie die Schienensätze installieren und die Datenrechenknoten im Schrank befestigen.</block>
   <block id="d08f231bff757ee25df913223bf39e35" category="doc">Installieren Sie Ihre Daten-Compute-Nodes für AI Data Engine</block>
   <block id="69e42da6d542e4665008dcc83755451b" category="paragraph">Installieren und sichern Sie Ihre Data Compute Nodes im Schrank.</block>
@@ -1402,7 +1399,6 @@
   <block id="b001ec8ec4133b6f8e6b8db16e7850ff" category="paragraph">Für Datenrechenknoten verwenden Sie 4x100GbE-Breakout-Kabel, um die e4a/e5a-Ports für die Clusterverbindungen anzuschließen.</block>
   <block id="788899ea47f1311b79403513bff040e9" category="paragraph">*4x100GbE Breakout-Kabel*</block>
   <block id="ba1f39989ab5fafce1803b42f3c54d45" category="paragraph">Um die Hardware zu verkabeln, verbinden Sie zuerst die Datenrechenknoten mit Ihrem Datennetzwerk, dann verbinden Sie die Datenrechenknoten mit den Cluster-Switches.</block>
-  <block id="e6f8cfd22de27cfd8ccde79f61a46bd1" category="summary">Ersetzen Sie einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster.</block>
   <block id="32f794268679c746fb213c9e0c2c7e31" category="doc">Ersetzen Sie einen Knoten in Ihrem AI Data Engine Cluster</block>
   <block id="d1293847699b10ee9673528d7b2c04bd" category="doc">Fügen Sie Ihrem AI Data Engine Cluster Datenrechenknoten hinzu</block>
   <block id="e224a7cdea2fcc18f05199345c841386" category="paragraph">Die einzelne IP wird über die DCNs verteilt und als Frontend-Adresse für AIDE Console und zugehörige APIs verwendet.</block>
@@ -1512,4 +1508,31 @@
   <block id="3f5ac75246d8594dc42a3814252da7ce" category="list-text"><block ref="8ceb652f32f46e0c9a1975fc579b542f" category="inline-link-rx"></block> die Daten enthält, die Sie mit AIDE verwenden möchten.</block>
   <block id="119a03c8a8d1576eafb9b8f6ac04c12f" category="inline-link-macro">Wählen Sie die Volumes aus, die Sie mit AIDE verwenden möchten</block>
   <block id="0d5f62005a0ac8e87f1aaffb995ce7de" category="list-text"><block ref="3ddf7be728c954623bdc7abbf7625bd2" category="inline-link-macro-rx"></block>.</block>
+  <block id="4664a9ced36cba14050a4fcbf1450a27" category="list-text">Benutzeranmeldeinformationen mit _Storage-Administrator_-Rechten</block>
+  <block id="eadf44f76dffdd84c31f1c9d356c0868" category="list-text">Die OIDC-Konfiguration besteht im Wesentlichen aus zwei Schritten. Zuerst müssen Sie die grundlegende OIDC-Konfiguration mit System Manager durchführen. Anschließend können Sie die Einrichtung abschließen, indem Sie die externe Rollenzuordnung mit der ONTAP CLI konfigurieren.</block>
+  <block id="5ac833147e752f92ac0c80b33430fb9f" category="admonition">Sie können die Metadata URI angeben, um die OIDC-Konfigurationsfelder im System Manager automatisch auszufüllen. Prüfen Sie die Dokumentation Ihres IdP, um das genaue URI-Format zu erhalten.</block>
+  <block id="624871063b499c9a41dbf91f4f294d7c" category="paragraph">Vervollständigen Sie die OIDC-Einrichtung, indem Sie die externe Rollenzuordnung konfigurieren.</block>
+  <block id="3c0b11b1d3509faa0a7bbac825211a4a" category="section-title">Konfigurieren Sie die externe Rollenzuordnung mithilfe der CLI</block>
+  <block id="4ae4bdbad8969579acc1dc1db436776d" category="paragraph">Die externe Rollenzuordnung ist eine ONTAP Funktion, mit der Sie die Rollen externer IdP den entsprechenden ONTAP-Rollen zuordnen können. Sie müssen diese Zuordnung konfigurieren, um sicherzustellen, dass Benutzern, die sich über OIDC authentifizieren, die entsprechenden RBAC-Berechtigungen in ONTAP gewährt werden.</block>
+  <block id="4cf903122d76266e6c91111b522b6d5f" category="paragraph">Diese Aufgabe ordnet den Data Engineer und den Data Scientist den entsprechenden ONTAP Rollen zu. Sie müssen die Befehlsbeispiele mit den entsprechenden Rollennamen basierend auf Ihrer Umgebung aktualisieren. Beachten Sie, dass Sie die Rolle des Storage Administrators bereits der ONTAP<block ref="21232f297a57a5a743894a0e4a801fc3" prefix=" " category="inline-code"></block> Rolle während der grundlegenden OIDC-Konfiguration im System Manager zugeordnet haben sollten.</block>
+  <block id="7c05dc11a263c8c571a6a666a4c4d4b3" category="list-text">Melden Sie sich über SSH mit einem Konto mit Administratorrechten an der ONTAP CLI an.</block>
+  <block id="258b991bef7bf176457c18935f6166d8" category="list-text">Konfigurieren Sie die Rollenzuordnung für die Rolle des Data Engineer; zum Beispiel:</block>
+  <block id="cd5dcea2498cb30a3d7de0f356155044" category="list-text">Konfigurieren Sie die Rollenzuordnung für die Rolle des Data Scientist; zum Beispiel:</block>
+  <block id="4b527243ee5adebf301c5c9ab3aa1e5a" category="inline-link">OAuth 2.0 externe Rollenzuordnung in ONTAP</block>
+  <block id="7d8d22eff571b389da4ee3b87fac44f2" category="list-text"><block ref="7d8d22eff571b389da4ee3b87fac44f2" category="inline-link-rx"></block></block>
+  <block id="e9c44bbfd795a5d63d74c6a77afee70d" category="paragraph">Rechtliche Hinweise bieten Zugriff auf Urheberrechtsvermerke, Marken, Patente und mehr.</block>
+  <block id="6016a2b341113bf496b719905398ecd2" category="section-title">Copyright</block>
+  <block id="52009bb7ee17227f566cd26a02caee56" category="inline-link-macro"><block ref="52009bb7ee17227f566cd26a02caee56" category="inline-link-rx"></block></block>
+  <block id="a1a9afcf552a769c282769271829889a" category="paragraph"><block ref="a1a9afcf552a769c282769271829889a" category="inline-link-macro-rx"></block></block>
+  <block id="126a02652da6de02962cf1b654fd6376" category="section-title">Marken</block>
+  <block id="c4ce4761e466527d26b3e3d5ed1006fd" category="paragraph">NETAPP, das NETAPP-Logo und die auf der NetApp Trademarks-Seite aufgeführten Marken sind Marken von NetApp, Inc. Andere Firmen- und Produktnamen können Marken ihrer jeweiligen Eigentümer sein.</block>
+  <block id="f99aa604031e5049799e73b5c3748a98" category="inline-link-macro"><block ref="f99aa604031e5049799e73b5c3748a98" category="inline-link-rx"></block></block>
+  <block id="5d545fe5152641e2ebe654e336e520e5" category="paragraph"><block ref="5d545fe5152641e2ebe654e336e520e5" category="inline-link-macro-rx"></block></block>
+  <block id="be89498d2f8a22ce47c02ba9795fe2af" category="section-title">Patente</block>
+  <block id="d0b19d36be2c5f16e9aef46c8a452d3d" category="paragraph">Eine aktuelle Liste der NetApp owned patents finden Sie unter:</block>
+  <block id="88e5eabd3917048b6927c42496b98f86" category="inline-link-macro"><block ref="88e5eabd3917048b6927c42496b98f86" category="inline-link-rx"></block></block>
+  <block id="dd38f906b37d412de7d1c1dcf4cbf31c" category="paragraph"><block ref="dd38f906b37d412de7d1c1dcf4cbf31c" category="inline-link-macro-rx"></block></block>
+  <block id="56c34c6410dd45c5cec44149ad0ce037" category="section-title">Datenschutzrichtlinie</block>
+  <block id="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-macro"><block ref="8acb58cbd50ef1b468a020ee0bd351d3" category="inline-link-rx"></block></block>
+  <block id="2352c4e1f4d0024ade0869e00e6243f4" category="paragraph"><block ref="2352c4e1f4d0024ade0869e00e6243f4" category="inline-link-macro-rx"></block></block>
 </blocks>
