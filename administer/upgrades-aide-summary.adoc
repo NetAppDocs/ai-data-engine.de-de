@@ -41,8 +41,8 @@ AIDE unterstützt die automatische Software-Update-Funktionalität von ONTAP nic
 
 Veröffentlichungsarten und -umfang:
 
-* ONTAP Hauptversionen (9.x.x) und AIDE Hauptversionen (9.x.x U0) führen neue Funktionen, APIs oder Änderungen ein, die die ONTAP Integration betreffen.
-* ONTAP patch releases (9.x.x Px) und AIDE update releases (9.x.x Ux) enthalten Korrekturen und Aktualisierungen, die die ONTAP Integration nicht beeinträchtigen.
+* ONTAP Hauptversionen (9.x.x) und AIDE Hauptversionen (9.x.xU0) führen neue Funktionen, APIs oder Änderungen ein, die die ONTAP Integration betreffen.
+* ONTAP patch releases (9.x.x Px) und AIDE update releases (9.x.xUx) enthalten Korrekturen und Aktualisierungen, die die ONTAP Integration nicht beeinträchtigen.
 
 
 
@@ -62,10 +62,10 @@ AIDE software wird als "U"-Releases veröffentlicht. Ein AIDE Major Release ist 
 | AIDE Releases | Unterstützte ONTAP Versionen 
 
 
-| 9.18.1 U0 | 9.18.1 GA und alle 9.18.1 Px 
+| 9.18.1U0 | 9.18.1 GA und alle 9.18.1 Px 
 
 
-| 9.18.1 U1 und später | 9.18.1 GA und alle 9.18.1 Px 
+| 9.18.1U1 und später | 9.18.1 GA und alle 9.18.1 Px 
 |===
 [NOTE]
 ====
@@ -83,13 +83,13 @@ Die folgenden Beispiele verwenden hypothetische zukünftige Versionen, um die zu
 | Wenn Ihre aktuelle AIDE Release ist… | Und Ihre angestrebte AIDE release ist… | Ihr Upgrade- oder Updatepfad ist… 
 
 
-| 9.18.1 U0 | 9.18.1 U1 | Direkt 
+| 9.18.1U0 | 9.18.1U1 | Direkt 
 
 
-| 9.18.1 U0 | 9.18.1 U3 | Direkt (Sie können von jeder Ux auf jede spätere Ux in 9.18.1 aktualisieren) 
+| 9.18.1U0 | 9.18.1U3 | Direkt (Sie können von jeder Ux auf jede spätere Ux in 9.18.1 aktualisieren) 
 
 
-| 9.18.1 U1 | 9.18.1 U3 | Direkt (Sie können von jeder Ux auf jede spätere Ux in 9.18.1 aktualisieren) 
+| 9.18.1U1 | 9.18.1U3 | Direkt (Sie können von jeder Ux auf jede spätere Ux in 9.18.1 aktualisieren) 
 |===
 
 
