@@ -1,0 +1,106 @@
+---
+sidebar: sidebar 
+permalink: rest/resources.html 
+keywords: aide, rest api, resources, dcn, data engine, governance, audit, policies, jobs 
+summary: 'Die ONTAP REST API umfasst neue Endpunkte zur Unterstützung der Funktionen und Möglichkeiten der AI Data Engine (AIDE).' 
+---
+= AIDE REST-API-Ressourcen
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die ONTAP REST API umfasst neue Endpunkte zur Unterstützung der Funktionen und Möglichkeiten der AI Data Engine (AIDE).
+
+
+
+== Neue Ressourcenkategorien in der ONTAP REST API für AFX
+
+Es wurden zwei neue Ressourcenkategorien zur ONTAP REST API hinzugefügt, um die AIDE-Funktionalität und -Features zu unterstützen.
+
+
+
+=== DCN
+
+DCN-Ressourcen unterstützen primär die Infrastruktur und das Lebenszyklusmanagement von Datenrechenknoten. Diese Endpunkte dienen der Verwaltung und Überwachung des DCN-Clusters selbst, einschließlich Knoten- und Clustermanagement, Telemetrie und Zustandsüberwachung sowie ähnlicher Plattformaufgaben. ONTAP fungiert als DCN-Client und erstellt REST-Anfragen an die auf den DCNs ausgeführten Dienste, anstatt als reiner Proxy zu dienen. Zu den typischen Funktionen gehören:
+
+* DCN Cluster sowie Knoteninventar und -status.
+* DCN-Cluster-Lebenszyklusoperationen, einschließlich der Möglichkeit, Knoten zu erstellen, zu erweitern, zu ersetzen und zu entfernen.
+* Telemetrie- und Betriebsprüfungen, die ONTAP zur Koordination mit dem DCN Cluster benötigt.
+
+
+Alle diese Funktionen werden im Allgemeinen unter dem ONTAP REST API-Unterbaum  `/api/dcn` bereitgestellt und stehen zur Verfügung, wenn ONTAP in einer Umgebung mit angeschlossenen und aktiven DCNs ausgeführt wird.
+
+ONTAP stellt außerdem zwei HTTP-Pfadpräfixe bereit, die direkt an die DCNs weitergeleitet werden:
+
+* Konsolen- oder UI-Proxy ohne ONTAP Authentifizierung: `/console/...`
+* DCN Proxy, der ONTAP Authentifizierung erfordert und zur Überwachung verwendet wird: `/dcn/...`
+
+
+
+
+=== Data Engine
+
+Die Data Engine-Ressourcen unterstützen die AIDE-Datenebene sowie die Governance- und Metadatenverwaltung. Die Endpunkte konzentrieren sich auf die Verwaltung der Objekte, auf denen AIDE arbeitet. Die Funktionen lassen sich grob in Unterkategorien einteilen.
+
+
+
+==== Kernobjektmodell und CRUD
+
+Es gibt mehrere Endpunkte, die Zugriff auf zentrale AIDE Objekte ermöglichen, darunter:
+
+* Arbeitsbereiche und Arbeitsbereichsversionen
+* Entitäten
+* Zugriffskontrolllisten (ACLs)
+* Anfragen
+* Datenquellen
+* Datensammlungen
+
+
+
+
+==== Governance, Audit und unterstützende Services
+
+Es gibt mehrere Endpunkte, die Zugang zu Governance- und sonstigen Unterstützungsdiensten bieten, darunter:
+
+* Richtlinien und Richtlinienmanagement
+* Ereignisse und Prüfprotokolle im Zusammenhang mit AIDE-Operationen
+* Autosupport-Konfiguration
+* Anwendungs- und Funktionsumschalter für AIDE-Funktionen
+* Governance-Bereiche, die typischerweise von Rollen genutzt werden
+
+
+Beachten Sie außerdem Folgendes:
+
+* Viele der langlaufenden Operationen (Erstellen, Ändern, Löschen) werden asynchron ausgeführt und geben eine Jobreferenz zurück, deren Status Clients abfragen können.
+* In vielen Fällen leitet ONTAP Anfragen nicht weiter, sondern rekonstruiert sie für die Data Engine-Endpunkte und übersetzt die Antworten im Rahmen seines DCN-Clientverhaltens.
+
+
+
+
+== Aktualisierungen bestehender ONTAP REST API-Ressourcen
+
+Zusätzlich zu den neuen Ressourcenkategorien gibt es Aktualisierungen an bestehenden ONTAP REST API-Ressourcen.
+
+
+
+=== Sicherheit
+
+Es wurden mehrere neue Endpunkte und Funktionen zum Sicherheitsbereich der ONTAP REST API hinzugefügt, um AIDE zu unterstützen, darunter:
+
+* Zertifikate und Zertifikatsverwaltung
+* OIDC-Authentifizierungskonfiguration
+* Benutzeridentität einschließlich Rolle und Berechtigungen
+
+
+
+
+== Verwandte Informationen
+
+* link:../rest/learn-rest-api.html["Erfahren Sie mehr über die AIDE REST API"]
+* https://docs.netapp.com/us-en/ontap-automation/resources/overview_categories.html["Ressourcenkategorien in der ONTAP REST API"^]
+

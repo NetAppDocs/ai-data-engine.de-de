@@ -1,0 +1,65 @@
+---
+sidebar: sidebar 
+permalink: rest/first-api-call.html 
+keywords: afx rest api, aide rest api, first api call, curl command, access token, verify permissions 
+summary: Sie können einen einfachen curl-Befehl ausführen, um mit der Nutzung der AIDE-Erweiterungen für die ONTAP REST API zu beginnen. 
+---
+= Ihr erster AIDE REST API-Aufruf
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Sie können einen einfachen curl-Befehl ausführen, um mit der Nutzung der AIDE-Erweiterungen für die ONTAP REST API zu beginnen.
+
+.Über diese Aufgabe
+Der Beispielaufruf der REST-API gibt Benutzernamen, Rolle und Berechtigungen des Benutzers zurück, der mit dem im Aufruf bereitgestellten Zugriffstoken verknüpft ist. Dies ist eine einfache Möglichkeit, Ihr Zugriffstoken mit den erforderlichen Berechtigungen zu überprüfen. Zur Vereinfachung werden Variablen im Bash-Stil verwendet.
+
+.Bevor Sie beginnen
+Zusätzlich zur Verfügbarkeit des curl-Dienstprogramms auf Ihrem lokalen Rechner benötigen Sie Folgendes:
+
+* IP-Adresse oder FQDN des ONTAP Cluster-Management-LIF
+* Ein von Ihrem Identitätsanbieter für die Rolle _storage administrator_ ausgestelltes Zugriffstoken
+
+
+.Schritte
+. Führen Sie den folgenden Befehl in der CLI Ihres lokalen Arbeitsplatzes aus:
++
+[source, curl]
+----
+curl --request GET "https://$FQDN_IP/api/security/login/whoami" \
+--include --header "Accept: */*" \
+--header "Authorization: Bearer $TOKEN_ADMIN"
+----
+. Überprüfen Sie die Antwort; zum Beispiel:
++
+[listing]
+----
+{
+  "username": "storageAdmin@examplecompany.onmicrosoft.com",
+  "role": [
+    "admin"
+  ],
+  "privileges": [
+    {
+      "path": "/api",
+      "access": "all"
+    }
+  ],
+  "_links": {
+    "self": {
+      "href": "/api/security/login/whoami"
+    }
+  }
+}
+----
+
+
+.Verwandte Informationen
+* link:../rest/authentication-authorization.html["Authentifizierung und Autorisierung für die AIDE REST API"]
+* https://docs.netapp.com/us-en/ontap-afx/rest/first-call.html["Ihr erster REST-API-Aufruf des AFX-Speichersystems"^]
+

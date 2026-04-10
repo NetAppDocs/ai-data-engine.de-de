@@ -1,0 +1,93 @@
+---
+sidebar: sidebar 
+permalink: rest/authentication-authorization.html 
+keywords: authentication, authorization, REST API, AIDE, ONTAP, OAuth 2.0, OpenID Connect, access token 
+summary: Bevor Sie die ONTAP REST API mit AIDE-Erweiterungen verwenden, sollten Sie sich mit den Optionen für Authentifizierung und Autorisierung vertraut machen. 
+---
+= Authentifizierung und Autorisierung für die AIDE REST API
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie die ONTAP REST API mit AIDE-Erweiterungen verwenden, sollten Sie sich mit den Optionen für Authentifizierung und Autorisierung vertraut machen.
+
+
+
+== ONTAP REST API-Authentifizierungsoptionen
+
+Die ONTAP REST API unterstützt zwei primäre Authentifizierungstechniken.
+
+Basis-Authentifizierung:: Die Basic Authentication ist eine einfache Technik, die als Teil des HTTP-Protokolls definiert ist. Bei der Basic Authentication geben Sie einen Benutzernamen und ein Passwort (kombiniert und in Base64 kodiert) im Authorization-Header Ihrer API-Aufrufe an. Die Verwendung mit der AIDE REST API wird nicht empfohlen, kann aber weiterhin mit bestehenden ONTAP API-Aufrufen genutzt werden.
+OAuth 2.0-Authentifizierung:: Ab Version 9.14.1 unterstützt ONTAP auch OAuth 2.0. Dies ist ein sichereres und flexibleres Authentifizierungsframework. Bei der Verwendung von OAuth 2.0 müssen Sie ein Zugriffstoken von einem externen Identitätsanbieter (IdP) anfordern und dieses jeder HTTP-Anfrage beifügen.
+
+
+
+
+== AI Data Engine und OpenID Connect
+
+OpenID Connect (OIDC) basiert auf OAuth 2.0 und bietet eine sichere und standardisierte Option zur Authentifizierung von Benutzern und Anwendungen. OIDC ist erforderlich, um auf die Funktionen von DCN und AIDE zuzugreifen. Nachdem Sie link:../install-setup/configure-oidc.html["OpenID Connect für AIDE in ONTAP konfigurieren"] haben, sind der Zugriff auf den ONTAP System Manager und die on-box Swagger-Seite durch die OIDC-Authentifizierung geschützt.
+
+Im Rahmen der OIDC-Konfiguration im ONTAP System Manager wird OAuth 2.0 automatisch aktiviert und ein OAuth 2.0-Client erstellt. Anschließend können Sie über den *token_endpoint* Ihres IdP ein Zugriffstoken abrufen, das sich üblicherweise aus der IdP-Metadaten-URI ermitteln lässt. Die Zugriffstoken müssen im Authorization-Header Ihrer API-Aufrufe enthalten sein, um den Zugriff auf AIDE-Ressourcen zu authentifizieren und zu autorisieren.
+
+
+
+== Verbesserungen der ONTAP RBAC-Implementierung
+
+Der Zugriff auf die AIDE REST API ist durch das rollenbasierte Zugriffskontrollsystem (RBAC) von ONTAP geschützt. Benutzer müssen in ONTAP die entsprechenden Rollen und Berechtigungen zugewiesen bekommen, um auf AIDE-Ressourcen zuzugreifen und Operationen über die REST API durchzuführen.
+
+Es gibt zwei zusätzliche ONTAP-Rollen, die AIDE unterstützen. Die entsprechenden externen Rollen, die bei Ihrem IdP definiert sind, müssen diesen ONTAP-Rollen zugeordnet werden, um den erforderlichen Zugriff auf AIDE-Ressourcen zu gewährleisten.
+
+
+NOTE: Zusätzlich zu den beiden neuen ONTAP Rollen müssen Sie die Rolle des externen Speicheradministrators der bestehenden ONTAP `admin` Rolle zuordnen. Weitere Informationen finden Sie unter link:../get-started/aide-components.html["AI Data Engine Komponenten und rollenbasierte Interaktionen"] und link:../install-setup/configure-oidc.html["OpenID Connect für AIDE in ONTAP konfigurieren"].
+
+Dateningenieur:: Dies ist eine vordefinierte ONTAP-Administratorrolle für den AIDE Data Engineer. Sie beschränkt den Zugriff auf nur die Endpunkte sowie die entsprechenden CLI-Befehlsverzeichnisse, die für die Durchführung von AIDE Data Engineering-Aufgaben benötigt werden. Zu den Aufgaben gehören die Arbeit mit Arbeitsbereichen und Datensammlungen, das Anzeigen von Jobs und die Verwendung der Dateivorschau, sofern zulässig.
+Datenwissenschaftler:: Dies ist eine zweite vordefinierte ONTAP-Administratorrolle für den AIDE Data Scientist. Sie beschränkt den Zugriff ebenfalls auf nur die REST-APIs und die entsprechenden CLI-Befehlsverzeichnisse, die für die Workflows des AIDE Data Scientist benötigt werden.
+
+
+
+
+== Zugriffstoken anfordern
+
+Sie benötigen ein Zugriffstoken, um es mit dem REST-API-Aufruf zu verwenden. Die Tokenanforderung erfolgt außerhalb von ONTAP und die genaue Vorgehensweise hängt vom Autorisierungsserver und dessen Konfiguration ab. Sie können das Token über einen Webbrowser, mit einem curl-Befehl oder mithilfe einer Programmiersprache anfordern. Zur Veranschaulichung wird ein Beispiel gezeigt, wie ein Zugriffstoken von Microsoft Entra ID mit curl angefordert werden kann.
+
+.Bevor Sie beginnen
+Beachten Sie Folgendes:
+
+* Sie müssen link:../install-setup/configure-oidc.html["OpenID Connect für AIDE in ONTAP konfigurieren"] für einen AIDE-fähigen Cluster.
+* Ermitteln Sie den  `token_endpoint` Ihres IdP, der in der Regel über die OIDC-Metadaten-URI verfügbar ist.
+* Ermitteln Sie anhand Ihres IdP die passenden Werte für die Konfiguration, wie z. B. CLIENT_ID.
+* Konfigurationsparameter wie TENANT_ID, CLIENT_ID und CLIENT_SECRET liegen im UUID-Format vor. USERNAME und PASSWORD sind Anmeldeinformationen im Klartext.
+* Optional können Sie die Variablenwerte in der Bash-Shell für die Verwendung mit dem curl-Befehl definieren.
+
+
+.Schritte
+. Führen Sie den folgenden Befehl in der CLI Ihres lokalen Arbeitsplatzrechners aus und geben Sie Werte für die Variablen entsprechend Ihrer Umgebung an:
++
+[source, bash]
+----
+curl --location "https://login.microsoftonline.com/$TENANT_ID/oauth2/v2.0/token" \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode "grant_type=password" \
+--data-urlencode "client_id=$CLIENT_ID" \
+--data-urlencode "client_secret=$CLIENT_SECRET" \
+--data-urlencode "scope=$SCOPE/.default" \
+--data-urlencode "username=$USERNAME" \
+--data-urlencode "password=$PASSWORD"
+----
+. Prüfen Sie die Antwort und extrahieren Sie das Zugriffstoken zur Verwendung in einem REST-API-Aufruf.
+
+
+
+
+== Verwandte Informationen
+
+* link:../get-started/aide-components-data-users.html["Erfahren Sie, wie Dateningenieure und Datenwissenschaftler mit den AIDE-Komponenten von AI Data Engine arbeiten."]
+* https://docs.netapp.com/us-en/ontap/authentication/overview-oauth2.html["ONTAP Authentifizierung und Autorisierung mit OAuth 2.0"^]
+* https://docs.netapp.com/us-en/ontap-automation/workflows/prepare_workflows.html["Bereiten Sie sich auf die Verwendung der ONTAP REST API-Workflows vor."^]
+* https://docs.netapp.com/us-en/ontap-automation/rest/rbac_overview.html["RBAC-Sicherheit mit der ONTAP REST API"^]
+
