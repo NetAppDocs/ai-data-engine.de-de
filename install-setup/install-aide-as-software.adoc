@@ -38,6 +38,7 @@ Sie benötigen eine Möglichkeit, eine Verbindung zum Internet oder zum entsprec
 * Auf Ihrem ONTAP AFX-Cluster läuft ONTAP 9.18.1 oder höher.
 * Genau drei Server, die die Mindesthardwareanforderungen (CPU, Arbeitsspeicher, NIC, Speicher) erfüllen, sind in Betrieb.
 * Red Hat Enterprise Linux (RHEL) 9.7 ist auf jedem Server installiert
+* Mindestens 70 GB freier Speicherplatz müssen in der  `/var` Partition für die Festplatten-Subsystem-Partitionierung verfügbar sein.
 
 
 .Netzwerkplan wird beschlossen

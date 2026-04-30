@@ -91,7 +91,8 @@ Für jeden Drittanbieterserver werden insgesamt sechs Ports für AIDE software a
 | *Netzwerkgeschwindigkeit*  a| 
 Für die Ausführung der AIDE software auf Servern von Drittanbietern werden folgende Netzwerkgeschwindigkeiten unterstützt:
 
-*** *Cluster- und Datenanschlüsse* – 100 GbE oder höher empfohlen
+*** *Cluster-Ports* - 100 GbE
+*** *Datenanschlüsse* – 100 GbE oder höher
 *** *Management-Port* – 1 GbE oder höher
 
 
@@ -99,6 +100,9 @@ Für die Ausführung der AIDE software auf Servern von Drittanbietern werden fol
 
 | *Festplattenspeicher*  a| 
 512GB oder höher
+
+
+NOTE: Für die Partitionierung des Festplatten-Subsystems muss im  `/var`-Verzeichnis 70 GB freier Speicherplatz verfügbar sein.
 
 |===
 
