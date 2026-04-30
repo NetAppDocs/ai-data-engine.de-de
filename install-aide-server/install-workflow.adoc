@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: install-aide-server/install-workflow.html 
+keywords: aide, ai, data engine, ai data engine, afx, afx 1k, install, setup, workflow, metadata engine, mde, third-party servers, hardware installation, cabling, power on, ontap cluster 
+summary: Beginnen Sie mit der Installation und Einrichtung Ihrer AI Data Engine auf Servern von Drittanbietern und stellen Sie diese in Ihrer ONTAP Umgebung bereit. 
+---
+= Installations- und Einrichtungsworkflow für AI Data Engine auf Servern von Drittanbietern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um Ihre AIDE software auf Servern von Drittanbietern zu installieren und zu konfigurieren, installieren und verkabeln Sie die Hardwarekomponenten, schalten das System ein und richten Ihren ONTAP Cluster ein.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]link:aide-mde-server-hardware-requirements.html["Überprüfen Sie die Hardware-Installationsanforderungen"]
+[role="quick-margin-para"]
+Stellen Sie sicher, dass Sie über ein vorhandenes AFX 1K-Speichersystem verfügen, und prüfen Sie anschließend die Hardwareanforderungen für die Installation von Servern von Drittanbietern oder von NetApp bereitgestellten Datenrechenknoten. Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["AFX 1K Speichersystem-Installationsdokumentation"^].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"]link:deploy-hardware.html["Installieren Sie die Server von Drittanbietern"]
+[role="quick-margin-para"]
+Server von Drittanbietern sollten gemäß den Anweisungen des Herstellers für Ihr spezifisches Servermodell installiert werden.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"]link:cable-hardware.html["Verkabeln Sie Ihre Drittanbieterserver"]
+[role="quick-margin-para"]
+Um die Hardware zu verkabeln, verbinden Sie zuerst die Server des Drittanbieters mit Ihrem Datennetzwerk und anschließend die Server des Drittanbieters mit den Cluster-Switches.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"]link:power-on-hardware.html["Schalten Sie Ihre Drittanbieterserver ein"]
+[role="quick-margin-para"]
+Nach der Installation des Racks und der Verkabelung Ihrer Hardware sollten Sie Ihre Drittanbieterserver und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, sofern diese noch nicht eingeschaltet sind.

@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: install-setup/cable-hardware.html 
+permalink: install-dcn/cable-hardware.html 
 keywords: aide, ai, data engine, ai data engine dcn, data compute node, afx, afx 1k, cable controllers, Cisco Nexus 9332D-GX2B, Cisco Nexus 9364D-GX2A, switches, switch, cable hardware, cable storage shelves, cable data compute nodes, cable network, cable cluster, cable host network 
 summary: Erfahren Sie, wie Sie die AIDE-Kabel an Ihr Netzwerk anschließen und die Data Compute Nodes verkabeln. 
 ---
@@ -11,28 +11,28 @@ summary: Erfahren Sie, wie Sie die AIDE-Kabel an Ihr Netzwerk anschließen und d
 
 
 [role="lead"]
-Verbinden Sie Ihre Data Compute Nodes mit den Netzwerk-Switches des Host-Netzwerks und des Clusters, um die Verarbeitung von KI-Workloads und die Integration mit Ihrem AFX 1K-Speichersystem zu ermöglichen. Dieses Verfahren verwendet 100GbE-Verbindungen sowohl für den Netzwerkzugriff als auch für die Clusterkommunikation, sodass die Nodes die bestehende Clusterinfrastruktur nutzen können, ohne das AFX-System herunterzufahren.
+Verbinden Sie Ihre Datenrechenknoten mit den Host-Netzwerk- und Cluster-Netzwerk-Switches, um die Verarbeitung von KI-Workloads und die Integration mit Ihrem AFX 1K-Speichersystem zu ermöglichen. Dieses Verfahren nutzt Verbindungen sowohl für den Netzwerkzugriff als auch für die Clusterkommunikation, sodass die Knoten die bestehende Clusterinfrastruktur nutzen können, ohne das AFX-System herunterzufahren.
 
 .Über diese Aufgabe
-Diese Verfahren zeigen gängige Konfigurationen. Die spezifische Verkabelung hängt von den für Ihr Speichersystem bestellten Komponenten ab. Ausführliche Konfigurationsdetails und Steckplatzprioritäten finden Sie unter link:https://hwu.netapp.com["NetApp Hardware Universe"^].
+Diese Verfahren zeigen gängige Konfigurationen. Die spezifische Verkabelung hängt von den für Ihr Speichersystem bestellten Komponenten ab.
 
 
-NOTE: Sie müssen das AFX 1K storage system beim Verkabeln der Data Compute Node nicht ausschalten. Sie können die Data Compute Node zu einem bestehenden AFX 1K storage system hinzufügen, das bereits eingeschaltet und konfiguriert ist.
+NOTE: Das AFX 1K-Speichersystem muss beim Verkabeln der NetApp Datenrechenknoten nicht ausgeschaltet werden. Sie können die Datenrechenknoten zu einem bereits eingeschalteten und konfigurierten AFX 1K-Speichersystem hinzufügen. Spezifische Verkabelungsanweisungen für Server von Drittanbietern finden Sie in der Installationsdokumentation Ihres Servermodells.
 
 .Bevor Sie beginnen
 * Sie haben bereits ein AFX 1K-Speichersystem installiert. Informationen zur Installation des AFX 1K-Speichersystems finden Sie unter link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["AFX 1K Speichersystem-Installationsdokumentation"^].
 * Die erforderlichen Netzwerk-Switches sind installiert und konfiguriert. Wenden Sie sich an Ihren Netzwerkadministrator, um Informationen zum Anschluss des Systems an Ihre Netzwerk-Switches zu erhalten.
-* Sie haben die link:../install-setup/cable-overview.html["Verkabelungsanforderungen für die Data Compute Node"] überprüft.
+* Sie haben die Verkabelungsanforderungen für Ihre Server von Drittanbietern oder von NetApp bereitgestellte Datenrechenknoten überprüft. Informationen zur Verkabelungskonfiguration finden Sie unter link:cable-overview.html["Verkabelungsanforderungen für die Data Compute Node"].
 
 
 
-NOTE: Mindestens drei Data Compute Nodes sind erforderlich, um AI Data Engine bereitzustellen.
+NOTE: Drei von NetApp bereitgestellte Data-Compute-Knoten sind erforderlich, um AI Data Engine bereitzustellen.
 
 
 
 == Schritt 1: Verbinden Sie die Data Compute Nodes mit dem Hostnetzwerk
 
-Sie können die Data Compute Node-Ports mit Ihrem Host-Netzwerk verbinden.
+Für von NetApp bereitgestellte Datenrechenknoten können Sie die Ports der Datenrechenknoten mit Ihrem Host-Netzwerk verbinden.
 
 .Schritte
 . Verbinden Sie Port e4b der folgenden Data Compute Nodes mit dem Ethernet-Datennetzwerk Netzwerk-Switch A:
@@ -69,9 +69,9 @@ image::../media/drw_aide_network_cabling_b_ieops-2648.svg[Kabel zu Ethernet-Netz
 
 
 
-== Schritt 2: Verkabeln Sie die Verbindungen des Data Compute Node-Clusters
+== Schritt 2: Die Clusterverbindungen verkabeln
 
-Für Datenrechenknoten verwenden Sie 4x100GbE-Breakout-Kabel, um die e4a/e5a-Ports für die Clusterverbindungen anzuschließen.
+Für von NetApp bereitgestellte Datenrechenknoten verwenden Sie 4x100GbE-Breakout-Kabel, um die e4a/e5a-Ports für die Clusterverbindungen zu verbinden.
 
 .Schritte
 . Verbinden Sie Port e4a der folgenden Data Compute Node mit einem Nicht-ISL-Port am Cluster Netzwerk-Switch A:

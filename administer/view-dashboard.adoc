@@ -33,7 +33,7 @@ Als Speicheradministrator können Sie mit ONTAP System Manager auf das Dashboard
 ** Überprüfen Sie die Anzahl und den Status der **Data compute nodes**.
 ** Auf Warnmeldungen prüfen:
 +
-*** DCN-Knotenprobleme oder Verbindungsprobleme
+*** Probleme mit Datenrechenknoten oder Verbindungsprobleme
 *** Arbeitsbereiche oder Datensammlungen mit Fehlern (zum Beispiel Fehler bei der Veröffentlichung von Sammlungen)
 
 
@@ -55,12 +55,12 @@ Als Speicheradministrator können Sie mit ONTAP System Manager auf das Dashboard
 
 
 
-== DCN-Gesundheits- und Nutzungsdaten anzeigen
+== Zustand und Auslastung der Daten-Compute-Knoten anzeigen
 
 . Wählen Sie im Navigationsbereich *Cluster* und anschließend *Übersicht* aus.
 . Wählen Sie die Registerkarte *Data compute* aus.
 +
-Diese Registerkarte zeigt alle DCN-Knoten im Cluster mit:
+Diese Registerkarte zeigt alle Datenrechenknoten im Cluster mit:
 
 +
 ** Knotenname, Modell, Seriennummer und Softwareversion
@@ -70,14 +70,14 @@ Diese Registerkarte zeigt alle DCN-Knoten im Cluster mit:
 ** Alle Fehlerindikatoren auf Knotenebene
 
 
-. Erweitern Sie einen DCN node, um die Detailansicht zu öffnen und zu überprüfen:
+. Erweitern Sie einen Datenberechnungsknoten, um die Detailansicht zu öffnen und Folgendes zu überprüfen:
 +
 ** System-CPU- und Speicherauslastung
 ** GPU-Speichernutzung
 ** Gemeldete Hardware- oder Serviceprobleme
 
 
-. Wählen Sie auf der Seite *Cluster > Übersicht* *Verkabelung* aus, um zu überprüfen, ob DCN-Knoten korrekt mit den Cluster-Switches verkabelt sind und um etwaige Port- oder Verbindungsprobleme zu identifizieren.
+. Wählen Sie auf der Seite *Cluster > Übersicht* die Option *Verkabelung*, um zu überprüfen, ob die Datenrechenknoten korrekt mit den Cluster-Switches verkabelt sind und um etwaige Port- oder Verbindungsprobleme zu identifizieren.
 
 
 
@@ -130,7 +130,7 @@ Diese Registerkarte zeigt alle DCN-Knoten im Cluster mit:
 ** Optional können Sie die Details öffnen, um die Zähler für Folgendes anzuzeigen:
 +
 *** Volumes
-*** LIFs mit Typ `Data compute network` (verwendet für DCN-ONTAP-Kommunikation)
+*** LIFs mit dem Typ  `Data compute network` (wird für die Kommunikation zwischen Datenrechenknoten und ONTAP verwendet)
 
 
 
@@ -158,10 +158,10 @@ IMPORTANT: Ändern Sie die Metadaten-Storage-VM, die von AIDE erstellten SnapMir
 . Im Navigationsbereich wählen Sie *Events & Jobs* und anschließend *System alerts*.
 . Überprüfen Sie alle aktiven Warnmeldungen im Zusammenhang mit:
 +
-** DCN node health oder Konnektivität
+** Zustand oder Konnektivität der Datenrechenknoten
 ** Netzwerkprobleme der Data Engine
 ** Fehler im Arbeitsbereich oder bei der Datenerfassung
-** Softwareversionskonflikte zwischen ONTAP und DCN cluster
+** Softwareversionskonflikte zwischen ONTAP und dem Datenrechenknotencluster
 
 
 . Konfigurieren Sie bei Bedarf Benachrichtigungsziele (zum Beispiel E-Mail, Syslog) in *Cluster > Settings > Notification management*, um sicherzustellen, dass AIDE-bezogene Warnmeldungen an Ihre Operations-Tools weitergeleitet werden.

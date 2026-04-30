@@ -13,13 +13,16 @@ summary: 'Erstellen und veröffentlichen Sie Datensammlungen aus Workspace-Metad
 [role="lead"]
 Datensammlungen sind die zentralen RAG-Bausteine der AI Data Engine (AIDE). Als Dateningenieur oder Data Scientist definieren Sie, welche Dateien zu einer Sammlung gehören, konfigurieren Einbettungs- und Indizierungsoptionen und veröffentlichen die Sammlung, sodass Anwendungen sie über einen Retrieval-Endpunkt abfragen können.
 
+
+NOTE: Die folgenden Anweisungen setzen eine NetApp DCN-basierte AIDE-Bereitstellung voraus.
+
 Sie führen alle Datenerfassungsaufgaben in AIDE Console durch.
 
 .Bevor Sie beginnen
 * Sie benötigen Berechtigungen als _Data Engineer_ oder _Data Scientist_ in AIDE Console (`\https://<cluster_management_ip>/console`).
 * Sie haben Zugriff auf mindestens einen Arbeitsbereich, in dem Metadaten extrahiert und im  `Ready` Status vorliegen.
 * Sie haben die Metadaten des Arbeitsbereichs untersucht und Abfragen oder Filter identifiziert, die sinnvolle Datenteilmengen definieren.
-* Die AIDE-Softwarelizenz ist installiert und die Inferenzfunktionen sind aktiviert.
+* Die AIDE Premium-Servicelizenz ist installiert und die Inferenzfunktionen sind für Data Curator Funktionalität aktiviert.
 
 
 

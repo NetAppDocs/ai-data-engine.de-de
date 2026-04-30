@@ -31,15 +31,15 @@ Für AIDE-Bereitstellungen sind mindestens vier AFX-Controller-Knoten erforderli
 
 === Datenrechenknoten
 
-Datenrechenknoten (DCNs) sind Linux-basierte Server mit hoher CPU-, RAM- und GPU-Leistung, die speziell für KI-Datenverarbeitungsaufgaben vorgesehen sind. Sie hosten KI-spezifische Dienste wie Metadatenkatalogisierung, Vektorsuche und Einbettungspipelines.
+Datenrechenknoten sind Linux-basierte Server mit hoher CPU-, RAM- und GPU-Leistung, die speziell für KI-Datenverarbeitungsaufgaben entwickelt wurden. Sie hosten KI-spezifische Dienste wie Metadaten-Katalogisierung, Vektorsuche und Einbettungspipelines.
 
-Für AIDE-Bereitstellungen werden genau _drei_ DCNs benötigt.
+Für AIDE Deployments werden genau _drei_ Datenrechenknoten benötigt.
 
 
 
 === Cluster-/Storage-Switches
 
-Redundante Hochgeschwindigkeits-Switches (100GbE oder höher) verbinden ONTAP und DCNs für Datentransfer mit niedriger Latenz und hohe Verfügbarkeit.
+Redundante Hochgeschwindigkeits-Switches (100GbE oder höher) verbinden ONTAP und Datenrechenknoten für mit niedriger Latenz Datentransfer und hohe Verfügbarkeit.
 
 
 
@@ -51,15 +51,15 @@ NVMe-oF-Einschübe mit SSDs hoher Dichte bieten ultra-niedrige Latenz und Redund
 
 == Netzwerk
 
-Alle DCNs und ONTAP-Speicherknoten sind über redundante, Hochgeschwindigkeits-Cluster-Switches (mindestens 100GbE) verbunden. Diese Architektur trennt Rechen- und Speicherressourcen, sodass jede unabhängig skaliert werden kann und sowohl die Leistung als auch die Ressourcenauslastung optimiert werden.
+Alle Datenrechenknoten und ONTAP-Speicherknoten sind über redundante Hochgeschwindigkeits-Cluster-Switches (mindestens 100GbE) verbunden. Diese Architektur trennt Rechen- und Speicherressourcen, sodass jede unabhängig skaliert werden kann und sowohl die Leistung als auch die Ressourcenauslastung optimiert werden.
 
-Die Netzwerkverbindung zwischen DCNs und ONTAP-Knoten ist durch dedizierte VLANs und IPspaces auf den Cluster-Switches isoliert. Dadurch wird sichergestellt, dass alle Kommunikationsarten, wie Datenzugriff, Management-APIs und interner Dienstverkehr, sicher und effizient bleiben und andere Netzwerkoperationen nicht beeinträchtigen.
+Die Netzwerkverbindung zwischen den Datenrechenknoten und ONTAP-Knoten ist durch dedizierte VLANs und IPspaces auf den Cluster-Switches isoliert. Dadurch wird sichergestellt, dass die gesamte Kommunikation, wie Datenzugriff, Management-APIs und interner Dienstverkehr, sicher und effizient bleibt und andere Netzwerkoperationen nicht beeinträchtigt.
 
 
 
 == AI Data Engine Hauptmerkmale
 
-AI Data Engine (AIDE) Hauptfunktionen arbeiten zusammen, um den KI-Daten-Lebenszyklus zu automatisieren, zu sichern und zu beschleunigen. Jede Funktion ist als Satz von Microservices implementiert, die auf DCNs laufen, in ONTAP Storage integriert sind und über REST-APIs und Managementoberflächen bereitgestellt werden.
+Die Hauptfunktionen der AI Data Engine (AIDE) arbeiten zusammen, um den Lebenszyklus von KI-Daten zu automatisieren, zu sichern und zu beschleunigen. Jede Funktion ist als Satz von Microservices implementiert, die auf Datenrechenknoten ausgeführt werden, in ONTAP storage integriert sind und über REST-APIs und Verwaltungsschnittstellen bereitgestellt werden.
 
 
 
@@ -105,7 +105,7 @@ Die Datensynchronisierungsfunktion ist in der ONTAP One-Basislizenz enthalten un
 Der Data Guardrails Dienst bietet kontinuierliche, automatisierte Steuerung und Schutz für sensible Daten während des gesamten KI-Lebenszyklus.
 
 .Lizenz und Zugang
-Data Guardrails Funktionalität ist nicht in der ONTAP One Base-Lizenz enthalten und erfordert eine separate AIDE Lizenz.
+Data Guardrails Funktionalität ist nicht in der ONTAP One-Basislizenz enthalten und erfordert eine separate AIDE premium services Lizenz.
 
 Sie können auf die Data Guardrails-Funktionalität über die AIDE Console zugreifen.
 
@@ -125,7 +125,7 @@ Sie können auf die Data Guardrails-Funktionalität über die AIDE Console zugre
 Der Data Curator Service ermöglicht schnelle Datenentdeckung, Suche, Vektorisierung und Abruf für AI- und GenAI-Anwendungen.
 
 .Lizenz und Zugang
-Data Curator Funktionalität ist nicht in der ONTAP One Basislizenz enthalten und erfordert eine separate AIDE Lizenz.
+Data Curator Funktionalität ist nicht in der ONTAP One-Basislizenz enthalten und erfordert eine separate AIDE Premium-Services-Lizenz.
 
 Sie können Data Curator über die AIDE Console aufrufen.
 

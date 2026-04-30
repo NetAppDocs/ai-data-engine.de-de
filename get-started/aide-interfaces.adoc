@@ -17,7 +17,7 @@ AI Data Engine (AIDE) bietet drei primäre Schnittstellen für Benutzerinterakti
 
 == ONTAP System Manager
 
-ONTAP System Manager ist eine webbasierte Schnittstelle für Speicheradministratoren. Sie bietet Workflows für die Cluster-Einrichtung, die Workspace-Verwaltung, DCN-Monitoring und das Anhängen von Guardrail-Richtlinien.
+ONTAP System Manager ist eine webbasierte Schnittstelle für Speicheradministratoren. Sie bietet Workflows für die Cluster-Einrichtung, die Workspace-Verwaltung, die Überwachung von Daten-Compute-Knoten und das Anhängen von Guardrail-Richtlinien.
 
 
 

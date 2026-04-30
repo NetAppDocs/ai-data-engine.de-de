@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: administer/aide-node-replace.html 
 keywords: ai data engine, aide, data compute node, dcn, replace node, node replacement, cluster maintenance 
-summary: 'Sie müssen einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster ersetzen, wenn er nicht mehr funktioniert oder aufgrund eines Hardwareausfalls, Upgrades oder Wartungsarbeiten ausgetauscht werden muss. Dies stellt sicher, dass der AIDE Cluster gesund und funktionsfähig bleibt. Das Verfahren kann durchgeführt werden, ohne laufende Dienste zu unterbrechen.' 
+summary: 'Sie müssen einen Datenrechenknoten in Ihrem AI Data Engine (AIDE)-Cluster ersetzen, wenn er nicht mehr funktioniert oder aufgrund eines Hardwareausfalls, Upgrades oder Wartung ausgetauscht werden muss.' 
 ---
 = Ersetzen Sie einen Knoten in Ihrem AI Data Engine Cluster
 :allow-uri-read: 
@@ -11,7 +11,7 @@ summary: 'Sie müssen einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AID
 
 
 [role="lead"]
-Sie müssen einen Datenrechenknoten (DCN) in Ihrem AI Data Engine (AIDE) Cluster ersetzen, wenn er nicht mehr funktioniert oder aufgrund eines Hardwareausfalls, Upgrades oder Wartungsarbeiten ausgetauscht werden muss. Dies stellt sicher, dass der AIDE Cluster gesund und funktionsfähig bleibt. Das Verfahren kann durchgeführt werden, ohne laufende Dienste zu unterbrechen.
+Sie müssen einen Datenrechenknoten in Ihrem AI Data Engine (AIDE)-Cluster ersetzen, wenn dieser aufgrund eines Hardwareausfalls, eines Upgrades oder von Wartungsarbeiten nicht mehr funktioniert oder ausgetauscht werden muss. Dadurch wird sichergestellt, dass der AIDE Cluster gesund und funktionsfähig bleibt. Der Vorgang kann durchgeführt werden, ohne laufende Dienste zu beeinträchtigen.
 
 
 
@@ -43,9 +43,9 @@ Sie sollten sich der folgenden Einschränkungen bewusst sein, wenn Sie einen Kno
 
 
 
-== Ersetzen Sie einen DCN-Knoten in Ihrem AIDE-Cluster
+== Ersetzen Sie einen Datenrechenknoten in Ihrem AIDE Cluster
 
-Sie können einen DCN-Knoten in Ihrem AIDE-Cluster mit folgendem Verfahren ersetzen.
+Sie können einen Datenrechenknoten in Ihrem AIDE Cluster mit folgendem Verfahren ersetzen.
 
 .Schritte
 . Entfernen Sie den defekten Knoten physisch

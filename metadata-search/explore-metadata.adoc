@@ -1,0 +1,124 @@
+---
+sidebar: sidebar 
+permalink: metadata-search/explore-metadata.html 
+keywords: aide, mde, data explorer, metadata engine, search, export, custom tags, download, csv, workspace, filter, file metadata 
+summary: Als AIDE-Benutzer mit einer reinen AIDE-Softwareinstallation verwenden Sie die Metadata Engine-Optionen in der AI Data Engine Console, um Dateimetadaten zu suchen, zu filtern und zu exportieren, damit Sie die benötigten Dateien schnell finden können. 
+---
+= Arbeitsbereichsdatei-Metadaten erkunden und exportieren
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Als AIDE-Nutzer mit einer AIDE Software-only-Bereitstellung können Sie in der AI Data Engine (AIDE) Console die Metadata Engine-Optionen verwenden, um Dateimetadaten mithilfe der Metadata Engine zu durchsuchen und zu filtern. Sie können Standardfilter anwenden, nach benutzerdefinierten Tags suchen und Ihre Ergebnisse als CSV-Dateien für die Offline-Analyse oder die Weiterverwendung exportieren.
+
+
+NOTE: Bei reinen AIDE-Softwarebereitstellungen ohne vollständige AIDE-Lizenz haben Sie vollen Zugriff auf die Metadata Engine-Funktionalität, können jedoch keine Datensammlungen oder Schutzmechanismen erstellen oder verwalten. link:../faq-aide.html["Erfahren Sie mehr über Bereitstellungs- und Lizenzierungsoptionen"].
+
+.Bevor Sie beginnen
+* Sie benötigen Berechtigungen als _Speicheradministrator_, _Dateningenieur_ oder _Datenwissenschaftler_ in AIDE Console sowie Zugriff auf mindestens einen Arbeitsbereich.
+* Ein Speicheradministrator hat:
++
+** Ein oder mehrere Arbeitsbereiche im ONTAP System Manager wurden erstellt.
+** Ihnen wurde als Benutzer oder Gruppe der Zugriff auf die relevanten Arbeitsbereiche mithilfe von link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] zugewiesen.
+
+
+* Die Metadatenextraktion für den Arbeitsbereich ist abgeschlossen und der Arbeitsbereich befindet sich im  `Ready` Zustand.
+
+
+
+
+== Bei AIDE Console anmelden
+
+.Schritte
+. Öffnen Sie im Browser die AIDE Console URL:
++
+`\https://<cluster_management_ip>/console`
+
+. Authentifizieren Sie sich über den OIDC-Anbieter Ihrer Organisation.
+. Vergewissern Sie sich, dass *Data Explorer* im linken Navigationsbereich verfügbar ist.
++
+
+NOTE: Bei AIDE-Softwarebereitstellungen ohne vollständige AIDE-Lizenz ist *Data Explorer* die Standard-Startseite.
+
+
+
+.Ergebnis
+Sie sind in der AIDE Console angemeldet und können die Arbeitsbereiche sehen, für die Ihnen Zugriff gewährt wurde.
+
+
+
+== Öffnen Sie einen Arbeitsbereich im Data Explorer
+
+.Schritte
+. Wählen Sie im linken Navigationsbereich *Data Explorer > Arbeitsbereiche*.
+. Sehen Sie sich die Liste der Ihnen zur Verfügung stehenden Arbeitsbereiche an.
+. Wählen Sie den Arbeitsbereich aus, den Sie erkunden möchten.
+. Wählen Sie *Explore*, um die Seite zum Suchen und Filtern von Dateimetadaten für diesen Arbeitsbereich zu öffnen.
+
+
+.Ergebnis
+Die Suchseite des Data Explorers wird geöffnet und ist auf den ausgewählten Arbeitsbereich beschränkt.
+
+
+
+== Dateimetadaten suchen und filtern
+
+.Schritte
+. Auf der Suchseite des Datenexplorers können Sie Ihre Ergebnisse mithilfe einer beliebigen Kombination der verfügbaren Filter verfeinern:
++
+** Geben Sie in der Suchleiste eine Suchanfrage ein, um Dateinamen oder Metadatenattribute abzugleichen.
++
+
+NOTE: Suchanfragen unterscheiden Groß-/Kleinschreibung.
+
+** Wenden Sie Standard-Metadatenfilter an (z. B. Dateityp, Größe oder Datum).
++
+
+NOTE: Der Filter *Klassifizierung* ist im Data Explorer nicht verfügbar.
+
+
+
+
+
+.Ergebnis
+Die Tabelle zeigt alle Dateien an, die Ihrer Suchanfrage oder den angewendeten Filtern entsprechen.
+
+
+
+== Erstellen und verwenden Sie benutzerdefinierte Tags
+
+.Schritte
+. Um benutzerdefinierte Tags zu erstellen, navigieren Sie zur Suchseite des Data Explorer und wählen Sie *Erweiterte Filter* aus.
+. Wählen Sie *Neue Tags hinzufügen*.
+. Fügen Sie ein oder mehrere benutzerdefinierte Tags hinzu, um Ihre Suchergebnisse nach einer Kombination von Attributen zu filtern, die nicht in den Standardfiltern enthalten sind.
+. Wählen Sie *Filter*, um Ihre benutzerdefinierten Tag-Filter auf die Suchergebnisse anzuwenden.
+. Überprüfen Sie die in der Dateilistentabelle angezeigten Suchergebnisse.
+
+
+.Ergebnis
+Die Tabelle zeigt alle Dateien an, die Ihren benutzerdefinierten Tag-Einträgen entsprechen.
+
+
+
+== Suchergebnisse als CSV herunterladen
+
+.Schritte
+. Wählen Sie oberhalb der Suchergebnistabelle image:icon_download_file.png["Symbol zum Herunterladen von Dateien"].
++
+Bis zum Abschluss des Downloads wird eine Informationsmeldung zum Downloadfortschritt angezeigt.
+
+. Beobachten Sie die Fortschrittsanzeige des Downloads oberhalb der Ergebnistabelle. Bei größeren Downloads wird der Fortschritt von Stapeldatei-Downloads oder die Anzahl der Zeilen in einer verarbeiteten CSV angezeigt.
+. Optional: Um den Download vor Abschluss zu stoppen, klicken Sie auf *Cancel download*.
+
+
+.Ergebnis
+Es werden eine oder mehrere CSV-Dateien auf Ihr lokales System heruntergeladen. Jede Datei enthält die Dateinamen und Metadatenspalten, die zum Zeitpunkt des Downloads in der Suchergebnistabelle angezeigt werden.
+
+
+
+== Was kommt als Nächstes?
+
+* link:../faq-aide.html["Erfahren Sie mehr über die Bereitstellung und Lizenzierung von AIDE."]
+

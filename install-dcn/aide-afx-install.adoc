@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
-permalink: install-setup/aide-afx-install.html 
-keywords: ai data engine, afx, afx 1k, install, hardware, storage system, data compute node, aide 
+permalink: install-dcn/aide-afx-install.html 
+keywords: ai data engine, afx, afx 1k, install, hardware, storage system, data compute node, aide, metadata engine, mde, third-party servers 
 summary: Installieren Sie das AFX-Speichersystem als ersten Schritt bei der Bereitstellung der AI Data Engine. Das AFX-System bildet die Speicherinfrastruktur, die für die Bereitstellung der AI Data Engine erforderlich ist. 
 ---
 = Installieren Sie das AFX-Speichersystem für AI Data Engine
@@ -11,7 +11,7 @@ summary: Installieren Sie das AFX-Speichersystem als ersten Schritt bei der Bere
 
 
 [role="lead"]
-Installieren Sie das AFX-Speichersystem als ersten Schritt bei der Bereitstellung von AI Data Engine (AIDE). Das AFX-Speichersystem bildet die Grundlage der Speicherinfrastruktur und ist vor der Installation der Datenrechenknoten erforderlich.
+Installieren Sie das AFX-Speichersystem als ersten Schritt bei der Bereitstellung der AI Data Engine (AIDE). Das AFX-Speichersystem bildet die Grundlage der Speicherinfrastruktur und ist erforderlich, bevor die AIDE software auf Servern von Drittanbietern oder NetApp Daten-Compute-Knoten installiert werden kann.
 
 Folgen Sie dem link:https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["AFX 1K Installationsdokumentation"^] zur Installation des AFX-Speichersystems.
 

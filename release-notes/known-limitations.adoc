@@ -15,21 +15,109 @@ Bekannte Einschränkungen kennzeichnen Plattformen, Geräte oder Funktionen, die
 
 
 
-== Bekannte Einschränkungen für die anfängliche Veröffentlichung von AIDE 9.18.1
+== Bekannte Einschränkungen der AIDE-Software bei Serverinstallationen von Drittanbietern
 
-Diese Einschränkungen gelten für die Metadata Engine, Data Compute Nodes und Management-Workflows in AIDE 9.18.1.
+Diese Einschränkungen gelten insbesondere für den Einsatz der AIDE-Software auf Servern von Drittanbietern unter Verwendung von vom Kunden verwalteter Hardware.
+
+
+
+=== Einschränkungen des Bereitstellungsmodells
+
+* **Nur Cluster mit drei Knoten**
++
+Für die Bereitstellung der AIDE-Software auf Servern von Drittanbietern sind genau drei Knoten erforderlich. Eine Bereitstellung mit weniger Knoten oder eine Skalierung über drei Knoten hinaus ist nicht möglich.
+
+* **Homogene Hardware erforderlich**
++
+Alle Knoten in einem AIDE-Softwarecluster auf Servern von Drittanbietern müssen identische Hardware-Spezifikationen aufweisen (gleiches CPU-Modell, gleicher Arbeitsspeicher, gleiche Netzwerkkonfiguration und gleiches Servermodell). Gemischte Hardwarekonfigurationen werden nicht unterstützt.
+
+* **Nur RHEL 9.7**
++
+Die Bereitstellung der AIDE-Software auf Servern von Drittanbietern unterstützt ausschließlich Red Hat Enterprise Linux (RHEL) 9.7 LTS. Andere Linux-Distributionen werden nicht unterstützt.
+
+* **Nur für Einzelstandort-Bereitstellungen**
++
+AIDE-Software auf Servern von Drittanbietern unterstützt ausschließlich Cluster-Bereitstellungen an einem einzigen Standort. Cluster-Topologien mit mehreren Standorten, gestreckte Cluster und geografisch verteilte Cluster werden nicht unterstützt. Alle drei Knoten eines AIDE-Software-Clusters auf Servern von Drittanbietern müssen sich am selben physischen Standort mit niedriger Latenz befinden.
+
++
+
+NOTE: Um Metadaten von Daten zu katalogisieren, die an entfernten Standorten gespeichert sind, verwenden Sie ONTAP-Cluster-Peering, um entfernte ONTAP Cluster mit Ihrem AIDE Cluster zu verbinden.
+
+
+
+
+
+=== Funktionsumfangsbeschränkungen
+
+* **Keine GPU-abhängigen Dienste**
++
+Diese Version der AIDE-Software auf Servern von Drittanbietern unterstützt keine GPU-basierten Dienste wie Vektorisierung, OCR (optische Zeichenerkennung) und Anreicherungsfunktionen.
+
+* **Keine Datensammlungen**
++
+Für die Erstellung von Datensammlungen ist eine vollständige AIDE Implementierung mit GPU-Ressourcen erforderlich. AIDE Software auf Servern von Drittanbietern bietet ausschließlich die Metadatenkatalogisierung.
+
+* **Keine RAG-Endpunkte**
++
+Die Retrieval-Augmented Generation (RAG)-Endpunkte für die semantische Suche erfordern eine vollständige AIDE Deployment. AIDE Software auf Servern von Drittanbietern unterstützt weder Vektor-Embeddings noch semantische Suchfunktionen.
+
+* **Keine Durchsetzung der Leitplankenrichtlinien zum Zeitpunkt der Abholung**
++
+Richtlinien für die Schwärzung von Daten während des Abrufs und die Zugriffskontrolle erfordern eine vollständige AIDE mit Vektorisierungsfunktionen.
+
+
+
+
+
+=== Upgrade-Pfade
+
+* **Das Verhalten beim Rollback ist versionsspezifisch.**
++
+Die Rückführung auf eine zuvor installierte AIDE-Softwarepaketversion ist zulässig, sofern dies von den Richtlinien der Zielversion unterstützt wird. Befolgen Sie die dokumentierte Rückführungsprozedur für Ihre Version.
+
+
+
+
+
+=== Betriebssystem- und Softwareverwaltung
+
+* **Zusätzliche Software wird nicht unterstützt**
++
+Das Ausführen anderer Anwendungen oder Dienste als AIDE-Software auf Serverknoten von Drittanbietern wird nicht unterstützt.
+
+
+
+
+
+=== ONTAP und Speicheranforderungen
+
+* **ONTAP 9.18.1 oder höher erforderlich**
++
+AIDE Software auf Servern von Drittanbietern erfordert ONTAP 9.18.1 oder höher. Ältere ONTAP Versionen werden nicht unterstützt.
+
+* **AFX-Speicher erforderlich**
++
+AIDE-Software auf Servern von Drittanbietern muss mit NetApp AFX-Speichersystemen verbunden sein. Unterstützung für andere ONTAP Plattformen ist nicht verfügbar.
+
+
+
+
+
+== Bekannte Einschränkungen für die anfängliche Veröffentlichung von AIDE 9.18.1U0/U1
+
+Diese Einschränkungen gelten für die Metadata Engine, Datenverarbeitungsknoten und Management-Workflows in AIDE 9.18.1U0/U1.
 
 
 
 === Anforderungen und Management von Compute Nodes
 
-* **Mindestanforderung an Datenrechenknoten**
+* **Mindestanforderung für NetApp DCN**
 +
-AIDE-Cluster benötigen mindestens und maximal 3 Datenrechenknoten (DCNs) für Metadata Engine-Funktionalität. Cluster mit weniger als 3 DCNs können Metadata Engine-Funktionen nicht aktivieren.
+AIDE-Cluster benötigen genau drei NetApp DCN-Knoten für Metadata Engine-Funktionalität. Cluster mit weniger als drei NetApp DCN-Knoten können Metadata Engine-Funktionen nicht aktivieren.
 
-* **Keine Unterstützung für das Hinzufügen von DCN-Knoten über die NetApp Console**
+* **Keine Unterstützung für das Hinzufügen von NetApp DCN-Knoten über die NetApp Console**
 +
-DCN-Knoten-Upgrades und -Erweiterungen müssen mit ONTAP System Manager und nicht über die NetApp Console durchgeführt werden.
+NetApp DCN-Knoten-Upgrades und -Erweiterungen müssen mit ONTAP System Manager und nicht über NetApp Console durchgeführt werden.
 
 
 
@@ -51,13 +139,13 @@ FlexCache-Volumes können nicht als Datenquellen zu Arbeitsbereichen hinzugefüg
 
 === Einschränkungen bei Software-Updates und Rücksetzungen
 
-* **Manuelle Software-Updates nur für DCN-Knoten**
+* **Manuelle Software-Updates nur für NetApp DCN-Knoten**
 +
-Automatische Software-Updates für DCN-Cluster werden in AIDE 9.18.1 nicht unterstützt. Die DCN-Knotensoftware kann nur durch Hochladen des Images von einem lokalen Client aktualisiert werden. Das Herunterladen von Images von externen Servern (HTTP/FTP) wird nicht unterstützt.
+Automatische Software-Updates für NetApp DCN-Cluster werden in AIDE 9.18.1 nicht unterstützt. NetApp DCN-Software kann nur durch Hochladen des Images von einem lokalen Client aktualisiert werden. Das Herunterladen von Images von externen Servern (HTTP/FTP) wird nicht unterstützt.
 
-* **Keine Rücksetzung der DCN Cluster software**
+* **Keine Rücksetzung der NetApp DCN Cluster-Software**
 +
-DCN cluster software kann nicht auf eine frühere Version zurückgesetzt werden. Nur Upgrades auf spätere Versionen sind erlaubt.
+NetApp DCN cluster software kann nicht auf eine frühere Version zurückgesetzt werden. Nur Upgrades auf spätere Versionen sind erlaubt.
 
 * **Keine ONTAP-Revertierung von AFX-Speicherclustern**
 +

@@ -15,26 +15,26 @@ indexpage:
     links:
     - title: Erfahren Sie mehr über AI Data Engine
       url: "/get-started/learn-about.html"
-    - title: AIDE Architektur
-      url: "/get-started/aide-architecture.html"
     - title: Was ist neu
       url: "/release-notes/whats-new.html"
     - title: Bekannte Einschränkungen
       url: "/release-notes/known-limitations.html"
-    - title: AIDE Schnellstart
+    - title: Schnellstartanleitung für AIDE software auf Servern von Drittanbietern
+      url: "/get-started/quick-start-mde-only.html"
+    - title: Schnellstart für NetApp DCN-Bereitstellung
       url: "/get-started/quick-start.html"
     - title: FAQ für AIDE
       url: "/faq-aide.html"
-  - title: Installation und Einrichtung
+  - title: Installieren Sie AIDE-kompatible Hardware
     links:
-    - title: Workflow zum Installieren von Datenrechenknoten
-      url: "/install-setup/install-workflow.html"
-    - title: Installationsanforderungen
-      url: "/install-setup/install-setup-requirements.html"
-    - title: Kabelhardware
-      url: "/install-setup/cable-hardware.html"
-    - title: System einschalten
-      url: "/install-setup/power-on-hardware.html"
+    - title: Workflow für die Installation von Drittanbieterservern
+      url: "/install-aide-server/install-workflow.html"
+    - title: Installations-Workflow für von NetApp bereitgestellte Data Compute Nodes
+      url: "/install-dcn/install-workflow.html"
+  - title: Installieren und richten Sie die AIDE-Software ein
+    links:
+    - title: Installieren Sie AIDE als Software
+      url: "/install-setup/install-aide-as-software.html"
     - title: AIDE Cluster einrichten
       url: "/install-setup/cluster-setup-afx.html"
     - title: OIDC-Authentifizierung konfigurieren
@@ -49,6 +49,8 @@ indexpage:
       url: "/workspaces/assign-users-to-workspace.html"
     - title: Arbeitsbereiche verwalten
       url: "/administer/manage-workspace.html"
+    - title: Dateimetadaten erkunden und exportieren
+      url: "/metadata-search/explore-metadata.html"
   - title: Verwalten und überwachen
     links:
     - title: Dashboard- und Clusterstatus anzeigen

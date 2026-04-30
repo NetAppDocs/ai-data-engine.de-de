@@ -68,7 +68,7 @@ Sie können den Namen, die Beschreibung, das Aktualisierungsintervall und (sofer
 +
 ** Aktualisieren Sie *Name* und *Description* nach Bedarf.
 ** Passen Sie das *Aktualisierungsintervall* (Metadatenaktualisierungshäufigkeit) innerhalb des zulässigen Bereichs (Stunden und Tage) an.
-** Wenn eine AIDE-Lizenz installiert ist, können Sie *Guardrail policy* auswählen.
+** Wenn eine AIDE Premium-Servicelizenz installiert ist, können Sie die *Guardrail policy* auswählen.
 
 
 . Wählen Sie *Save*.

@@ -11,13 +11,49 @@ summary: 'Erfahren Sie mehr über die neuen Funktionen der AI Data Engine (AIDE)
 
 
 [role="lead"]
-AI Data Engine (AIDE) 9.18.1 ist die erste Version der NetApp-Plattform für AI Data Engine Datenmanagement. Diese Version führt eine Metadata Engine und Management-Workflows ein, mit denen Organisationen unstrukturierte Daten für AI-Workloads katalogisieren und organisieren können und so die Grundlage für erweiterte Governance- und Vektorisierungsfunktionen schaffen. Erweiterte Governance (Guardrails) und Vektorisierung stehen Kunden mit den entsprechenden AI Data Engine Lizenzen zur Verfügung.
+Erfahren Sie mehr über die neuesten Funktionen, die in AI Data Engine (AIDE)-Releases für das KI-Datenmanagement verfügbar sind, einschließlich Katalogisierung, Workspace-Management und flexibler Bereitstellungsoptionen.
 
 
 
-== Was ist neu in der ersten Version von AIDE 9.18.1
+== Was ist neu in AIDE 1.0.0
 
-AIDE 9.18.1 führt die folgenden grundlegenden Funktionen ein:
+AIDE 1.0.0 (veröffentlicht am 30. April 2026) führt AIDE als reine Software-Bereitstellung auf Servern von Drittanbietern ein. Mit dieser Bereitstellungsoption können Sie AIDE-Software auf Ihren eigenen RHEL 9.7-Servern ausführen, ohne dass NetApp Data Compute Nodes (DCNs) erforderlich sind. In dieser Version unterstützt die AIDE-Software auf Servern von Drittanbietern metadatenorientierte Funktionen.
+
+.link:../install-aide-server/aide-mde-server-hardware-requirements.html["Option für die vom Kunden verwaltete Hardwarebereitstellung"]
+Die Bereitstellungsoption der AIDE-Software auf Servern von Drittanbietern bietet Ihnen die Flexibilität, Ihre eigene Hardware mit den Metadatenverwaltungsfunktionen von AIDE zu nutzen und gleichzeitig die zugrunde liegende Hardware und das Betriebssystem selbst zu verwalten. Zu den wichtigsten Merkmalen dieses Bereitstellungsmodells gehören:
+
+* Drei-Knoten homogen Cluster erforderlich
+* Sie installieren das Betriebssystem und verwalten die Sicherheitspatches des Betriebssystems
+* NetApp bietet AIDE-Software-Stack und Support
+* Erfordert ONTAP 9.18.1 oder höher
+* Erfordert ein ONTAP AFX-Speichersystem
+
+
+.link:../get-started/learn-about.html#deployment-options["AIDE Metadata Engine grundlegende Unterstützung"]
+AIDE-Software auf Servern von Drittanbietern unterstützt die Kernfunktionen der Metadata Engine von AIDE und ermöglicht es Ihnen, Ihre Metadaten für KI-Workloads zu katalogisieren und zu organisieren.
+
+In dieser Version unterstützt die AIDE-Software auf Servern von Drittanbietern keine GPU-abhängigen Dienste wie Vektorisierung, OCR und Anreicherung, und sie unterstützt keine Datensammlungen, Vektoreinbettungen oder RAG-Endpunkte für die semantische Suche. Ein Upgrade-Pfad zu den vollständigen AIDE-Funktionen wird unterstützt, sobald diese verfügbar sind.
+
+.link:../get-started/aide-architecture.html#metadata-engine["Unterstützte Funktionen der Metadata Engine"]
+AIDE Software auf Servern von Drittanbietern bietet folgende Metadatenfunktionen:
+
+* Arbeitsbereichserstellung und -verwaltung
+* Automatisierte Metadatenextraktion und Katalogisierung
+* Metadatensuche und -filterung mithilfe von REST-APIs
+* Data Sync für automatisierte Datenaktualität
+* Metadatenexportfunktion
+
+
+.link:../metadata-search/explore-metadata.html["Metadata Engine Suche und Browsen"]
+In AIDE 1.0.0 ist die Metadata Engine-Funktionalität in der AI Data Engine Console verfügbar. Sie können Metadaten aus einer zentralen Ansicht über alle Arbeitsbereiche hinweg suchen, durchsuchen, filtern und exportieren. Sie können Metadaten über eine neue Seite in der AIDE Console erkunden, die mit allen AIDE-Softwareinstallationen auf Servern von Drittanbietern enthalten ist. Diese Seite kann verwendet werden, nachdem die Erstellung des Arbeitsbereichs und die Metadatenextraktion abgeschlossen sind.
+
+
+
+== Was ist neu in der ersten Version von AIDE 9.18.1U0/U1
+
+AI Data Engine (AIDE) 9.18.1 U0/U1 ist die erste Version der NetApp-Plattform für KI-Datenmanagement. Diese Version führt eine Metadata Engine und Management-Workflows ein, mit denen Unternehmen unstrukturierte Daten für KI-Workloads katalogisieren und organisieren können und die die Grundlage für erweiterte Governance- und Vektorisierungsfunktionen bieten. Erweiterte Governance (Guardrails) und Vektorisierung stehen Kunden mit den entsprechenden AI Data Engine Lizenzen zur Verfügung.
+
+AIDE 9.18.1U0 führt die folgenden grundlegenden Funktionen ein:
 
 .link:../get-started/aide-architecture.html#metadata-engine["Metadata Engine für die KI-Katalogisierung"]
 Die erste Version beinhaltet eine Metadata Engine, die Dateien und Objekte über ONTAP Cluster hinweg katalogisiert.
@@ -66,7 +102,7 @@ Die erste Version umfasst die folgenden Arbeitsabläufe:
 
 
 .link:../vectorization/zero-to-rag.html["Erweiterte Datenkuratierungs- und Governance-Funktionen"]
-Die folgenden Funktionen stehen Kunden mit den entsprechenden AIDE-Lizenzen zur Verfügung:
+Die folgenden Funktionen stehen mit dem Update AIDE 9.18.1U1 für Kunden mit den entsprechenden AIDE-Lizenzen zur Verfügung:
 
 * *Vektorisierung und RAG*: Erstellung von Datensammlungen, Einbettungen und Abrufendpunkten in der AI Data Engine Console, unter Verwendung von Metadaten aus AIDE Workspaces.
 * *Leitplankenbasierte Governance*: Definition von Leitplankenrichtlinien in der AI Data Engine Console und Zuordnung dieser Richtlinien zu Arbeitsbereichen im ONTAP System Manager.
@@ -76,7 +112,7 @@ Die folgenden Funktionen stehen Kunden mit den entsprechenden AIDE-Lizenzen zur 
 
 === Unterstützte Hardware und Plattformen
 
-AIDE 9.18.1 läuft auf ONTAP AI Datenplattform-Clustern, die Folgendes kombinieren:
+AIDE 9.18.1 U0 und U1 laufen auf ONTAP AI Datenplattform-Clustern, die Folgendes kombinieren:
 
 * AFX 1K Speicherknoten
 * NetApp Datenverarbeitungsknoten

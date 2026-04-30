@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: install-aide-server/power-on-hardware.html 
+keywords: aide, ai, data engine, ai data engine, third-party server, afx, afx 1k, power on, 
+summary: Schalten Sie jedes Shelf ein, um eine eindeutige Shelf-ID zuzuweisen, schalten Sie die AFX Controller-Nodes ein und sichern Sie die Stromkabel. 
+---
+= Schalten Sie Ihre Drittanbieterserver für AI Data Engine ein
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nach der Installation des Racks und der Verkabelung Ihrer Hardware sollten Sie Ihre Drittanbieterserver und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, sofern diese noch nicht eingeschaltet sind.
+
+Bei Servern von Drittanbietern finden Sie die Anweisungen zum Einschalten in der Installationsdokumentation Ihres jeweiligen Servermodells.
+
+.Was kommt als Nächstes?
+Nachdem Sie Ihre Drittanbieterserver aktiviert haben, link:../install-setup/install-aide-as-software.html["Installieren Sie die AIDE software"].

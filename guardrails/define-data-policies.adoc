@@ -19,7 +19,7 @@ Verwenden Sie diese Verfahren, um diese Richtlinien in AIDE Console zu definiere
 * Sie benötigen Administratorrechte für Speicherverwaltung in AIDE Console (`\https://<cluster_management_ip>/console`) , um globale Richtlinien zu erstellen und zu verwalten.
 * Sie verfügen über einen AIDE Cluster mit bereitgestellten und fehlerfreien Data Compute Nodes.
 * link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] ist konfiguriert, und Ihre IdP-Rolle ist einer AIDE admin Rolle zugeordnet, die die Verwaltung von Datenrichtlinien ermöglicht.
-* Die Softwarelizenz für AIDE ist so installiert, dass die Data Guardrails- und Inferenzfunktionen aktiviert sind.
+* Die AIDE Premium-Servicelizenz wird installiert, sodass Guardrail- und Inferenzfunktionen für Data-Governance-Funktionen aktiviert sind.
 * Es existiert mindestens ein Arbeitsbereich, oder Sie haben sich mit dem Administrator abgestimmt, um zu verstehen, welche Datenquellen (Volumes) in Arbeitsbereichen verwendet werden.
 
 

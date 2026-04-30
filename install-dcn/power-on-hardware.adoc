@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: install-setup/power-on-hardware.html 
+permalink: install-dcn/power-on-hardware.html 
 keywords: aide, ai, data engine, ai data engine dcn, data compute node, afx, afx 1k, power on, 
 summary: Schalten Sie jedes Shelf ein, um eine eindeutige Shelf-ID zuzuweisen, schalten Sie die AFX Controller-Nodes ein und sichern Sie die Stromkabel. 
 ---
@@ -11,14 +11,16 @@ summary: Schalten Sie jedes Shelf ein, um eine eindeutige Shelf-ID zuzuweisen, s
 
 
 [role="lead"]
-Nachdem Sie die Rack-Hardware installiert und Ihre Datenrechenknoten verkabelt haben, sollten Sie Ihre DCNs und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, falls diese noch nicht eingeschaltet sind.
+Nachdem Sie das Rack installiert und Ihre Hardware verkabelt haben, sollten Sie Ihre Datenrechenknoten und Ihre Controller-Knoten für das AFX-Speichersystem einschalten, sofern diese noch nicht eingeschaltet sind.
+
+Um Ihre von NetApp bereitgestellten Datenrechenknoten einzuschalten, müssen Sie jedes Shelf einschalten, um eine eindeutige Shelf-ID zuzuweisen, die AFX-Controller-Knoten einschalten und die Stromkabel für die Datenrechenknoten sichern.
 
 .Bevor Sie beginnen
 * Stellen Sie sicher, dass Ihre Regale eingeschaltet sind und jedem eine eindeutige Regal-ID zugewiesen wurde. Informationen zur Zuweisung von Regal-IDs für das AFX-Lagersystem finden Sie in der link:https://docs.netapp.com/us-en/ontap-afx/install-setup/power-on-hardware.html#step-1-power-on-the-shelf-and-assign-shelf-id["Dokumentation zur Vergabe eindeutiger Regal-IDs"^].
 
 
 .Schritte
-Nachdem Sie Ihre Storage Shelves eingeschaltet und die eindeutigen IDs zugewiesen haben, schalten Sie Ihre DCNs und die Storage Controller Nodes ein, falls diese noch nicht eingeschaltet sind.
+Nachdem Sie Ihre Speichersysteme eingeschaltet und die eindeutigen IDs zugewiesen haben, schalten Sie Ihre Datenrechenknoten ein und schalten Sie die Speicherkontrollerknoten ein, falls diese noch nicht eingeschaltet sind.
 
 . Schließen Sie Ihren Laptop an den seriellen Konsolenanschluss an. Dadurch können Sie die Bootsequenz überwachen, wenn die Controller eingeschaltet werden.
 +

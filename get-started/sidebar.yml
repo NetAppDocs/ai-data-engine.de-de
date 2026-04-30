@@ -19,29 +19,53 @@ entries:
     - title: Dateningenieure und Datenwissenschaftler und Komponenten
       url: "/get-started/aide-components-data-users.html"
 - title: Schnellstart
-  url: "/get-started/quick-start.html"
-- title: Installieren Sie AIDE
   entries:
-  - title: Installationsanforderungen
-    url: "/install-setup/aide-hardware-requirements.html"
-  - title: Installieren Sie Ihr AFX storage system
-    url: "/install-setup/aide-afx-install.html"
-  - title: Installieren Sie Ihre Datenrechenknoten
+  - title: AIDE software auf Servern von Drittanbietern
+    url: "/get-started/quick-start-mde-only.html"
+  - title: AIDE-Software auf von NetApp bereitgestellten DCNs
+    url: "/get-started/quick-start.html"
+- title: Installieren Sie AIDE-kompatible Hardware
+  entries:
+  - title: Installieren Sie Server von Drittanbietern
     entries:
-    - title: Workflow installieren
-      url: "/install-setup/install-workflow.html"
     - title: Hardwareanforderungen überprüfen
-      url: "/install-setup/install-setup-requirements.html"
-    - title: Bereiten Sie die Installation vor
-      url: "/install-setup/prepare-hardware.html"
-    - title: Installieren Sie Datenrechenknoten
-      url: "/install-setup/deploy-hardware.html"
-    - title: Überprüfen Sie die Verkabelungsanforderungen
-      url: "/install-setup/cable-overview.html"
-    - title: Kabelhardware
-      url: "/install-setup/cable-hardware.html"
-    - title: System einschalten
-      url: "/install-setup/power-on-hardware.html"
+      url: "/install-aide-server/aide-mde-server-hardware-requirements.html"
+    - title: Installieren Sie Ihr AFX storage system
+      url: "/install-aide-server/aide-afx-install.html"
+    - title: Installieren Sie Ihre Drittanbieterserver
+      entries:
+      - title: Workflow installieren
+        url: "/install-aide-server/install-workflow.html"
+      - title: Installieren Sie die Server von Drittanbietern
+        url: "/install-aide-server/deploy-hardware.html"
+      - title: Kabelhardware
+        url: "/install-aide-server/cable-hardware.html"
+      - title: System einschalten
+        url: "/install-aide-server/power-on-hardware.html"
+  - title: Installieren Sie von NetApp bereitgestellte Datenrechenknoten
+    entries:
+    - title: Hardwareanforderungen überprüfen
+      url: "/install-dcn/aide-dcn-hardware-requirements.html"
+    - title: Installieren Sie Ihr AFX storage system
+      url: "/install-dcn/aide-afx-install.html"
+    - title: Installieren Sie Ihre Datenrechenknoten
+      entries:
+      - title: Workflow installieren
+        url: "/install-dcn/install-workflow.html"
+      - title: Überprüfen Sie die Anforderungen für die Hardwareinstallation
+        url: "/install-dcn/install-setup-requirements.html"
+      - title: Bereiten Sie die Installation vor
+        url: "/install-dcn/prepare-hardware.html"
+      - title: Installieren Sie Datenrechenknoten
+        url: "/install-dcn/deploy-hardware.html"
+      - title: Überprüfen Sie die Verkabelungsanforderungen
+        url: "/install-dcn/cable-overview.html"
+      - title: Kabelhardware
+        url: "/install-dcn/cable-hardware.html"
+      - title: System einschalten
+        url: "/install-dcn/power-on-hardware.html"
+- title: Installieren Sie AIDE-Software auf Servern von Drittanbietern
+  url: "/install-setup/install-aide-as-software.html"
 - title: Richten Sie Ihr AIDE System ein
   entries:
   - title: AIDE mit einem AFX-Cluster einrichten

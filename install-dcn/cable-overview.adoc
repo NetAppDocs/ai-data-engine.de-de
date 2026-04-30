@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
-permalink: install-setup/cable-overview.html 
-keywords: aide, ai data engine, cable, overview, cabling, hardware, switches, cluster network, host network, data compute nodes 
+permalink: install-dcn/cable-overview.html 
+keywords: aide, ai data engine, cable, overview, cabling, hardware, switches, cluster network, host network, data compute nodes, compute nodes 
 summary: Erfahren Sie mehr über die Verkabelungskonfiguration für Data Compute Node, einschließlich der Nutzung von I/O-Steckplätzen, Kabeltypen und Verbindungsanforderungen für Host- und Cluster-Netzwerke. 
 ---
 = Anforderungen an die Verkabelung von Data Compute Node für AI Data Engine
@@ -13,13 +13,9 @@ summary: Erfahren Sie mehr über die Verkabelungskonfiguration für Data Compute
 [role="lead"]
 Data Compute Nodes werden über Host-Netzwerk- und Cluster-Netzwerkverbindungen in Ihr AFX 1K Storage System integriert. Überprüfen Sie die I/O-Steckplatzkonfiguration, die Kabeltypen und die Verbindungsanforderungen für Ihre Bereitstellung.
 
+NetApp-bereitgestellte Datenrechenknoten werden an dieselben Cluster-Switches wie die AFX 1K Controller-Knoten angeschlossen und erweitern so Ihr Speichersystem um Rechenressourcen, die für KI- und Machine-Learning-Workloads optimiert sind.
 
-
-== Verkabelungskonfiguration
-
-Data Compute Nodes werden an dieselben Cluster-Switches wie die AFX 1K Controller Nodes angeschlossen und erweitern so Ihr Speichersystem um Rechenressourcen, die für AI- und Machine-Learning-Workloads optimiert sind.
-
-Die anfängliche AI Data Engine (AIDE) Konfiguration unterstützt mindestens drei Data Compute Nodes. Ausführliche Konfigurationsdetails und Slot-Prioritäten finden Sie unter link:https://hwu.netapp.com["NetApp Hardware Universe"^].
+Die anfängliche AI Data Engine (AIDE) Konfiguration unterstützt mindestens drei Data Compute Nodes.
 
 image::../media/drw_aide-dcn_back_slots_labeled_ieops-2646.svg[Slotnummerierung auf einem Data Compute Node]
 
@@ -63,7 +59,7 @@ E/A-Steckplatz am Data Compute Node.
 |===
 
 
-== E/A-Steckplatzkonfiguration
+== NetApp-bereitgestellte Data Compute-Node-I/O-Slot-Konfiguration
 
 Der Data Compute Node verwendet ein spezielles Steckplatznummerierungsschema, das sich von Standardserverkonfigurationen unterscheidet. Das Verständnis des Steckplatzlayouts ist für die korrekte Verkabelung unerlässlich.
 
@@ -79,7 +75,7 @@ Der Data Compute Node verwendet ein spezielles Steckplatznummerierungsschema, da
 
 
 
-== Netzwerkverbindungen
+== NetApp-bereitgestellte Daten-Compute-Node-Netzwerkverbindungen
 
 Data Compute Nodes benötigen zwei Arten von Netzwerkverbindungen, um mit dem AFX 1K-Speichersystem integriert zu werden.
 
@@ -113,15 +109,15 @@ Hafenzuweisungen:
 
 == Unterstützte Hardwarekomponenten
 
-Die Data Compute Nodes erfordern spezielle Kabel und Netzwerk-Switches, um eine ordnungsgemäße Konnektivität und Leistung mit dem AFX 1K storage system sicherzustellen.
+NetApp-bereitgestellte Datenrechenknoten benötigen spezielle Kabel und Switches, um eine ordnungsgemäße Konnektivität und Leistung mit dem AFX 1K-Speichersystem sicherzustellen.
 
 [cols="2,3,6"]
 |===
-| *Data Compute Node* | *Unterstützte Switches* | *Unterstützte Kabel* 
+| *Rechenknoten* | *Unterstützte Switches* | *Unterstützte Kabel* 
 
 
  a| 
-Data Compute Nodes (mindestens drei erforderlich)
+NetApp-bereitgestellte Datenrechenknoten (mindestens drei erforderlich)
  a| 
 * Cisco Nexus 9332D-GX2B (400GbE)
 * Cisco Nexus 9364D-GX2A (400GbE)
@@ -136,15 +132,15 @@ Data Compute Nodes (mindestens drei erforderlich)
 * RJ-45-Kabel für Managementverbindungen
 
 
-|===
 
 NOTE: Breakout-Kabel stellen vier 100-GbE-Verbindungen von jedem 400-GbE-Switch-Port bereit. Verbinden Sie das 400-GbE-Ende mit den Switches und das 100-GbE-Ende mit den Data Compute Node I/O-Ports.
 
+|===
 
 
 == Kabelausrichtung
 
-Beim Anschließen von Kabeln an Data Compute Nodes sorgt die richtige Kabelausrichtung für zuverlässige Verbindungen.
+Bei der Verbindung von Kabeln mit Rechenknoten gewährleistet die richtige Kabelausrichtung zuverlässige Verbindungen.
 
 Die Verkabelungsgrafiken in den Installationsanweisungen zeigen Pfeilsymbole, die die korrekte Ausrichtung (oben oder unten) der Zuglasche des Kabelsteckers beim Einführen eines Steckers in einen Port anzeigen. Beim Einführen des Steckers sollten Sie spüren, wie er einrastet. Wenn Sie kein Einrasten spüren, entfernen Sie ihn, drehen Sie ihn um und versuchen Sie es erneut.
 
@@ -154,4 +150,4 @@ image:../media/drw_cable_pull_tab_direction_ieops-1699.svg["Richtung der Kabelzu
 CAUTION: Behandeln Sie die empfindlichen Steckverbinderkomponenten vorsichtig, wenn Sie sie einrasten lassen.
 
 .Was kommt als Nächstes?
-Nach Überprüfung der Verkabelungskonfiguration link:cable-hardware.html["Verkabeln Sie die Hardware"] für Ihre Data Compute Nodes.
+Nach Überprüfung der Kabelkonfiguration, link:cable-hardware.html["Verkabeln Sie die Hardware für Ihre Datenrechenknoten"].

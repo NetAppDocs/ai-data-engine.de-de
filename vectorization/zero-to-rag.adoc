@@ -14,9 +14,12 @@ searchtitle: Data-to-RAG-Schnellstart für AI Data Engine
 [role="lead"]
 Gehen Sie mit diesem Workflow von einem neu bereitgestellten AI Data Engine (AIDE) System zu einem funktionsfähigen Retrieval-Augmented Generation (RAG) Endpunkt. Verstehen Sie, wie Speicheradministratoren, Dateningenieure und Data Scientists mithilfe von ONTAP System Manager und AIDE Console zusammenarbeiten.
 
+
+NOTE: Die folgenden Anweisungen setzen eine NetApp DCN-basierte AIDE-Bereitstellung voraus.
+
 .Bevor Sie beginnen
-* Sie haben Data compute nodes (DCNs) zum ONTAP Cluster installiert und hinzugefügt.
-* Sie haben die AIDE Software für Vektorisierung und Data Guardrails installiert und lizenziert.
+* Sie haben NetApp DCNs installiert und dem ONTAP Cluster hinzugefügt.
+* Sie haben AIDE installiert und die AIDE Premium-Servicelizenz für Vektorisierungs- und Leitplankenfunktionen aktiviert.
 * Sie haben link:../install-setup/configure-oidc.html["OpenID Connect (OIDC)"] konfiguriert und Rollen für Administratoren, Dateningenieure und Datenwissenschaftler zugeordnet.
 
 

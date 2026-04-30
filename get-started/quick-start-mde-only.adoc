@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: get-started/quick-start-mde-only.html 
+keywords: ai, data engine, get started, getting started, quick start, metadata engine, mde, mde only, third-party servers, install, set up 
+summary: Um mit AI Data Engine software auf Servern von Drittanbietern zu beginnen, bereiten Sie Ihre Umgebung vor, installieren Sie AIDE software, richten Sie Ihren Cluster ein und erstellen Sie Arbeitsbereiche für Ihre Benutzer. 
+---
+= Schnellstartanleitung für AIDE software auf Servern von Drittanbietern
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um AI Data Engine (AIDE) software auf Servern von Drittanbietern in Betrieb zu nehmen, bereiten Sie Ihre Umgebung vor, installieren Sie AI Data Engine software, richten Sie Ihren Cluster ein und erstellen Sie Arbeitsbereiche.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]Wird AIDE mit einem neuen oder einem bestehenden AFX-Cluster installiert?
+[role="quick-margin-para"]
+Sie müssen entscheiden, ob AIDE und AFX gleichzeitig installiert werden oder ob AIDE mit einem bestehenden AFX-Cluster integriert wird.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"]Überprüfung der Anforderungen an AIDE software auf Servern von Drittanbietern
+[role="quick-margin-para"]
+Prüfen Sie vor Beginn die Hardware- und Softwarevoraussetzungen. link:../install-aide-server/aide-mde-server-hardware-requirements.html["Informieren Sie sich über die Anforderungen an AIDE software auf Servern von Drittanbietern"]. Sie müssen link:../install-aide-server/install-workflow.html["Richten Sie Ihre Server ein"] vor der Installation der AIDE software durchführen.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"]Installieren Sie AIDE software auf Ihren Drittanbieterservern
+[role="quick-margin-para"]
+Falls Sie Ihr AFX-Speichersystem noch nicht installiert haben, https://docs.netapp.com/us-en/ontap-afx/install-setup/install-setup-workflow.html["installieren"^] die AFX-Hardware.
+
+[role="quick-margin-para"]
+Installieren Sie RHEL 9.7 und die AIDE software auf Ihren Servern, und konfigurieren Sie anschließend das Cluster-Netzwerk. link:../install-setup/install-aide-as-software.html["Installieren Sie RHEL 9.7 und AIDE software"].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] Richten Sie Ihren Cluster ein
+[role="quick-margin-para"]
+Verwenden Sie ONTAP System Manager, um AIDE mit Ihrem AFX-Cluster zu verbinden. link:../install-setup/cluster-setup-afx.html["AIDE mit einem AFX-Cluster einrichten"].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"] Arbeitsbereiche und Datenzugriff einrichten
+[role="quick-margin-para"]
+link:../workspaces/create-workspace.html["Richten Sie einen Arbeitsbereich und Benutzer für diesen Arbeitsbereich ein, die auf AIDE-Daten zugreifen können."].
+
+.Was kommt als Nächstes?
+Sie können nun ONTAP System Manager zur Verwaltung Ihrer AIDE Bereitstellung verwenden. Benutzer mit Arbeitsbereichsberechtigungen können ebenfalls link:../metadata-search/explore-metadata.html["Metadata Engine-Suchen von der AI Data Engine Console"] ausführen.

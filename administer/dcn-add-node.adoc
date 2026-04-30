@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: administer/dcn-add-node.html 
 keywords: aide, ai data engine, data compute node, dcn, add dcn, expand dcn cluster 
-summary:  
+summary: 'Sie können Datenrechenknoten im Rahmen der Erstellung eines neuen AI Data Engine (AIDE)-Clusters oder der Erweiterung eines bestehenden Clusters hinzufügen.' 
 ---
 = Fügen Sie Ihrem AI Data Engine Cluster Datenrechenknoten hinzu
 :allow-uri-read: 
@@ -11,81 +11,78 @@ summary:
 
 
 [role="lead"]
-Sie können Datenrechenknoten (DCNs) im Rahmen der Erstellung eines neuen AI Data Engine (AIDE)-Clusters oder der Erweiterung eines bestehenden Clusters hinzufügen. Der Workflow umfasst das Erkennen und Konfigurieren der Knoten mithilfe von ONTAP System Manager.
+Sie können Datenrechenknoten im Rahmen der Erstellung eines neuen AI Data Engine (AIDE)-Clusters oder der Erweiterung eines bestehenden Clusters hinzufügen. Der Workflow umfasst das Erkennen und Konfigurieren der Knoten mithilfe von ONTAP System Manager.
 
 
 
 == Bereiten Sie das Hinzufügen von Knoten vor
 
-Beim Hinzufügen von DCN-Knoten gibt es mehrere Überlegungen.
+Beachten Sie Folgendes beim Hinzufügen von Datenrechenknoten.
 
-.Beim Erstellen eines neuen AIDE-Clusters
-Für einen neuen AIDE Cluster werden genau drei DCN-Knoten benötigt.
+.Minimale Anzahl an Datenrechenknoten
+Für einen neuen AIDE Cluster werden genau drei verfügbare Datenrechenknoten benötigt.
 
 .Hardwareinstallation und Adressierbarkeit
 Stellen Sie sicher, dass die folgenden Voraussetzungen erfüllt sind:
 
-* Die neue DCN-Hardware ist im Rack montiert, eingeschaltet und mit den Cluster-Switches verkabelt.
-* Sie haben einen IP-Adressraumbereich für das DCN-zu-ONTAP-Backend-Subnetz verfügbar.
+* Die neue Datenverarbeitungshardware ist in einem Rack montiert, eingeschaltet und mit den Cluster-Switches verkabelt.
+* Für die Datenrechenknoten steht ein IP-Adressraumbereich zum ONTAP Backend-Subnetz zur Verfügung.
 * Der ONTAP Cluster wurde initialisiert und ist vom Cluster Management LIF aus erreichbar.
 
 
 .System Manager-Anmeldeinformationen
-Sie benötigen _storage administrator_-Berechtigungen, um Aufgaben zur Erstellung oder Erweiterung eines AIDE-Clusters durchzuführen.
+Sie benötigen _storage administrator_-Berechtigungen, um AIDE-Cluster-Erstellungs- oder Erweiterungsaufgaben durchzuführen.
 
 .Softwarekompatibilität
-Prüfen Sie die folgende Dokumentation, um zu bestätigen, dass Ihre DCN-Hardware- und Softwareversionen mit Ihrem ONTAP Cluster kompatibel sind:
+Prüfen Sie anhand der folgenden Dokumentation, ob die Hardware- und Softwareversionen Ihrer Datenverarbeitungsgeräte mit Ihrem ONTAP Cluster kompatibel sind:
 
-* link:../administer/upgrades-aide-summary.html["DCN-Software ist mit der ONTAP Version kompatibel"].
+* link:../administer/upgrades-aide-summary.html["AIDE-Software ist mit der ONTAP Version kompatibel"].
 
 
 Während des Hinzufügens von Knoten überprüft der System Manager, ob auf den neuen Knoten eine Softwareversion ausgeführt wird, die kompatibel ist mit:
 
-* Die effektive Version (ECV) des ONTAP-Clusters, falls dies der erste DCN-Beitritt ist.
-* Die bestehende DCN-Cluster-Version, wenn DCNs bereits vorhanden sind.
+* Die effektive Version des ONTAP-Clusters, wenn dies der erste hinzugefügte Datenrechenknoten ist.
+* Die Version des bestehenden Datenrechenclusters, falls bereits Datenrechenknoten vorhanden sind.
 
 
 Wenn ein Knoten inkompatibel ist:
 
-* Neben dem betroffenen DCN wird im Dialogfeld *Hinzufügen* ein Fehler angezeigt.
-* Sie müssen zuerst die DCN-Software (oder ONTAP, wie zutreffend) auf eine kompatible Version aktualisieren.
+* Im Dialogfeld *Hinzufügen* wird neben dem betroffenen Datenberechnungsknoten ein Fehler angezeigt.
+* Sie müssen zuerst die Software des Datenrechenknotens (oder ONTAP, je nach Bedarf) auf eine kompatible Version aktualisieren.
 
 
 
 
 == Fügen Sie die Datenberechnungsknoten hinzu
 
-Sie fügen DCN-Knoten im Rahmen der Erstellung eines neuen AIDE-Clusters oder der Erweiterung eines bestehenden Clusters hinzu.
+Fügen Sie Datenrechenknoten im Rahmen der Erstellung eines neuen AIDE Clusters oder der Erweiterung eines bestehenden Clusters hinzu.
 
 .Schritte
 . Wählen Sie im System Manager den *Dashboard* im Navigationsbereich und dann die Karte *Health* aus.
 . Bestätigen Sie, dass Knoten zum Hinzufügen vorhanden sind, und wählen Sie *Details anzeigen*, um die Liste anzuzeigen.
 +
-Die Liste enthält gefundene Knoten, die noch nicht Teil des AIDE Clusters sind
+Die Liste enthält gefundene Knoten, die noch nicht Teil des AIDE-Clusters sind.
 
 . Alternativ können Sie *Cluster* und *Overview* sowie die Registerkarte *Data compute* auswählen, um die Liste anzuzeigen.
-. Wählen Sie am unteren Rand der Seite „Datenberechnung“ oberhalb der Liste der Knoten *Hinzufügen* aus.
-. Im Dialogfeld *Datenrechenknoten hinzufügen* wählen Sie die DCN-Knoten aus, die Sie hinzufügen möchten.
-+
-Sie können einzelne Knoten optional vor dem Hinzufügen umbenennen.
-
+. Wählen Sie am unteren Rand der Seite „Datenberechnung“ oberhalb der Knotenliste *Hinzufügen* aus.
+. Im Dialogfeld *Knoten hinzufügen* wählen Sie die Data Compute Nodes aus, die Sie hinzufügen möchten.
 . Wenn Sie zum ersten Mal Knoten hinzufügen und kein Backend-Subnetz existiert, wählen Sie *Subnetz hinzufügen* und geben Sie Folgendes an:
 +
 ** Subnetzname (für interne Verwendung)
 ** Subnetzadresse und Maske
-** IP-Adressbereich für DCN und ONTAP-Knoten auf diesem Backend-Netzwerk
+** IP-Adressbereich für Datenrechenknoten und ONTAP-Knoten im Backend-Netzwerk
 +
-System Manager überprüft, ob der Bereich genügend freie IP-Adressen für alle hinzuzufügenden DCNs, alle ONTAP-Knoten im Cluster und zusätzliche Floating IPs auf Clusterebene enthält, die für die Kommunikation zwischen DCN und ONTAP verwendet werden.
+Der System Manager prüft, ob der Adressbereich genügend freie IP-Adressen für alle hinzuzufügenden Datenrechenknoten, alle ONTAP-Knoten im Cluster sowie zusätzliche Floating IPs auf Clusterebene enthält, die für die Kommunikation zwischen Datenrechenknoten und ONTAP verwendet werden.
 
 
 
-. Ob Sie das Backend-Subnetz hinzugefügt haben oder es bereits existiert:
+. Führen Sie die folgenden Schritte unabhängig davon aus, ob Sie das Backend-Subnetz hinzugefügt haben oder es bereits existiert:
 +
 .. Überprüfen Sie die verfügbaren IP-Adressen.
 .. Wählen Sie bei Bedarf *Subnetz bearbeiten* aus und erweitern Sie den IP-Bereich.
 +
 *** Der Bereich kann nur erweitert werden. Das Verkleinern oder Ändern des Subnetzes wird nicht unterstützt.
-*** Eine Änderung des Subnetzes oder des IP-Bereichs kann die Neuerstellung des zugrunde liegenden Kubernetes-Clusters auf DCNs erforderlich machen und mehrere Minuten dauern.
+*** Eine Änderung des Subnetzes oder des IP-Bereichs kann die Neuerstellung des zugrunde liegenden Kubernetes-Clusters auf den Datenrechenknoten erforderlich machen und mehrere Minuten dauern.
 
 
 
@@ -96,23 +93,35 @@ System Manager überprüft, ob der Bereich genügend freie IP-Adressen für alle
 ** Netzwerkmaske
 ** Gateway (falls für Ihre Umgebung erforderlich)
 +
-Die einzelne IP wird über die DCNs verteilt und als Frontend-Adresse für AIDE Console und zugehörige APIs verwendet.
+Die einzelne IP-Adresse wird über die Datenrechenknoten verteilt und als Frontend-Adresse für AIDE Console und zugehörige APIs verwendet.
 
 
 
 . Überprüfen Sie die ausgewählten Knoten, das Backend-Subnetz und die Einstellungen der Data Engine-Service-Schnittstelle.
 . Wählen Sie *Hinzufügen* und warten Sie, bis der Vorgang abgeschlossen ist. System Manager führt die folgenden Aktionen aus:
 +
-** Fügen Sie die ausgewählten Knoten dem DCN Cluster hinzu
-** Stellen Sie das Backend-Netzwerk bereit und fügen Sie Knoten dem Kubernetes-basierten DCN Cluster hinzu
-** Aktualisiert interne Metadaten für DCN discovery
+** Fügen Sie die ausgewählten Knoten dem Datenrechencluster hinzu
+** Stellen Sie das Backend-Netzwerk bereit und fügen Sie Knoten dem Kubernetes-basierten Data Compute Cluster hinzu
+** Interne Metadaten für die Datenrechenknotenerkennung aktualisieren
 
 
 . Nach Abschluss wählen Sie *Cluster* und *Overview* aus und bestätigen Sie:
 +
-.. Unter *Datenverarbeitung* erscheinen die neuen DCNs als Teil des Clusters
-.. Alle Knoten sind *Healthy*
-.. Überprüfen Sie, ob die *Health*-Karte im Dashboard die aktualisierte Knotenanzahl anzeigt.
+** Unter *Datenberechnung* werden die neuen Datenberechnungsknoten als Teil des Clusters online angezeigt
+** Alle Knoten sind *Healthy*
+** AIDE Version wird für jeden Knoten korrekt angezeigt
+** Überprüfen Sie, ob die *Health*-Karte im Dashboard die aktualisierte Knotenanzahl anzeigt.
+
+
+. (Optional) Nachdem alle Knoten dem Cluster beigetreten sind, überprüfen Sie, ob alle Dienste ordnungsgemäß starten.
++
+.. Überprüfen Sie den Kubernetes-Pod-Status:
++
+[source, bash]
+----
+kubectl get pods -n aide-system
+----
+.. Prüfen Sie, ob alle Pods den Status *Running* oder *Completed* aufweisen.
 
 
 

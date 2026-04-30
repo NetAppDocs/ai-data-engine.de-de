@@ -17,7 +17,7 @@ Halten Sie die AI Data Engine (AIDE) Systemkomponenten auf dem neuesten Stand, u
 
 == AIDE Systemkomponenten
 
-Es gibt zwei Hauptkomponenten, die in einem AIDE System aktualisiert werden müssen: ONTAP software und AIDE software, zu der auch DCN firmware gehört.
+Es gibt zwei Hauptkomponenten, die in einem AIDE System aktualisiert werden müssen: ONTAP Software und AIDE Software, zu der auch NetApp DCN Firmware gehört.
 
 
 
@@ -29,7 +29,7 @@ ONTAP ist das Betriebssystem, das auf NetApp Speicher­systemen, einschließlich
 
 === AIDE Software-Updates
 
-AIDE Console software und DCN Firmware-Updates werden zusammen als ein einziges Paket (.tgz) verteilt und sind nicht in ONTAP Images eingebettet. Updates gewährleisten die ordnungsgemäße Funktion der Hardwarekomponenten innerhalb des AIDE Systems und bieten neue Funktionen, Leistungsverbesserungen und Fehlerbehebungen.
+AIDE Console-Software und NetApp DCN-Firmware-Updates werden zusammen als ein einziges Paket (.tgz) verteilt und sind nicht in ONTAP-Images eingebettet. Updates gewährleisten die ordnungsgemäße Funktion der Hardwarekomponenten innerhalb des AIDE-Systems und bieten neue Funktionen, Leistungsverbesserungen und Fehlerbehebungen.
 
 
 
@@ -51,7 +51,7 @@ Veröffentlichungsarten und -umfang:
 
 Stellen Sie die Kompatibilität zwischen ONTAP und AIDE software sicher, wenn Sie Updates planen.
 
-AIDE software wird als "U"-Releases veröffentlicht. Ein AIDE Major Release ist ein "U0"-Release und nachfolgende Minor Releases werden "U1" und später sein.
+AIDE-Software wird in „U“-Versionen veröffentlicht. Eine Hauptversion von AIDE ist „U0“, nachfolgende Nebenversionen sind „U1“ und höher.
 
 
 
@@ -76,7 +76,7 @@ AIDE software wird als "U"-Releases veröffentlicht. Ein AIDE Major Release ist 
 
 === AIDE Upgrade-Pfade
 
-Die folgenden Beispiele verwenden hypothetische zukünftige Versionen, um die zulässigen Upgrade- und Update-Pfade ab AIDE 9.18.1 U0 und 9.18.1 U1 zu zeigen.
+Die folgenden Beispiele verwenden hypothetische zukünftige Versionen, um zulässige Upgrade- und Update-Pfade von AIDE 9.18.1 U0 und 9.18.1 U1 aufzuzeigen.
 
 [cols="25,25,50"]
 |===
@@ -86,16 +86,16 @@ Die folgenden Beispiele verwenden hypothetische zukünftige Versionen, um die zu
 | 9.18.1U0 | 9.18.1U1 | Direkt 
 
 
-| 9.18.1U0 | 9.18.1U3 | Direkt (Sie können von jeder Ux auf jede spätere Ux in 9.18.1 aktualisieren) 
+| 9.18.1U0 | 9.18.1U3 | Direkt (Sie können von Ux auf eine spätere Ux in 9.18.1 aktualisieren) 
 
 
-| 9.18.1U1 | 9.18.1U3 | Direkt (Sie können von jeder Ux auf jede spätere Ux in 9.18.1 aktualisieren) 
+| 9.18.1U1 | 9.18.1U3 | Direkt (Sie können von Ux auf eine spätere Ux in 9.18.1 aktualisieren) 
 |===
 
 
 == Einschränkungen rückgängig machen
 
-AIDE-Systeme unterstützen keine Rücksetzvorgänge für DCN-Firmware, AIDE-Software-Updates oder ONTAP auf AFX-Speichersystemen. Nachdem Sie ein Update oder Upgrade installiert haben, können Sie nicht zu einer vorherigen Version zurückkehren. Überprüfen Sie <<Kompatibilitätsmatrix,Kompatibilitätsanforderungen>> vor dem Update oder Upgrade.
+AIDE-Systeme unterstützen keine Rücksetzvorgänge für NetApp DCN-Firmware, AIDE-Software-Updates oder ONTAP auf AFX-Speichersystemen. Nach der Installation eines Updates oder Upgrades ist ein Downgrade auf eine vorherige Version nicht möglich. Prüfen Sie <<Kompatibilitätsmatrix,Kompatibilitätsanforderungen>> vor dem Update oder Upgrade.
 
 .Verwandte Informationen
 * https://docs.netapp.com/us-en/ontap-afx/administer/upgrade-ontap.html["ONTAP-Software für AFX-Systeme aktualisieren"^]

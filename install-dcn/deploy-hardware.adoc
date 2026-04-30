@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
-permalink: install-setup/deploy-hardware.html 
-keywords: aide, ai, data engine, ai data engine, dcn, data compute node, afx, afx 1k, install, setup, hardware, deploy, 
+permalink: install-dcn/deploy-hardware.html 
+keywords: aide, ai, data engine, ai data engine, dcn, data compute node, afx, afx 1k, install, setup, hardware, deploy, mde, third-party servers, netapp data compute nodes, cabinet, rail kit, bezel, cable management 
 summary: Erfahren Sie, wie Sie die Schienensätze installieren und die Datenrechenknoten im Schrank befestigen. 
 ---
 = Installieren Sie Ihre Daten-Compute-Nodes für AI Data Engine
@@ -11,7 +11,9 @@ summary: Erfahren Sie, wie Sie die Schienensätze installieren und die Datenrech
 
 
 [role="lead"]
-Installieren und sichern Sie Ihre Data Compute Nodes im Schrank.
+Installieren und sichern Sie Ihre Server von Drittanbietern oder NetApp-bereitgestellten Datenrechenknoten im Serverschrank.
+
+Zur Installation Ihrer von NetApp bereitgestellten Datenrechenknoten müssen Sie die Schienensätze für die Datenrechenknoten montieren, die Datenrechenknoten im Schrank befestigen und Kabelmanagementvorrichtungen an der Rückseite des Systems anbringen, um eine geordnete Kabelführung zu gewährleisten.
 
 .Bevor Sie beginnen
 * Vergewissern Sie sich, dass die Anleitung dem Schienenbausatz beiliegt.
@@ -34,4 +36,4 @@ NOTE: Im Allgemeinen sollten die Switches mittig im Schrank installiert werden. 
 
 
 .Was kommt als Nächstes?
-Nachdem Sie die Datenrechenknoten installiert haben, link:cable-hardware.html["Verkabeln Sie die Daten-Compute-Nodes für AIDE"].
+Nachdem Sie die Datenrechenknoten installiert haben, link:cable-overview.html["Überprüfen Sie die Kabelanforderungen für die Datenrechenknoten für AIDE"].
