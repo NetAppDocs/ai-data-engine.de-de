@@ -871,7 +871,6 @@
   <block id="7dbe065509bb17277c7b17f3766f97be" category="list-text">Im Dashboard lässt sich ermitteln, welche Dateneigentümer die höchste Konzentration an kalten, veralteten oder doppelten Daten aufweisen. Anschließend können die Ergebnisse in der Untersuchungsansicht nach Eigentümer oder Gruppe gefiltert sowie gemäß Ihren Richtlinien überprüft und verwaltet werden.</block>
   <block id="482723983a4f2af954e36ff41e567451" category="inline-link-macro">Bekannte Einschränkungen</block>
   <block id="34e34c0debc388181c3934f84b977ddd" category="list-text"><block ref="34e34c0debc388181c3934f84b977ddd" category="inline-link-macro-rx"></block></block>
-  <block id="e72c60c273700856ad0eeb853a353e52" category="sidebar">AI Data Engine bietet Ihnen Einblick in die unstrukturierten Daten, die auf Ihren NetApp Systemen gespeichert sind. Damit lassen sich Optimierungspotenziale für den Storage identifizieren, Daten analysieren und Lebenszyklusrichtlinien durchsetzen.</block>
   <block id="ed67b8aec97dcec019f1b2972d70f5af" category="sidebar">AI Data Engine Dokumentation</block>
   <block id="0416d02572f9d563fa4967178dc5c5fb" category="sidebar">Die Dokumentation zu AI Data Engine beschreibt, wie AI Data Engine bereitgestellt wird, wie Datenquellen verbunden werden und wie AI Data Engine für Speicheroptimierung, Metadatenanalyse und Data Governance genutzt wird.</block>
   <block id="be11c74c1dd7f307bb80183a90dc2067" category="sidebar">Los geht's</block>
@@ -892,4 +891,5 @@
   <block id="6b2443d2529b7b19a67154f7a04c9877" category="sidebar">Der Zustand Ihres Speichers lässt sich mit dem AIDE Dashboard beurteilen.</block>
   <block id="4bd61438e659088dded1d69964caccb1" category="sidebar">Verwaltung von Richtlinien und Maßnahmen</block>
   <block id="7d0ee6fed10d3d4e5c9ee496729ab519" category="sidebar">Versionshinweise</block>
+  <block id="ac219e2fd9f167e916107df50eb88fad" category="sidebar">AI Data Engine ist ein Metadaten-Intelligence-Service, der über NetApp Console verwaltet wird, Ihre verbundenen Systeme scannt, einen Metadatenkatalog erstellt und Ihnen die Transparenz und Tools bietet, um Storage zu optimieren und Daten im großen Maßstab zu steuern.</block>
 </blocks>
