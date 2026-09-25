@@ -1,0 +1,71 @@
+---
+sidebar: sidebar 
+permalink: policies/manage-policies.html 
+keywords: manage policies, edit policy, enable policy, disable policy, delete policy 
+summary: Gespeicherte Richtlinien können daraufhin überprüft werden, welche Dateien aktuell den jeweiligen Kriterien entsprechen, und nicht mehr benötigte Richtlinien können entfernt werden. 
+---
+= Verwalten von Richtlinien in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie überprüfen möchten, welche Ihrer gespeicherten Richtlinien mit Daten übereinstimmen, die Anzahl betroffener Dateien vergleichen möchten, um Maßnahmen zu priorisieren, oder nicht mehr benötigte Richtlinien entfernen möchten, verwenden Sie die Seite „Richtlinien“. Beispielsweise kann ein Speicheradministrator mit mehreren Richtlinien für selten genutzte Daten die Anzahl betroffener Dateien vergleichen, um zu entscheiden, welche Datengruppen zuerst Aufmerksamkeit erfordern.
+
+Jede Richtlinienliste zeigt die Anzahl der Dateien und Objekte an, die aktuell ihren Kriterien entsprechen. Anhand dieser Anzahl lässt sich ermitteln, welche Richtlinien aktiv Daten erfassen, die eine Überprüfung wert sind.
+
+
+
+[[check-which-files-match-a-policy]]
+== Es wird geprüft, welche Dateien einer Richtlinie entsprechen.
+
+Bevor Sie eine Richtlinie bearbeiten oder löschen, sollten die Dateien überprüft werden, die derzeit damit übereinstimmen, um zu bestätigen, dass die Kriterien weiterhin die richtigen Daten erfassen.
+
+.Schritte
+. Wählen Sie in der AI Data Engine Benutzeroberfläche *Richtlinien* aus.
+. Das Aktionsmenü neben der Richtlinie kann geöffnet und *Ergebnisse untersuchen* ausgewählt werden.
+
+
+
+
+[[edit-a-policy]]
+== Richtlinie bearbeiten
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. Wählen Sie in der AI Data Engine Benutzeroberfläche *Richtlinien* aus.
+. Das Aktionsmenü der Richtlinie, die bearbeitet werden soll, ist zu öffnen, und *Richtlinie bearbeiten* ist auszuwählen.
+. Aktualisieren Sie bei Bedarf den Richtliniennamen, die Beschreibung oder die Aktion.
+. *Speichern* auswählen.
+
+
+
+
+[[delete-a-policy]]
+== Löschen einer Richtlinie
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+
+CAUTION: Die Löschung ist endgültig und kann nicht rückgängig gemacht werden.
+
+.Schritte
+. Wählen Sie in der AI Data Engine Benutzeroberfläche *Richtlinien* aus.
+. Öffnen Sie das Aktionsmenü für die Richtlinie, die Sie löschen möchten, und wählen Sie *Richtlinie löschen* aus.
+. Die Löschung wird im Vorschaudialog bestätigt.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:create-policy.html["Erstellung einer Richtlinie"]
+* link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+

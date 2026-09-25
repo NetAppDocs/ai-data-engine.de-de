@@ -1,0 +1,74 @@
+---
+sidebar: sidebar 
+permalink: administer/configure-settings.html 
+keywords: cold threshold, stale threshold, configuration, settings, data classification, cold data, stale data 
+summary: Die Zeitschwellenwerte werden so konfiguriert, dass AI Data Engine Daten in Ihrer Umgebung als kalt oder veraltet klassifiziert. 
+---
+= Konfiguration von Schwellenwerten für kalte und veraltete Daten in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine klassifiziert Dateien anhand von von Ihnen definierten Zeitschwellenwerten als inaktiv oder veraltet. Diese Schwellenwerte beeinflussen, welche Daten in Dashboard-Zusammenfassungen angezeigt werden, welche Dateien bei Anwendung von Filtern für inaktive oder veraltete Dateien in Investigation erscheinen und auf welche Dateien sich Richtlinien beziehen. Es sollten Schwellenwerte festgelegt werden, die den Datenklassifizierungs- und Aufbewahrungspraktiken Ihres Unternehmens entsprechen und dabei helfen, die Daten zu identifizieren, deren Überwachung als wichtig erachtet wird.
+
+
+
+[[what-is-cold-and-stale-data]]
+== Was sind kalte und veraltete Daten?
+
+Kalte Daten:: Dateien, auf die innerhalb des konfigurierten Schwellenwerts für selten genutzte Daten nicht zugegriffen wurde. Selten genutzte Daten sind eine wichtige Kennzahl, mit der Ihre Organisation Speicher identifizieren kann, der gemäß Ihren Aufbewahrungs- und Geschäftsrichtlinien optimiert werden könnte.
+Veraltete Daten:: Dateien, auf die innerhalb des konfigurierten Schwellenwerts für veraltete Daten nicht zugegriffen oder die nicht geändert wurden. Zu den veralteten Daten gehören Dateien, auf die gelegentlich zugegriffen, die aber in letzter Zeit nicht geändert wurden und die Ihre Organisation gemäß ihren Richtlinien überwachen oder verwalten kann.
+
+
+
+NOTE: Die Standard-Schwellenwerte sind Produktvorgaben, die als Ausgangspunkt dienen. Sie entsprechen nicht den gesetzlichen, regulatorischen oder branchenüblichen Aufbewahrungsfristen. Es sollten Schwellenwerte festgelegt werden, die den spezifischen Richtlinien und Anforderungen Ihres Unternehmens entsprechen.
+
+Änderungen an einem der Schwellenwerte werden nach Abschluss des nächsten Scanzyklus wirksam.
+
+
+
+[[configure-the-cold-data-threshold]]
+== Konfiguration des Schwellenwerts für kalte Daten
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. *Einstellungen* auswählen.
+. Für die Definition von Kaltdaten ist die Option *Bearbeiten* auszuwählen.
+. Die Dateieigenschaft wird auf *Zuletzt aufgerufen* oder *Zuletzt geändert* festgelegt.
+. Legen Sie den Zeitschwellenwert fest. Der Standardwert beträgt ein Jahr.
+. *Speichern* auswählen.
+
+
+
+
+[[configure-the-stale-data-threshold]]
+== Konfiguration des Schwellenwerts für veraltete Daten
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. *Einstellungen* auswählen.
+. Für *Definition veralteter Daten* ist *Bearbeiten* auszuwählen.
+. Die Dateieigenschaft wird auf *Zuletzt aufgerufen* oder *Zuletzt geändert* festgelegt.
+. Legen Sie den Zeitschwellenwert fest. Der Standardwert beträgt drei Jahre.
+. *Speichern* auswählen.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:../investigate/understand-dashboard.html["Informationen zum AI Data Engine Dashboard"]
+* link:../get-started/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
+* link:manage-users-roles.html["Verwaltung von Benutzern und Rollen"]
+

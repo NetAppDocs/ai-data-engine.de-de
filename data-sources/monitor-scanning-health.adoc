@@ -1,0 +1,49 @@
+---
+sidebar: sidebar 
+permalink: data-sources/monitor-scanning-health.html 
+keywords: scan health, scanning, health monitor, coverage, migration 
+summary: Bestätigen Sie, dass der Scanvorgang funktioniert und dass Ihre Untersuchungsergebnisse den aktuellen Daten entsprechen. 
+---
+= Überwachung des Scanstatus in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie auf der Grundlage eines Dashboard- oder Untersuchungsergebnisses handeln, sollten Sie bestätigen, dass die zugrunde liegenden Daten aktuell sind. Es sollte überprüft werden, ob die Scanfunktion funktioniert und ob Ihre Ergebnisse aktuelle Daten widerspiegeln.
+
+
+
+[[verify-scan-status-and-coverage]]
+== Überprüfung von Scanstatus und Abdeckung
+
+Stellen Sie sicher, dass alle Ihre Speichersysteme verbunden sind und gescannt werden.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* ist zu überprüfen, ob alle erwarteten Speichersysteme aufgelistet und für den Scan aktiviert sind.
+. In einer Systemzeile kann *Details anzeigen* ausgewählt werden, um den Scanfortschritt und eventuelle Fehler zu überprüfen. Einzelheiten sind unter link:../data-sources/manage-data-sources.html["Datenquellen verwalten"] zu finden.
+
+
+
+
+[[validate-that-investigation-findings-reflect-current-data]]
+== Es ist zu überprüfen, ob die Untersuchungsergebnisse die aktuellen Daten widerspiegeln.
+
+Wenn das Dashboard eine große Menge an kalten oder veralteten Daten anzeigt, sollten Sie vor darauf basierenden Entscheidungen bestätigen, dass die Zahlen aktuell sind.
+
+* Der Zeitpunkt des letzten Scans für jedes Speichersystem, das zu dem Ergebnis beiträgt, sollte überprüft werden. Ein System, das in letzter Zeit nicht gescannt wurde, kann kalte und veraltete Daten unter- oder überbewerten.
+* Es ist zu bestätigen, dass die Scan-Abdeckung für dieses System vollständig ist. Ein Teilscan (angehalten, in Bearbeitung oder mit Fehlern) bedeutet, dass einige Daten noch nicht ausgewertet wurden.
+* Warten Sie den nächsten Scanzyklus ab, oder beheben Sie den zugrunde liegenden Fehler, falls die Abdeckung unvollständig erscheint.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"]
+* link:../investigate/understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
+* link:../investigate/investigate-data.html["Untersuchung Ihrer Daten"]
+

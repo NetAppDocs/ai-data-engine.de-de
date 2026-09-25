@@ -1,0 +1,12 @@
+---
+section: deploy
+title: Einsetzen
+entries:
+- title: Informationen zur AIDE Bereitstellung
+  url: "/deploy/deployment-overview.html"
+- title: AIDE-Anforderungen
+  url: "/deploy/aide-requirements.html"
+- title: AIDE Lite bereitstellen
+  url: "/deploy/deploy-aide-lite.html"
+- title: AIDE Enterprise bereitstellen
+  url: "/deploy/deploy-enterprise.html"

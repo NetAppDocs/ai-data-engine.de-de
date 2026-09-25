@@ -1,0 +1,89 @@
+---
+sidebar: sidebar 
+permalink: investigate/investigate-unstructured.html 
+keywords: investigate, unstructured, cold data, stale data, last accessed, file size, file owner, reclaimable storage, NFS, SMB, CIFS 
+summary: Mithilfe von Metadatenfiltern können Dateien in NFS- und SMB/CIFS-Volumes als kalt, veraltet oder groß gefunden und klassifiziert werden. Anschließend können die Ergebnisse überprüft, gegebenenfalls Maßnahmen ergriffen oder die Filterkriterien als wiederverwendbare Richtlinie gespeichert werden. 
+---
+= Untersuchung unstrukturierter Daten in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn der dateibasierte Speicher unerwartet anwächst, kann nach dem Zeitpunkt des letzten Zugriffs, der Dateigröße und dem Eigentümer gefiltert werden, um festzustellen, welche Dateien Kapazität belegen. So kann ein Speicheradministrator beispielsweise Terabytes an VM-Snapshots identifizieren, auf die seit über einem Jahr nicht mehr zugegriffen wurde, und beurteilen, ob sie archiviert, gelöscht oder aufbewahrt werden sollten.
+
+.Bevor Sie beginnen
+* Mindestens eine Datenquelle muss verbunden sein und scannen. Informationen hierzu sind in link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"] enthalten.
+
+
+
+
+[[find-cold-or-stale-files-by-last-access-time]]
+== Inaktive oder veraltete Dateien lassen sich anhand des letzten Zugriffszeitpunkts finden.
+
+Mithilfe datumsbasierter Filter lassen sich Dateien identifizieren, auf die innerhalb der Kalt- oder Veraltet-Daten-Schwellenwerte Ihrer Organisation nicht zugegriffen wurde. Die Schwellenwerte sind unter *Configuration* > *Settings* konfigurierbar. Siehe link:../administer/configure-settings.html["Schwellenwerte für kalte und veraltete Daten konfigurieren"].
+
+.Schritte
+. Wählen Sie in der AI Data Engine Benutzeroberfläche die Option *Investigation* aus.
++
+Die Registerkarte „Unstrukturiert“ ist standardmäßig ausgewählt.
+
+. Wählen Sie *Filter hinzufügen* und anschließend *Zuletzt aufgerufen* aus.
+. Wählen Sie einen Zeitraum aus, der Ihrem Schwellenwert für kalte Daten entspricht, zum Beispiel *1+ Jahr*.
+. Um sich auf die größten Verbraucher zu konzentrieren, wählen Sie erneut *Filter hinzufügen*, dann *Dateigröße* und legen Sie einen Mindestwert fest, zum Beispiel *>1 GiB*.
++
+Angewendete Filter werden als Tags unterhalb der Filterleiste angezeigt. Die Ergebnistabelle und die Anzahl der Elemente werden aktualisiert, wenn Sie jeden Filter hinzufügen.
+
+
+
+Eine vollständige Liste der verfügbaren Filter ist unter link:use-filters.html["Arbeiten mit Filtern"] verfügbar.
+
+
+
+[[group-results-by-owner]]
+== Ergebnisse nach Eigentümer gruppieren
+
+Die Gruppierung nach Eigentümer hilft Ihnen zu verstehen, wer die meisten potenziell rückholbaren Daten besitzt, bevor Sie entscheiden, wo Sie Maßnahmen ergreifen.
+
+.Schritte
+. Nachdem die Filter angewendet wurden, wählen Sie die Dropdown-Liste *View by* aus.
+. *Besitzer* auswählen.
++
+Die Ergebnisse werden neu angeordnet und zeigen die Gesamtzahl der Dateien und deren Größe pro Besitzer an. Durch Auswahl einer beliebigen Besitzerzeile werden die einzelnen Dateien des Besitzers eingeblendet.
+
+
+
+
+
+[[review-file-details]]
+== Dateidetails prüfen
+
+Durch Auswahl einer beliebigen Dateizeile lässt sich das Detailfenster öffnen, und es kann bestätigt werden, dass die Datei dem gewünschten Umfang entspricht, bevor Maßnahmen ergriffen werden.
+
+Im Detailbereich werden das Dateisystem, das Storage Repository, der Dateieigentümer sowie alle angewendeten Tags oder Richtlinien angezeigt. Vor dem Archivieren oder Löschen sollten System und Eigentümer überprüft werden.
+
+
+
+[[act-on-results-or-save-as-a-policy]]
+== Auf Ergebnisse reagieren oder als Richtlinie speichern
+
+Nachdem Sie die Dateien identifiziert haben, die Sie bearbeiten möchten, wählen Sie ein oder mehrere Elemente mithilfe der Kontrollkästchen in der Ergebnistabelle aus.
+
+* Informationen zu sofortigen Maßnahmen finden Sie unter link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"].
+* Um die Filterkriterien für die laufende Überwachung zu speichern, wählen Sie in der Filtersymbolleiste *Richtlinie erstellen* aus. Siehe link:../policies/create-policy.html["Erstellung einer Richtlinie"].
+
+
+Zum Herunterladen der gefilterten Ergebnisse auf der Registerkarte „Unstrukturiert“ image:icon_download_file.png["Download"] auswählen.
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:use-filters.html["Arbeiten mit Filtern"]
+* link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+* link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+* link:../get-started/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
+* link:understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
+

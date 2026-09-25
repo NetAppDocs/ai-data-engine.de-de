@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: deploy/deployment-overview.html 
+keywords: deployment, aide lite, aide enterprise, kubernetes, vm, deployment modes, sizing 
+summary: AI Data Engine kann als AIDE Lite oder als AIDE Enterprise bereitgestellt werden, wenn Ihre Umgebung eine auf Kubernetes basierende Hochverfügbarkeit erfordert. 
+---
+= Informationen zur Bereitstellung von AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine kann als AIDE Lite, eine Einzel-VM-Installation, bereitgestellt werden. Wenn Ihre Umgebung Kubernetes-basierte Hochverfügbarkeit in großem Umfang erfordert, kann stattdessen AIDE Enterprise bereitgestellt werden.
+
+
+
+[[aide-lite]]
+== AIDE Lite
+
+AIDE Lite wird auf einer einzelnen Linux VM installiert. Kubernetes-Kenntnisse sind nicht erforderlich, da das Installationsprogramm k3s automatisch bereitstellt.
+
+AIDE Lite ist in drei Größen, Small, Medium und Large, für Umgebungen mit bis zu ca. 200 Millionen, 1 Milliarde bzw. 3 Milliarden Dateien verfügbar. Vollständige Informationen zur VM-Dimensionierung und zu den Betriebssystemanforderungen finden sich unter link:aide-requirements.html["AIDE-Anforderungen"]. Diese Größen sind empfohlene Richtwerte, keine festen Obergrenzen; link:aide-requirements.html#flexible-sizing-lite["Richtlinien für flexible Größenanpassung"] enthält Informationen dazu, was die Dimensionierung bestimmt und wie eine weitere Skalierung möglich ist.
+
+
+
+[[aide-enterprise]]
+== AIDE Enterprise
+
+AIDE Enterprise ist bereitzustellen, wenn Ihre Umgebung Hochverfügbarkeit, Fehlertoleranz, fortlaufende Upgrades oder horizontale Skalierung über die größte Größe von AIDE Lite hinaus erfordert. AIDE Enterprise wird als Multi-Node Kubernetes-Cluster auf einem vom Kunden bereitgestellten und verwalteten RKE2-Cluster bereitgestellt.
+
+AIDE Enterprise ist in drei Größen, Small, Medium und Large, für Umgebungen mit bis zu ca. 1 Milliarde, 3 Milliarden bzw. 6 Milliarden Dateien verfügbar. Vollständige Informationen zur Dimensionierung der Knoten und zu den Clusteranforderungen sind unter link:aide-requirements.html["AIDE-Anforderungen"] verfügbar. Diese Größen sind empfohlene Richtwerte, keine festen Obergrenzen: Umgebungen mit mehr als 6 Milliarden Dateien werden durch horizontale Skalierung unterstützt. Details sind unter link:aide-requirements.html#flexible-sizing-enterprise["Richtlinien für flexible Größenanpassung"] verfügbar.
+
+
+
+[[deployment-process]]
+== Bereitstellungsprozess
+
+NetApp Console stellt die Infrastruktur für AI Data Engine nicht bereit. Sie bereiten einen Linux-Rechner oder -Cluster vor, der die Anforderungen erfüllt, kopieren dann den vorab generierten Installationsbefehl aus NetApp Console und führen ihn auf dem Zielhost aus. Der Befehl initialisiert die Laufzeitumgebung und installiert den AI Data Engine Stack automatisch. Während der Installation fordert das Installationsprogramm Sie auf, die IP-Adresse und die Benutzer-ID des Zielhosts zu bestätigen, bevor die Installation fortgesetzt wird.
+
+AIDE Lite Installationen sind in der Regel innerhalb von 45 Minuten abgeschlossen. AIDE Enterprise Installationen sind in der Regel innerhalb von 30 Minuten abgeschlossen. Das Installationsprogramm enthält integrierte Timeouts und Wiederholungen, um vorübergehende Probleme beim Starten der Komponenten zu bewältigen.
+
+
+
+[[deployment-mode-reference]]
+== Referenz zum Bereitstellungsmodus
+
+[cols="1h,2,2"]
+|===
+|  | AIDE Lite | AIDE Enterprise 
+
+
+| Bereitstellungsmodell | Einzelne Linux VM | Multi-Node Kubernetes Cluster (vom Kunden bereitgestelltes RKE2) 
+
+
+| Scan-Rate | 50 Millionen bis 1 Milliarde Dateien pro Tag, je nach Größe unterschiedlich | 250 Millionen bis 2 Milliarden Dateien/Tag, je nach Größe 
+
+
+| Max. Dateien (große Größe) | Ungefähr 3 Milliarden | Ungefähr 6 Milliarden 
+|===
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:aide-requirements.html["AIDE-Anforderungen"]
+* link:deploy-aide-lite.html["AI Data Engine Lite bereitstellen"]
+* link:deploy-enterprise.html["AI Data Engine – Enterprise"]
+

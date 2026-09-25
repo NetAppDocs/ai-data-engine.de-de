@@ -1,0 +1,69 @@
+---
+sidebar: sidebar 
+permalink: investigate/understand-dashboard.html 
+keywords: dashboard, overview, reclaimable storage, cold data, stale data, storage health, capacity risk, data owners, investigate 
+summary: Sie können den Zustand Ihrer Speichersysteme in Ihrer gesamten Umgebung bewerten, erkennen, wo sich potenziell rückgewinnbarer Speicherplatz konzentriert, und entscheiden, welche Systeme oder Dateneigentümer zuerst untersucht werden sollten. 
+---
+= Bewertung des Storage-Zustands mit dem AI Data Engine Dashboard
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie entscheiden können, was Sie untersuchen, müssen Sie den Zustand Ihres Speichers verstehen. Wie viel Speicherplatz erfüllt die Schwellenwerte Ihrer Organisation für kalte und veraltete Daten, und welche Systeme oder Verantwortlichen enthalten die meisten Daten in diesen Kategorien? Beispielsweise kann ein Speicheradministrator, der auf eine Kapazitätswarnung reagiert, feststellen, dass ein großer Teil des gescannten Speichers aus kalten Daten besteht, und dann das System mit den größten Auswirkungen genauer untersuchen, um sofort mit der Analyse zu beginnen.
+
+Wählen Sie in NetApp Console *Governance* > *AI Data Engine UI* aus. Das Dashboard wird standardmäßig geöffnet.
+
+
+
+[[understand-how-much-storage-is-affected]]
+== Verstehen, wie viel Speicher betroffen ist
+
+Das Übersichtsfenster zeigt das Ausmaß des Problems in Ihrer gescannten Umgebung:
+
+* *Cold data*: Speicherdaten, auf die innerhalb des Schwellenwerts für Cold Data (Standard: ein Jahr) nicht zugegriffen wurde. Ihre Organisation kann diese Daten gemäß ihren Aufbewahrungs- und Governance-Richtlinien auswerten.
+* *Veraltete Daten*: Speicher, auf den innerhalb des Schwellenwerts für veraltete Daten (Standard: drei Jahre) nicht zugegriffen oder der nicht geändert wurde. Veraltete Daten sollten gemäß den Richtlinien Ihres Unternehmens zum Datenlebenszyklus überprüft werden, bevor über Maßnahmen wie Archivierung oder Löschung entschieden wird.
+* *Offengelegte Verzeichnisse*: Verzeichnisse mit zu weit gefassten Zugriffseinstellungen. Diese stellen ein Governance-Risiko dar, das unabhängig vom Speicherverbrauch ist.
+* *Datenressourcen*: Die Anzahl der aktuell gescannten Volumes, Shares und Buckets.
+* *Anzahl der gescannten Dateien*: Die Gesamtzahl der in allen gescannten Datenressourcen indizierten Dateien.
+
+
+Die Schwellenwerte für „kalt“ und „veraltet“ spiegeln Ihre konfigurierten Einstellungen wider und können unter *Konfiguration* > *Einstellungen* geändert werden. Die Standardwerte sind Produktvorgaben und entsprechen nicht den gesetzlichen, regulatorischen oder branchenüblichen Aufbewahrungsfristen. Weitere Informationen finden Sie unter link:../administer/configure-settings.html["Schwellenwerte für kalte und veraltete Daten konfigurieren"].
+
+Das Diagramm „Aktiver im Vergleich zu zurückforderbarem Speicher“ zeigt den Anteil aktiver Daten im Vergleich zu kalten und veralteten Daten über alle gescannten Ressourcen hinweg. Ein hoher Anteil kalter, veralteter oder duplizierter Daten kann auf ein erhebliches Speicheroptimierungspotenzial hinweisen.
+
+Die Filter *System* und *System type* steuern den Umfang des Dashboards. Wenn ein Speichersystem nicht in der Filterliste angezeigt wird, siehe link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"].
+
+
+
+[[identify-storage-optimization-opportunities]]
+== Möglichkeiten zur Speicheroptimierung identifizieren
+
+Mithilfe des Übersichtsbereichs und des Diagramms lassen sich Möglichkeiten zur Speicheroptimierung identifizieren und priorisieren:
+
+* Der Fokus sollte auf Ressourcen mit dem größten potenziell rückgewinnbaren Umfang liegen, nicht auf solchen mit dem größten Gesamtumfang. Ein kleines System mit überwiegend ungenutzten oder veralteten Daten eignet sich möglicherweise besser als erste Ressource für die Evaluierung als ein großes, überwiegend aktives System.
+* Es sollte eher nach größeren Ansammlungen veralteter oder kalter Daten als nach einzelnen Dateien gesuchtet werden. Mehrere zehn Terabyte an Daten, die auf einer einzigen Ressource Ihren Schwellenwert für veraltete Daten erreichen, rechtfertigen eine Bewertung; einzelne Dateien erfordern möglicherweise keine Maßnahmen.
+
+
+
+
+[[move-from-the-dashboard-to-investigation]]
+== Der Wechsel vom Dashboard zur Untersuchung
+
+Wenn Sie eine Ressource oder einen Eigentümer identifiziert haben, die beziehungsweise der einer Untersuchung wert ist, können Sie über die Tabellen am unteren Rand des Dashboards direkt zu den Details wechseln.
+
+Die Tabelle „Top-Datenressourcen nach zurückforderbarem Speicherplatz“ listet Ihre gescannten Speicherressourcen auf, eingestuft nach dem Anteil der Daten, die dupliziert sind oder die Schwellenwerte Ihrer Organisation für kalte und veraltete Daten erfüllen. Durch Auswählen einer beliebigen Zeile wird die Untersuchungsansicht geöffnet, gefiltert nach dieser Ressource. Dort kann die Registerkarte link:investigate-unstructured.html["Unstrukturiert"] verwendet werden, um kalte oder veraltete Dateien zu identifizieren, oder die Registerkarte link:investigate-directories.html["Verzeichnisse"], um die Berechtigungsfreigabe zu prüfen.
+
+Die Tabelle „Top data owners by reclaimable storage“ zeigt, welche Dateninhaber über Daten verfügen, die potenziell zurückgewonnen werden können. Durch Auswahl einer beliebigen Zeile wird die link:investigate-unstructured.html["Untersuchung"]Ansicht geöffnet, gefiltert nach den Dateien dieses Inhabers. Dort können Sie die Ergebnisse prüfen, Maßnahmen dazu ergreifen oder sie als Richtlinie speichern.
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:investigate-data.html["Untersuchung Ihrer Daten"]
+* link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
+* link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"]
+* link:../administer/configure-settings.html["Schwellenwerte für kalte und veraltete Daten konfigurieren"]
+

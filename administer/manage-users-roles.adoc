@@ -1,0 +1,108 @@
+---
+sidebar: sidebar 
+permalink: administer/manage-users-roles.html 
+keywords: roles, users, permissions, AI data engine administrator, AI data engine viewer 
+summary: Der Zugriff wird gesteuert, indem jedem Benutzer eine Administrator- oder Betrachterrolle zugewiesen wird. Informationen zu den beiden Rollen und ihren Berechtigungen. 
+---
+= Verwalten von Benutzern und Rollen in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Es lässt sich steuern, was jeder Benutzer in AI Data Engine anzeigen und tun kann, indem ihm eine Administrator- oder Betrachterrolle zugewiesen wird. Bevor Ihr Team AI Data Engine verwendet, ist jedem Benutzer die Rolle zuzuweisen, die dem erforderlichen Zugriffsniveau entspricht.
+
+Rollen werden über die Organisationseinstellungen der NetApp Console zugewiesen. AI Data Engine unterstützt zwei Rollen.
+
+
+
+[[available-roles]]
+== Verfügbare Rollen
+
+
+
+[[ai-data-engine-administrator]]
+=== AI Data Engine Administrator
+
+Die Administratorrolle für AI Data Engine bietet vollen Zugriff auf alle AI Data Engine Funktionen. NetApp empfiehlt, diese Rolle pro Bereitstellung nicht mehr als zwei oder drei Benutzern zuzuweisen.
+
+
+
+[[ai-data-engine-viewer]]
+=== AI Data Engine Viewer
+
+Die Viewer-Rolle für AI Data Engine bietet eingeschränkten Zugriff auf AI Data Engine. Viewer können Informationen anzeigen, Berichte exportieren, Dateien taggen und Richtlinien nur für die Überwachung erstellen, aber keine Einstellungen ändern oder Dateiaktionen wie Archivieren, Kopieren oder Löschen durchführen.
+
+
+
+[[permissions-by-role]]
+== Berechtigungen nach Rolle
+
+[cols="3,1,1"]
+|===
+| Fähigkeit | AI Data Engine Administrator | AI Data Engine Viewer 
+
+
+| Verwaltung von Benutzern und Rollen | Ja | - 
+
+
+| Datenressourcen verwalten | Ja | - 
+
+
+| Systemkonfiguration | Ja | - 
+
+
+| Dashboards anzeigen | Ja | Ja 
+
+
+| Suchmetadaten (Untersuchung) | Ja | Ja 
+
+
+| Berichte exportieren | Ja | Ja 
+
+
+| Erstellung von Richtlinien, die nur die Überwachung betreffen | Ja | Ja 
+
+
+| Erstellung von Richtlinien mit Aktionen | Ja | - 
+
+
+| Aktionen: Tag | Ja | Ja 
+
+
+| Aktionen: Archivieren, Kopieren, Löschen | Ja | - 
+
+
+| Business-Tags verwalten | Ja | Ja 
+|===
+
+
+[[assign-a-role-to-a-user]]
+== Zuweisung einer Rolle an einen Benutzer
+
+Rollen werden in der NetApp Console zugewiesen, nicht innerhalb von AI Data Engine selbst.
+
+.Schritte
+. Wechseln Sie in der NetApp Console zu *Members*.
+. Führen Sie einen der folgenden Schritte aus:
++
+** Zum Hinzufügen eines neuen Benutzers wählen Sie *Benutzer hinzufügen* aus und geben die E-Mail-Adresse des Benutzers ein.
+** Zum Aktualisieren eines bestehenden Benutzers wählen Sie den Benutzer aus der Liste aus.
+
+
+. Wählen Sie die Organisation, den Ordner oder das Projekt aus und dann die Kategorie *Data Service*.
+. Zuweisung der Rolle *AI Data Engine administrator* oder *AI Data Engine viewer*.
+. Speichern Sie Ihre Änderungen.
+
+
+Der Nutzer erhält eine E-Mail-Einladung und kann nach deren Annahme auf AI Data Engine zugreifen.
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+* link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+

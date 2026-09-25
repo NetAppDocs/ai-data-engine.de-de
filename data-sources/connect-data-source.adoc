@@ -1,0 +1,88 @@
+---
+sidebar: sidebar 
+permalink: data-sources/connect-data-source.html 
+keywords: connect, data source, storage system, scanned systems, configuration, scan, NFS, CIFS, StorageGRID, database, file shares, console agent, scope, content intelligence, activate 
+summary: Speichersysteme werden mit AI Data Engine verbunden, indem der Assistent für das Onboarding der Datenquelle abgeschlossen und anschließend das Scannen aktiviert wird, um mit der Metadatenerfassung zu beginnen. 
+---
+= Verbinden einer Datenquelle mit AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine scannt Ihre Speichersysteme, um Metadaten zu erfassen und zu analysieren. Zum Hinzufügen einer Datenquelle ist der Onboarding-Assistent auszufüllen. Der Assistent erfasst Verbindungsdetails, den Scanbereich und die Einstellungen für Ihren Quelltyp. Nach dem Hinzufügen des Systems ist der Scan zu aktivieren, damit die Erfassung der Metadaten beginnt.
+
+.Bevor Sie beginnen
+* Sie benötigen Administratorrechte für AI Data Engine, um Datenquellen in AI Data Engine zu verbinden und zu konfigurieren.
+* Speichersysteme werden in der NetApp Console mit einem Console Agent erkannt, bevor sie zu AI Data Engine hinzugefügt werden. Dies gilt für alle unterstützten Speichertypen, einschließlich lokaler ONTAP Cluster, Cloud Volumes ONTAP, Amazon FSx for NetApp ONTAP, Google Cloud NetApp Volumes und Azure NetApp Files. Zu lokalen ONTAP Clustern siehe link:https://docs.netapp.com/us-en/storage-management-ontap-onprem/task-discovering-ontap.html["Lokale ONTAP Cluster entdecken"] in der NetApp Console Dokumentation. Die direkte Erkennung aktiviert keine Datendienste wie AI Data Engine.
+* Vergewissern Sie sich, dass die Netzwerkverbindungen geöffnet sind, die AI Data Engine für den Zugriff auf Ihre Datenquellen benötigt. Weitere Informationen finden Sie unter link:../deploy/aide-requirements.html["AI Data Engine Anforderungen"].
+
+
+
+
+[[add-a-data-source]]
+== Hinzufügen einer Datenquelle
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* ist *System hinzufügen* auszuwählen.
+. Wählen Sie einen Quelltyp aus:
++
+[cols="1,2"]
+|===
+| Quellentyp | Beschreibung 
+
+
+| *Dateifreigabegruppe* | NFS- oder SMB/CIFS-Dateifreigaben aus der Cloud oder On-Premises können als benannte Gruppe hinzugefügt werden. 
+
+
+| *Datenbank* | Hinzufügen eines Datenbankservers zum Scannen ausgewählter Schemas. 
+
+
+| *StorageGRID* | Daten von NetApp StorageGRID mit dem S3-Protokoll scannen. 
+|===
+. Geben Sie die Verbindungsdetails für Ihren Quelltyp ein:
++
+[cols="1,3"]
+|===
+| Quellentyp | Erforderliche Angaben 
+
+
+| *Dateifreigabegruppe* | Ein Name für die Freigabegruppe, dann die Details zu Freigabehost und -pfad. 
+
+
+| *Datenbank* | Datenbanktyp, Host, Port und Authentifizierungsdaten. 
+
+
+| *StorageGRID* | Systemname, S3 Endpunkt-URL sowie S3 Zugriffsschlüssel und geheimer Schlüssel. 
+|===
+. Überprüfen Sie Ihre Auswahl und wählen Sie *Confirm* aus, um die Datenquelle hinzuzufügen.
+
+
+
+
+[[activate-scanning]]
+== Scannen aktivieren
+
+Nach der Konfiguration einer Datenquelle startet der Scanvorgang nicht automatisch. Der Scan muss für jedes System einzeln aktiviert werden.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das gescannt werden soll.
+. *Scans aktivieren* auswählen.
+
+
+.Ergebnis
+Der Systemstatus wird auf der Registerkarte „Gescannte Systeme“ aktualisiert und zeigt an, dass die Überprüfung ausgeführt wird. Informationen zur Überwachung des Scanfortschritts und zur Überprüfung, ob AI Data Engine Datenressourcen indiziert, finden Sie unter link:manage-data-sources.html["Datenquellen verwalten"] und link:monitor-scanning-health.html["Scanstatus überwachen"].
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:manage-data-sources.html["Datenquellen verwalten"]
+* link:../deploy/aide-requirements.html["AI Data Engine Anforderungen"]
+* link:../investigate/understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
+* link:monitor-scanning-health.html["Scanstatus überwachen"]
+

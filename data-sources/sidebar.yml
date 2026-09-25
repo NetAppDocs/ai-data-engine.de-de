@@ -1,0 +1,10 @@
+---
+section: data-sources
+title: Datenquellen verbinden
+entries:
+- title: Herstellen einer Verbindung mit einer Datenquelle
+  url: "/data-sources/connect-data-source.html"
+- title: Datenquellen verwalten
+  url: "/data-sources/manage-data-sources.html"
+- title: Scanstatus überwachen
+  url: "/data-sources/monitor-scanning-health.html"

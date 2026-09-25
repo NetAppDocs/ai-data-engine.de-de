@@ -1,0 +1,40 @@
+---
+sidebar: sidebar 
+permalink: release-notes/whats-new.html 
+keywords: 'what"s new, release notes, AI Data Engine, storage optimization' 
+summary: Informationen zu neuen Funktionen in AI Data Engine. 
+---
+= Was ist neu in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Informationen zu neuen Funktionen in AI Data Engine.
+
+
+
+[[ai-data-engine-1-1-0]]
+== AI Data Engine 1.1.0
+
+AI Data Engine ist ein Metadaten-Intelligence-Service, der über NetApp Console verwaltet wird, Ihre verbundenen Systeme scannt, einen Metadatenkatalog erstellt und Ihnen die Transparenz und Tools bietet, um Storage zu optimieren und Daten im großen Maßstab zu steuern. AI Data Engine kann als link:../deploy/deployment-overview.html["AIDE Lite"] oder als AIDE Enterprise bereitgestellt werden, wenn Ihre Umgebung eine Kubernetes-basierte Hochverfügbarkeit in großem Maßstab erfordert.
+
+Neue Funktionen:
+
+link:../investigate/understand-dashboard.html["Speicherkapazität wiederherstellen"]:: Kalte, veraltete und doppelte Daten in Ihren verbundenen Systemen werden anhand Ihrer konfigurierten Schwellenwerte identifiziert, und es wird angezeigt, welche Systeme und Dateneigentümer die höchste Konzentration dieser Daten aufweisen.
+link:../investigate/investigate-data.html["Senkung von Kosten und Risiken"]:: Verbundene Systeme können nach Zugriffszeit, Änderungsdatum, Erstellungsdatum, Dateigröße, Duplikatstatus und weiteren Kriterien gefiltert werden, um Dateien zu finden, die den Datenmanagementzielen Ihres Unternehmens entsprechen. Auf Grundlage der Ergebnisse können direkt Maßnahmen ergriffen oder die Kriterien als Richtlinie gespeichert werden.
+link:../policies/create-policy.html["Daten kontinuierlich verwalten"]:: Filterkriterien lassen sich als benannte Richtlinien speichern, um wiederkehrende Datenzustände im Zeitverlauf nachzuverfolgen, z. B. selten genutzte oder übergroße Dateien, und Benachrichtigungen zu erhalten, wenn sich die Anzahl der betroffenen Dateien ändert.
+link:../investigate/take-actions.html["Speicherkosten senken"]:: Die Durchsetzung der Datenlebenszyklusrichtlinien Ihrer Organisation erfolgt durch das Kopieren und Archivieren von Dateien auf NFS- oder SMB/CIFS-Ziele, das Kennzeichnen von Elementen zur Nachverfolgung oder das endgültige Löschen von Dateien gemäß Ihren Aufbewahrungsanforderungen.
+link:../administer/manage-users-roles.html["Zuweisung von Administrator- und Betrachterrollen"]:: Sie können steuern, wer Daten untersuchen und Maßnahmen ergreifen darf, indem Sie Benutzern in Ihrer Organisation die Administrator- oder Viewer-Rolle für AI Data Engine zuweisen.
+link:../investigate/use-filters.html["Duplizierte Daten werden eliminiert"]:: Dateien mit doppelten Kopien in Ihren verbundenen Systemen. Filterung nach dem Attribut „Duplikate“ oder nach dem Dateihash, um Duplikatgruppen direkt zu prüfen und Maßnahmen zu ergreifen.
+link:../investigate/understand-dashboard.html["Datenverantwortliche in die Verantwortung nehmen"]:: Im Dashboard lässt sich ermitteln, welche Dateneigentümer die höchste Konzentration an kalten, veralteten oder doppelten Daten aufweisen. Anschließend können die Ergebnisse in der Untersuchungsansicht nach Eigentümer oder Gruppe gefiltert sowie gemäß Ihren Richtlinien überprüft und verwaltet werden.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:known-limitations.html["Bekannte Einschränkungen"]
+

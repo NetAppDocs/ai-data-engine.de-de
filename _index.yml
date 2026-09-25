@@ -1,0 +1,63 @@
+---
+indexpage:
+  title: AI Data Engine Dokumentation
+  summary: Die Dokumentation zu AI Data Engine beschreibt, wie AI Data Engine bereitgestellt
+    wird, wie Datenquellen verbunden werden und wie AI Data Engine für Speicheroptimierung,
+    Metadatenanalyse und Data Governance genutzt wird.
+  keywords: ai data engine, aide, storage optimization, investigation, policies, data
+    governance, NetApp Console
+  lead: AI Data Engine bietet Ihnen Einblick in die unstrukturierten Daten, die auf
+    Ihren NetApp Systemen gespeichert sind. Damit lassen sich Optimierungspotenziale
+    für den Storage identifizieren, Daten analysieren und Lebenszyklusrichtlinien
+    durchsetzen.
+  tiles:
+  - title: Los geht's
+    links:
+    - title: Erfahren Sie mehr über AI Data Engine
+      url: "/get-started/learn-about.html"
+    - title: AI Data Engine Architektur
+      url: "/get-started/architecture.html"
+    - title: Schnellstart
+      url: "/get-started/quick-start.html"
+    - title: Workflows zur Speicheroptimierung
+      url: "/get-started/storage-optimization-workflows.html"
+  - title: Einsetzen
+    links:
+    - title: Bereitstellungsübersicht
+      url: "/deploy/deployment-overview.html"
+    - title: AIDE-Anforderungen
+      url: "/deploy/aide-requirements.html"
+    - title: AIDE Lite bereitstellen
+      url: "/deploy/deploy-aide-lite.html"
+    - title: AIDE Enterprise bereitstellen
+      url: "/deploy/deploy-enterprise.html"
+  - title: Datenexploration
+    links:
+    - title: Herstellen einer Verbindung mit einer Datenquelle
+      url: "/data-sources/connect-data-source.html"
+    - title: Datenquellen verwalten
+      url: "/data-sources/manage-data-sources.html"
+    - title: Die Speicherauslastung kann über das Dashboard beurteilt werden.
+      url: "/investigate/understand-dashboard.html"
+    - title: Untersuchung Ihrer Daten
+      url: "/investigate/investigate-data.html"
+    - title: Verwendung von Filtern
+      url: "/investigate/use-filters.html"
+    - title: Maßnahmen für Daten ergreifen
+      url: "/investigate/take-actions.html"
+  - title: Richtlinien und Maßnahmen
+    links:
+    - title: Erstellung einer Richtlinie
+      url: "/policies/create-policy.html"
+    - title: Verwalten von Richtlinien
+      url: "/policies/manage-policies.html"
+  - title: Verwalten
+    links:
+    - title: Verwaltung von Benutzern und Rollen
+      url: "/administer/manage-users-roles.html"
+    - title: Datenschwellenwerte konfigurieren
+      url: "/administer/configure-settings.html"
+    - title: Was ist neu
+      url: "/release-notes/whats-new.html"
+    - title: Bekannte Einschränkungen
+      url: "/release-notes/known-limitations.html"

@@ -1,0 +1,48 @@
+---
+sidebar: sidebar 
+permalink: release-notes/known-limitations.html 
+keywords: known limitations, limitations, restrictions, AI Data Engine 
+summary: Bekannte Einschränkungen kennzeichnen Funktionen, die in dieser Version der AI Data Engine nicht unterstützt werden. 
+---
+= Bekannte Einschränkungen in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bekannte Einschränkungen kennzeichnen Funktionen, die in dieser Version der AI Data Engine nicht unterstützt werden oder nicht korrekt zusammenarbeiten. Diese Einschränkungen sollten vor der Bereitstellung oder Nutzung des Produkts geprüft werden.
+
+
+
+[[deployment]]
+== Bereitstellung
+
+Lite und Enterprise Bereitstellungen sind unabhängig:: AIDE Lite und AIDE Enterprise sind separate Bereitstellungsmodi. Es gibt keinen unterstützten Migrationspfad, um eine bestehende Bereitstellung von einem Modus in den anderen zu verschieben.
+
+
+
+
+[[policies-and-actions]]
+== Richtlinien und Maßnahmen
+
+Richtliniengesteuerte Aktionen sind begrenzt:: Beim Erstellen einer Richtlinie sind die verfügbaren automatisierten Aktionen auf die dauerhafte Löschung und die E-Mail-Benachrichtigung beschränkt. Automatisierte Archivierungs- und Tagging-Aktionen aus Richtlinien sind in dieser Version nicht verfügbar. Es kann eine Richtlinie ohne Aktion erstellt werden, um einen Datenzustand im Zeitverlauf zu überwachen.
+
+
+
+
+[[tags]]
+== Tags
+
+Tags können nicht gelöscht oder umbenannt werden:: Die Tag-Verwaltung ist in dieser Version nicht verfügbar. Nach dem Erstellen eines Tags bleibt es im System verfügbar. Sie können ein Tag auf Elemente anwenden und von Elementen entfernen, aber die Tag-Definition selbst nicht löschen oder einen Tag-Namen korrigieren, der einen Tippfehler enthält.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:whats-new.html["Was ist neu"]
+* link:../deploy/deployment-overview.html["Bereitstellungsübersicht"]
+* link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+

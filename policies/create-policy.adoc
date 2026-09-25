@@ -1,0 +1,100 @@
+---
+sidebar: sidebar 
+permalink: policies/create-policy.html 
+keywords: create policy, save query, policy, filters, actions, automation 
+summary: Die Filterkriterien für Untersuchungen können als benannte Richtlinie gespeichert werden, damit dieselbe Datengruppierung im Laufe der Zeit verfolgt werden kann und Benachrichtigungen erfolgen, wenn sich die Bedingungen ändern. 
+---
+= Eine Richtlinie in AI Data Engine erstellen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Eine Richtlinie wird erstellt, wenn ein wiederkehrender Datenzustand überwacht werden soll, ohne dieselbe Untersuchung manuell wiederholen zu müssen. Beispielsweise kann ein Data Governance Manager eine Richtlinie für „große veraltete Dateien“ speichern, um diese Gruppierung über Scanzyklen hinweg zu verfolgen und eine E-Mail-Benachrichtigung zu erhalten, wenn sich die Anzahl der betroffenen Dateien ändert.
+
+
+
+[[about-policies]]
+== Informationen zu Richtlinien
+
+Richtlinien speichern die in Investigation definierten Filterkriterien als wiederverwendbare Regel. AI Data Engine wertet jede Richtlinie nach jedem Scanzyklus anhand des Metadatenkatalogs aus. Eine Richtlinie kann jederzeit geöffnet werden, um die aktuelle übereinstimmende Ergebnismenge anzuzeigen. Wenn eine Delete action angehängt ist, entfernt AI Data Engine nach jedem Scanzyklus die übereinstimmenden Dateien. Wenn eine E-Mail-Benachrichtigung angehängt ist, sendet AI Data Engine eine Aktualisierung, wenn sich die Anzahl der betroffenen Dateien ändert.
+
+
+
+[[choose-a-policy-action]]
+== Eine Richtlinienaktion auswählen
+
+Eine Richtlinie ist ein gespeicherter Filtersatz mit einer optionalen zugehörigen Aktion:
+
+* *Nur überwachen (keine Aktion)*: Die übereinstimmenden Gruppierungen werden im Zeitverlauf verfolgt, ohne dass Maßnahmen ergriffen werden. Diese Option eignet sich, wenn Transparenz gewünscht ist, ohne sich auf eine automatisierte Reaktion festzulegen.
+* *E-Mail-Benachrichtigung senden*: Ein Benutzer wird per E-Mail benachrichtigt, wenn sich die Anzahl der übereinstimmenden Dateien ändert.
+* *Endgültig löschen*: Alle übereinstimmenden Dateien werden nach jedem Scanzyklus automatisch und ohne weitere Bestätigung endgültig entfernt. Dieser Vorgang ist unwiderruflich. Es ist zu prüfen, dass Ihre Filterkriterien präzise sind und dass Sie berechtigt sind, die identifizierten Dateien zu löschen, bevor diese Aktion zugewiesen wird.
+
+
+
+
+[[create-a-policy-from-investigation]]
+== Erstellung einer Richtlinie aus der Untersuchung
+
+.Bevor Sie beginnen
+* Zum Hinzufügen einer Lösch- oder E-Mail-Benachrichtigungsaktion ist die Rolle „AI Data Engine administrator“ erforderlich. Mit der Rolle „AI Data Engine viewer“ können ausschließlich Richtlinien zur reinen Überwachung erstellt werden.
+
+
+.Schritte
+. In NetApp Console erfolgt die Navigation zu *Governance* > *AI Data Engine* > *Investigation*.
+. Es lassen sich ein oder mehrere Filter anwenden, die die Dateien identifizieren, auf die die Richtlinie abzielen soll.
++
+Zum Beispiel: *Dateityp* = .vmdk UND *Zeitpunkt des letzten Zugriffs* > 365 Tage.
+
++
+Anhand der Ergebnistabelle lässt sich bestätigen, dass der Filtersatz die beabsichtigte Datengruppierung erfasst.
+
+. In der Filteraktionsleiste ist *Richtlinie erstellen* auszuwählen.
+. Ein *Richtlinienname* ist einzugeben.
+. Optional kann eine *Beschreibung* (bis zu 500 Zeichen) eingegeben werden.
+. Der Ausdruck für die Filterkriterien (zum Beispiel `last_access_time <= 3 Years AND file_size >= 5GiB`) sollte überprüft werden, um sicherzustellen, dass er Ihre Auswahl widerspiegelt.
+. Zum Anhängen einer Aktion steht unter *Action* eine der folgenden Optionen zur Verfügung:
++
+** *Nur überwachen (keine Aktion)* (Standard): Die Richtlinie wird als Bedingung „Nur überwachen“ gespeichert.
+** *E-Mail-Benachrichtigung senden*: Es wird eine E-Mail-Benachrichtigung an den von Ihnen angegebenen Empfänger gesendet.
+** *Endgültig löschen*: Es sind keine weiteren Eingaben erforderlich.
++
+
+CAUTION: Die Aktion „Endgültig löschen“ löscht nach jedem Scanvorgang automatisch und unwiderruflich alle Dateien, die dieser Richtlinie entsprechen. Vor dem Speichern ist zu prüfen, ob Ihre Filterkriterien korrekt sind und ob Sie zum Löschen dieser Dateien berechtigt sind.
+
+
+
+. *Erstellen* auswählen.
+
+
+.Ergebnis
+Die Richtlinie wird gespeichert und auf der link:manage-policies.html["Richtlinien"]Seite angezeigt. Wenn eine Aktion zugeordnet wurde, wendet AI Data Engine diese Aktion auf Dateien an, die den Richtlinienkriterien entsprechen.
+
+
+
+[[example-identify-cold-archive-files]]
+== Beispiel: Kalte Archivdateien identifizieren
+
+Das folgende Beispiel erstellt eine Richtlinie, die eine E-Mail-Benachrichtigung sendet, wenn Dateien erkannt werden, auf die seit über einem Jahr nicht mehr zugegriffen wurde.
+
+. In „Untersuchung“ werden diese Filter angewendet:
++
+** *Zeitpunkt des letzten Zugriffs* > 365 Tage
+
+
+. *Richtlinie erstellen* auswählen.
+. Der Name der Richtlinie lautet: *Cold Files - Unaccessed 1 Year*.
+. Die Aktion *E-Mail-Benachrichtigung senden* sowie die E-Mail-Adresse des Empfängers sind auszuwählen.
+. *Erstellen* auswählen.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:manage-policies.html["Verwalten von Richtlinien"]
+* link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+* link:../investigate/investigate-data.html["Untersuchung Ihrer Daten"]
+

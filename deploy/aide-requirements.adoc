@@ -1,0 +1,312 @@
+---
+sidebar: sidebar 
+permalink: deploy/aide-requirements.html 
+keywords: requirements, prerequisites, networking, ports, vm, kubernetes, sizing, flexible sizing, scaling, capacity planning 
+summary: Vor der Bereitstellung von AI Data Engine sollten die Infrastruktur- und Netzwerkanforderungen überprüft werden. 
+---
+= AI Data Engine Anforderungen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Bevor Sie AI Data Engine implementieren, sollten die Anforderungen an Netzwerk, VM Dimensionierung und Betriebssystem für Ihre Umgebung geprüft werden.
+
+
+
+[[networking-requirements]]
+== Netzwerkanforderungen
+
+Folgende Netzwerkverbindungen müssen geöffnet sein:
+
+[cols="2,1,1,1,2"]
+|===
+| Verbindung | Port | Protokoll | Richtung | Zweck 
+
+
+| Console Agent zu NetApp Console | 443 | TCP | Ausgehend | HTTPS: Verbindung zur NetApp Console 
+
+
+| Console Agent zu ONTAP | 443 | TCP | Ausgehend | HTTPS: ONTAP Clustererkennung 
+
+
+| Console Agent zu AI Data Engine | 80, 443, 8080, 9000 | TCP | Bidirektional | Kommunikation zwischen Console Agent und AI Data Engine 
+
+
+| AI Data Engine zu ONTAP (NFS) | 111, 2049 | TCP/UDP | Zum Storage | NFS Datenquellenzugriff 
+
+
+| AI Data Engine zu ONTAP (SMB/CIFS) | 139, 445 | TCP/UDP | Zum Storage | SMB/CIFS Datenquellenzugriff 
+
+
+| AI Data Engine zu Active Directory | 389, 636, 3268, 3269 | TCP/UDP | Ausgehend | LDAP (389), LDAPS (636) und Global Catalog (3268, 3269) dienen der Benutzerauthentifizierung und dem SMB/CIFS-Scannen. Port 389 verwendet sowohl TCP als auch UDP; alle anderen Ports verwenden nur TCP. 
+
+
+| AI Data Engine für NetApp Services / Container Registry | 443 | TCP | Ausgehend | HTTPS: Artefakt Downloads und Container Image Pulls (AWS S3 und ECR) 
+|===
+
+
+[[outbound-internet-access]]
+=== Ausgehender Internetzugang
+
+Für eine Online-Installation müssen die folgenden Endpunkte vom AI Data Engine Host aus erreichbar sein:
+
+[cols="2,2,1"]
+|===
+| Endpunkt | Zweck | Umfang 
+
+
+| `\https://api.console.netapp.com` | NetApp Console Kommunikation | Beide 
+
+
+| `\https://netapp-cloud-account.auth0.com` | Zentralisierte Benutzerauthentifizierung | Beide 
+
+
+| `\https://auth0.com` | Authentifizierungsdienste | Beide 
+
+
+| `\https://582244788873.dkr.ecr.us-west-2.amazonaws.com` | NetApp Container Registry (AIDE Container Images) | Beide 
+
+
+| `\https://582244788873.dkr-ecr.us-west-2.on.aws` | NetApp Container Registry (Dual Stack/Virtual Private Cloud (VPC) Endpunktzugriff) | Beide 
+
+
+| `\https://api.ecr.us-west-2.amazonaws.com` | AWS ECR API (Authentifizierung und Abruf von Image-Manifesten) | Beide 
+
+
+| `\https://prod-us-west-2-starport-layer-bucket.s3.us-west-2.amazonaws.com` | AWS S3 (ECR Container-Image-Layer-Speicher) | Beide 
+
+
+| `\https://prod-us-west-2-starport-layer-bucket.s3.amazonaws.com` | AWS S3 (ECR Container-Image-Layer-Speicher) | Beide 
+
+
+| `\https://s3.us-west-2.amazonaws.com` | AWS S3 (Installer-Wrapper-Skript, Helm-Charts und Komponentenversionskatalog) | Beide 
+
+
+| `\https://s3.amazonaws.com` | AWS S3 (Installer-Wrapper-Skript, Helm-Charts und Komponentenversionskatalog) | Beide 
+
+
+| `\https://sts.us-west-2.amazonaws.com` | AWS STS (temporärer Austausch von Anmeldeinformationen für den Zugriff auf Registry und S3) | Beide 
+
+
+| `\https://support.compliance.api.bluexp.netapp.com` | Software Images, Manifeste und Vorlagen; Streaming von Protokollen und Metriken | Beide 
+
+
+| `\https://dseasb33srnrn.cloudfront.net` | CloudFront CDN für Softwareverteilung | Beide 
+
+
+| `\http://packages.ubuntu.com` | Erforderliche Ubuntu Pakete | Nur Lite (Ubuntu) 
+
+
+| `\http://archive.ubuntu.com` | Ubuntu Paketarchiv | Nur Lite (Ubuntu) 
+
+
+| `\http://security.ubuntu.com` | Ubuntu Sicherheitspaketarchiv | Nur Lite (Ubuntu) 
+
+
+| `\https://get.k3s.io` | k3s Laufzeitumgebung herunterladen (vom Installationsprogramm initiiert) | Nur Lite 
+
+
+| `\https://get.helm.sh` | Helm Download (vom Installationsprogramm initiiert) | Nur Lite 
+|===
+AI Data Engine nutzt außerdem NetApp Console für die zentrale Authentifizierung und Konsolendienste. Angaben zu den für die Console und Console Agent Konnektivität erforderlichen Endpunkten enthält link:https://docs.netapp.com/us-en/console-setup-admin/reference-networking-saas-console.html["Anforderungen an den Netzwerkzugriff für NetApp Console"^].
+
+Vergewissern Sie sich vor Beginn der Bereitstellung, dass die DNS-Auflösung für diese Endpunkte vom AI Data Engine Host aus funktioniert.
+
+
+
+[[aide-lite-requirements]]
+== AIDE Lite Anforderungen
+
+
+
+[[vm-sizing]]
+[[lite-vm-sizes]]
+=== VM Dimensionierung
+
+Diese Größenangaben sind empfohlene Basiskonfigurationen, die für ein anfängliches Scan-Fenster von drei bis vier Tagen optimiert sind, keine festen Grenzwerte. Informationen dazu, wodurch diese Werte bestimmt werden und wie eine Skalierung darüber hinaus erfolgt, enthält <<flexible-sizing-lite,Richtlinien für flexible Größenanpassung>>.
+
+[cols="1,1,1,1,1,1,1,1"]
+|===
+| Größe | vCPU | RAM | Festplatte | Speicher-IOPS | Speicherdurchsatz | Netzwerk | Ungefähre Dateien 
+
+
+| Klein | 16 | 64 GB | 500 GB | 8.000 | 1.000 MB/s | 1 GbE | 200 Millionen 
+
+
+| Mittel | 32 | 128 GB | 2 TB | 12.000 | 1.500 MB/s | 1 GbE | 1 Milliarde 
+
+
+| Groß | 96 | 192 GB | 6 TB | 16.000 | 2.000 MB/s | 10 GbE | 3 Milliarden 
+|===
+
+NOTE: Für alle Bereitstellungsgrößen wird NVMe SSD oder anderer Solid-State-Speicher empfohlen. Die Festplattenwerte in dieser Tabelle beziehen sich ausschließlich auf den Speicher des AIDE Datenvolumens. Wenn das Betriebssystem, die k3s Laufzeitumgebung und die AIDE Daten eine einzelne Festplatte gemeinsam nutzen, sind zum Festplattenwert für die gewählte Größe etwa 65 GB hinzuzurechnen. Beispielsweise erfordert eine Small Bereitstellung auf einer einzelnen Festplatte insgesamt etwa 565 GB.
+
+
+
+[[flexible-sizing-guidelines]]
+[[flexible-sizing-lite]]
+=== Richtlinien für flexible Größenanpassung
+
+<<lite-vm-sizes,Kleine, mittlere und große Konfigurationen>> Es handelt sich um empfohlene Ausgangswerte für ein erstes Scan-Fenster von drei bis vier Tagen, nicht um feste Grenzwerte, die von der Software vorgegeben werden.
+
+Wodurch werden die Größenempfehlungen bestimmt?::
++
+--
+* *Gesamtanzahl der Dateien und Verzeichnisse*: Die Gesamtzahl der zu katalogisierenden Objekte ist der Hauptfaktor für den Rechen- und Speicherbedarf. Eine höhere Anzahl von Objekten erfordert proportional mehr Arbeitsspeicher, CPU und Speicherplatz.
+* *Verzeichnisstruktur*: Der Ressourcenverbrauch variiert mit der Verschachtelungstiefe der Verzeichnisse und der Verteilung der Dateien auf Freigaben und Volumes. Tief verschachtelte oder stark fragmentierte Strukturen können mehr Ressourcen benötigen als die gleiche Anzahl an Dateien in einer flacheren Hierarchie.
+* *Erforderlicher Scan-Durchsatz*: Die Geschwindigkeit des anfänglichen Katalogabschlusses hängt direkt von der CPU- und Speicherzuweisung ab. Eine Bereitstellung unterhalb der empfohlenen Größe reduziert den Durchsatz und verlängert das anfängliche Scan-Fenster.
+* *Speicherleistung*: Hochleistungsspeicher wird dringend empfohlen. Metadatenindizierung und Ereignisverarbeitung erfordern kontinuierliche IOPS und einen Durchsatz, der proportional zur Größe der Bereitstellung ist.
+
+
+--
+Was passiert, wenn zu klein dimensioniert wird?::
++
+--
+Eine Bereitstellung unterhalb der empfohlenen Größe verhindert weder die Installation noch führt sie zu Serviceausfällen. Das System bleibt betriebsbereit und der Scanvorgang wird fortgesetzt, jedoch können Sie mit Folgendem rechnen:
+
+* *Verlängerte anfängliche Katalogisierungsdauer*: Durch die reduzierte Rechenleistung sinkt die Anzahl der täglich gescannten Objekte. Beispielsweise kann eine Bereitstellung, die auf 3 Milliarden Objekte ausgelegt ist, aber in kleinerer Größe bereitgestellt wird, deutlich länger als die angestrebten drei bis vier Tage dauern.
+* *Verringerter kontinuierlicher Durchsatz bei der Datenerfassung*: Neue Dateiereignisse und inkrementelle Scan-Aktualisierungen werden unter kontinuierlicher Last langsamer verarbeitet.
+* *Risiko der Speicherkapazität*: Zu geringe Speicherkapazität im Verhältnis zur Gesamtanzahl der Objekte kann dazu führen, dass der Metadatenindex an seine Kapazitätsgrenzen stößt. Dies lässt sich in der Regel durch eine Erweiterung der Speicherkapazität beheben, ohne dass eine vollständige Neuimplementierung erforderlich ist.
+
+
+--
+Skalierung bei zusätzlichem Kapazitätsbedarf::
++
+--
+AIDE Lite läuft auf einer einzelnen VM, daher ist die Skalierung vertikal:
+
+* Die Erhöhung von vCPU, Arbeitsspeicher oder Speicherplatz auf der Host-VM ist möglich.
+* Eine Neukonfiguration oder Neuinstallation des Clusters ist nicht erforderlich.
++
+
+NOTE: AIDE Lite unterstützt keine Hochverfügbarkeit oder horizontale horizontale Skalierung. Wenn Ihre Umgebung regelmäßig mehr als 3 Milliarden Dateien umfasst oder Sie Hochverfügbarkeit und Fehlertoleranz benötigen, sollten Sie stattdessen link:deploy-enterprise.html["AIDE Enterprise"] einsetzen.
+
+
+
+--
+
+
+
+
+[[operating-system]]
+=== Betriebssystem
+
+[cols="1,2"]
+|===
+| Betriebssystem | Unterstützte Versionen 
+
+
+| Ubuntu | 22.04 LTS, 24.04 LTS (24.04 LTS empfohlen) 
+
+
+| Red Hat Enterprise Linux (RHEL) | 8.x, 9.x 
+|===
+
+
+[[additional-prerequisites]]
+=== Zusätzliche Voraussetzungen
+
+* Sie benötigen Root- oder Sudo-Zugriff auf die Ziel-VM, um das Installationsprogramm auszuführen.
+* Eine Netzwerkverbindung mit mindestens 1 GbE (10 GbE für große Bereitstellungen).
+* Auf dem Zielrechner müssen bash 4.0 oder höher, curl und tar verfügbar sein.
+* Das Installationsprogramm lädt automatisch `k3s`, `helm`, `kubectl` und `jq` herunter und initialisiert sie. Eine Vorinstallation dieser Tools auf der Ziel-VM ist nicht erforderlich.
+* Die Ports 6443 (TCP), 10250 (TCP) und 8472 (UDP) müssen auf dem Host frei sein, bevor das Installationsprogramm startet. Wenn eine Host-Firewall (`firewalld` unter RHEL oder  `ufw` unter Ubuntu) aktiv ist, müssen diese Ports sowie die k3s Pod CIDR (`10.44.0.0/16`) und die Service CIDR (`10.45.0.0/16`) vor dem Ausführen des Installationsprogramms freigegeben werden. Die Dokumentation Ihrer Betriebssystem-Firewall enthält die erforderlichen Befehle.
+* Auf RHEL Systemen mit SELinux im Erzwingungsmodus konfiguriert das Installationsprogramm die erforderlichen SELinux-Richtlinienpakete automatisch. Eine manuelle SELinux Konfiguration ist nicht erforderlich.
+
+
+
+
+[[aide-enterprise-requirements]]
+== AIDE Enterprise Anforderungen
+
+* Sie verfügen über kubectl-Zugriff mit cluster-admin-Berechtigungen auf dem Rechner, von dem aus Sie das Installationsprogramm ausführen.
+* Sie verfügen über Sudo-Berechtigungen (oder Root-Berechtigungen) auf dem Rechner, von dem aus Sie den Installationsbefehl ausführen.
+* Auf dem Zielcluster ist RKE2 v1.34 oder höher (v1.36.x empfohlen) installiert.
+* Der Installationshost lädt automatisch `helm`, `kubectl` und `jq` über `--tools-dir` herunter und führt das Bootstrap aus. Eine Vorinstallation dieser Tools auf dem Verwaltungsrechner ist nicht erforderlich.
+* Eine konfigurierte StorageClass (Standardname `aide-sc`) ist auf dem Cluster verfügbar und wird für die zustandsbehafteten Backing-Services von AIDE verwendet.
+* Ein NFS-Server mit mindestens einem exportierten Pfad ist verfügbar und wird für das AIDE Konfigurationsdaten-Volume und gemeinsam genutzte Index-Snapshots verwendet.
+* Auf dem Cluster existiert bereits ein Ziel-Kubernetes-Namespace (default `aide`); der Installer erstellt ihn nicht.
+
+
+
+NOTE: Für alle Enterprise Knotenbereitstellungen wird NVMe- oder Hochleistungs-SSD-Speicher empfohlen.
+
+
+
+[[node-sizing]]
+[[enterprise-vm-sizes]]
+=== Node-Größe
+
+Diese Größenangaben stellen empfohlene Basiskonfigurationen für Cluster dar, die für ein anfängliches Scan-Fenster von etwa drei Tagen optimiert sind, und sind keine festen Kapazitätsgrenzen. AIDE Enterprise unterstützt Umgebungen mit mehr als 6 Milliarden Dateien durch horizontale Skalierung. Einzelheiten enthält <<flexible-sizing-enterprise,Richtlinien für flexible Größenanpassung>>.
+
+[cols="1,1,1,1,1,1,1,1,1"]
+|===
+| Größe | Nodes | vCPU pro Knoten | RAM pro Knoten | Festplatte pro Knoten | Storage IOPS pro Node | Speicherdurchsatz pro Knoten | Netzwerk pro Knoten | Ungefähre Dateien 
+
+
+| Klein | 3 | 32 | 128 GB | ~1,3TB | 8.000 | 1.000 MB/s | 1 GbE | 1 Milliarde 
+
+
+| Mittel | 6 | 48 | 192 GB | ~2TB | 12.000 | 1.500 MB/s | 10 GbE | 3 Milliarden 
+
+
+| Groß | 9 | 64 | 256 GB | ~2,7TB | 16.000 | 2.000 MB/s | 10 GbE | 6 Milliarden 
+|===
+
+
+[[flexible-sizing-guidelines]]
+[[flexible-sizing-enterprise]]
+=== Richtlinien für flexible Größenanpassung
+
+<<enterprise-vm-sizes,Kleine, mittlere und große Konfigurationen>>Es handelt sich um empfohlene Basiskonfigurationen für den Cluster für ein anfängliches Scan-Fenster von etwa drei Tagen, nicht um von der Software erzwungene feste Kapazitätsgrenzen. AIDE Enterprise unterstützt Umgebungen mit mehr als 3 Milliarden Dateien durch horizontale Skalierung über Clusterknoten hinweg.
+
+Wodurch werden die Größenempfehlungen bestimmt?::
++
+--
+* *Gesamtanzahl von Dateien und Verzeichnissen*: Die Gesamtanzahl der Objekte ist der Hauptfaktor für den Speicher- und Rechenbedarf. Größere Umgebungen benötigen zusätzliche Clusterknoten, um die Verarbeitungslast zu verteilen und die Leistung aufrechtzuerhalten.
+* *Hochverfügbare Replikation*: In Unternehmensumgebungen ist Datenreplizierung standardmäßig über mehrere Knoten hinweg aktiviert, um Fehlertoleranz zu gewährleisten. Die Replikation erhöht den gesamten Speicher- und Arbeitsspeicherbedarf im Vergleich zu einer gleichwertigen Einzelknotenbereitstellung.
+* *Knotenanzahl und Lastverteilung*: Verarbeitungsdurchsatz und Gesamtkapazität des Katalogs skalieren mit der Anzahl der Knoten im Cluster. Zusätzliche Knoten verteilen sowohl die Indizierungs-Workload als auch die Speicherkapazität im Cluster.
+* *Erforderlicher Scan-Durchsatz*: Die clusterweite Zuweisung von CPU und Speicher bestimmt die tägliche Scanrate und wie schnell die anfängliche Katalogisierung abgeschlossen ist.
+* *Speicherleistung pro Knoten*: Hochleistungsspeicher auf jedem Knoten wird dringend empfohlen, und die Gesamtkapazität des Clusters skaliert proportional mit der Anzahl der Knoten.
+
+
+--
+Was passiert, wenn zu klein dimensioniert wird?::
++
+--
+Eine Unterschreitung der empfohlenen Dimensionierung verhindert weder die Installation noch führt sie zu schwerwiegenden Ausfällen. Zu den praktischen Auswirkungen gehören:
+
+* *Verlängerte anfängliche Katalogisierungsdauer*: Weniger Knoten oder reduzierte Ressourcen pro Knoten verringern den Durchsatz und verlängern das anfängliche Katalogisierungsfenster proportional.
+* *Erhöhte Verarbeitungslatenz unter Spitzenlast*: Unzureichender Arbeitsspeicher im Cluster kann während Phasen mit hohem Datenaufkommen zu erhöhter Verarbeitungslatenz führen. Laufende Operationen werden nicht unterbrochen, der kontinuierliche Durchsatz ist jedoch reduziert.
+* *Speicherkapazitätsrisiko*: Unzureichender Clusterspeicher für die Zielanzahl von Objekten kann den Metadatenindex an seine Kapazitätsgrenzen bringen. Dies lässt sich durch die Erweiterung des Speichers auf vorhandenen Knoten (unterbrechungsfrei) oder durch das Hinzufügen eines dedizierten Speicherknotens beheben.
+
+
+--
+Skalierung bei zusätzlichem Kapazitätsbedarf::
++
+--
+AIDE Enterprise unterstützt horizontale Skalierung ohne erneute Bereitstellung:
+
+* Durch das Hinzufügen von Worker-Knoten erhöhen sich die für die Scanverarbeitung und Ereigniserfassung verfügbare CPU und der Arbeitsspeicher.
+* Durch das Hinzufügen dedizierter Speicherknoten lässt sich die Gesamtkapazität des Katalogs erhöhen. Dies ist die wichtigste Methode, um Umgebungen über die größte vordefinierte Bereitstellungsgröße hinaus zu skalieren.
+* Der Cluster lässt sich durch Hinzufügen weiterer Knoten auf über 6 Milliarden Dateien skalieren. Ihr NetApp Ansprechpartner kann Sie bei der Dimensionierung der Knoten für benutzerdefinierte Skalierungen unterstützen.
++
+
+NOTE: Das Hinzufügen von Knoten zu einem bestehenden Enterprise Cluster unterbricht laufende Scanvorgänge nicht. Die Änderung sollte jedoch während eines Zeitfensters mit geringer Aktivität koordiniert werden.
+
+
+
+--
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:deployment-overview.html["AIDE Bereitstellungsübersicht"]
+* link:deploy-aide-lite.html["AI Data Engine Lite bereitstellen"]
+* link:deploy-enterprise.html["AI Data Engine – Enterprise"]
+

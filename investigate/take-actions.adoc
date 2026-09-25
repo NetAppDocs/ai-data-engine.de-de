@@ -1,0 +1,162 @@
+---
+sidebar: sidebar 
+permalink: investigate/take-actions.html 
+keywords: actions, tag, archive, delete, data lifecycle, storage optimization, breadcrumb 
+summary: Dateien, die Sie als inaktiv, veraltet oder überholt identifiziert haben, lassen sich archivieren, zur Nachverfolgung kennzeichnen oder endgültig löschen, wenn sie nicht mehr benötigt werden. 
+---
+= Ergreifen Sie Maßnahmen für Ihre Daten in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nachdem Sie Dateien mithilfe Ihrer definierten Filter identifiziert haben, können Sie direkt Maßnahmen ergreifen, um die Datenlebenszyklusrichtlinien Ihres Unternehmens durchzusetzen. Beispielsweise kann ein Storage-Administrator, der Terabytes an VM-Snapshots findet, auf die seit über einem Jahr nicht mehr zugegriffen wurde, diese je nach Aufbewahrungsanforderungen und Unternehmensrichtlinien gesammelt in einer Cold-Storage-Freigabe archivieren oder löschen.
+
+.Über diese Aufgabe
+Um eine Aktion auszuführen, wählen Sie mithilfe der Kontrollkästchen einen oder mehrere Einträge in der Tabelle „Untersuchungsergebnisse“ aus. Die Aktionsleiste umfasst vier Optionen: *Löschen*, *Archivieren*, *Kopieren* und *Taggen*.
+
+Die Ihnen zur Verfügung stehenden Aktionen hängen von Ihrer zugewiesenen Rolle ab:
+
+[cols="2,1,1"]
+|===
+| Aktion | AI Data Engine Administrator | AI Data Engine Viewer 
+
+
+| Tag | Ja | Ja 
+
+
+| Archiv | Ja | - 
+
+
+| Kopie | Ja | - 
+
+
+| Löschen | Ja | - 
+|===
+Eine vollständige Beschreibung der Rollen finden Sie unter link:../administer/manage-users-roles.html["Verwaltung von Benutzern und Rollen"].
+
+
+
+[[decide-what-to-do]]
+== Entscheiden Sie, was Sie tun möchten.
+
+Wählen Sie eine Aktion entsprechend Ihrer Sicherheit in Bezug auf die Daten:
+
+[cols="1,2"]
+|===
+| Aktion | Wann es verwendet wird 
+
+
+| Tag | Sie benötigen mehr Zeit oder müssen sich mit einem anderen Team abstimmen, bevor Sie die Dateien archivieren oder löschen. Durch das Tagging werden die Dateien nachverfolgt, ohne ihren Speicherort zu ändern. 
+
+
+| Archiv | Die Daten könnten zwar noch wertvoll sein, gehören aber nicht in den primären Speicher. Durch die Archivierung werden sie an einen kostengünstigeren Speicherort verschoben und bleiben dabei wiederherstellbar. 
+
+
+| Kopie | Die Daten sollten an einem zweiten Ort vorhanden sein, beispielsweise für Sicherungs- oder Migrationszwecke. Durch das Kopieren bleibt das Original erhalten. 
+
+
+| Löschen | Die Daten werden nicht mehr benötigt und unterliegen keinen Aufbewahrungspflichten. Die Löschung ist endgültig, daher sollte sie nur verwendet werden, wenn Sie sich absolut sicher sind. 
+|===
+Wenn Daten möglicherweise noch wertvoll sind oder einer weiteren Überprüfung bedürfen, sollten Sie sie taggen, archivieren oder kopieren, anstatt sie zu löschen. Daten sollten nur dann gelöscht werden, wenn Sie sicher sind, dass sie dauerhaft gefahrlos entfernt werden können.
+
+
+
+[[archive-files]]
+== Archivdateien
+
+Beim Archivieren werden Dateien über NFS oder SMB/CIFS an ein Cold-Storage-Ziel verschoben. Optional kann eine Breadcrumb-Datei am ursprünglichen Speicherort verbleiben.
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. In der Untersuchungsansicht werden die Dateien ausgewählt, die archiviert werden sollen.
+. *Archiv* auswählen.
+. Im Dialogfeld „Archiv“ wird das Zielvolume-Protokoll ausgewählt:
++
+** *NFS*: Geben Sie den Pfad zum NFS-Zielordner ein.
+** *CIFS*: Geben Sie den Pfad zum CIFS-Zielordner im Format  `\\Hostname\share_name` ein. Geben Sie die Active Directory-Anmeldeinformationen an: Geben Sie den Benutzernamen im Format  `domain\user` oder  `user@domain` ein und geben Sie das Passwort ein.
+
+
+. Um eine Breadcrumb-Datei am ursprünglichen Speicherort zu erstellen, muss *Leave breadcrumb* aktiviert sein.
++
+Eine Breadcrumb-Datei hilft Benutzern, zu verstehen, warum eine Datei verschoben wurde.
+
+. *Archiv* auswählen.
+
+
+
+
+[[copy-files]]
+== Dateien kopieren
+
+Duplikate von Dateien werden auf ein Zielvolume kopiert, ohne sie vom ursprünglichen Speicherort zu entfernen.
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. Wählen Sie in der Investigation Ansicht die Dateien aus, die Sie kopieren möchten.
+. *Kopieren* wird ausgewählt.
+. Wählen Sie im Dialogfeld „Kopieren“ das Zielvolume Protokoll aus:
++
+** *NFS*: Geben Sie den Pfad zum NFS-Zielordner ein.
+** *CIFS*: Geben Sie den Pfad zum CIFS-Zielordner im Format  `\\Hostname\share_name` ein. Geben Sie die Active Directory-Anmeldeinformationen an: Geben Sie den Benutzernamen im Format  `domain\user` oder  `user@domain` ein und geben Sie das Passwort ein.
+
+
+. *Kopieren* wird ausgewählt.
+
+
+
+
+[[delete-files]]
+== Dateien löschen
+
+Durch das endgültige Löschen werden Dateien dauerhaft aus dem Speicher entfernt und können nicht wiederhergestellt werden.
+
+
+CAUTION: Die Löschung ist endgültig und kann nicht rückgängig gemacht werden. Diese Aktion löscht Quelldateien auch dann, wenn sie aktive Daten enthalten.
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. Wählen Sie in der Untersuchungsansicht die Dateien aus, die Sie löschen möchten.
+. Wählen Sie *Delete*.
+. Im Dialogfeld „Löschen“ ist im Bestätigungsfeld *endgültig löschen* einzugeben.
+. Wählen Sie *Delete*.
+
+
+.Ergebnis
+Die ausgewählten Dateien werden endgültig aus dem Speicher gelöscht.
+
+
+
+[[tag-files]]
+== Tag-Dateien
+
+Bei der Verschlagwortung erhalten Dateien ein Business-Tag zur Klassifizierung und Nachverfolgung.
+
+.Schritte
+. In der Ansicht „Untersuchung“ wählen Sie die Dateien aus, die Sie taggen möchten.
+. *Tag* wird ausgewählt.
+. Geben Sie die anzuwendenden Tags ein oder wählen Sie sie aus (z. B. „Archivkandidat“).
+. Bestätigen Sie, dass die Tags angewendet werden sollen.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:investigate-data.html["Untersuchung Ihrer Daten"]
+* link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
+* link:use-filters.html["Arbeiten mit Filtern"]
+* link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+* link:../administer/manage-users-roles.html["Verwaltung von Benutzern und Rollen"]
+

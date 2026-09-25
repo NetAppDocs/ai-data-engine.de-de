@@ -1,0 +1,106 @@
+---
+sidebar: sidebar 
+permalink: get-started/storage-optimization-workflows.html 
+keywords: storage optimization, cold data, stale data, retention, workflow, dashboard, investigate, policy 
+summary: Durchgängige Arbeitsabläufe dienen dazu, einen Dashboard-Befund von der Untersuchung über Maßnahmen bis hin zur laufenden Überwachung von Richtlinien zu begleiten. 
+---
+= Workflows zur Speicheroptimierung in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Diese AI Data Engine Workflows führen Sie von der Identifizierung eines Speicherproblems im Dashboard über die Untersuchung und Maßnahmen bis hin zu einer fortlaufenden Überwachungsrichtlinie. Jeder Workflow folgt demselben Ablauf: Dashboard, untersuchen, Maßnahmen ergreifen und als Richtlinie speichern.
+
+
+
+[[identify-and-act-on-cold-data]]
+== Kalte Daten identifizieren und darauf reagieren
+
+.Szenario
+Im Dashboard ist erkennbar, dass eine Speicherressource eine große Menge an als „kalt“ gekennzeichneten Daten enthält. Auf kalte Dateien wurde innerhalb des konfigurierten Schwellenwerts für kalte Daten nicht zugegriffen. Dieser Schwellenwert beträgt standardmäßig ein Jahr und kann unter *Configuration* > *Settings* konfiguriert werden.
+
+.Schritte
+. Wählen Sie in link:../investigate/understand-dashboard.html["das Dashboard"] die Ressource mit der höchsten Konzentration an kalten Daten aus, und wählen Sie dann *Investigate*.
+. In link:../investigate/investigate-unstructured.html["Untersuchung"] bestätigen Sie die Ressourcen mithilfe des Filters *Zuletzt aufgerufen*, der auf Ihren konfigurierten Cold-Data-Schwellenwert gesetzt ist (Standard: *1+ Jahr*).
+. Die Ergebnisse werden geprüft, um link:../investigate/take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]die passenden Dateien zu ermitteln.
+. Wenn es sich lohnt, diese Ressourcen fortlaufend zu überwachen, link:../policies/create-policy.html["Der Filtersatz kann als Richtlinie gespeichert werden"] werden Sie benachrichtigt, sobald neue Dateien inaktiv werden.
+
+
+
+
+[[identify-and-act-on-stale-data]]
+== Veraltete Daten erkennen und darauf reagieren
+
+.Szenario
+Dateien, auf die zwar noch gelegentlich zugegriffen wird, die aber seit Jahren nicht mehr verändert wurden, werden als veraltet eingestuft, wenn sie außerhalb der Veraltungsschwelle Ihrer Organisation liegen (Standard: drei Jahre seit dem letzten Zugriff oder der letzten Änderung).
+
+
+NOTE: Dieser Schwellenwert ist unter *Konfiguration* > *Einstellungen* konfigurierbar.
+
+.Schritte
+. Anhand von link:../investigate/understand-dashboard.html["das Dashboard"] lässt sich eine Ressource mit signifikanten veralteten Daten identifizieren.
+. Wenden Sie in link:../investigate/investigate-unstructured.html["Untersuchung"] den Filter *Zuletzt geändert* an, der auf Ihren Schwellenwert für veraltete Daten festgelegt ist (Standardwert *3+ Jahre*).
+. Die Ergebnisse werden geprüft, um link:../investigate/take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]die passenden Dateien zu ermitteln.
+. link:../policies/create-policy.html["Der Filtersatz kann als Richtlinie gespeichert werden"] um diese Ressourcen über nachfolgende Scans hinweg zu verfolgen.
+
+
+
+
+[[manage-data-retention-compliance]]
+== Einhaltung der Datenaufbewahrungsvorschriften gewährleisten
+
+.Szenario
+Ihre Organisation verlangt, dass Dateien, die älter als ein bestimmtes Alter sind, auf ihre Aufbewahrung hin überprüft werden. Die Standardaufbewahrungsschwelle in AI Data Engine beträgt sieben oder mehr Jahre seit der Dateierstellung. Sie können diese Schwelle an die Compliance- und Aufbewahrungsrichtlinien Ihrer Organisation anpassen.
+
+
+NOTE: Dieser Schwellenwert ist unter *Konfiguration* > *Einstellungen* konfigurierbar.
+
+.Schritte
+. Wenden Sie in link:../investigate/investigate-unstructured.html["Untersuchung"] den Filter *Zuletzt erstellt* an, der auf Ihren Aufbewahrungsschwellenwert (Standard: *7+ Jahre*) festgelegt ist.
+. Die Ergebnisse sollten vor dem weiteren Vorgehen mit den relevanten Beteiligten abgestimmt werden. Dateien, die mit einer Aufbewahrungskennzeichnung versehen sind, werden häufig überwacht, anstatt automatisch gelöscht zu werden.
+. link:../policies/create-policy.html["Erstellung einer Richtlinie"] mit einer reinen Überwachungs- oder E-Mail-Benachrichtigungsfunktion, sodass Sie benachrichtigt werden, sobald neue Dateien den Aufbewahrungsschwellenwert erreichen, statt nur einmal auf diese Ressourcen reagieren zu müssen.
+
+
+
+
+[[find-and-eliminate-duplicate-files]]
+== Doppelte Dateien finden und entfernen
+
+.Szenario
+Mehrere identische Kopien derselben Dateien befinden sich auf verschiedenen Volumes oder Freigaben, ein häufiges Problem in Umgebungen mit Backup-Aufträgen, Datenmigrationen oder gemeinsam genutzten Projektordnern.
+
+.Schritte
+. Wählen Sie in link:../investigate/investigate-unstructured.html["Untersuchung"] *Filter hinzufügen* und anschließend *Duplikate* aus.
+. Die Ergebnisse können überprüft werden. Die aufgeführten Dateien haben ein oder mehrere identische Kopien an anderer Stelle im Katalog.
+. Wählen Sie die Dateien aus, auf die eine Aktion angewendet werden soll, und wählen Sie link:../investigate/take-actions.html["eine Aktion"]. Bestätigte Duplikate, von denen an anderer Stelle eine Originalkopie vorhanden ist, können archiviert oder gelöscht werden.
+. link:../policies/create-policy.html["Der Filter kann als Richtlinie gespeichert werden"] um die Ansammlung von Duplikaten im Laufe der Zeit zu verfolgen und Benachrichtigungen zu erhalten, wenn die Anzahl zunimmt.
+
+
+
+
+[[target-cleanup-by-data-owner]]
+== Zielbereinigung durch den Dateninhaber
+
+.Szenario
+Daten, die die Grenzwerte für veraltete und nicht mehr verwendete Daten in Ihrem Unternehmen erfüllen, sind auf viele Eigentümer verteilt. Die Identifizierung der Dateneigentümer mit den meisten Dateien in diesen Kategorien hilft Ihnen dabei, die Datenbereinigung zu priorisieren.
+
+.Schritte
+. Suchen Sie unter link:../investigate/understand-dashboard.html["das Dashboard"] die Tabelle „Top data owners by reclaimable storage“.
+. Durch Auswahl einer Besitzerzeile wird link:../investigate/investigate-unstructured.html["Untersuchung"] geöffnet, gefiltert nach den Dateien dieses Besitzers.
+. Die Ergebnisse prüfen und über link:../investigate/take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]Dateien entscheiden.
+. link:../policies/create-policy.html["Der Filtersatz kann als Richtlinie gespeichert werden"] zur Überwachung, wie sich die potenziell rückforderbaren Daten dieses Eigentümers im Laufe der Zeit verändern.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:../investigate/understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
+* link:../investigate/investigate-data.html["Untersuchung Ihrer Daten"]
+* link:../investigate/investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
+* link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+* link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+

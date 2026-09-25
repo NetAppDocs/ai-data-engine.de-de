@@ -1,0 +1,157 @@
+---
+sidebar: sidebar 
+permalink: data-sources/manage-data-sources.html 
+keywords: manage, data source, storage system, scanned systems, pause scanning, resume scanning, scan all, retry scans, CIFS credentials, DP volumes, deactivate, scan status, scan errors, scanning toggle 
+summary: Der Scanstatus und die verbundenen Datenquellen können überwacht und verwaltet werden, einschließlich des Anhaltens von Scans, der Bearbeitung von Anmeldeinformationen, der Aktivierung des Zugriffs auf DP Volumes und der Deaktivierung von Systemen. 
+---
+= Verwalten von Datenquellen in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nach dem Verbinden der Datenquellen können Sie deren Scanstatus überwachen und sie über die Registerkarte *Gescannte Systeme* verwalten. Mit diesen Verfahren können Sie den Scanvorgang anhalten oder fortsetzen, Anmeldeinformationen aktualisieren, Datenzugriffseinstellungen anpassen und Systeme deaktivieren, die Sie nicht mehr scannen müssen.
+
+
+
+[[view-scan-status-and-details]]
+== Anzeigen des Scanstatus und der Details
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das Sie überprüfen möchten.
+. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
++
+Die Detailansicht zeigt:
+
++
+** Eine Statusübersicht mit aktuellem Scanfortschritt
+** Eine Aufschlüsselung der Scan-Status von Datenressourcen: ausgeführt, abgeschlossen, angehalten und Fehler
+** Scan Berechtigungsmodus (z. B. „Scannen ohne Schreibberechtigung“)
++
+Wenn Scanfehler auftreten, können die Fehlerdetails erweitert werden, um zu sehen, welche Volumes oder Freigaben betroffen sind und was die Ursache für den Fehler ist.
+
+
+
+
+
+
+
+[[pause-scanning]]
+== Scannen anhalten
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das angehalten werden soll.
+. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. Wählen Sie *Pause*.
+
+
+
+
+[[resume-scanning]]
+== Scanvorgang fortsetzen
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* ist das pausierte System zu finden.
+. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. *Resume* wird ausgewählt.
+
+
+
+
+[[scan-all-data-resources]]
+== Alle Datenressourcen scannen
+
+Löst einen sofortigen Scan aller Datenressourcen auf einem System aus. Dies dient zum Aktualisieren der Metadaten nach einer wesentlichen Datenänderung.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das gescannt werden soll.
+. Das Aktionsmenü neben dem System ist auszuwählen.
+. *Alle Volumes scannen* kann ausgewählt werden (eine entsprechende Option gibt es im Aktionsmenü für Freigaben und Buckets).
+
+
+
+
+[[retry-failed-scans]]
+== Fehlgeschlagene Scans wiederholen
+
+Datenressourcen, die sich in einem fehlgeschlagenen Zustand oder Fehlerzustand befinden, können erneut in die Warteschlange gestellt werden. Zunächst sollte die Grundursache behoben werden, z. B. ein Problem mit den Anmeldeinformationen, ein Netzwerkfehler oder ein Berechtigungsproblem, bevor ein erneuter Versuch erfolgt.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System mit fehlgeschlagenen Scans.
+. Das Aktionsmenü neben dem System ist auszuwählen.
+. *Alle Scans wiederholen* wird ausgewählt.
+
+
+
+
+[[edit-cifs-credentials]]
+== CIFS Anmeldeinformationen bearbeiten
+
+Die Anmeldeinformationen, die AI Data Engine zur Authentifizierung bei SMB/CIFS-Freigaben verwendet, werden aktualisiert.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das SMB/CIFS System.
+. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. *CIFS-Anmeldeinformationen bearbeiten* wird ausgewählt.
+. Geben Sie den aktualisierten Benutzernamen und das aktualisierte Passwort ein und wählen Sie dann *Save*.
+
+
+
+
+[[enable-or-disable-access-to-dp-volumes]]
+== Aktivieren oder Deaktivieren des Zugriffs auf DP Volumes
+
+Data Protection (DP) Volumes sind NetApp SnapMirror Zielvolumes. Standardmäßig scannt AI Data Engine keine DP-Volumes. Der Zugriff auf DP-Volumes kann pro System aktiviert oder deaktiviert werden.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Das System befindet sich auf der Registerkarte *Gescannte Systeme*.
+. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. *Zugriff auf DP Volumes aktivieren* oder *Zugriff auf DP Volumes deaktivieren* auswählen.
+
+
+
+
+[[enable-or-disable-scanning-of-specific-shares-buckets-or-volumes]]
+== Das Scannen bestimmter Freigaben, Buckets oder Volumes kann aktiviert oder deaktiviert werden
+
+Nachdem Sie eine Datenquelle verbunden und gescannt haben, können Sie das Scannen einzelner Volumes oder Freigaben aktivieren oder deaktivieren, ohne das gesamte System neu konfigurieren zu müssen. Damit lässt sich der Scanumfang nach der Ersteinrichtung verfeinern. Beispielsweise können Sie Volumes ausschließen, die Daten enthalten, die Sie nicht analysieren müssen, oder Volumes hinzufügen, die beim ersten Scan nicht ausgewählt oder verfügbar waren.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das aktualisiert werden soll.
+. In der Systemzeile ist *Details anzeigen* auszuwählen.
+. Suchen Sie in der Liste der Datenressourcen das Volume, den Bucket oder die Freigabe, die Sie ändern möchten.
+. Mit dem Schalter *Scanning* wird das Scannen für diese Ressource aktiviert oder deaktiviert.
+
+
+
+
+[[deactivate-ai-data-engine-for-a-system]]
+== Deaktivierung von AI Data Engine für ein System
+
+Durch das Deaktivieren eines Systems werden alle Scanvorgänge gestoppt und das System aus der aktiven Scanabdeckung entfernt. Die Systemkonfiguration bleibt erhalten, und das System kann jederzeit wieder aktiviert werden, indem in der Systemzeile *Activate scans* ausgewählt wird.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das deaktiviert werden soll.
+. Das Aktionsmenü neben dem System ist auszuwählen.
+. Die Option *Deactivate AI Data Engine* ist auszuwählen.
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"]
+* link:monitor-scanning-health.html["Scanstatus überwachen"]
+* link:../investigate/understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
+

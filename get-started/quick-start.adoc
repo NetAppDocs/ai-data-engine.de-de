@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: get-started/quick-start.html 
+keywords: quick start, deploy, connect, investigate, policies 
+summary: AI Data Engine wird in Betrieb genommen, indem der Dienst bereitgestellt, Ihre Speichersysteme verbunden und Ihre erste Untersuchung gestartet wird. 
+---
+= Schnellstart für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine wird in Betrieb genommen, indem der Dienst bereitgestellt, Ihre Speichersysteme verbunden und Ihre erste Untersuchung gestartet wird.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]Anforderungen an die Überprüfung
+[role="quick-margin-para"]
+Anhand der link:../deploy/aide-requirements.html["AIDE-Anforderungen"] und link:../deploy/deployment-overview.html["Informationen zu Bereitstellungsmodi"] kann bestimmt werden, ob AIDE Lite oder AIDE Enterprise installiert werden soll.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"] Bereitstellung von AI Data Engine
+[role="quick-margin-para"]
+Die Bereitstellung von link:../deploy/deploy-aide-lite.html["AIDE Lite"] oder link:../deploy/deploy-enterprise.html["AIDE Enterprise"] erfolgt über die NetApp Console. Die Einrichtungsseite führt Sie durch die Auswahl des Installationsorts und der Konfigurationsgröße sowie durch die Ausführung des Installationsbefehls.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"] Eine Datenquelle verbinden
+[role="quick-margin-para"]
+link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"] den Scanvorgang zu starten. AI Data Engine katalogisiert Dateisystem-Metadaten der von Ihnen angegebenen Speichersysteme.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] Daten erkunden
+[role="quick-margin-para"]
+Öffnen Sie die link:../investigate/understand-dashboard.html["Dashboard"]Ansicht, um Einblicke in die Speicheroptimierung zu erhalten, oder gehen Sie zu link:../investigate/investigate-data.html["Untersuchung"], um Ihre Metadaten direkt zu durchsuchen und zu filtern.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"] Eine Richtlinie erstellen
+[role="quick-margin-para"]
+link:../policies/create-policy.html["Ihre Untersuchungsfilter lassen sich als Richtlinie speichern"] zum Überwachen von Dateien, die im Lauf der Zeit denselben Kriterien entsprechen. Sie können eine Richtlinie konfigurieren, die eine Benachrichtigung sendet, übereinstimmende Dateien dauerhaft löscht oder die Ergebnisse verfolgt.

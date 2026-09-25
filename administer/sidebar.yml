@@ -1,0 +1,8 @@
+---
+section: administer
+title: Verwalten
+entries:
+- title: Verwaltung von Benutzern und Rollen
+  url: "/administer/manage-users-roles.html"
+- title: Datenschwellenwerte konfigurieren
+  url: "/administer/configure-settings.html"

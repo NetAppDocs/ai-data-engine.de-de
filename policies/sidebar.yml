@@ -1,0 +1,8 @@
+---
+section: policies
+title: Verwaltung von Richtlinien und Maßnahmen
+entries:
+- title: Erstellung einer Richtlinie
+  url: "/policies/create-policy.html"
+- title: Verwalten von Richtlinien
+  url: "/policies/manage-policies.html"

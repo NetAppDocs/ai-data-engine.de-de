@@ -1,0 +1,50 @@
+---
+sidebar: sidebar 
+permalink: investigate/investigate-data.html 
+keywords: investigate, metadata, unstructured, structured, directories, cold data, stale data, permissions, reclaimable storage 
+summary: Mit der Untersuchungsansicht können Sie dateibasierte Speicher, Datenbanktabellen und Verzeichnisstrukturen in Ihren verbundenen Systemen untersuchen. Wählen Sie die Registerkarte, die dem entspricht, wonach Sie suchen. 
+---
+= Untersuchung Ihrer Daten in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Sie nachvollziehen müssen, was Speicherplatz belegt, welche Datenbanktabellen unkontrolliert wachsen oder in welchen Verzeichnissen die Zugriffsrechte zu weit gefasst sind, verwenden Sie Metadatenfilter, um Ihre Daten über alle verbundenen Systeme hinweg zu untersuchen.
+
+
+
+[[choose-a-starting-point]]
+== Wählen Sie einen Ausgangspunkt
+
+Die Ansicht wird geöffnet, wenn in der linken Navigation *Investigation* ausgewählt wird. Die Investigation Ansicht kann auch über das Dashboard geöffnet werden, wenn in der Tabelle _Top data resources by reclaimable storage_ *Investigate* ausgewählt wird; dadurch wird automatisch ein Filter für diese Ressource angewendet.
+
+*Investigation* ist in drei Registerkarten unterteilt. Die Registerkarte ist entsprechend dem Datentyp auszuwählen, der untersucht wird.
+
+[cols="1,2,1"]
+|===
+| Tab | Verwendung, wenn Sie Folgendes möchten | Weitere Informationen 
+
+
+| *Unstrukturiert* | Kalte, veraltete oder doppelte dateibasierte Daten in NFS- und SMB/CIFS-Volumes finden | link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"] 
+
+
+| *Strukturiert* | Identifizierung übergroßer oder ungenutzter Datenbanktabellen, die Speicherplatz belegen | link:investigate-structured.html["Untersuchung strukturierter Daten"] 
+
+
+| *Verzeichnisse* | Prüfung der Berechtigungen auf Verzeichnisebene und Ermittlung allgemein zugänglicher Pfade | link:investigate-directories.html["Verzeichnisse untersuchen"] 
+|===
+Die Zusammenfassungsanzahl und die Gesamtgröße oben auf der Seite werden entsprechend der aktiven Registerkarte aktualisiert (z. B. „Unstructured (400M) | 5.7 PiB“).
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
+* link:investigate-structured.html["Untersuchung strukturierter Daten"]
+* link:investigate-directories.html["Verzeichnisse untersuchen"]
+* link:use-filters.html["Arbeiten mit Filtern"]
+* link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+
