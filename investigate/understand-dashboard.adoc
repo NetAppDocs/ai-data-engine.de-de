@@ -13,7 +13,7 @@ summary: Sie können den Zustand Ihrer Speichersysteme in Ihrer gesamten Umgebun
 [role="lead"]
 Bevor Sie entscheiden können, was Sie untersuchen, müssen Sie den Zustand Ihres Speichers verstehen. Wie viel Speicherplatz erfüllt die Schwellenwerte Ihrer Organisation für kalte und veraltete Daten, und welche Systeme oder Verantwortlichen enthalten die meisten Daten in diesen Kategorien? Beispielsweise kann ein Speicheradministrator, der auf eine Kapazitätswarnung reagiert, feststellen, dass ein großer Teil des gescannten Speichers aus kalten Daten besteht, und dann das System mit den größten Auswirkungen genauer untersuchen, um sofort mit der Analyse zu beginnen.
 
-Wählen Sie in NetApp Console *Governance* > *AI Data Engine UI* aus. Das Dashboard wird standardmäßig geöffnet.
+Wählen Sie in NetApp Console *AI data hub* > *AI Data Engine UI* aus. Standardmäßig wird das Dashboard geöffnet.
 
 
 

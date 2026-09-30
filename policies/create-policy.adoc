@@ -42,7 +42,7 @@ Eine Richtlinie ist ein gespeicherter Filtersatz mit einer optionalen zugehörig
 
 
 .Schritte
-. In NetApp Console erfolgt die Navigation zu *Governance* > *AI Data Engine* > *Investigation*.
+. In NetApp Console navigieren Sie zu *AI Data Engine* > *AI Data Engine* > *Untersuchung*.
 . Es lassen sich ein oder mehrere Filter anwenden, die die Dateien identifizieren, auf die die Richtlinie abzielen soll.
 +
 Zum Beispiel: *Dateityp* = .vmdk UND *Zeitpunkt des letzten Zugriffs* > 365 Tage.

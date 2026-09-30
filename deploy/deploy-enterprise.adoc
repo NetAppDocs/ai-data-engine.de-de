@@ -14,6 +14,7 @@ summary: AIDE Enterprise wird über die NetApp Console mithilfe des Bereitstellu
 AIDE Enterprise wird über NetApp Console mithilfe des Bereitstellungsassistenten bereitgestellt. Der Assistent führt Sie durch die Auswahl des Installationsorts, die Wahl einer Konfigurationsgröße und die Ausführung des Installationsbefehls für Ihren RKE2-Cluster.
 
 .Bevor Sie beginnen
+* Ihre Organisation hat Zugriff auf die private Vorschau von AI Data Engine in NetApp Console. Für die Anforderung des Zugriffs und die Bereitstellung von AI Data Engine steht Ihnen Ihr NetApp Ansprechpartner zur Verfügung.
 * Sie verfügen in der NetApp Console über mindestens _Organization admin_-Berechtigungen.
 * Ihr RKE2 Cluster erfüllt die Voraussetzungen für Enterprise Knoten, die in link:aide-requirements.html["AIDE-Anforderungen"] beschrieben sind.
 * Für die Ausführung des Installationsbefehls sind Sudo-Berechtigungen (oder Root-Berechtigungen) auf dem Rechner erforderlich, auf dem der Installationsbefehl ausgeführt wird.
@@ -25,7 +26,7 @@ AIDE Enterprise wird über NetApp Console mithilfe des Bereitstellungsassistente
 
 
 .Schritte
-. In NetApp Console erfolgt die Navigation zu *Governance* > *AI Data Engine*.
+. Navigieren Sie in NetApp Console zu *AI data hub* > *AI Data Engine*.
 +
 Die Landingpage von AI Data Engine wird angezeigt.
 
