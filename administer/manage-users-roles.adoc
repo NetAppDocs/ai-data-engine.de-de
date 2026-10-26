@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: administer/manage-users-roles.html 
-keywords: roles, users, permissions, AI data engine administrator, AI data engine viewer 
+keywords: roles, users, permissions, ai data engine administrator, ai data engine viewer 
 summary: Der Zugriff wird gesteuert, indem jedem Benutzer eine Administrator- oder Betrachterrolle zugewiesen wird. Informationen zu den beiden Rollen und ihren Berechtigungen. 
 ---
 = Verwalten von Benutzern und Rollen in AI Data Engine
@@ -11,7 +11,7 @@ summary: Der Zugriff wird gesteuert, indem jedem Benutzer eine Administrator- od
 
 
 [role="lead"]
-Es lässt sich steuern, was jeder Benutzer in AI Data Engine anzeigen und tun kann, indem ihm eine Administrator- oder Betrachterrolle zugewiesen wird. Bevor Ihr Team AI Data Engine verwendet, ist jedem Benutzer die Rolle zuzuweisen, die dem erforderlichen Zugriffsniveau entspricht.
+Es kann gesteuert werden, was jeder Benutzer in AI Data Engine (AIDE) anzeigen und tun kann, indem ihm eine Administrator- oder Betrachterrolle zugewiesen wird. Bevor Ihr Team mit der Nutzung von AI Data Engine beginnt, sollte jedem Benutzer die Rolle zugewiesen werden, die dem benötigten Level des Zugriffs entspricht.
 
 Rollen werden über die Organisationseinstellungen der NetApp Console zugewiesen. AI Data Engine unterstützt zwei Rollen.
 
@@ -74,8 +74,18 @@ Die Viewer-Rolle für AI Data Engine bietet eingeschränkten Zugriff auf AI Data
 | Aktionen: Archivieren, Kopieren, Löschen | Ja | - 
 
 
+| Aktionen: Duplikate entfernen | Ja | - 
+
+
 | Business-Tags verwalten | Ja | Ja 
 |===
+
+
+[[roles-and-governed-ai-access]]
+== Rollen und kontrollierter KI-Zugriff
+
+NetApp Console Rollen steuern, wer den verwalteten KI-Zugriff in AI Data Engine konfigurieren kann. Sie steuern nicht, welche Sammlungen ein KI-Clientbenutzer durchsuchen kann. Die Microsoft Entra ID-Bereiche, die Sie jeder Sammlung zuweisen, steuern diesen Zugriff. Details sind unter link:../mcp/configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"] beschrieben.
+
 
 
 [[assign-a-role-to-a-user]]
@@ -105,4 +115,5 @@ Der Nutzer erhält eine E-Mail-Einladung und kann nach deren Annahme auf AI Data
 
 * link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+* link:../mcp/manage-data-collections.html["Verwaltung von Datensammlungen"]
 

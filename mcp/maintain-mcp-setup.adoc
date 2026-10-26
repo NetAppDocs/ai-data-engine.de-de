@@ -1,0 +1,180 @@
+---
+sidebar: sidebar 
+permalink: mcp/maintain-mcp-setup.html 
+keywords: mcp, governed ai access, maintain, update, edit collection, identity provider, user scopes, mcp settings, aide cluster host name, mcp host name, enable connection to mcp, validate access 
+summary: Bei Änderungen Ihrer Anforderungen empfiehlt sich eine Überprüfung und Aktualisierung Ihrer MCP-Sammlungen, Identitätsanbieter, Zugriffsbereiche und Servereinstellungen sowie anschließend die Validierung des Zugriffs durch Ihre AI Clients. 
+---
+= Wartung Ihrer von AI Data Engine verwalteten KI-Zugriffskonfiguration
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der gesteuerte KI-Zugriff in AI Data Engine (AIDE) lässt sich durch das Überprüfen und Aktualisieren Ihrer Model Context Protocol (MCP) Kollektionen, Identitätsanbieter, Zugriffsbereiche und Servereinstellungen sowie durch das Validieren des Zugriffs von Ihren KI Clients an Ihre Anforderungen anpassen.
+
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie haben eine MCP-Sammlung konfiguriert und einen KI-Client verbunden. Weitere Informationen finden sich in link:quick-start-mcp.html["Schnellstart für geregelten KI-Zugriff mit AI Data Engine"].
+* Sie haben die Rolle *AI Data Engine administrator*.
+
+
+Änderungen werden nicht sofort wirksam. Wenn Sie die App-Rollen oder Geltungsbereiche von Microsoft Entra ID ändern, erhalten Benutzer den aktualisierten Zugriff erst, nachdem ihr AI Client ein neues Zugriffstoken erhalten hat, was bis zu etwa einer Stunde dauern kann. Benutzer können sich erneut anmelden, damit sie früher ein neues Token erhalten. Wenn Sie einer Sammlung Daten hinzufügen, sind die Dateien erst durchsuchbar, nachdem AI Data Engine sie gescannt und indiziert hat.
+
+
+
+[[review-mcp-server-and-collection-status]]
+== Status von MCP Server und Sammlung
+
+Es gilt, den Status des MCP Servers und der Sammlungen, die Ihre KI-Clients verwenden, zu prüfen und etwaige Konfigurationswarnungen zu beheben.
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Den Status des MCP Servers überprüfen:
++
+** *Wird ausgeführt*: Der MCP Server läuft. AI Clients können sich verbinden, wenn *Enable connection to MCP* aktiviert ist.
+** *Eingeschränkt*: Der MCP server läuft, aber eine Voraussetzung fehlt oder ist fehlerhaft, z. B. ist kein Identitätsanbieter konfiguriert oder der Metadatenkatalog antwortet nur langsam. AI Clients können sich möglicherweise nicht authentifizieren oder Sammlungen abrufen.
+** *Offline*: Der MCP-Server ist gestoppt, deaktiviert oder nicht erreichbar. KI-Clients können keine Verbindung herstellen. Wenn die Verbindung zu MCP deaktiviert ist, finden Sie weitere Informationen unter <<enable-or-disable-the-connection-to-mcp,Verbindung zu MCP aktivieren oder deaktivieren>>.
+
+
+. In der Sammlungsliste lässt sich der Status jeder Sammlung prüfen, die Ihre AI-Clients verwenden. Eine Sammlung mit dem Status *Enabled* ist für AI-Clients verfügbar. Wenn Volumes in einer Sammlung noch gescannt werden, empfiehlt es sich, vor der Suche nach neuen Dateien den Abschluss der Indizierung abzuwarten.
+. Behebung aller Konfigurationswarnungen:
++
+** Falls ein Identitätsanbieter fehlt, wird er unter *Konfiguration* > *Identitätsanbieter* hinzugefügt. Siehe link:connect-entra-id-aide-mcp.html#set-up-an-identity-provider["Einrichten eines Identitätsanbieters"]. Es ist zu bestätigen, dass der *Verbindungsstatus* des Identitätsanbieters *Verbunden* lautet.
+** Wenn bei einer Sammlung *Ready to configure* angezeigt wird, erfolgt die Konfiguration über das Menü *Actions*, die Auswahl von *Configure for MCP* sowie die Auswahl von Identitätsanbietern und Benutzerbereichen. Weitere Informationen finden sich in link:manage-data-collections.html#configure-a-collection-for-mcp["Konfiguration einer Sammlung für MCP"].
+** Wenn ein Volume in einer Sammlung einen Scanfehler anzeigt, finden Sie weitere Informationen unter link:../data-sources/manage-data-sources.html#view-scan-status-and-details["Anzeigen des Scanstatus und der Details"].
+
+
+
+
+
+
+[[edit-a-data-collection]]
+== Eine Datensammlung bearbeiten
+
+Aktualisierung des Namens, der Beschreibung oder der Datenressourcen einer MCP-Sammlung.
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Im Menü *Aktionen* der Sammlung ist *Bearbeiten* auszuwählen.
+. Der Name oder die Beschreibung kann nach Bedarf aktualisiert werden.
+. Für die Aktualisierung der Sammlung lassen sich Datenressourcen auswählen oder abwählen.
+. Die Option *MCP-Sammlung speichern* auswählen.
+
+
+Die Sammlung *All files* kann weder bearbeitet noch umbenannt oder gelöscht werden. Sie kann für MCP konfiguriert werden. Weitere Informationen enthält <<update-identity-providers-or-user-scopes-for-a-collection,Aktualisierung der Identitätsanbieter oder Benutzerbereiche für eine Sammlung>>.
+
+
+
+[[update-an-identity-provider]]
+== Einen Identitätsanbieter aktualisieren
+
+Aktualisierung eines Identitätsanbieters bei Änderungen der Anbieterkonfiguration.
+
+.Schritte
+. In NetApp Console: *AI data hub* > *AI Data Engine* > *Configuration* > *Identity providers*.
+. Öffnen des Identitätsanbieters zur Bearbeitung.
+. Bei Bedarf lassen sich die Mandanten-ID, die Applikations-ID (Client-ID) oder der Name aktualisieren.
+. *Speichern* auswählen.
+
+
+Falls Administratorzugriff erforderlich ist, muss Ihr Administrator den Identitätsanbieter aktualisieren.
+
+
+
+[[update-the-identity-providers-or-user-scopes-for-a-collection]]
+[[update-identity-providers-or-user-scopes-for-a-collection]]
+== Aktualisierung der Identitätsanbieter oder Benutzerbereiche für eine Sammlung
+
+Sie können ändern, welche Identitätsanbieter den Zugriff auf eine Sammlung autorisieren oder welche Benutzerbereiche sie umfassen, und anschließend die aktualisierten Verbindungsdetails kopieren.
+
+.Bevor Sie beginnen
+Falls der benötigte Identitätsanbieter nicht aufgeführt ist, erfolgt die Verbindung zunächst unter *Identitätsanbieter*. Ein entsprechender Verweis ist unter link:connect-entra-id-aide-mcp.html#set-up-an-identity-provider["Einrichten eines Identitätsanbieters"] zu finden.
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Im Menü *Actions* der Sammlung ist *Configure for MCP* auszuwählen.
+. Hier werden die Identitätsanbieter ausgewählt, die den Zugriff auf die Sammlung autorisieren.
+. Für jeden ausgewählten Identitätsanbieter sind die *einzuschließenden Benutzer-Scopes* zu prüfen. *Alle Benutzer-Scopes* können beibehalten werden, oder es lassen sich bestimmte Scopes auswählen und mit *Scopes hinzufügen* ergänzen.
+. Die Option *Generate MCP code snippet* auswählen.
+. Die aktualisierte *MCP server URL* oder der Konfigurationsausschnitt für Ihren AI-Client wird kopiert; anschließend wird *Schließen* ausgewählt.
+
+
+.Ergebnis
+Die Sammlung verwendet die von Ihnen ausgewählten Identitätsanbieter und Benutzerbereiche. Wenn sich die MCP-Server-URL oder das Konfigurations-Snippet geändert hat, ist für jeden betroffenen AI Client eine Aktualisierung erforderlich. Weitere Informationen finden Sie unter <<update-ai-client-connections-and-validate-access,Aktualisierung der AI Clientverbindungen und Validierung des Zugriffs>>.
+
+Weitere Informationen zu dieser Aufgabe sind unter link:manage-data-collections.html#configure-a-collection-for-mcp["Konfiguration einer Sammlung für MCP"] verfügbar.
+
+
+
+[[enable-or-disable-the-connection-to-mcp]]
+== Verbindung zu MCP aktivieren oder deaktivieren
+
+Damit AI Clients eine Verbindung zu Ihren MCP Sammlungen herstellen können, muss die Option „Enable connection to MCP“ aktiviert sein. Die Verbindung ist standardmäßig deaktiviert. Sie sollte erst aktiviert werden, nachdem Sie den MCP Server eingerichtet haben und bevor Sie das MCP Code Snippet für Ihren AI Client generieren. Wenn Sie sie später deaktivieren, bleiben AI Clients blockiert, bis Sie sie wieder aktivieren.
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Anschließend wird *MCP settings* ausgewählt.
+. Erweiterung von *MCP server connection*.
+. Mit dem Schalter *Enable connection to MCP* lässt sich die Verbindung ein- oder ausschalten.
++
+
+CAUTION: Das Deaktivieren der MCP Serververbindung blockiert alle Anfragen von AI Clients an alle MCP Sammlungen, unabhängig von den Sammlungseinstellungen. Bereits verbundene AI Clients verlieren bei ihrer nächsten Anfrage den Zugriff. Die Verbindung sollte nur deaktiviert werden, wenn der Zugriff serverweit ausgesetzt werden soll.
+
+. Nach dem Aktivieren der Verbindung sollte der MCP-Server den Status *Running* haben. Weitere Informationen finden Sie in <<review-mcp-server-and-collection-status,Status von MCP Server und Sammlung>>.
+
+
+
+
+[[review-mcp-server-settings]]
+== Überprüfung der MCP Servereinstellungen
+
+Zu prüfen ist, ob AI Clients eine Verbindung zum MCP Server herstellen können, sowie der Host-Name des AIDE Clusters.
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Anschließend wird *MCP settings* ausgewählt.
+. Unter *MCP-Serververbindung* finden Sie die Option *Verbindung zu MCP aktivieren*. Informationen zum Ein- und Ausschalten der Verbindung enthält <<enable-or-disable-the-connection-to-mcp,Verbindung zu MCP aktivieren oder deaktivieren>>.
+. Unter *MCP hostname* erfolgt die Überprüfung des Hostnamens des AIDE Clusters. Falls eine Änderung erforderlich ist, erfolgt die Eingabe des aktualisierten Hostnamens und die Auswahl von *Configure*.
++
+
+CAUTION: Wenn der AIDE Cluster Hostname geändert wird, ändert sich die MCP Server URL. AI Clients, die die vorherige URL verwenden, können erst wieder eine Verbindung herstellen, wenn ihre Verbindungseinstellungen aktualisiert wurden. Der neue Hostname muss sich in einer Domäne befinden, die in Ihrem Entra ID Mandanten verifiziert ist. Da die Application ID URI und der Scope aus dem Hostnamen gebildet werden, müssen auch diese in Entra ID aktualisiert werden. Siehe <<update-ai-client-connections-and-validate-access,Aktualisierung der AI Clientverbindungen und Validierung des Zugriffs>>.
+
++
+
+NOTE: Die Absicherung des MCP-Servers mit HTTPS erfordert ein SSL/TLS-Zertifikat. NetApp Console managt das Zertifikat nicht. Das Ingress-Skript richtet das Zertifikat und den AIDE Cluster-Hostname ein. Der Hostname muss zu einer Domäne gehören, die in Ihrem Entra ID-Mandanten verifiziert ist. Weitere Informationen finden sich in link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"].
+
+. *Schließen* auswählen.
+
+
+
+
+[[update-ai-client-connections-and-validate-access]]
+== Aktualisierung der AI Clientverbindungen und Validierung des Zugriffs
+
+Nachdem Sie Sammlungen, Identitätsanbieter, Benutzerbereiche oder Servereinstellungen geändert haben, sollte bestätigt werden, dass Ihre AI Clients weiterhin eine Verbindung herstellen können und dass der Zugriff Ihren beabsichtigten Berechtigungen entspricht.
+
+.Schritte
+. Falls sich die MCP-Server-URL oder das generierte Konfigurationssnippet geändert haben, erfordert jeder betroffene AI-Client eine Aktualisierung der Verbindungseinstellungen. Weitere Informationen dazu finden sich unter link:connect-ai-clients-mcp.html["AI-Clients verbinden"].
+. Bei jedem betroffenen AI Client ist zu prüfen, ob der Client eine Verbindung herstellen und sich authentifizieren kann.
+. Es sollte eine repräsentative Suchanfrage ausgeführt werden.
+. Die erwarteten Inhalte der Sammlung sollten zugänglich sein, und der Zugriff sollte den beabsichtigten Berechtigungen entsprechen.
+
+
+.Ergebnis
+Ihre MCP Konfiguration spiegelt Ihre Änderungen wider, Ihre betroffenen AI Clients können sich verbinden, und der Zugriff entspricht Ihren beabsichtigten Berechtigungen.
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:manage-data-collections.html["Verwaltung von Datensammlungen"]
+* link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
+* link:connect-entra-id-aide-mcp.html["AI Data Engine mit Microsoft Entra ID verbinden"]
+* link:connect-ai-clients-mcp.html["Verbindung von KI-Clients mit dem AI Data Engine MCP Server"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
+

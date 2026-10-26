@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: investigate/take-actions.html 
-keywords: actions, tag, archive, delete, data lifecycle, storage optimization, breadcrumb 
-summary: Dateien, die Sie als inaktiv, veraltet oder überholt identifiziert haben, lassen sich archivieren, zur Nachverfolgung kennzeichnen oder endgültig löschen, wenn sie nicht mehr benötigt werden. 
+keywords: actions, tag, archive, delete, copy, data lifecycle, storage optimization, breadcrumb, duplicates, clean up duplicates 
+summary: Sie können Dateien, die Sie als inaktiv, veraltet, dupliziert oder überholt identifiziert haben, archivieren, Elemente zur Nachverfolgung kennzeichnen oder nicht mehr benötigte Dateien endgültig löschen. 
 ---
 = Ergreifen Sie Maßnahmen für Ihre Daten in AI Data Engine
 :allow-uri-read: 
@@ -11,10 +11,10 @@ summary: Dateien, die Sie als inaktiv, veraltet oder überholt identifiziert hab
 
 
 [role="lead"]
-Nachdem Sie Dateien mithilfe Ihrer definierten Filter identifiziert haben, können Sie direkt Maßnahmen ergreifen, um die Datenlebenszyklusrichtlinien Ihres Unternehmens durchzusetzen. Beispielsweise kann ein Storage-Administrator, der Terabytes an VM-Snapshots findet, auf die seit über einem Jahr nicht mehr zugegriffen wurde, diese je nach Aufbewahrungsanforderungen und Unternehmensrichtlinien gesammelt in einer Cold-Storage-Freigabe archivieren oder löschen.
+In AI Data Engine (AIDE) können Sie die Datenlebenszyklus-Richtlinien Ihres Unternehmens durchsetzen, indem Sie die Dateien archivieren, kopieren, taggen oder löschen, die Sie mithilfe Ihrer Filter identifiziert haben. Beispielsweise kann ein Storage-Administrator, der nach Terabytes an VM-Snapshots filtert, auf die seit über einem Jahr nicht mehr zugegriffen wurde, diese je nach Aufbewahrungsanforderungen und Unternehmensrichtlinien gesammelt in einer Cold Storage-Freigabe archivieren oder löschen.
 
 .Über diese Aufgabe
-Um eine Aktion auszuführen, wählen Sie mithilfe der Kontrollkästchen einen oder mehrere Einträge in der Tabelle „Untersuchungsergebnisse“ aus. Die Aktionsleiste umfasst vier Optionen: *Löschen*, *Archivieren*, *Kopieren* und *Taggen*.
+Für eine Aktion wählen Sie mithilfe der Kontrollkästchen ein oder mehrere Elemente in der Tabelle „Untersuchungsergebnisse“ aus. Die Aktionsleiste wird mit vier Optionen aktiviert: *Löschen*, *Archivieren*, *Kopieren* und *Tag*. Zum Entfernen doppelter Kopien einer Datei verwenden Sie *Duplikate bereinigen*. Siehe <<Doppelte Dateien untersuchen und bereinigen>>.
 
 Die Ihnen zur Verfügung stehenden Aktionen hängen von Ihrer zugewiesenen Rolle ab:
 
@@ -33,6 +33,9 @@ Die Ihnen zur Verfügung stehenden Aktionen hängen von Ihrer zugewiesenen Rolle
 
 
 | Löschen | Ja | - 
+
+
+| Bereinigung von Duplikaten | Ja | - 
 |===
 Eine vollständige Beschreibung der Rollen finden Sie unter link:../administer/manage-users-roles.html["Verwaltung von Benutzern und Rollen"].
 
@@ -54,10 +57,13 @@ Wählen Sie eine Aktion entsprechend Ihrer Sicherheit in Bezug auf die Daten:
 | Archiv | Die Daten könnten zwar noch wertvoll sein, gehören aber nicht in den primären Speicher. Durch die Archivierung werden sie an einen kostengünstigeren Speicherort verschoben und bleiben dabei wiederherstellbar. 
 
 
-| Kopie | Die Daten sollten an einem zweiten Ort vorhanden sein, beispielsweise für Sicherungs- oder Migrationszwecke. Durch das Kopieren bleibt das Original erhalten. 
+| Kopie | Die Daten sollten an einem zweiten Speicherort vorhanden sein, beispielsweise zu Sicherungs- oder Migrationszwecken. Beim Kopieren bleibt das Original erhalten. Sie können in einen NFS- oder SMB-Ordner kopieren, ein gefiltertes FlexClone Volume erstellen oder Elemente mit NetApp Copy and Sync übertragen. 
 
 
 | Löschen | Die Daten werden nicht mehr benötigt und unterliegen keinen Aufbewahrungspflichten. Die Löschung ist endgültig, daher sollte sie nur verwendet werden, wenn Sie sich absolut sicher sind. 
+
+
+| Bereinigung von Duplikaten | Identische Kopien einer Datei befinden sich an mehr als einem Speicherort, und Sie möchten nur eine davon behalten. Sie können die redundanten Kopien kennzeichnen, archivieren oder löschen und dabei eine Kopie behalten. Das Löschen von Duplikaten ist endgültig. Weitere Informationen finden Sie unter <<Doppelte Dateien untersuchen und bereinigen>>. 
 |===
 Wenn Daten möglicherweise noch wertvoll sind oder einer weiteren Überprüfung bedürfen, sollten Sie sie taggen, archivieren oder kopieren, anstatt sie zu löschen. Daten sollten nur dann gelöscht werden, wenn Sie sicher sind, dass sie dauerhaft gefahrlos entfernt werden können.
 
@@ -66,7 +72,13 @@ Wenn Daten möglicherweise noch wertvoll sind oder einer weiteren Überprüfung 
 [[archive-files]]
 == Archivdateien
 
-Beim Archivieren werden Dateien über NFS oder SMB/CIFS an ein Cold-Storage-Ziel verschoben. Optional kann eine Breadcrumb-Datei am ursprünglichen Speicherort verbleiben.
+Dateien, die nicht in den primären Storage gehören, lassen sich in ein Cold-Storage-Ziel verschieben und bleiben dabei wiederherstellbar. Optional lässt sich am ursprünglichen Speicherort eine Breadcrumb-Datei belassen, damit Benutzer nachvollziehen können, warum eine Datei verschoben wurde.
+
+
+CAUTION: Das Kopieren oder Archivieren von Dateien kann die Berechtigungen, Eigentümer, Gruppeninformationen und Zeitstempel am Ziel ändern. Protokollübergreifende Übertragungen können den Zugriff erheblich erweitern. Vor der Übertragung sensibler Daten ist eine Überprüfung der Sicherheitseinstellungen am Ziel erforderlich, anschließend sind die Berechtigungen zu verifizieren.
+
+
+NOTE: Die Anmeldeinformationen, die Sie für ein SMB-Ziel angeben, sind von der Active Directory-Integration getrennt. Informationen zum Anzeigen von Benutzernamen und Berechtigungen in AI Data Engine finden Sie unter link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"].
 
 .Bevor Sie beginnen
 * Sie benötigen die Rolle „AI Data Engine administrator“.
@@ -77,38 +89,110 @@ Beim Archivieren werden Dateien über NFS oder SMB/CIFS an ein Cold-Storage-Ziel
 . *Archiv* auswählen.
 . Im Dialogfeld „Archiv“ wird das Zielvolume-Protokoll ausgewählt:
 +
-** *NFS*: Geben Sie den Pfad zum NFS-Zielordner ein.
-** *CIFS*: Geben Sie den Pfad zum CIFS-Zielordner im Format  `\\Hostname\share_name` ein. Geben Sie die Active Directory-Anmeldeinformationen an: Geben Sie den Benutzernamen im Format  `domain\user` oder  `user@domain` ein und geben Sie das Passwort ein.
+** Für *NFS* erfolgt die Eingabe des Zielordnerpfads im Format `hostname:/path/to/destination`.
+** Für *SMB* ist der Pfad zum SMB-Zielordner im Format `\\Hostname\share_name` anzugeben. Anschließend erfolgt die Auswahl des Authentifizierungsverfahrens. Für Kerberos wird der FQDN des Hosts verwendet, und die Anmeldedaten bleiben leer. Weitere Informationen dazu enthält link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"]. Für andere Methoden sind Active Directory-Anmeldedaten anzugeben: Der Benutzername ist im Format `domain\user` oder `user@domain` einzugeben, ebenso das Passwort.
 
 
 . Um eine Breadcrumb-Datei am ursprünglichen Speicherort zu erstellen, muss *Leave breadcrumb* aktiviert sein.
 +
 Eine Breadcrumb-Datei hilft Benutzern, zu verstehen, warum eine Datei verschoben wurde.
 
-. *Archiv* auswählen.
+. Die Option *Archivdatei* wird ausgewählt.
 
 
 
 
-[[copy-files]]
-== Dateien kopieren
+[[copy-selected-items]]
+== Kopieren ausgewählter Elemente
 
-Duplikate von Dateien werden auf ein Zielvolume kopiert, ohne sie vom ursprünglichen Speicherort zu entfernen.
+Ausgewählte Elemente lassen sich an einem anderen Speicherort bereitstellen, beispielsweise für Sicherungen oder Migrationen. Sie können Elemente in einen NFS- oder SMB-Ordner kopieren, eine gefilterte Kopie eines ONTAP Volume erstellen oder Elemente mithilfe von Copy and Sync übertragen.
+
+Die Wahl sollte auf die Methode fallen, die Ihrem Ziel entspricht:
+
+* *Normale Kopie*: Elemente in einen NFS- oder SMB-Zielordner kopieren, ohne die Originaldateien zu verändern.
+* *FlexClone*: Erstellt eine zeitpunktgenaue Kopie eines ONTAP Volumes und entfernt Elemente, die nicht in Ihrer Abfrage enthalten waren, aus dem geklonten Volume. Das ursprüngliche Volume bleibt unverändert.
+* *Synchronisieren*: Elemente zwischen Datei- oder Objektspeichern, lokal oder in der Cloud, mit Copy and Sync übertragen.
+
 
 .Bevor Sie beginnen
 * Sie benötigen die Rolle „AI Data Engine administrator“.
 
 
 .Schritte
-. Wählen Sie in der Investigation Ansicht die Dateien aus, die Sie kopieren möchten.
+. In AI Data Engine erfolgt die Auswahl von *Investigation* in der linken Navigation.
+. Mithilfe von Filtern lassen sich die Elemente finden, die Sie kopieren möchten; anschließend lassen sich die Elemente in der Ergebnistabelle auswählen.
 . *Kopieren* wird ausgewählt.
-. Wählen Sie im Dialogfeld „Kopieren“ das Zielvolume Protokoll aus:
+. Abschluss des Verfahrens für die gewählte Kopiermethode.
+
+
+
+
+[[copy-items-to-an-nfs-or-smb-folder]]
+=== Elemente in einen NFS- oder SMB-Ordner kopieren
+
+Mit der Funktion „Normales Kopieren“ können Sie Kopien ausgewählter Elemente in einem Zielordner ablegen, während die Originaldateien unverändert bleiben.
+
+
+CAUTION: Das Kopieren oder Archivieren von Dateien kann die Berechtigungen, Eigentümer, Gruppeninformationen und Zeitstempel am Ziel ändern. Protokollübergreifende Übertragungen können den Zugriff erheblich erweitern. Vor der Übertragung sensibler Daten ist eine Überprüfung der Sicherheitseinstellungen am Ziel erforderlich, anschließend sind die Berechtigungen zu verifizieren.
+
+.Bevor Sie beginnen
+* Voraussetzung ist, dass die Zielfreigabe den Zugriff durch AI Data Engine erlaubt. NFS- und SMB-Freigaben werden unabhängig von ihrem Hosting-Standort unterstützt.
+* Für ein SMB-Ziel sollten Kerberos- oder NTLM-Anmeldeinformationen verfügbar sein.
+
+
+.Schritte
+. Im Dialogfeld *Ausgewählte Elemente kopieren* können Sie *Reguläre Kopie* auswählen.
+. Auswahl des Zielprotokolls und Angabe der Zieldetails:
 +
-** *NFS*: Geben Sie den Pfad zum NFS-Zielordner ein.
-** *CIFS*: Geben Sie den Pfad zum CIFS-Zielordner im Format  `\\Hostname\share_name` ein. Geben Sie die Active Directory-Anmeldeinformationen an: Geben Sie den Benutzernamen im Format  `domain\user` oder  `user@domain` ein und geben Sie das Passwort ein.
+** Für *NFS* erfolgt die Eingabe des Zielordnerpfads im Format `hostname:/path/to/destination`.
+** Für *SMB* ist der Zielordnerpfad im Format `\\hostname\share_name` einzugeben. Als SMB Authentifizierungstyp wird Kerberos oder NTLM ausgewählt. Bei Kerberos wird der FQDN des Hosts verwendet, und die Anmeldeinformationen bleiben leer. Informationen dazu finden sich in link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"]. Für andere Methoden sind Active Directory-Anmeldeinformationen erforderlich: Der Benutzername wird im Format `domain\user` oder `user@domain` sowie das Kennwort eingegeben.
 
 
-. *Kopieren* wird ausgewählt.
+. Überprüfung, wie sich das Kopieren auf die Metadaten der Datei auswirken kann:
++
+** Berechtigungen, Eigentumsverhältnisse und Gruppeninformationen können nach Möglichkeit beibehalten werden. Falls Quellidentitäten nicht zugeordnet werden können, gelten gegebenenfalls die Standardeinstellungen des Zielsystems.
+** Die Zeitstempel der Quelle, einschließlich des Erstellungszeitpunkts, bleiben möglicherweise nicht erhalten und spiegeln unter Umständen den Kopiervorgang oder das Verhalten des Zielsystems wider.
+** Neue Verzeichnisse verwenden die Standardberechtigungen des Ziels.
+** Protokollübergreifende Übertragungen können den Zugriff erweitern. Vor dem Kopieren empfiehlt sich eine Überprüfung der Sicherheitseinstellungen des Zielsystems sowie anschließend der Berechtigungen.
+
+
+. Wählen Sie *Absenden*.
+
+
+
+
+[[create-a-filtered-copy-of-an-ontap-volume]]
+=== Erstellung einer gefilterten Kopie eines ONTAP Volumes
+
+Eine bereinigte Kopie eines ONTAP Volumes, die nur die Elemente Ihrer Abfrage enthält, steht zur Datenmigration bereit. FlexClone erstellt eine zeitpunktgenaue Kopie des Volumes und löscht nur im Klon die Elemente außerhalb Ihrer Abfrage.
+
+.Bevor Sie beginnen
+Alle ausgewählten Elemente müssen zum selben ONTAP Volume gehören. Das FlexClone Volume wird im selben Aggregat wie das übergeordnete Volume erstellt.
+
+.Schritte
+. Im Dialogfeld *Ausgewählte Elemente kopieren* erfolgt die Auswahl von *FlexClone*.
+. Für das geklonte Volume wird ein *Name* angegeben.
+. Die Abfrage muss alle Elemente enthalten, die Sie im geklonten Volume beibehalten möchten.
++
+Elemente, die nicht in der Abfrage enthalten sind, werden aus dem Klon gelöscht. Das Originalvolume ist davon nicht betroffen.
+
+. Wählen Sie *Absenden*.
+
+
+
+
+[[transfer-items-using-copy-and-sync]]
+=== Elemente mit Copy and Sync übertragen
+
+Die Übertragung ausgewählter Elemente zwischen Datei- oder Object Storage Standorten, lokal oder in der Cloud.
+
+.Bevor Sie beginnen
+Es ist sicherzustellen, dass alle ausgewählten Elemente zu demselben Storage Repository gehören. Wenn sich Ihre Auswahl über mehrere Repositorys erstreckt, ist der Vorgang abzubrechen, und es sind Elemente aus nur einem Repository auszuwählen.
+
+.Schritte
+. Im Dialogfeld *Ausgewählte Elemente kopieren* wird *Synchronisieren* ausgewählt.
+. Die Anzahl der zu synchronisierenden Elemente sollte überprüft und bestätigt werden, damit sie mit den Elementen übereinstimmt, die Sie übertragen möchten.
+. Zum Fortfahren mit Copy and Sync die Option *Sync* auswählen.
 
 
 
@@ -116,7 +200,7 @@ Duplikate von Dateien werden auf ein Zielvolume kopiert, ohne sie vom ursprüngl
 [[delete-files]]
 == Dateien löschen
 
-Durch das endgültige Löschen werden Dateien dauerhaft aus dem Speicher entfernt und können nicht wiederhergestellt werden.
+Dateien, die Sie nicht mehr benötigen und für die keine Aufbewahrungspflichten bestehen, können endgültig entfernt werden.
 
 
 CAUTION: Die Löschung ist endgültig und kann nicht rückgängig gemacht werden. Diese Aktion löscht Quelldateien auch dann, wenn sie aktive Daten enthalten.
@@ -137,10 +221,84 @@ Die ausgewählten Dateien werden endgültig aus dem Speicher gelöscht.
 
 
 
+[[investigate-and-clean-up-duplicate-files]]
+== Doppelte Dateien untersuchen und bereinigen
+
+Doppelte Kopien einer Datei können gefunden und die überflüssigen entfernt werden. Die Metadaten und Speicherorte der Kopien können überprüft und Duplikate zur Überprüfung gekennzeichnet, archiviert oder endgültig gelöscht werden, wobei eine Kopie erhalten bleibt.
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+
+
+.Schritte
+. In NetApp Console befindet sich *AI data hub* > *AI Data Engine*.
+. Die Auswahl erfolgt über *Investigation* > *Unstructured*.
++
+Die Tabelle zeigt Dateinamen, Größen, Besitzer, Systeme und Tags an.
+
+. Optional: Mit *Filter hinzufügen* lässt sich die Dateiliste eingrenzen.
+. Wenn Sie einen Dateinamen auswählen, werden dessen Details geöffnet.
++
+Das Dateisystem, das Storage Repository, der Pfad, die Größe, die Zeitstempel, die Zugriffsrechte und der Eigentümer der Datei werden überprüft. Im Feld *Duplicates* wird die Anzahl doppelter Kopien angezeigt.
+
+. Neben *Duplikate* steht die Option *Details anzeigen* zur Auswahl.
++
+Die Investigationsansicht wendet einen *Duplicates*-Filter an, der Dateien mit Duplikaten einschließt, sowie einen *File hash*-Filter, der mit der ausgewählten Datei übereinstimmt.
+
+. Überprüfung der übereinstimmenden Dateien und ihrer Speicherorte.
+. Auswahl der Dateien, die bereinigt werden sollen.
++
+Überprüfung der Anzahl der *ausgewählten Elemente*.
+
+. Die Option *Duplikate bereinigen* auswählen.
+. Die geschätzte Anzahl der Dateien, die den aktuellen Filtern entsprechen und doppelte Kopien aufweisen, wird überprüft.
++
+
+NOTE: Die Anzahl ist ein Schätzwert. Exakte Duplikate werden bei der Ausführung der Aktion neu berechnet, und nur Dateien, deren Identität bestätigt wurde, sind betroffen.
+
+. Legen Sie fest, wie mit den Duplikaten umgegangen werden soll:
++
+** Kennzeichnung der Duplikate zur Überprüfung:
++
+... Unter *Aktion* ist *Tag* auszuwählen.
+... Zunächst ist *Hinzufügen* auszuwählen, anschließend das anzuwendende Tag. Zum Hinzufügen weiterer Tags kann der Vorgang wiederholt werden.
+... Wählen Sie *Absenden*.
+
+
+** Archivierung der Duplikate auf einem Ziel-Volume:
++
+... Unter *Aktion* erfolgt die Auswahl von *Archivieren*.
+... Unter *Am ursprünglichen Standort* stehen die Optionen *Vollständig entfernen* oder *Einen Verweis hinterlassen* zur Auswahl.
+... Auswahl des Protokolls des Ziel-Volumes. Für *NFS*: Eingabe des Zielordnerpfads im Format `Hostname:/SHAREPATH`. Für *SMB*: Eingabe des Zielordnerpfads und anschließende Auswahl der *Kerberos*- oder *NTLM*-Authentifizierung. Für NTLM: Eingabe von Active Directory-Benutzername und Kennwort.
+... Wählen Sie *Absenden*.
+
+
+** Duplikate löschen und eine Kopie beibehalten:
++
+
+CAUTION: Die Löschung ist endgültig und kann nicht rückgängig gemacht werden.
+
++
+... Unter *Aktion* erfolgt die Auswahl über *Löschen*.
+... Unter *Kopie behalten bei* stehen *Zuletzt aufgerufen*, *Zuletzt geändert* oder *Erstellt* zur Auswahl.
+... Unter *Am ursprünglichen Standort* stehen die Optionen *Vollständig entfernen* oder *Einen Verweis hinterlassen* zur Auswahl.
+... Wählen Sie *Absenden*.
+... Im Dialogfeld *Doppelte Kopien löschen* können Sie die Anzahl der zu löschenden Dateien sowie die Informationen zum Beibehalten einer Kopie prüfen.
+... Nach der Eingabe  `permanently delete` folgt die Auswahl von *Delete*.
+
+
+
+
+
+
+Wenn Sie den Vorgang beenden möchten, ohne eine Aktion zu übermitteln, wählen Sie *Abbrechen*.
+
+
+
 [[tag-files]]
 == Tag-Dateien
 
-Bei der Verschlagwortung erhalten Dateien ein Business-Tag zur Klassifizierung und Nachverfolgung.
+Dateien, die später erneut eingesehen oder mit einem anderen Team abgestimmt werden sollen, lassen sich verfolgen, ohne ihren Speicherort zu ändern. Beispielsweise dient das Tag „Archivierungskandidat“ dazu, Dateien zu kennzeichnen, die vor dem Archivieren oder Löschen überprüft werden müssen.
 
 .Schritte
 . In der Ansicht „Untersuchung“ wählen Sie die Dateien aus, die Sie taggen möchten.
@@ -156,7 +314,6 @@ Bei der Verschlagwortung erhalten Dateien ein Business-Tag zur Klassifizierung u
 
 * link:investigate-data.html["Untersuchung Ihrer Daten"]
 * link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
-* link:use-filters.html["Arbeiten mit Filtern"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
 * link:../administer/manage-users-roles.html["Verwaltung von Benutzern und Rollen"]
 

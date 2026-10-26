@@ -1,0 +1,22 @@
+---
+section: mcp
+title: Governance für den KI-Zugriff (MCP)
+entries:
+- title: Informationen zum kontrollierten KI-Zugriff
+  url: "/mcp/learn-about-mcp.html"
+- title: Schnellstart
+  url: "/mcp/quick-start-mcp.html"
+- title: Vorbereitung des MCP Hosts
+  url: "/mcp/prepare-mcp-host.html"
+- title: Konfiguration von Microsoft Entra ID
+  url: "/mcp/configure-entra-id-mcp.html"
+- title: Verbindung von AIDE mit Microsoft Entra ID
+  url: "/mcp/connect-entra-id-aide-mcp.html"
+- title: Verwaltung von Datensammlungen
+  url: "/mcp/manage-data-collections.html"
+- title: AI-Clients verbinden
+  url: "/mcp/connect-ai-clients-mcp.html"
+- title: AIDE MCP Tools
+  url: "/mcp/mcp-tools-reference.html"
+- title: Wartung Ihrer MCP-Konfiguration
+  url: "/mcp/maintain-mcp-setup.html"

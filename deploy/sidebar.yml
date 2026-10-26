@@ -5,8 +5,22 @@ entries:
 - title: Informationen zur AIDE Bereitstellung
   url: "/deploy/deployment-overview.html"
 - title: AIDE-Anforderungen
-  url: "/deploy/aide-requirements.html"
-- title: AIDE Lite bereitstellen
-  url: "/deploy/deploy-aide-lite.html"
-- title: AIDE Enterprise bereitstellen
-  url: "/deploy/deploy-enterprise.html"
+  entries:
+  - title: Anforderungen für das AIDE Deployment
+    url: "/deploy/aide-requirements.html"
+  - title: Voraussetzungen für das AIDE Single-Node Deployment
+    url: "/deploy/single-node-prerequisites.html"
+  - title: Voraussetzungen für das AIDE Multi-Node Deployment
+    url: "/deploy/multi-node-prerequisites.html"
+- title: AIDE als Einzelknoten-Deployment einsetzen
+  url: "/deploy/deploy-aide-single-node.html"
+- title: Einsatz von AIDE als Multi-Node Deployment
+  url: "/deploy/deploy-aide-multi-node.html"
+- title: AIDE mit einem Proxy einsetzen
+  entries:
+  - title: Informationen zu Proxys für AIDE
+    url: "/deploy/configure-proxy.html"
+  - title: AIDE als Einzelknoten-Deployment mit einem Proxy einsetzen
+    url: "/deploy/deploy-aide-single-node-proxy.html"
+  - title: AIDE als Multi-Node Deployment mit einem Proxy einsetzen
+    url: "/deploy/deploy-aide-multi-node-proxy.html"

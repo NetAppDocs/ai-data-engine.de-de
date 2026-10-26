@@ -56,9 +56,9 @@ Anhand der Ergebnistabelle lässt sich bestätigen, dass der Filtersatz die beab
 . Der Ausdruck für die Filterkriterien (zum Beispiel `last_access_time <= 3 Years AND file_size >= 5GiB`) sollte überprüft werden, um sicherzustellen, dass er Ihre Auswahl widerspiegelt.
 . Zum Anhängen einer Aktion steht unter *Action* eine der folgenden Optionen zur Verfügung:
 +
-** *Nur überwachen (keine Aktion)* (Standard): Die Richtlinie wird als Bedingung „Nur überwachen“ gespeichert.
+** *Nur überwachen (keine Aktion)* (Standard): Speichert die Richtlinie als Bedingung „Nur überwachen“.
 ** *E-Mail-Benachrichtigung senden*: Es wird eine E-Mail-Benachrichtigung an den von Ihnen angegebenen Empfänger gesendet.
-** *Endgültig löschen*: Es sind keine weiteren Eingaben erforderlich.
+** *Endgültig löschen*: Erfordert keine weitere Eingabe.
 +
 
 CAUTION: Die Aktion „Endgültig löschen“ löscht nach jedem Scanvorgang automatisch und unwiderruflich alle Dateien, die dieser Richtlinie entsprechen. Vor dem Speichern ist zu prüfen, ob Ihre Filterkriterien korrekt sind und ob Sie zum Löschen dieser Dateien berechtigt sind.
@@ -69,14 +69,14 @@ CAUTION: Die Aktion „Endgültig löschen“ löscht nach jedem Scanvorgang aut
 
 
 .Ergebnis
-Die Richtlinie wird gespeichert und auf der link:manage-policies.html["Richtlinien"]Seite angezeigt. Wenn eine Aktion zugeordnet wurde, wendet AI Data Engine diese Aktion auf Dateien an, die den Richtlinienkriterien entsprechen.
+AI Data Engine speichert die Richtlinie, und sie wird auf der link:manage-policies.html["Richtlinien"] Seite angezeigt. Wenn Sie eine Aktion zugeordnet haben, wendet AI Data Engine diese Aktion auf Dateien an, die den Richtlinienkriterien entsprechen.
 
 
 
 [[example-identify-cold-archive-files]]
 == Beispiel: Kalte Archivdateien identifizieren
 
-Das folgende Beispiel erstellt eine Richtlinie, die eine E-Mail-Benachrichtigung sendet, wenn Dateien erkannt werden, auf die seit über einem Jahr nicht mehr zugegriffen wurde.
+Das folgende Beispiel erstellt eine Richtlinie, die eine E-Mail-Benachrichtigung versendet, wenn AI Data Engine Dateien erkennt, auf die seit über einem Jahr nicht mehr zugegriffen wurde.
 
 . In „Untersuchung“ werden diese Filter angewendet:
 +

@@ -1,0 +1,136 @@
+---
+sidebar: sidebar 
+permalink: mcp/learn-about-mcp.html 
+keywords: governed ai access, mcp, model context protocol, ai clients, collections, entra id, claude code, claude desktop, cursor, opencode 
+summary: 'Governed AI access ermöglicht KI-Clients, die Metadaten in ausgewählten AI Data Engine Sammlungen über das Model Context Protocol (MCP) zu durchsuchen, unter Verwendung eines Zugriffs, den Sie in NetApp Console steuern.' 
+---
+= Informationen zum kontrollierten KI-Zugriff mit AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Gesteuerter KI-Zugriff ermöglicht es KI-Clients, mithilfe des Model Context Protocol (MCP) die Metadaten in den von Ihnen ausgewählten Sammlungen in AI Data Engine (AIDE) zu durchsuchen. Sie legen fest, welche link:manage-data-collections.html#about-data-collections["Sammlungen"] ein KI-Client durchsuchen kann und wer sie verwenden kann. KI-Assistenten arbeiten mit Ihren katalogisierten Metadaten innerhalb der von Ihnen festgelegten Grenzen.
+
+
+
+[[what-governed-ai-access-does]]
+== Was regulierter KI-Zugriff bewirkt
+
+Das Model Context Protocol (MCP) ist ein offener Standard, der es KI-Clients ermöglicht, Verbindungen zu externen Datenquellen und Tools herzustellen. AI Data Engine stellt einen MCP-Server, das sogenannte Governed Access Gateway, bereit, sodass KI-Clients den Metadatenkatalog von AI Data Engine abfragen können, anstatt direkt auf Ihre Storage Systeme zuzugreifen.
+
+Über MCP kann ein vernetzter AI Client Folgendes tun:
+
+* Es ist möglich, die Metadaten der Dateien in den Sammlungen zu durchsuchen, die Sie für den KI-Zugriff aktiviert haben.
+* Tags können aufgelistet, erstellt sowie Dateien hinzugefügt oder aus diesen Dateien entfernt werden. Wenn ein Tag nicht vorhanden ist, wird es durch das Hinzufügen zu einer Datei erstellt. Tag-Operationen sind in einer Power-User-Sitzung verfügbar, die die Microsoft Entra ID App-Rolle und den entsprechenden Scope erfordert. Weitere Informationen hierzu enthält link:configure-entra-id-mcp.html#create-and-assign-the-power-user-app-role["Erstellen und Zuweisen der App-Rolle „Power-User“"]. Informationen zu den Tools, die AI Clients verwenden können, enthält link:mcp-tools-reference.html["MCP tools für den von AI Data Engine gesteuerten KI-Zugriff"].
+
+
+
+
+[[governed-ai-access-and-the-investigation-view]]
+== Regulierter AI-Zugriff und die Untersuchungsansicht
+
+Der kontrollierte KI-Zugriff bietet Ihnen eine KI-basierte Alternative zu den Untersuchungen, die Sie in AI Data Engine durchführen. Anstatt im link:../investigate/investigate-data.html["Untersuchungsansicht"] der Benutzeroberfläche Filter zu erstellen und zu taggende Dateien auszuwählen, stellen Sie in einem KI-Client wie Claude Desktop eine Frage oder geben eine Anweisung.
+
+[cols="1,2,2"]
+|===
+| Aufgabe | In AI Data Engine | Über einen KI-Client 
+
+
+| Dateien anhand ihrer Metadaten finden | Anwendung von Metadatenfiltern in der link:../investigate/investigate-unstructured.html["Untersuchungsansicht"]. | Es ist möglich, den AI Client zu veranlassen, eine Sammlung anhand des Dateinamenpräfixes, des Dateityps oder des Eigentümers zu durchsuchen. 
+
+
+| Dateidetails prüfen | Im Detailfenster einer Datei werden das System, das Storage Repository, der Eigentümer und die angewendeten Tags angezeigt. | Über den AI Client können Sie den Pfad, den Typ, die Größe, den Zeitpunkt der letzten Änderung und den Eigentümer der Dateien in den Ergebnissen abfragen. 
+
+
+| Tag-Dateien | In den Ergebnissen der Untersuchung können Dateien ausgewählt und die link:../investigate/take-actions.html#tag-files["Tag-Aktion"] verwendet werden. | Sie können den AI-Client dazu auffordern, ein Tag zu erstellen, es einer Datei hinzuzufügen oder ein Tag aus einer Datei zu entfernen. 
+|===
+Die gleichen Katalogmetadaten und Schlagwörter stehen an beiden Stellen zur Verfügung. Schlagwörter können in der Investigation view oder über einen AI client erstellt, hinzugefügt oder entfernt werden. Jede Oberfläche spiegelt die Änderungen wider, die Sie in der jeweils anderen vornehmen, sodass tagbasierte Suchvorgänge konsistent sind.
+
+Der KI-Client funktioniert nur innerhalb der Sammlungen, die für den KI-Zugriff aktiviert sind. Informationen zu Suchoptionen und Beispiele sind unter link:connect-ai-clients-mcp.html#search-metadata["Metadaten durchsuchen"] zu finden.
+
+Beispielhafte Eingabeaufforderungen sind unter link:connect-ai-clients-mcp.html#sample-prompts["AI-Clients verbinden"] verfügbar.
+
+
+
+[[how-governed-ai-access-works]]
+== Wie der geregelte KI-Zugriff funktioniert
+
+Der verwaltete KI-Zugriff wird in Microsoft Entra ID und NetApp Console konfiguriert. Die Aufgaben sind zwischen einem AI Data Engine Administrator und einem Microsoft Entra ID-Administrator aufgeteilt, wobei es sich möglicherweise um dieselbe Person handelt:
+
+. AI Data Engine Administrator: link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]durch Ausführen des Ingress-Skripts. Der AIDE Cluster Hostname muss sich in einer Domäne befinden, die in Microsoft Entra ID verifiziert ist.
+. Entra ID Administrator: link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID"] durch die Registrierung einer dedizierten Applikation für jede AI Data Engine Instanz, die Definition der Application ID URI und des  `power_users` Scope, die Erstellung und Zuweisung der Power-User-App-Rolle sowie das Hinzufügen von Redirect URIs für Ihre AI Clients.
+. AI Data Engine Administrator: link:connect-entra-id-aide-mcp.html["Microsoft Entra ID als Identitätsanbieter einrichten"] in AI Data Engine.
+. Optional: Datensammlungen aus ausgewählten Volumes erstellen. Die Sammlung *All files* ist standardmäßig vorhanden und enthält alle gescannten Dateien.
+. Für die Verbindung zu MCP muss die Option in *MCP settings* aktiviert sein, und der MCP server muss laufen. Die Verbindung ist standardmäßig deaktiviert.
+. Für MCP umfasst die Konfiguration jeder Sammlung die Auswahl von Identitätsanbietern und Benutzerbereichen. Die von Ihnen angegebenen Bereiche definieren, wonach ein AI Client suchen kann.
+. Für die Verbindung von KI-Clients dienen die MCP-Server-URL oder ein client-spezifisches Snippet, das in NetApp Console generiert wird.
+
+
+Nach Abschluss der Konfiguration melden sich die Benutzer mit ihrer Entra ID bei einem AI Client an. Der Client kann dann nur die Sammlungen durchsuchen, auf die die Entra ID Scopes des Benutzers zugreifen dürfen.
+
+Der Zugriff wird nur auf Sammlungsebene gewährt. Sie können keinen Zugriff auf einzelne Dateien oder Verzeichnisse gewähren.
+
+
+
+[[how-ai-clients-sign-in]]
+== Wie sich KI-Clients anmelden
+
+Microsoft Entra ID authentifiziert Benutzer. Der AI Data Engine MCP Server stellt niemals Token aus und verfügt über kein Secret. Er validiert nur Token, die Ihr Entra ID Mandant ausstellt.
+
+Wenn ein Benutzer einen KI-Client verbindet, geschieht Folgendes:
+
+. Der AI-Client sendet seine erste Anfrage ohne Token an den MCP-Server unter `/mcp/tools`. Der Server antwortet mit `401 Unauthorized` und verweist auf seine OAuth-Metadaten.
+. Der KI-Client liest die Metadaten, um den Entra ID-Issuer und den unterstützten Scope zu ermitteln.
+. Der Browser öffnet die Entra ID-Anmeldeseite. Nachdem sich der Benutzer angemeldet hat und zugestimmt hat, leitet Entra ID zur registrierten Callback-URI weiter.
+. Entra ID stellt ein v2.0-Token für Ihre Applikation aus. Die Token-Zielgruppe ist die Applikations-ID (Client-ID), der  `scp` Claim ist  `power_users`, und der  `roles` Claim enthält  `AIDEPowerUsers`.
+. Der MCP Server validiert bei jeder Anfrage die Token-Signatur, den Aussteller, die Zielgruppe und das Ablaufdatum anhand Ihres Entra ID-Mandanten.
+
+
+Die Token-Anforderungen sind unter link:configure-entra-id-mcp.html#token-expectations["Erwartungen an Token"] beschrieben.
+
+
+
+[[validated-ai-clients]]
+== Validierte KI-Clients
+
+NetApp hat die Einrichtung des gesteuerten KI-Zugriffs mit den folgenden KI-Clients getestet und validiert:
+
+* Claude Code
+* Claude Desktop
+* Cursor
+* OpenCode
+
+
+NetApp hat andere MCP-Clients nicht getestet. Sie könnten funktionieren, wenn sie sich für eine Verbindung konfigurieren lassen, aber sie sind nicht validiert.
+
+
+
+[[what-isnt-available-through-mcp]]
+== Was über MCP nicht verfügbar ist
+
+Der kontrollierte AI-Zugriff ist auf die Metadatensuche und Tag-Operationen innerhalb von Sammlungen beschränkt. Über MCP kann ein AI-Client Folgendes nicht:
+
+* Abrufen des Inhalts von Dateien.
+* Dateien hinzufügen, löschen oder ändern.
+* Änderung der Konfiguration der Datenquelle.
+
+
+Die vollständige Liste der Einschränkungen finden Sie unter link:../release-notes/known-limitations.html["Bekannte Einschränkungen"].
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:manage-data-collections.html["Verwaltung von Datensammlungen"]
+* link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"]
+* link:quick-start-mcp.html["Schnellstart für geregelten KI-Zugriff mit AI Data Engine"]
+* link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]
+* link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
+* link:connect-entra-id-aide-mcp.html["AI Data Engine mit Microsoft Entra ID verbinden"]
+* link:connect-ai-clients-mcp.html["Verbindung von KI-Clients mit dem AI Data Engine MCP Server"]
+* link:mcp-tools-reference.html["MCP tools für den von AI Data Engine gesteuerten KI-Zugriff"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
+

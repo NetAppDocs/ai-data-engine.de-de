@@ -11,7 +11,7 @@ summary: Vor der Bereitstellung von AI Data Engine sollten die Infrastruktur- un
 
 
 [role="lead"]
-Bevor Sie AI Data Engine implementieren, sollten die Anforderungen an Netzwerk, VM Dimensionierung und Betriebssystem für Ihre Umgebung geprüft werden.
+Vor dem Deployment von AI Data Engine (AIDE) sollten die Anforderungen an Netzwerk, Kubernetes, Dimensionierung und Betriebssystem für Ihre Umgebung geprüft werden. Für ein Single-Node-Deployment stellen Sie eine Linux-VM bereit, und AI Data Engine provisioniert alles Weitere automatisch. Für ein Multi-Node-Deployment verwenden Sie Ihren eigenen Kubernetes-Cluster.
 
 
 
@@ -25,107 +25,203 @@ Folgende Netzwerkverbindungen müssen geöffnet sein:
 | Verbindung | Port | Protokoll | Richtung | Zweck 
 
 
-| Console Agent zu NetApp Console | 443 | TCP | Ausgehend | HTTPS: Verbindung zur NetApp Console 
+| Konsolenagent für NetApp Console | 443 | TCP | Ausgehend | HTTPS: Verbindung zur NetApp Console 
 
 
-| Console Agent zu ONTAP | 443 | TCP | Ausgehend | HTTPS: ONTAP Clustererkennung 
+| Konsolenagent für ONTAP | 443 | TCP | Ausgehend | HTTPS: ONTAP Clustererkennung 
 
 
-| Console Agent zu AI Data Engine | 80, 443, 8080, 9000 | TCP | Bidirektional | Kommunikation zwischen Console Agent und AI Data Engine 
+| Konsolenagent für AI Data Engine | 80, 443, 8080, 9000 | TCP | Bidirektional | Kommunikation zwischen Console agent und AI Data Engine 
+
+
+| KI-Client zum MCP-Server | 443 | TCP | Eingehend | HTTPS: KI-Clients greifen über Ihr Unternehmensnetzwerk oder VPN auf den Hostnamen des AIDE-Clusters zu. KI-Clients verbinden sich über Port 443 mit dem Hostnamen. Sie stellen keine Verbindung zum internen Service-Port her. 
 
 
 | AI Data Engine zu ONTAP (NFS) | 111, 2049 | TCP/UDP | Zum Storage | NFS Datenquellenzugriff 
 
 
-| AI Data Engine zu ONTAP (SMB/CIFS) | 139, 445 | TCP/UDP | Zum Storage | SMB/CIFS Datenquellenzugriff 
+| AI Data Engine zu ONTAP (SMB) | 139, 445 | TCP/UDP | Zum Storage | SMB Datenquellenzugriff 
 
 
-| AI Data Engine zu Active Directory | 389, 636, 3268, 3269 | TCP/UDP | Ausgehend | LDAP (389), LDAPS (636) und Global Catalog (3268, 3269) dienen der Benutzerauthentifizierung und dem SMB/CIFS-Scannen. Port 389 verwendet sowohl TCP als auch UDP; alle anderen Ports verwenden nur TCP. 
+| Cluster-Knoten zum NFS-Server (Volume für Multi-Node-Konfiguration) | 2049 | TCP | Ausgehend | NFS-Zugriff auf den Export, der die AI Data Engine Konfiguration enthält. Gilt nur für Deployments mit mehreren Nodes. Bei Verwendung von Kerberos bindet der Admin-Host diesen Export ebenfalls ein. 
 
 
-| AI Data Engine für NetApp Services / Container Registry | 443 | TCP | Ausgehend | HTTPS: Artefakt Downloads und Container Image Pulls (AWS S3 und ECR) 
+| AI Data Engine zu Active Directory | 389, 636, 3268, 3269 | TCP (UDP auch für 389) | Ausgehend | LDAP (389), LDAPS (636) und Global Catalog (3268, 3269) dienen der Benutzerauthentifizierung, dem SMB/CIFS-Scanning und der Zuordnung von NFS-Benutzer- und Gruppen-IDs zu Active Directory-Namen. Port 389 verwendet sowohl TCP als auch UDP; alle anderen Ports verwenden ausschließlich TCP. 
+
+
+| AI Data Engine zu Kerberos KDC (Active Directory-Domänencontroller) | 88 | TCP/UDP | Ausgehend | Kerberos-Authentifizierung für SMB/CIFS-Datenquellen. Nur erforderlich, wenn Sie Kerberos verwenden. Weitere Informationen finden Sie unter <<kerberos-ad-requirements,Anforderungen für Kerberos und Active Directory>>. 
+
+
+| AI Data Engine zum DNS-Server | 53 | TCP/UDP | Ausgehend | Namensauflösung für Dateiserver und den KDC bei Verwendung von Kerberos 
+
+
+| AI Data Engine für NetApp Services, Container Registry und CDN | 443 | TCP | Ausgehend | HTTPS: Download des Installationsskripts von einem CDN, Abruf des Container-Images und des Helm-Charts aus ECR sowie Download des Komponentenkatalogs aus S3 
 |===
 
 
 [[outbound-internet-access]]
 === Ausgehender Internetzugang
 
-Für eine Online-Installation müssen die folgenden Endpunkte vom AI Data Engine Host aus erreichbar sein:
+Für eine Online-Installation müssen die folgenden Endpunkte erreichbar sein. Wenn in einer Zeile eine Bedingung angegeben ist, ist der Endpunkt nur in diesem Fall erforderlich.
 
-[cols="2,2,1"]
+[cols="3,3,2,1"]
 |===
-| Endpunkt | Zweck | Umfang 
+| Endpunkt | Zweck | Initiiert von | Bereitstellungstyp 
 
 
-| `\https://api.console.netapp.com` | NetApp Console Kommunikation | Beide 
+| `\https://582244788873.dkr.ecr.us-west-2.amazonaws.com` | NetApp Container Registry (AIDE Container-Images und Helm-Charts) | Container-Laufzeitumgebung und Installer | Beide 
 
 
-| `\https://netapp-cloud-account.auth0.com` | Zentralisierte Benutzerauthentifizierung | Beide 
+| `\https://582244788873.dkr-ecr.us-west-2.on.aws` | NetApp Container Registry (Dual Stack/Virtual Private Cloud (VPC) Endpunktzugriff) | Container-Laufzeitumgebung und Installer | Beide 
 
 
-| `\https://auth0.com` | Authentifizierungsdienste | Beide 
+| `\https://api.ecr.us-west-2.amazonaws.com` | AWS ECR API (Authentifizierung und Abruf von Image-Manifesten) | Container-Laufzeitumgebung und Installer | Beide 
 
 
-| `\https://582244788873.dkr.ecr.us-west-2.amazonaws.com` | NetApp Container Registry (AIDE Container Images) | Beide 
+| `\https://ecr.us-west-2.amazonaws.com` | Aktualisierung der Anmeldeinformationen für die AWS ECR Registry | AI Data Engine | Beide 
 
 
-| `\https://582244788873.dkr-ecr.us-west-2.on.aws` | NetApp Container Registry (Dual Stack/Virtual Private Cloud (VPC) Endpunktzugriff) | Beide 
+| `\https://prod-us-west-2-starport-layer-bucket.s3.us-west-2.amazonaws.com` | AWS S3 (ECR Container-Image-Layer-Speicher) | Container-Laufzeit | Beide 
 
 
-| `\https://api.ecr.us-west-2.amazonaws.com` | AWS ECR API (Authentifizierung und Abruf von Image-Manifesten) | Beide 
+| `\https://prod-us-west-2-starport-layer-bucket.s3.amazonaws.com` | AWS S3 (ECR Container-Image-Layer-Speicher) | Container-Laufzeit | Beide 
 
 
-| `\https://prod-us-west-2-starport-layer-bucket.s3.us-west-2.amazonaws.com` | AWS S3 (ECR Container-Image-Layer-Speicher) | Beide 
+| `\https://s3.us-west-2.amazonaws.com` | AWS S3 (Komponentenversionskatalog) | Installer und AI Data Engine | Beide 
 
 
-| `\https://prod-us-west-2-starport-layer-bucket.s3.amazonaws.com` | AWS S3 (ECR Container-Image-Layer-Speicher) | Beide 
+| `\https://s3.amazonaws.com` | AWS S3 (Komponentenversionskatalog) | Installer und AI Data Engine | Beide 
 
 
-| `\https://s3.us-west-2.amazonaws.com` | AWS S3 (Installer-Wrapper-Skript, Helm-Charts und Komponentenversionskatalog) | Beide 
+| `\https://sts.us-west-2.amazonaws.com` | AWS STS (temporärer Austausch von Anmeldeinformationen für den Zugriff auf Registry und S3) | AI Data Engine | Beide 
 
 
-| `\https://s3.amazonaws.com` | AWS S3 (Installer-Wrapper-Skript, Helm-Charts und Komponentenversionskatalog) | Beide 
+| `\https://aide-version-policy.s3.us-west-2.amazonaws.com` | AI Data Engine operator: Versionsrichtlinie | AI Data Engine | Beide 
 
 
-| `\https://sts.us-west-2.amazonaws.com` | AWS STS (temporärer Austausch von Anmeldeinformationen für den Zugriff auf Registry und S3) | Beide 
+| `\https://api.bluexp.netapp.com` | NetApp Console Registrierung | Installationsprogramm | Beide 
 
 
-| `\https://support.compliance.api.bluexp.netapp.com` | Software Images, Manifeste und Vorlagen; Streaming von Protokollen und Metriken | Beide 
+| `\https://netapp-cloud-account.auth0.com` | NetApp Console Authentifizierung | AI Data Engine | Beide 
 
 
-| `\https://dseasb33srnrn.cloudfront.net` | CloudFront CDN für Softwareverteilung | Beide 
+| `\https://api.workloads.netapp.com` | Erkennung von FSx und NetApp Workloads | AI Data Engine | Beide 
 
 
-| `\http://packages.ubuntu.com` | Erforderliche Ubuntu Pakete | Nur Lite (Ubuntu) 
+| `\https://api.gcp.workloads.netapp.com` | Erkennung von Google Cloud NetApp Volumes | AI Data Engine | Beide 
 
 
-| `\http://archive.ubuntu.com` | Ubuntu Paketarchiv | Nur Lite (Ubuntu) 
+| `\https://checkip.amazonaws.com` | Der Systemstatusmonitor verwendet sie, um die öffentliche IP-Adresse im Systemstatus Dashboard anzuzeigen. AI Data Engine funktioniert auch ohne sie. | AI Data Engine | Beide 
 
 
-| `\http://security.ubuntu.com` | Ubuntu Sicherheitspaketarchiv | Nur Lite (Ubuntu) 
+| `\https://api.ipify.org` | Ausweichlösung zum Abrufen der im Systemstatus-Dashboard angezeigten öffentlichen IP-Adresse. AI Data Engine funktioniert auch ohne sie. | AI Data Engine | Beide 
 
 
-| `\https://get.k3s.io` | k3s Laufzeitumgebung herunterladen (vom Installationsprogramm initiiert) | Nur Lite 
+| `\https://icanhazip.com` | Ausweichlösung zum Abrufen der im Systemstatus-Dashboard angezeigten öffentlichen IP-Adresse. AI Data Engine funktioniert auch ohne sie. | AI Data Engine | Beide 
 
 
-| `\https://get.helm.sh` | Helm Download (vom Installationsprogramm initiiert) | Nur Lite 
+| `\https://ipinfo.io` | Ausweichlösung zum Abrufen der im Systemstatus-Dashboard angezeigten öffentlichen IP-Adresse. AI Data Engine funktioniert auch ohne sie. | AI Data Engine | Beide 
+
+
+| `\https://hub.docker.com` | Proxy-Konnektivitätstest, nur bei Verwendung eines ausgehenden Proxys. Ein fehlgeschlagener Test blockiert weder die Installation noch die Laufzeit. Dieser Endpunkt ist von den Docker Hub Endpunkten getrennt, die k3s System-Images bereitstellen. | AI Data Engine | Beide 
+
+
+| `\https://cognito-idp.us-east-1.amazonaws.com` | Der Proxy-Verbindungstest kommt nur bei Verwendung eines ausgehenden Proxys zum Einsatz. Ein fehlgeschlagener Test blockiert weder die Installation noch die Laufzeit. | AI Data Engine | Beide 
+
+
+| `\https://cognito-identity.us-east-1.amazonaws.com` | AWS Cognito Zugriff, der zum Senden von Produktnutzungsmetriken von AI Data Engine Instanzen an NetApp verwendet wird. Auch für einen Proxy-Konnektivitätstest verwendet. | AI Data Engine | Beide 
+
+
+| `\https://support.compliance.api.bluexp.netapp.com` | Streaming von Protokollen und Metriken | AI Data Engine | Beide 
+
+
+| `\https://login.microsoftonline.com` | Nur erforderlich, wenn Sie den verwalteten KI-Zugriff (MCP) verwenden. Ermittlung des Microsoft Entra ID-Mandanten und Abruf des Signaturschlüssels. | AI Data Engine | Beide 
+
+
+| `\https://d13jb5dapseb36.cloudfront.net` | CloudFront CDN für Installationsskripte | Installationsprogramm | Beide 
+
+
+| `\https://get.helm.sh` | Helm Download | Installationsprogramm | Beide 
+
+
+| `\https://dl.k8s.io` | kubectl-Download | Installationsprogramm | Beide 
+
+
+| `\https://github.com` | jq-Download und Download der k3s-Binärdatei bei Einzelknoten-Deployments | Installationsprogramm | Beide 
+
+
+| `\https://release-assets.githubusercontent.com` | GitHub Download-Weiterleitungen | Installationsprogramm | Beide 
+
+
+| `\https://get.k3s.io` | Download der k3s Laufzeitumgebung | Installationsprogramm | Nur ein einzelner Knoten 
+
+
+| `\https://rpm.rancher.io` | Das k3s SELinux-Richtlinienpaket (`k3s-selinux`) wird unter RHEL, Rocky Linux oder AlmaLinux 8 bzw. 9 installiert, sofern SELinux-Dateien auf dem Host vorhanden sind, selbst wenn SELinux deaktiviert ist. Das Installationsprogramm verwendet die Kopie aus Ihrem Repository, sofern eine solche vorhanden ist. | Installationsprogramm | Nur Einzelknoten (RHEL-Familie) 
+
+
+| `\https://auth.docker.io` | Docker Hub Authentifizierung für k3s Systemabbilder | Container-Laufzeit | Nur ein einzelner Knoten 
+
+
+| `\https://registry-1.docker.io` | Docker Hub Registry für k3s Systemabbilder | Container-Laufzeit | Nur ein einzelner Knoten 
+
+
+| `\https://production.cloudfront.docker.com` | Docker Hub Image Layer Storage für k3s Systemabbilder | Container-Laufzeit | Nur ein einzelner Knoten 
 |===
-AI Data Engine nutzt außerdem NetApp Console für die zentrale Authentifizierung und Konsolendienste. Angaben zu den für die Console und Console Agent Konnektivität erforderlichen Endpunkten enthält link:https://docs.netapp.com/us-en/console-setup-admin/reference-networking-saas-console.html["Anforderungen an den Netzwerkzugriff für NetApp Console"^].
+Die Endpunkte in dieser Tabelle sind die gleichen, egal ob Sie sich direkt mit dem Internet verbinden oder über einen Proxy.
+
+Bei Verwendung eines Proxys muss jeder Endpunkt für HTTPS (`CONNECT`) auf Port 443 mit den exakt aufgeführten Hostnamen, ohne Wildcards oder einen führenden Punkt, zugelassen werden.
+
+Die Zulassung von  `d13jb5dapseb36.cloudfront.net`, das den Download des Installationsprogramms hostet, erfolgt anhand des Hostnamens. Seine IP-Adressen werden mit anderen Websites gemeinsam genutzt und ändern sich häufig, sodass eine auf IP-Adressen basierende Regel nicht mehr funktioniert.
+
+Bei Deployments mit mehreren Knoten stellen die Clusterknoten die Verbindungen zur Container Runtime her. Wenn der Installationsbefehl für mehrere Knoten in der NetApp Console einen anderen `--registry`Wert angibt, gilt dieser Registry-Hostname anstelle der in der Tabelle aufgeführten Registry-Hostnamen.
+
+Informationen hierzu finden Sie unter link:configure-proxy.html["Informationen zu Proxys für AI Data Engine"]. Informationen zum Einsatz mit einem Proxy finden Sie unter link:deploy-aide-single-node-proxy.html["Einsetzen von AI Data Engine als Einzelknoten Deployment mit einem Proxy"] oder link:deploy-aide-multi-node-proxy.html["Einsatz von AI Data Engine als Multi-Node Deployment mit einem Proxy"].
+
+
+NOTE: Zu prüfen ist, ob Ihre Paketmanager über die in Ihrer Umgebung gegebenenfalls erforderliche Proxy-Konfiguration verfügen.
+
+AI Data Engine nutzt außerdem NetApp Console für zentrale Authentifizierung und Console Services. Endpunkte wie  `\https://api.bluexp.netapp.com` und  `\https://netapp-cloud-account.auth0.com` sind im link:https://docs.netapp.com/us-en/console-setup-admin/reference-networking-saas-console.html#endpoints-contacted-by-netapp-console-and-console-agents["Anforderungen an den Netzwerkzugriff für NetApp Console"^] aufgeführt.
 
 Vergewissern Sie sich vor Beginn der Bereitstellung, dass die DNS-Auflösung für diese Endpunkte vom AI Data Engine Host aus funktioniert.
 
 
 
-[[aide-lite-requirements]]
-== AIDE Lite Anforderungen
+[[supported-kubernetes-versions]]
+[[supported-kubernetes]]
+== Unterstützte Kubernetes Versionen
+
+AI Data Engine unterstützt nur die in dieser Tabelle aufgeführten Distributionen und Versionen.
+
+[cols="1,1,1,2"]
+|===
+| Bereitstellung | Kubernetes Distribution | Unterstützte Version | Bereitgestellt von 
+
+
+| AIDE Einzelknoten | k3s | v1.35 | Das Installationsprogramm provisioniert k3s automatisch. Es ist kein Eingreifen erforderlich. 
+
+
+| AIDE Multi-Node | RKE2 | v1.34 bis v1.36 (v1.36.x empfohlen) | Sie stellen den Cluster bereit, der gemeinsam genutzt oder dediziert sein kann. 
+
+
+| AIDE Multi-Node | OpenShift | OpenShift 4.22.16 (Kubernetes v1.35.8) | Sie stellen den Cluster bereit, der gemeinsam genutzt oder dediziert sein kann. 
+
+
+| AIDE Multi-Node | Azure Kubernetes Service (AKS) | v1.34 bis v1.36 | Sie stellen den Cluster bereit, der gemeinsam genutzt oder dediziert sein kann. 
+|===
+
+
+[[aide-single-node-deployment-requirements]]
+== Anforderungen für das AIDE Einzelknoten-Deployment
+
+Sie stellen eine Linux-VM bereit, und AI Data Engine provisioniert alles Weitere automatisch, einschließlich k3s. Kubernetes muss weder eingerichtet noch gemanagt werden. Informationen zur Hostvorbereitung, zum Speicherplatz und zu den Firewall-Anforderungen finden Sie in link:single-node-prerequisites.html["Voraussetzungen für das AIDE Single-Node Deployment"].
 
 
 
 [[vm-sizing]]
-[[lite-vm-sizes]]
+[[single-node-vm-sizes]]
 === VM Dimensionierung
 
-Diese Größenangaben sind empfohlene Basiskonfigurationen, die für ein anfängliches Scan-Fenster von drei bis vier Tagen optimiert sind, keine festen Grenzwerte. Informationen dazu, wodurch diese Werte bestimmt werden und wie eine Skalierung darüber hinaus erfolgt, enthält <<flexible-sizing-lite,Richtlinien für flexible Größenanpassung>>.
+Diese Größenangaben sind empfohlene Basiskonfigurationen, die für ein anfängliches Scan-Fenster von drei bis vier Tagen optimiert sind, keine festen Grenzwerte. Informationen dazu, wodurch diese Werte bestimmt werden und wie eine Skalierung darüber hinaus erfolgt, enthält <<flexible-sizing-single-node,Richtlinien für flexible Größenanpassung>>.
 
 [cols="1,1,1,1,1,1,1,1"]
 |===
@@ -144,12 +240,15 @@ Diese Größenangaben sind empfohlene Basiskonfigurationen, die für ein anfäng
 NOTE: Für alle Bereitstellungsgrößen wird NVMe SSD oder anderer Solid-State-Speicher empfohlen. Die Festplattenwerte in dieser Tabelle beziehen sich ausschließlich auf den Speicher des AIDE Datenvolumens. Wenn das Betriebssystem, die k3s Laufzeitumgebung und die AIDE Daten eine einzelne Festplatte gemeinsam nutzen, sind zum Festplattenwert für die gewählte Größe etwa 65 GB hinzuzurechnen. Beispielsweise erfordert eine Small Bereitstellung auf einer einzelnen Festplatte insgesamt etwa 565 GB.
 
 
+NOTE: In einem Single-Node-Deployment kommt für das AIDE Datenvolume Block Storage statt NFS zum Einsatz. NFS-basierter Storage kann zu verminderter Performance führen.
+
+
 
 [[flexible-sizing-guidelines]]
-[[flexible-sizing-lite]]
+[[flexible-sizing-single-node]]
 === Richtlinien für flexible Größenanpassung
 
-<<lite-vm-sizes,Kleine, mittlere und große Konfigurationen>> Es handelt sich um empfohlene Ausgangswerte für ein erstes Scan-Fenster von drei bis vier Tagen, nicht um feste Grenzwerte, die von der Software vorgegeben werden.
+<<single-node-vm-sizes,Kleine, mittlere und große Konfigurationen>> Es handelt sich um empfohlene Ausgangswerte für ein erstes Scan-Fenster von drei bis vier Tagen, nicht um feste Grenzwerte, die von der Software vorgegeben werden.
 
 Wodurch werden die Größenempfehlungen bestimmt?::
 +
@@ -161,29 +260,25 @@ Wodurch werden die Größenempfehlungen bestimmt?::
 
 
 --
-Was passiert, wenn zu klein dimensioniert wird?::
+Was passiert, wenn die bereitgestellte Größe zu klein bemessen ist oder nicht mehr ausreicht::
 +
 --
-Eine Bereitstellung unterhalb der empfohlenen Größe verhindert weder die Installation noch führt sie zu Serviceausfällen. Das System bleibt betriebsbereit und der Scanvorgang wird fortgesetzt, jedoch können Sie mit Folgendem rechnen:
+Jede Konfiguration ist auf eine bestimmte Dateianzahl und Scanrate optimiert. Wenn Ihre Umgebung die von der Konfiguration unterstützten Werte überschreitet, können Sie Folgendes erwarten:
 
 * *Verlängerte anfängliche Katalogisierungsdauer*: Durch die reduzierte Rechenleistung sinkt die Anzahl der täglich gescannten Objekte. Beispielsweise kann eine Bereitstellung, die auf 3 Milliarden Objekte ausgelegt ist, aber in kleinerer Größe bereitgestellt wird, deutlich länger als die angestrebten drei bis vier Tage dauern.
 * *Verringerter kontinuierlicher Durchsatz bei der Datenerfassung*: Neue Dateiereignisse und inkrementelle Scan-Aktualisierungen werden unter kontinuierlicher Last langsamer verarbeitet.
-* *Risiko der Speicherkapazität*: Zu geringe Speicherkapazität im Verhältnis zur Gesamtanzahl der Objekte kann dazu führen, dass der Metadatenindex an seine Kapazitätsgrenzen stößt. Dies lässt sich in der Regel durch eine Erweiterung der Speicherkapazität beheben, ohne dass eine vollständige Neuimplementierung erforderlich ist.
+* *Scanvorgang blockiert*: AI Data Engine Komponenten sind für die Größe konfiguriert, die Sie einsetzen. Wenn die Umgebung diese Größe deutlich überschreitet, kann der Scanvorgang blockieren, anstatt sich nur zu verlangsamen. Informationen zur Überprüfung auf problematische Workloads und Ressourcenengpässe finden Sie unter link:../administer/monitor-deployment-health.html["Deployment Systemstatus überwachen und Probleme untersuchen"].
+* *Risiko der Speicherkapazität*: Zu geringer Storage im Verhältnis zur Gesamtanzahl der Objekte kann dazu führen, dass der Metadatenindex an seine Kapazitätsgrenzen stößt. Für die Planung einer Storage-Erweiterung können Sie NetApp Support kontaktieren.
 
 
 --
-Skalierung bei zusätzlichem Kapazitätsbedarf::
+Skalierung über die empfohlene Größe hinaus::
 +
 --
-AIDE Lite läuft auf einer einzelnen VM, daher ist die Skalierung vertikal:
-
-* Die Erhöhung von vCPU, Arbeitsspeicher oder Speicherplatz auf der Host-VM ist möglich.
-* Eine Neukonfiguration oder Neuinstallation des Clusters ist nicht erforderlich.
-+
-
-NOTE: AIDE Lite unterstützt keine Hochverfügbarkeit oder horizontale horizontale Skalierung. Wenn Ihre Umgebung regelmäßig mehr als 3 Milliarden Dateien umfasst oder Sie Hochverfügbarkeit und Fehlertoleranz benötigen, sollten Sie stattdessen link:deploy-enterprise.html["AIDE Enterprise"] einsetzen.
+AI Data Engine Komponenten sind für die Größe konfiguriert, die Sie einsetzen, sodass das Hinzufügen von vCPU, Arbeitsspeicher oder Storage zur Host-VM die Kapazität nicht automatisch erhöht. Wenn die Anzahl der Dateien oder die benötigte Performance die Größe überschreitet, die Sie eingesetzt haben, ist eine Kontaktaufnahme mit NetApp Support erforderlich, um die Dimensionierung anzupassen.
 
 
+NOTE: Ein Single-Node Deployment unterstützt weder Hochverfügbarkeit noch horizontales Scale-out. Wenn Ihre Umgebung regelmäßig mehr als 3 Milliarden Dateien umfasst oder Sie Hochverfügbarkeit und Fehlertoleranz benötigen, empfiehlt sich stattdessen ein link:deploy-aide-multi-node.html["AIDE Multi-Node Deployment"].
 
 --
 
@@ -205,41 +300,45 @@ NOTE: AIDE Lite unterstützt keine Hochverfügbarkeit oder horizontale horizonta
 |===
 
 
-[[additional-prerequisites]]
-=== Zusätzliche Voraussetzungen
+[[aide-multi-node-deployment-requirements]]
+== Anforderungen für das AIDE Multi-Node Deployment
 
-* Sie benötigen Root- oder Sudo-Zugriff auf die Ziel-VM, um das Installationsprogramm auszuführen.
-* Eine Netzwerkverbindung mit mindestens 1 GbE (10 GbE für große Bereitstellungen).
-* Auf dem Zielrechner müssen bash 4.0 oder höher, curl und tar verfügbar sein.
-* Das Installationsprogramm lädt automatisch `k3s`, `helm`, `kubectl` und `jq` herunter und initialisiert sie. Eine Vorinstallation dieser Tools auf der Ziel-VM ist nicht erforderlich.
-* Die Ports 6443 (TCP), 10250 (TCP) und 8472 (UDP) müssen auf dem Host frei sein, bevor das Installationsprogramm startet. Wenn eine Host-Firewall (`firewalld` unter RHEL oder  `ufw` unter Ubuntu) aktiv ist, müssen diese Ports sowie die k3s Pod CIDR (`10.44.0.0/16`) und die Service CIDR (`10.45.0.0/16`) vor dem Ausführen des Installationsprogramms freigegeben werden. Die Dokumentation Ihrer Betriebssystem-Firewall enthält die erforderlichen Befehle.
-* Auf RHEL Systemen mit SELinux im Erzwingungsmodus konfiguriert das Installationsprogramm die erforderlichen SELinux-Richtlinienpakete automatisch. Eine manuelle SELinux Konfiguration ist nicht erforderlich.
+Sie bringen Ihren eigenen Kubernetes-Cluster mit, der mit anderen Workloads gemeinsam genutzt oder für AI Data Engine dediziert sein kann. Das Installationsprogramm setzt AI Data Engine auf Ihrem bestehenden Kubernetes-Cluster ein und provisioniert oder managt ihn nicht. Die Anforderungen an Cluster, Storage und Installer-Host finden Sie unter link:multi-node-prerequisites.html["Voraussetzungen für das AIDE Multi-Node Deployment"].
+
+
+NOTE: Für alle Multi-Node-Deployments wird NVMe- oder Hochleistungs-SSD-Storage empfohlen.
 
 
 
+[[linux-kernel-and-nfs-nconnect-support]]
+[[multi-node-requirements]]
+=== Unterstützung für Linux Kernel und NFS nconnect
 
-[[aide-enterprise-requirements]]
-== AIDE Enterprise Anforderungen
+Für die `nconnect` NFS Mount-Option wird Linux Kernel 5.3 oder höher empfohlen, da diese den für das gemeinsam genutzte AIDE Konfigurationsvolume erforderlichen Durchsatz bietet. Die folgenden Distributionsversionen unterstützen `nconnect` und erfüllen die Kernel-Empfehlung; RHEL und CentOS 8.3 verwenden einen Red Hat Kernel-Backport.
 
-* Sie verfügen über kubectl-Zugriff mit cluster-admin-Berechtigungen auf dem Rechner, von dem aus Sie das Installationsprogramm ausführen.
-* Sie verfügen über Sudo-Berechtigungen (oder Root-Berechtigungen) auf dem Rechner, von dem aus Sie den Installationsbefehl ausführen.
-* Auf dem Zielcluster ist RKE2 v1.34 oder höher (v1.36.x empfohlen) installiert.
-* Der Installationshost lädt automatisch `helm`, `kubectl` und `jq` über `--tools-dir` herunter und führt das Bootstrap aus. Eine Vorinstallation dieser Tools auf dem Verwaltungsrechner ist nicht erforderlich.
-* Eine konfigurierte StorageClass (Standardname `aide-sc`) ist auf dem Cluster verfügbar und wird für die zustandsbehafteten Backing-Services von AIDE verwendet.
-* Ein NFS-Server mit mindestens einem exportierten Pfad ist verfügbar und wird für das AIDE Konfigurationsdaten-Volume und gemeinsam genutzte Index-Snapshots verwendet.
-* Auf dem Cluster existiert bereits ein Ziel-Kubernetes-Namespace (default `aide`); der Installer erstellt ihn nicht.
+[cols="2,1,2"]
+|===
+| Verteilung | Kernelversion | `nconnect` Unterstützung 
 
 
+| RHEL/CentOS 8.3+ | 4.18 (Backport) | Ja 
 
-NOTE: Für alle Enterprise Knotenbereitstellungen wird NVMe- oder Hochleistungs-SSD-Speicher empfohlen.
 
+| RHEL / CentOS 9.x | 5,14 | Ja 
+
+
+| Ubuntu 20.04 | 5,4 | Ja 
+
+
+| Ubuntu 22.04 | 5,15 | Ja 
+|===
 
 
 [[node-sizing]]
-[[enterprise-vm-sizes]]
+[[multi-node-sizes]]
 === Node-Größe
 
-Diese Größenangaben stellen empfohlene Basiskonfigurationen für Cluster dar, die für ein anfängliches Scan-Fenster von etwa drei Tagen optimiert sind, und sind keine festen Kapazitätsgrenzen. AIDE Enterprise unterstützt Umgebungen mit mehr als 6 Milliarden Dateien durch horizontale Skalierung. Einzelheiten enthält <<flexible-sizing-enterprise,Richtlinien für flexible Größenanpassung>>.
+Diese Größenangaben stellen empfohlene Basiskonfigurationen für Cluster dar, optimiert für ein anfängliches Scan-Fenster von drei bis vier Tagen, und sind keine festen Kapazitätsgrenzen. Umgebungen mit mehr als 6 Milliarden Dateien erfordern eine benutzerdefinierte Dimensionierung mit NetApp. Details sind in <<flexible-sizing-multi-node,Richtlinien für flexible Größenanpassung>> zu finden.
 
 [cols="1,1,1,1,1,1,1,1,1"]
 |===
@@ -257,56 +356,121 @@ Diese Größenangaben stellen empfohlene Basiskonfigurationen für Cluster dar, 
 
 
 [[flexible-sizing-guidelines]]
-[[flexible-sizing-enterprise]]
+[[flexible-sizing-multi-node]]
 === Richtlinien für flexible Größenanpassung
 
-<<enterprise-vm-sizes,Kleine, mittlere und große Konfigurationen>>Es handelt sich um empfohlene Basiskonfigurationen für den Cluster für ein anfängliches Scan-Fenster von etwa drei Tagen, nicht um von der Software erzwungene feste Kapazitätsgrenzen. AIDE Enterprise unterstützt Umgebungen mit mehr als 3 Milliarden Dateien durch horizontale Skalierung über Clusterknoten hinweg.
+<<multi-node-sizes,Kleine, mittlere und große Konfigurationen>> Es handelt sich um empfohlene Basiskonfigurationen für Cluster für ein anfängliches Scan-Fenster von drei bis vier Tagen, nicht um feste Kapazitätsgrenzen, die von der Software erzwungen werden. Umgebungen mit mehr als 6 Milliarden Dateien erfordern eine benutzerdefinierte Dimensionierung mit NetApp.
 
 Wodurch werden die Größenempfehlungen bestimmt?::
 +
 --
 * *Gesamtanzahl von Dateien und Verzeichnissen*: Die Gesamtanzahl der Objekte ist der Hauptfaktor für den Speicher- und Rechenbedarf. Größere Umgebungen benötigen zusätzliche Clusterknoten, um die Verarbeitungslast zu verteilen und die Leistung aufrechtzuerhalten.
-* *Hochverfügbare Replikation*: In Unternehmensumgebungen ist Datenreplizierung standardmäßig über mehrere Knoten hinweg aktiviert, um Fehlertoleranz zu gewährleisten. Die Replikation erhöht den gesamten Speicher- und Arbeitsspeicherbedarf im Vergleich zu einer gleichwertigen Einzelknotenbereitstellung.
+* *Hochverfügbarkeitsreplikation*: Multi-Node-Deployments ermöglichen standardmäßig die Datenreplizierung über mehrere Knoten hinweg, um Fehlertoleranz zu gewährleisten. Die Replikation erhöht den gesamten Storage- und Arbeitsspeicherbedarf im Vergleich zu einem entsprechenden Einzelknoten-Deployment.
 * *Knotenanzahl und Lastverteilung*: Verarbeitungsdurchsatz und Gesamtkapazität des Katalogs skalieren mit der Anzahl der Knoten im Cluster. Zusätzliche Knoten verteilen sowohl die Indizierungs-Workload als auch die Speicherkapazität im Cluster.
 * *Erforderlicher Scan-Durchsatz*: Die clusterweite Zuweisung von CPU und Speicher bestimmt die tägliche Scanrate und wie schnell die anfängliche Katalogisierung abgeschlossen ist.
 * *Speicherleistung pro Knoten*: Hochleistungsspeicher auf jedem Knoten wird dringend empfohlen, und die Gesamtkapazität des Clusters skaliert proportional mit der Anzahl der Knoten.
 
 
 --
-Was passiert, wenn zu klein dimensioniert wird?::
+Was passiert, wenn die bereitgestellte Größe zu klein bemessen ist oder nicht mehr ausreicht::
 +
 --
-Eine Unterschreitung der empfohlenen Dimensionierung verhindert weder die Installation noch führt sie zu schwerwiegenden Ausfällen. Zu den praktischen Auswirkungen gehören:
+Jede Konfiguration ist auf eine bestimmte Dateianzahl und Scanrate optimiert. Wenn Ihre Umgebung die von der Konfiguration unterstützten Werte überschreitet, können Sie Folgendes erwarten:
 
 * *Verlängerte anfängliche Katalogisierungsdauer*: Weniger Knoten oder reduzierte Ressourcen pro Knoten verringern den Durchsatz und verlängern das anfängliche Katalogisierungsfenster proportional.
-* *Erhöhte Verarbeitungslatenz unter Spitzenlast*: Unzureichender Arbeitsspeicher im Cluster kann während Phasen mit hohem Datenaufkommen zu erhöhter Verarbeitungslatenz führen. Laufende Operationen werden nicht unterbrochen, der kontinuierliche Durchsatz ist jedoch reduziert.
-* *Speicherkapazitätsrisiko*: Unzureichender Clusterspeicher für die Zielanzahl von Objekten kann den Metadatenindex an seine Kapazitätsgrenzen bringen. Dies lässt sich durch die Erweiterung des Speichers auf vorhandenen Knoten (unterbrechungsfrei) oder durch das Hinzufügen eines dedizierten Speicherknotens beheben.
+* *Erhöhte Verarbeitungslatenz unter Spitzenlast*: Unzureichender Arbeitsspeicher im Cluster kann während Phasen mit hohem Datenaufkommen zu erhöhter Verarbeitungslatenz führen.
+* *Scanvorgang blockiert*: AI Data Engine Komponenten sind für die Größe konfiguriert, die Sie einsetzen. Wenn die Umgebung diese Größe deutlich überschreitet, kann der Scanvorgang blockieren, anstatt sich nur zu verlangsamen. Informationen zur Überprüfung auf problematische Workloads und Ressourcenengpässe finden Sie unter link:../administer/monitor-deployment-health.html["Deployment Systemstatus überwachen und Probleme untersuchen"].
+* *Risiko der Storage-Kapazität*: Unzureichender Cluster Storage für die Zielobjektanzahl kann den Metadatenindex an Kapazitätsschwellen heranführen. Für die Planung einer Storage-Erweiterung können Sie den NetApp Support kontaktieren.
 
 
 --
-Skalierung bei zusätzlichem Kapazitätsbedarf::
+Skalierung über die empfohlene Größe hinaus::
 +
 --
-AIDE Enterprise unterstützt horizontale Skalierung ohne erneute Bereitstellung:
-
-* Durch das Hinzufügen von Worker-Knoten erhöhen sich die für die Scanverarbeitung und Ereigniserfassung verfügbare CPU und der Arbeitsspeicher.
-* Durch das Hinzufügen dedizierter Speicherknoten lässt sich die Gesamtkapazität des Katalogs erhöhen. Dies ist die wichtigste Methode, um Umgebungen über die größte vordefinierte Bereitstellungsgröße hinaus zu skalieren.
-* Der Cluster lässt sich durch Hinzufügen weiterer Knoten auf über 6 Milliarden Dateien skalieren. Ihr NetApp Ansprechpartner kann Sie bei der Dimensionierung der Knoten für benutzerdefinierte Skalierungen unterstützen.
-+
-
-NOTE: Das Hinzufügen von Knoten zu einem bestehenden Enterprise Cluster unterbricht laufende Scanvorgänge nicht. Die Änderung sollte jedoch während eines Zeitfensters mit geringer Aktivität koordiniert werden.
+Die horizontale Skalierung eines bestehenden Multi-Node-Clusters wird nicht unterstützt. Das Hinzufügen von Worker-Knoten oder dedizierten Storage Nodes erhöht die Scan-Verarbeitung, die Ereigniserfassung oder die Katalogkapazität nicht automatisch. Wenn Ihre Umgebung die Größe überschreitet, die Sie eingesetzt haben, oder wenn Sie mehr Kapazität für die Scan-Verarbeitung oder Ereigniserfassung benötigen, ist zur Planung der Änderung eine Abstimmung mit NetApp Support oder Ihrem NetApp Ansprechpartner erforderlich.
 
 
+NOTE: Für Skalierungen über sechs Milliarden Dateien hinaus erhalten Sie von Ihrem NetApp Ansprechpartner Hinweise zur Knotendimensionierung und zu kundenspezifischer Skalierung.
 
 --
 
+
+
+
+[[kerberos-and-active-directory-requirements]]
+[[kerberos-ad-requirements]]
+== Anforderungen für Kerberos und Active Directory
+
+Diese Anforderungen sind vor dem Scannen von SMB/CIFS-Freigaben mit Kerberos-Authentifizierung und vor der Zuordnung von NFS-Benutzer- und Gruppen-IDs zu Active Directory-Namen zu berücksichtigen. Die Anforderungen an Zeitsynchronisierung, DNS und Hostpakete gelten nur für Kerberos. AIDE ist ein Kerberos-Client: Es authentifiziert sich bei Ihrem bestehenden Kerberos key distribution center (KDC) und fungiert nicht als Kerberos-Server.
+
+
+
+[[time-synchronization]]
+=== Zeitsynchronisation
+
+Die Kerberos Authentifizierung schlägt fehl, wenn die Uhren der AIDE Knoten und des KDC um mehr als die zulässige Zeitabweichung voneinander abweichen. Active Directory erlaubt standardmäßig eine maximale Abweichung von fünf Minuten.
+
+Folgendes ist zu überprüfen:
+
+* Das Network Time Protocol (NTP) ist auf allen AIDE Knoten aktiv.
+* Die AIDE Knoten verwenden eine Zeitquelle, die mit Ihren Domänencontrollern synchronisiert ist.
+
+
+
+
+[[dns]]
+=== DNS
+
+Die folgenden DNS-Anforderungen müssen erfüllt sein:
+
+* Jeder AIDE Knoten kann den Dateiserver und den KDC über den vollqualifizierten Domainnamen (FQDN) auflösen.
+* Wenn Sie die Knoten so konfigurieren, dass sie Ihren Active Directory-DNS-Server verwenden, muss dieser Server auch externe Namen auflösen. Andernfalls kann AIDE die in <<outbound-internet-access,Ausgehender Internetzugang>> aufgeführten Endpunkte nicht erreichen.
+* Wenn Sie die DNS-Einstellungen in einem Multi-Node Deployment ändern, sollte Ihr Active Directory-DNS-Server auf jedem Knoten als einziger Nameserver konfiguriert sein. Die Namensauflösung im Cluster wählt zufällig einen der aufgeführten Nameserver aus, sodass ein Nameserver, der Active Directory-Namen nicht auflösen kann, zu zeitweiligen Ausfällen führt.
+
+
+Informationen zum Ändern der DNS-Einstellungen finden Sie unter „Namensauflösung korrigieren“ in link:../administer/configure-kerberos-smb-single-node.html#fix-name-resolution["Konfigurieren von Kerberos für SMB/CIFS-Freigaben auf einem Einzelknoten Deployment"] oder link:../administer/configure-kerberos-smb-multi-node.html#fix-name-resolution["Konfiguration von Kerberos für SMB/CIFS-Freigaben in einem Multi-Node Deployment"].
+
+
+
+[[host-packages]]
+=== Host-Pakete
+
+[cols="1,3"]
+|===
+| Bereitstellung | Erforderliche Pakete 
+
+
+| Einzelknoten | Kerberos-Client-Tools: `krb5-user` unter Ubuntu oder `krb5-workstation` unter RHEL. Das Installationsprogramm installiert automatisch `cifs-utils` zur Unterstützung des Kerberos-authentifizierten SMB-Zugriffs. 
+
+
+| Multi-Node | `cifs-utils` auf jedem Knoten sowie Kerberos-Client-Tools und ein NFS-Client auf dem Host, auf dem Sie das Keytab erstellen und testen. 
+|===
+ `cifs-utils` ist auf jedem AIDE Knoten nur für Kerberos-basiertes SMB/CIFS-Scanning erforderlich. Der Single-Node Installer installiert es. In einem Multi-Node Deployment erfolgt die Installation auf jedem Knoten. Das Kerberos-Scanning einer SMB/CIFS-Freigabe schlägt fehl, wenn `cifs-utils` auf einem Knoten fehlt.
+
+
+
+[[active-directory-attributes-for-nfs]]
+=== Active Directory Attribute für NFS
+
+Um NFS-Benutzer- und Gruppen-IDs in Active Directory-Namen aufzulösen, müssen die  `uidNumber` und  `gidNumber` Attribute ausgefüllt und in den Global Catalog repliziert werden, falls AIDE diesen abfragt. Weitere Informationen finden Sie unter link:../administer/configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"].
+
+
+
+[[active-version-and-support-contact]]
+== Aktive Version und Support-Kontakt
+
+Die aktive Version von AI Data Engine sowie die Kontaktinformationen des NetApp Supports finden Sie unter *Configuration* > *About AIDE*.
 
 
 
 [[related-information]]
 == Verwandte Informationen
 
+* link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"]
+* link:../administer/configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"]
 * link:deployment-overview.html["AIDE Bereitstellungsübersicht"]
-* link:deploy-aide-lite.html["AI Data Engine Lite bereitstellen"]
-* link:deploy-enterprise.html["AI Data Engine – Enterprise"]
+* link:single-node-prerequisites.html["Voraussetzungen für das AIDE Single-Node Deployment"]
+* link:multi-node-prerequisites.html["Voraussetzungen für das AIDE Multi-Node Deployment"]
+* link:deploy-aide-single-node.html["Bereitstellung von AI Data Engine als Single-Node-Deployment"]
+* link:deploy-aide-multi-node.html["Bereitstellung von AI Data Engine als Multi-Node Deployment"]
 

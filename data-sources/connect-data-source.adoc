@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: data-sources/connect-data-source.html 
-keywords: connect, data source, storage system, scanned systems, configuration, scan, NFS, CIFS, StorageGRID, database, file shares, console agent, scope, content intelligence, activate 
-summary: Speichersysteme werden mit AI Data Engine verbunden, indem der Assistent für das Onboarding der Datenquelle abgeschlossen und anschließend das Scannen aktiviert wird, um mit der Metadatenerfassung zu beginnen. 
+keywords: connect, data source, storage system, add system, scan, NFS, CIFS, SMB, StorageGRID, database, file shares, console agent, scope, activate, Kerberos 
+summary: Verbindung von Datenquellen mit AI Data Engine sowie Konfiguration der zu scannenden Datenressourcen. 
 ---
 = Verbinden einer Datenquelle mit AI Data Engine
 :allow-uri-read: 
@@ -11,70 +11,137 @@ summary: Speichersysteme werden mit AI Data Engine verbunden, indem der Assisten
 
 
 [role="lead"]
-AI Data Engine scannt Ihre Speichersysteme, um Metadaten zu erfassen und zu analysieren. Zum Hinzufügen einer Datenquelle ist der Onboarding-Assistent auszufüllen. Der Assistent erfasst Verbindungsdetails, den Scanbereich und die Einstellungen für Ihren Quelltyp. Nach dem Hinzufügen des Systems ist der Scan zu aktivieren, damit die Erfassung der Metadaten beginnt.
+Die Datenquellen, die AI Data Engine (AIDE) analysieren soll, werden verbunden, und es wird ausgewählt, welche ihrer Datenressourcen gescannt werden sollen. AI Data Engine scannt verbundene Datenquellen, um Metadaten zu erfassen, und das Verbindungsverfahren hängt vom Quelltyp ab.
 
-.Bevor Sie beginnen
-* Sie benötigen Administratorrechte für AI Data Engine, um Datenquellen in AI Data Engine zu verbinden und zu konfigurieren.
-* Speichersysteme werden in der NetApp Console mit einem Console Agent erkannt, bevor sie zu AI Data Engine hinzugefügt werden. Dies gilt für alle unterstützten Speichertypen, einschließlich lokaler ONTAP Cluster, Cloud Volumes ONTAP, Amazon FSx for NetApp ONTAP, Google Cloud NetApp Volumes und Azure NetApp Files. Zu lokalen ONTAP Clustern siehe link:https://docs.netapp.com/us-en/storage-management-ontap-onprem/task-discovering-ontap.html["Lokale ONTAP Cluster entdecken"] in der NetApp Console Dokumentation. Die direkte Erkennung aktiviert keine Datendienste wie AI Data Engine.
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie müssen über _AI Data Engine Administrator_-Berechtigungen verfügen, um Datenquellen zu verbinden und zu konfigurieren.
+* Für Systeme, die über die NetApp Console Erkennung verbunden sind, ist vor dem Hinzufügen zu AI Data Engine die Erkennung der Speichersysteme in NetApp Console durch einen Console Agent erforderlich. Dies gilt für alle unterstützten Storage Typen, einschließlich lokaler ONTAP Cluster, Cloud Volumes ONTAP, Amazon FSx for NetApp ONTAP, Google Cloud NetApp Volumes und Azure NetApp Files. Für lokale ONTAP Cluster finden Sie unter link:https://docs.netapp.com/us-en/storage-management-ontap-onprem/task-discovering-ontap.html["Lokale ONTAP Cluster entdecken"] in der NetApp Console Dokumentation weitere Informationen. Die direkte Erkennung aktiviert keine Datenservices wie AI Data Engine.
 * Vergewissern Sie sich, dass die Netzwerkverbindungen geöffnet sind, die AI Data Engine für den Zugriff auf Ihre Datenquellen benötigt. Weitere Informationen finden Sie unter link:../deploy/aide-requirements.html["AI Data Engine Anforderungen"].
+* Zum Scannen von SMB/CIFS-Freigaben mit Kerberos-Authentifizierung ist zunächst das Verfahren für Ihren Deployment-Typ in link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"] durchzuführen.
 
 
 
 
 [[add-a-data-source]]
+[[add-data-source]]
 == Hinzufügen einer Datenquelle
 
-.Schritte
-. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
-. Auf der Registerkarte *Gescannte Systeme* ist *System hinzufügen* auszuwählen.
-. Wählen Sie einen Quelltyp aus:
-+
-[cols="1,2"]
-|===
-| Quellentyp | Beschreibung 
-
-
-| *Dateifreigabegruppe* | NFS- oder SMB/CIFS-Dateifreigaben aus der Cloud oder On-Premises können als benannte Gruppe hinzugefügt werden. 
-
-
-| *Datenbank* | Hinzufügen eines Datenbankservers zum Scannen ausgewählter Schemas. 
-
-
-| *StorageGRID* | Daten von NetApp StorageGRID mit dem S3-Protokoll scannen. 
-|===
-. Geben Sie die Verbindungsdetails für Ihren Quelltyp ein:
-+
-[cols="1,3"]
-|===
-| Quellentyp | Erforderliche Angaben 
-
-
-| *Dateifreigabegruppe* | Ein Name für die Freigabegruppe, dann die Details zu Freigabehost und -pfad. 
-
-
-| *Datenbank* | Datenbanktyp, Host, Port und Authentifizierungsdaten. 
-
-
-| *StorageGRID* | Systemname, S3 Endpunkt-URL sowie S3 Zugriffsschlüssel und geheimer Schlüssel. 
-|===
-. Überprüfen Sie Ihre Auswahl und wählen Sie *Confirm* aus, um die Datenquelle hinzuzufügen.
+Sie können Ihre Daten in AI Data Engine einbringen, damit Sie sie analysieren können. Auf der Seite *Data sources* können Sie mit *Add system* eine Dateifreigabegruppe, einen Datenbankserver oder ein StorageGRID System verbinden. Nach dem Hinzufügen der Datenquelle konfigurieren Sie das Scannen, um anzugeben, welche ihrer Ressourcen AI Data Engine scannt, um Metadaten zu erfassen. Siehe <<configure-scanning>>.
 
 
 
+[[add-a-file-shares-group]]
+[[add-file-shares-group]]
+=== Dateifreigabegruppe hinzufügen
 
-[[activate-scanning]]
-== Scannen aktivieren
+NFS- oder SMB-Freigaben können in AI Data Engine als ein benanntes System integriert werden, damit sie sich gemeinsam managen lassen. Anschließend können die Gruppe erstellt, die Freigaben hinzugefügt und die zu scannenden Freigaben konfiguriert werden.
 
-Nach der Konfiguration einer Datenquelle startet der Scanvorgang nicht automatisch. Der Scan muss für jedes System einzeln aktiviert werden.
+[[add-file-shares-group-prerequisites]]
+.Bevor Sie beginnen
+* Für die Gruppe ist ein Name festzulegen; für jede Freigabe sind Host und Pfad anzugeben.
+* Zu überprüfen ist, ob das AI Data Engine Deployment die Freigabeserver erreichen kann.
+* Bei NFS ist eine Konfiguration der Exportzugriffsrechte erforderlich, die AI Data Engine benötigt.
+* Für SMB sind das Authentifizierungsverfahren und der erforderliche Zugriff zum Lesen der Freigaben vorzubereiten.
+
 
 .Schritte
-. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
-. Auf der Registerkarte *Gescannte Systeme* befindet sich das System, das gescannt werden soll.
-. *Scans aktivieren* auswählen.
+. In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
+. Zunächst erfolgt die Auswahl von *Add system*, anschließend von *Add File Shares Group*.
+. Einen Namen für die Gruppe eingeben und fortfahren.
+. Auswahl des Protokolls der hinzuzufügenden Freigaben.
+. Eingabe und Übermittlung der hinzuzufügenden Freigaben.
++
 
+NOTE: Bei SMB/CIFS-Freigaben mit Kerberos Authentifizierung wird als Freigabepfad der FQDN gefolgt vom Freigabenamen verwendet, z. B. `filer.corp.example.com/sharename`, und die Anmeldeinformationen bleiben leer. Weitere Informationen finden sich unter link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"].
+
+. Das Ergebnis sollte für jede Freigabe überprüft werden. Fehlgeschlagene Freigaben sollten behoben und anschließend erneut hinzugefügt werden.
+. Konfiguration der Scanvorgänge für die Gruppe. Weitere Informationen finden Sie unter <<configure-scanning>>.
+
+
+
+
+[[add-a-database-server]]
+[[add-database]]
+=== Hinzufügen eines Datenbankservers
+
+Die Daten eines Datenbankservers lassen sich in AI Data Engine einbringen, damit sie gescannt werden können. Anschließend lässt sich eine Verbindung zum Datenbankserver herstellen und die zu scannenden Schemas auswählen.
+
+.Bevor Sie beginnen
+* Erforderlich sind der Datenbanktyp, der Server-Hostname oder die IP-Adresse, der Port und die Anmeldeinformationen des Scan-Kontos.
+* Voraussetzung ist, dass das Konto die Schemas und Tabellen lesen kann, die gescannt werden sollen.
+* Zu überprüfen ist, ob AI Data Engine den Datenbankserver erreichen kann.
+
+
+.Schritte
+. In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
+. Sie wählen *System hinzufügen* und anschließend *Datenbankserver hinzufügen* aus.
+. Auswahl des Datenbanktyps und Eingabe der Verbindungsdetails.
+. Übermittlung der Verbindungsdaten.
+. Konfiguration der Scanvorgänge für den Datenbankserver. Weitere Informationen finden Sie in <<configure-scanning>>.
+
+
+
+
+[[add-storagegrid]]
+=== StorageGRID hinzufügen
+
+StorageGRID Objektdaten lassen sich über den S3-Endpunkt in AI Data Engine einbringen, damit sie gescannt werden können. Nach dem Verbinden von StorageGRID erfolgt die Auswahl der zu scannenden Buckets.
+
+.Bevor Sie beginnen
+* Erforderlich sind ein Systemname, die StorageGRID S3-Endpunkt-URL sowie ein S3-Zugriffsschlüssel und ein geheimer Schlüssel.
+* Prüfung, ob AI Data Engine den Endpunkt erreichen kann.
+
+
+.Schritte
+. In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
+. Dann *System hinzufügen* und anschließend *StorageGRID hinzufügen* auswählen.
+. Der Systemname, die S3-Endpunkt-URL, der Zugriffsschlüssel und der geheime Schlüssel sind einzugeben.
+. Übermittlung der Verbindungsdaten.
+. Konfiguration der Scanvorgänge für das StorageGRID System. Weitere Informationen enthält <<configure-scanning>>.
+
+
+
+
+[[configure-scanning]]
+== Scannen konfigurieren
+
+Nachdem Sie ein System verbunden haben, wählen Sie die Datenressourcen aus, die AI Data Engine durchsuchen soll, damit die Metadatenerfassung die zu analysierenden Daten abdeckt. Zur Auswahl steht einer der folgenden Ansätze:
+
+* Auf der Seite *Datenquellen* erfolgt die Aktivierung des automatischen Scans für das gesamte System. AI Data Engine scannt alle vorhandenen und zukünftigen Ressourcen im System.
+* Das Scannen nach einzelnen Volumes, Freigaben, Buckets oder Schemas lässt sich auf der Seite *Details anzeigen* des Systems aktivieren.
+
+
+.Schritte
+* Aktivierung der automatischen Systemprüfung für ein System:
++
+.. In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
+.. Das System auswählen und den Auto-Scan-Schalter umlegen, um Auto-Scan zu aktivieren.
++
+
+NOTE: Sie müssen die automatische Scanfunktion deaktivieren, um das Scannen für einzelne Ressourcen zu managen.
+
+
+
+* Scannen einzelner Ressourcen aktivieren:
++
+.. In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
+.. Das System suchen und *Details anzeigen* auswählen.
+.. In der Liste der Datenressourcen lässt sich das Scannen für die Volumes, Freigaben, Buckets oder Schemas aktivieren, die einbezogen werden sollen.
+.. Anschließend zu *Datenquellen* zurückwechseln, das System suchen und *Scans aktivieren* auswählen.
+
+
+
+
+Weitere Verfahren auf Ressourcenebene sind unter link:manage-data-sources.html["Datenquellen verwalten"] beschrieben.
 
 .Ergebnis
-Der Systemstatus wird auf der Registerkarte „Gescannte Systeme“ aktualisiert und zeigt an, dass die Überprüfung ausgeführt wird. Informationen zur Überwachung des Scanfortschritts und zur Überprüfung, ob AI Data Engine Datenressourcen indiziert, finden Sie unter link:manage-data-sources.html["Datenquellen verwalten"] und link:monitor-scanning-health.html["Scanstatus überwachen"].
+Der Systemstatus auf der Seite *Datenquellen* wird aktualisiert und zeigt an, dass der Scanvorgang läuft. Die Seite zeigt den Scanstatus jeder Ressource an.
+
+Falls Scans unerwartet stoppen oder pausieren, finden Sie weitere Informationen unter link:../administer/monitor-deployment-health.html["Deployment Systemstatus überwachen und Probleme untersuchen"].
 
 
 
@@ -83,6 +150,7 @@ Der Systemstatus wird auf der Registerkarte „Gescannte Systeme“ aktualisiert
 
 * link:manage-data-sources.html["Datenquellen verwalten"]
 * link:../deploy/aide-requirements.html["AI Data Engine Anforderungen"]
+* link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"]
 * link:../investigate/understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
-* link:monitor-scanning-health.html["Scanstatus überwachen"]
+* link:../administer/monitor-deployment-health.html["Deployment Systemstatus überwachen und Probleme untersuchen"]
 

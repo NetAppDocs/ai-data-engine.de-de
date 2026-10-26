@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: get-started/quick-start.html 
-keywords: quick start, deploy, connect, investigate, policies 
-summary: AI Data Engine wird in Betrieb genommen, indem der Dienst bereitgestellt, Ihre Speichersysteme verbunden und Ihre erste Untersuchung gestartet wird. 
+keywords: quick start, deploy, connect, investigate, policies, governed ai access, mcp 
+summary: AI Data Engine wird durch das Deployment des Service, das Verbinden Ihrer Datenquellen und das Starten Ihrer ersten Untersuchung einsatzbereit. Optional kann ein kontrollierter KI-Zugriff für KI-Clients eingerichtet werden. 
 ---
 = Schnellstart für AI Data Engine
 :allow-uri-read: 
@@ -11,24 +11,28 @@ summary: AI Data Engine wird in Betrieb genommen, indem der Dienst bereitgestell
 
 
 [role="lead"]
-AI Data Engine wird in Betrieb genommen, indem der Dienst bereitgestellt, Ihre Speichersysteme verbunden und Ihre erste Untersuchung gestartet wird.
+AI Data Engine (AIDE) lässt sich durch das Einsetzen des Service, das Verbinden Ihrer Datenquellen und den Start Ihrer ersten Untersuchung in Betrieb nehmen. Auch die Durchsuchung Ihrer Metadaten durch AI Clients über einen kontrollierten AI-Zugriff ist möglich.
 
-.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"]Anforderungen an die Überprüfung
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"] link:../deploy/aide-requirements.html["Prüfung der Anforderungen und Auswahl eines Deployment Typs"]
 [role="quick-margin-para"]
-Anhand der link:../deploy/aide-requirements.html["AIDE-Anforderungen"]Dokumentationlink:../deploy/deployment-overview.html["Informationen zu Bereitstellungsmodi"] lässt sich feststellen, ob AIDE Lite oder AIDE Enterprise installiert werden sollte. AI Data Engine ist als private Vorschau in der NetApp Console verfügbar. Für die Anforderung des Zugriffs, damit Sie AI Data Engine implementieren können, wenden Sie sich an Ihren NetApp Ansprechpartner.
+Anhand der Anforderungen und link:../deploy/deployment-overview.html["Informationen zu Deployment-Typen"] lässt sich entscheiden, ob ein AIDE Single-Node oder Multi-Node Deployment installiert werden soll.
 
-.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"] Bereitstellung von AI Data Engine
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"] link:../deploy/deployment-overview.html["AI Data Engine einsetzen"]
 [role="quick-margin-para"]
-Die Bereitstellung von link:../deploy/deploy-aide-lite.html["AIDE Lite"] oder link:../deploy/deploy-enterprise.html["AIDE Enterprise"] erfolgt über die NetApp Console. Die Einrichtungsseite führt Sie durch die Auswahl des Installationsorts und der Konfigurationsgröße sowie durch die Ausführung des Installationsbefehls.
+Die Bereitstellung einer Anwendung link:../deploy/deploy-aide-single-node.html["AIDE Einzelknoten-Deployment"] oder eines link:../deploy/deploy-aide-multi-node.html["AIDE Multi-Node Deployment"] Clusters erfolgt über NetApp Console. Die Einrichtungsseite führt Sie durch die Auswahl des Installationsorts und der Konfigurationsgröße sowie durch die Ausführung des Installationsbefehls. Falls Ihr Host oder Cluster nur über einen Proxy auf das Internet zugreift, wird stattdessen link:../deploy/configure-proxy.html["mit einem Proxy einsetzen"] verwendet.
 
-.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"] Eine Datenquelle verbinden
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"] link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"]
 [role="quick-margin-para"]
-link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"] den Scanvorgang zu starten. AI Data Engine katalogisiert Dateisystem-Metadaten der von Ihnen angegebenen Speichersysteme.
+Zum Starten des Scans ist eine Verbindung mit einer Datenquelle erforderlich. AI Data Engine katalogisiert die Metadaten der Datenquellen, die Sie verbinden.
 
-.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] Daten erkunden
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] link:../investigate/understand-dashboard.html["Datenexploration"]
 [role="quick-margin-para"]
-Öffnen Sie die link:../investigate/understand-dashboard.html["Dashboard"]Ansicht, um Einblicke in die Speicheroptimierung zu erhalten, oder gehen Sie zu link:../investigate/investigate-data.html["Untersuchung"], um Ihre Metadaten direkt zu durchsuchen und zu filtern.
+Im Dashboard werden Einblicke in die Storage-Optimierung angezeigt, oder unter link:../investigate/investigate-data.html["Untersuchung"] können Sie Ihre Metadaten direkt durchsuchen und filtern.
 
-.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"] Eine Richtlinie erstellen
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"] link:../policies/create-policy.html["Erstellung einer Richtlinie"]
 [role="quick-margin-para"]
-link:../policies/create-policy.html["Ihre Untersuchungsfilter lassen sich als Richtlinie speichern"] zum Überwachen von Dateien, die im Lauf der Zeit denselben Kriterien entsprechen. Sie können eine Richtlinie konfigurieren, die eine Benachrichtigung sendet, übereinstimmende Dateien dauerhaft löscht oder die Ergebnisse verfolgt.
+Ihre Untersuchungsfilter können als Richtlinie gespeichert werden, um Dateien, die denselben Kriterien entsprechen, im Zeitverlauf zu überwachen. Sie können eine Richtlinie so konfigurieren, dass sie eine Benachrichtigung sendet, übereinstimmende Dateien endgültig löscht oder die Ergebnisse nachverfolgt.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["Sechs"] link:../mcp/quick-start-mcp.html["Optional: Einrichten des kontrollierten KI-Zugriffs"]
+[role="quick-margin-para"]
+KI-Clients können die Metadaten in den von Ihnen ausgewählten Sammlungen durchsuchen. Fortgeschrittene Benutzer können Metadaten durchsuchen und Aktionen mit den Daten durchführen.

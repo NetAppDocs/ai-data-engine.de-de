@@ -1,0 +1,155 @@
+---
+sidebar: sidebar 
+permalink: mcp/manage-data-collections.html 
+keywords: mcp, governed ai access, data collections, collection, ai access, scope, create collection, enable collection 
+summary: Datensammlungen erstellen und für den AI Zugriff aktivieren, damit verbundene AI Clients sie durchsuchen können. 
+---
+= Datensammlungen für den von AI Data Engine gesteuerten KI-Zugriff managen
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Eine Sammlung ist ein logischer Container für Datenquellen, die Sie über den MCP-Server (Model Context Protocol) für AI Data Engine (AIDE) für KI-Clients durchsuchbar machen. Sammlungen werden erstellt und für den KI-Zugriff aktiviert, damit verbundene KI-Clients sie durchsuchen können.
+
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+* Microsoft Entra ID wurde in AI Data Engine als Identitätsanbieter eingerichtet, und der Verbindungsstatus lautet *Connected*. Ein Verweis ist unter link:connect-entra-id-aide-mcp.html#set-up-an-identity-provider["Einrichten eines Identitätsanbieters"] zu finden.
+* Sie haben eine benutzerdefinierte Datensammlung erstellt oder verwenden eine Standardsammlung, die nur die Daten enthält, die AI Clients für die Suche benötigen. Weitere Informationen finden Sie unter <<create-a-data-collection,Erstellen einer Datensammlung>>.
+
+
+
+
+[[about-data-collections]]
+== Über Datensammlungen
+
+Eine Sammlung ist ein logischer Container für eine oder mehrere Datenquellen. AI Data Engine stellt standardmäßig eine Sammlung namens *All files* bereit, die jedes System und jedes Volume enthält, das AI Data Engine gescannt hat.
+
+
+CAUTION: Vor der Gewährung des Zugriffs eines Bereichs auf eine Sammlung ist zu bestätigen, dass alle Personen mit diesem Bereich die Metadaten jeder Datei in der Sammlung durchsuchen dürfen. Bei der Gewährung des Zugriffs eines Bereichs auf *Alle Dateien* können alle Personen mit diesem Bereich die Metadaten aller gescannten Daten durchsuchen.
+
+Informationen zum Erstellen einer Sammlung finden Sie unter <<create-a-data-collection,Erstellen einer Datensammlung>>. Informationen zum späteren Ändern einer Sammlung, eines Identitätsanbieters oder der MCP Server Einstellungen finden Sie unter link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"].
+
+
+
+[[create-a-data-collection]]
+== Erstellen einer Datensammlung
+
+Eine Datensammlung definiert die Datenressourcen, die AI Clients über den MCP server durchsuchen können.
+
+.Schritte
+. In NetApp Console befindet sich *AI data hub* > *AI Data Engine*.
+. Die Auswahl erfolgt über *Configuration* und anschließend über *MCP collections*.
+. Anschließend erfolgt die Auswahl von *Sammlung erstellen*.
+. In *Name* können Sie einen eindeutigen Namen für die Sammlung eingeben.
+. Optional: Im Feld *Beschreibung* können Sie eine Beschreibung eingeben, damit Ihr Team den Zweck der Sammlung versteht. Die Beschreibung darf maximal 512 Zeichen umfassen.
+. Mit den Filtern *Systems* und *Protocols* lässt sich die Liste der Datenressourcen eingrenzen.
+. Für jede Datenressource, die in die Sammlung aufgenommen werden soll, ist das entsprechende Kontrollkästchen zu aktivieren.
++
+In der Spalte *Scan status* wird angezeigt, ob die jeweilige Datenressource den Status *Completed* oder *Re-scanning* hat oder in *Error* ist. S3 und strukturierte Datenressourcen lassen sich keiner Sammlung hinzufügen.
+
++
+Die Zusammenfassung *Selected rows* zeigt die Anzahl der ausgewählten Ressourcen, deren Scankapazität und die Anzahl der gescannten Dateien an. Zum Aufheben der Auswahl und für einen Neustart dient *Reset*.
+
+. Auszuwählen ist die Option *Create MCP collection*.
+
+
+Eine Bestätigungsmeldung erscheint, und die neue Sammlung wird der Liste *Sammlungen* mit dem Status „Bereit zur Konfiguration“ hinzugefügt. Das Erstellen der Sammlung schließt die Konfiguration der MCP-Verbindung nicht ab.
+
+Die Liste *Sammlungen* zeigt den Namen, die Beschreibung, die Anzahl der Volumes, die gescannte Kapazität, die Anzahl der gescannten Dateien, den Eigentümer und den Status jeder Sammlung an. Der Eigentümer ist *System* für Sammlungen, die AI Data Engine bereitstellt, und *Benutzer* für Sammlungen, die Sie erstellen.
+
+Nachdem Sie eine Sammlung erstellt haben, <<configure-a-collection-for-mcp,für MCP konfigurieren>>.
+
+
+
+[[configure-a-collection-for-mcp]]
+== Konfiguration einer Sammlung für MCP
+
+Auswahl der Identitätsanbieter und Benutzerbereiche für eine MCP-Sammlung sowie Abruf der Verbindungsdetails für Ihren AI Client.
+
+
+IMPORTANT: In einer Power-User-Sitzung wird die Suche nicht nach Berechtigungen auf Dateiebene gefiltert. Benutzer mit Zugriff auf die Sammlung können jede Datei darin durchsuchen. Es werden nur Dateien einbezogen, die alle Benutzer sehen dürfen, die den Bereichen der Sammlung zugewiesen sind. Einem Bereich sollte nur dann Zugriff auf *Alle Dateien* gewährt werden, wenn alle Benutzer mit diesem Bereich alle gescannten Daten durchsuchen dürfen.
+
+.Bevor Sie beginnen
+* Sie haben eine MCP-Sammlung erstellt oder verwenden *Alle Dateien*. Informationen dazu finden Sie unter <<create-a-data-collection,Erstellen einer Datensammlung>>.
+* Die Identitätsanbieter, die Sie verwenden möchten, sind mit AI Data Engine verbunden. Weitere Informationen enthält link:connect-entra-id-aide-mcp.html#set-up-an-identity-provider["Einrichten eines Identitätsanbieters"].
+* Die Verbindung zu MCP ist aktiviert. Unter *MCP collections* > *MCP settings* können Sie *MCP server connection* erweitern und bestätigen, dass *Enable connection to MCP* aktiviert ist. Die Verbindung ist standardmäßig deaktiviert. Weitere Informationen finden Sie unter link:maintain-mcp-setup.html#enable-or-disable-the-connection-to-mcp["Verbindung zu MCP aktivieren oder deaktivieren"].
+* Der MCP Server hat den Status *Running*. Weitere Informationen enthält link:maintain-mcp-setup.html#review-mcp-server-and-collection-status["Status von MCP Server und Sammlung"].
+
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Bei der Sammlung, die Sie konfigurieren möchten, ist das Menü *Aktionen* zu öffnen und *Für MCP konfigurieren* auszuwählen.
+. Im Schritt *Identitätsanbieter auswählen* werden ein oder mehrere Identitätsanbieter ausgewählt, um den Zugriff auf die Sammlung zu authentifizieren und zu autorisieren.
++
+
+NOTE: Falls der benötigte Identitätsanbieter nicht aufgeführt ist, erfolgt das Hinzufügen vor dem Fortfahren unter *Identitätsanbieter*. Falls Administratorzugriff erforderlich ist, stellt Ihr Administrator die Verbindung zum Identitätsanbieter her.
+
+. Für jeden ausgewählten Identitätsanbieter dient *User scopes to include* zur Angabe der Bereiche:
++
+.. Damit alle Benutzerbereiche einbezogen werden, bleibt *Alle Benutzerbereiche* ausgewählt.
+.. Bestimmte Bereiche lassen sich einbeziehen, indem das Dropdown-Menü geöffnet, die Bereiche ausgewählt und *Bereiche hinzufügen* gewählt wird.
++
+`power_users` ist der einzige Bereich in der Dropdown-Liste, und seine Auswahl führt zum gleichen Ergebnis wie *Alle Benutzerbereiche*. Der Bereichsname muss mit dem Bereich übereinstimmen, den Sie in Microsoft Entra ID definiert haben.
+
+
+
+. Die Option *Generate MCP code snippet* auswählen.
+. Im Schritt *Generate MCP code snippet* erfolgt das Kopieren der Verbindungsdetails, die Ihr AI client benötigt:
++
+** Für die direkte Verwendung des Endpunkts ist das Kopiersymbol neben *MCP server URL* auszuwählen.
+** Für die Verwendung eines clientspezifischen Konfigurationsausschnitts erfolgt unter *Code snippets* die Auswahl der Registerkarte *Claude* für Claude Desktop oder der Registerkarte *Cursor* für Cursor und anschließend die Auswahl des Kopiersymbols. Für Claude Code und OpenCode wird die MCP server URL verwendet.
++
+Vor dem Teilen eines Codeausschnitts ist sicherzustellen, dass der Host Ihr AIDE Cluster-Hostname und keine Cluster- oder Service-IP-Adresse ist und dass die URL auf `/mcp/tools` endet und die `collection_id` dieser Sammlung enthält. Der Bereich muss `\https://<host>/mcp/tools/power_users` sein, und die Client-ID muss die Anwendungs-ID (Client-ID) Ihrer AI Data Engine Applikation in Entra ID sein.
+
++
+
+NOTE: Wenn die Warnung *MCP hostname not setup* angezeigt wird, erfolgt die Konfiguration des AIDE Cluster-Hostnamens über *MCP settings*. Weitere Informationen dazu finden Sie in link:maintain-mcp-setup.html#review-mcp-server-settings["Überprüfung der MCP Servereinstellungen"] und link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]. Zum Absichern des MCP Servers mit HTTPS ist ein SSL/TLS-Zertifikat erforderlich, das das Ingress-Skript einrichtet.
+
+
+
+. Optional: Zum Ändern der Identitätsanbieter oder Benutzerbereiche kann *Zurück* ausgewählt und der Codeausschnitt anschließend erneut generiert werden.
+. *Schließen* auswählen.
+
+
+.Ergebnis
+Sie haben die MCP-Server-URL oder einen clientspezifischen Konfigurationsausschnitt für die ausgewählten Identitätsanbieter und Benutzerbereiche. Mithilfe dieser Angaben lässt sich Ihr AI Client verbinden und der Zugriff auf die Sammlung validieren. Es ist sicherzustellen, dass die Umleitungs-URI für Ihren AI Client in der AI Data Engine Applikation in Entra ID registriert ist. Als Client-ID dient die Anwendungs-ID (Client) der Applikation. Weitere Informationen finden sich in link:configure-entra-id-mcp.html#add-redirect-uris-for-ai-clients["Hinzufügen von Umleitungs-URIs für Ihre AI Clients"].
+
+
+NOTE: Das Generieren von Verbindungsdetails stellt keine Verbindung zu Ihrem AI client her und validiert ihn auch nicht. link:connect-ai-clients-mcp.html["Abschluss dieser Aufgaben im AI client"].
+
+Eine Sammlung steht AI-Clients erst zur Verfügung, nachdem Sie Identitätsprovider und Benutzerbereiche ausgewählt haben. Nach Abschluss dieses Vorgangs hat die Sammlung den Status *Enabled*.
+
+Benutzer, deren Token über einen entsprechenden Berechtigungsbereich verfügen, können die Sammlung entdecken und durchsuchen. Benutzer ohne passenden Berechtigungsbereich können die Sammlung weder entdecken, durchsuchen noch damit arbeiten.
+
+
+
+[[disable-ai-access-for-a-collection]]
+== KI-Zugriff für eine Sammlung deaktivieren
+
+Der KI-Zugriff für eine Sammlung kann deaktiviert werden, wenn KI-Clients sie nicht mehr durchsuchen müssen. Wenn Sie eine Sammlung für MCP konfigurieren, wird der KI-Zugriff automatisch aktiviert.
+
+.Schritte
+. In NetApp Console lautet der Pfad *AI data hub* > *AI Data Engine* > *Konfiguration* > *MCP Sammlungen*.
+. Im *Aktionen*-Menü der Sammlung ist *Deaktivieren* auszuwählen.
+
+
+KI-Clients, die die deaktivierte Sammlung verwenden, verlieren nach Wirksamwerden der Änderung den Zugriff darauf. Ihre Auswahl für Identitätsanbieter und Benutzerbereich bleibt erhalten. KI-Clients können außerdem auf keine Sammlung zugreifen, solange die Verbindung zu MCP deaktiviert ist. Informationen zum gleichzeitigen Blockieren von Anfragen an alle Sammlungen enthält link:maintain-mcp-setup.html#enable-or-disable-the-connection-to-mcp["Verbindung zu MCP aktivieren oder deaktivieren"].
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:learn-about-mcp.html["Informationen zum kontrollierten KI-Zugriff"]
+* link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"]
+* link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
+* link:connect-entra-id-aide-mcp.html["AI Data Engine mit Microsoft Entra ID verbinden"]
+* link:connect-ai-clients-mcp.html["Verbindung von KI-Clients mit dem AI Data Engine MCP Server"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
+

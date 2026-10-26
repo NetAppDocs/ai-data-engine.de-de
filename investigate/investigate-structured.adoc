@@ -13,8 +13,12 @@ summary: Überdimensionierte oder ungenutzte Datenbanktabellen auf Ihren verbund
 [role="lead"]
 Wenn der Datenbankspeicher unerwartet wächst, können Sie anhand der Tabellenmetadaten filtern, um festzustellen, welche Tabellen überdimensioniert sind oder seit ihrer ersten Erkennung keine Aktivität mehr aufweisen. So kann beispielsweise ein Speicheradministrator große Tabellen erkennen, die sich seit einem früheren Scan nicht verändert haben, und anschließend mit dem Datenbankeigentümer abstimmen, ob diese noch benötigt werden.
 
-.Bevor Sie beginnen
-* Mindestens eine Datenbankdatenquelle muss verbunden sein und gescannt werden. Weitere Informationen finden sich unter link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"].
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie haben mindestens eine Datenbank-Datenquelle verbunden, und der Scanvorgang läuft. Einzelheiten enthält link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"].
 
 
 
@@ -22,11 +26,13 @@ Wenn der Datenbankspeicher unerwartet wächst, können Sie anhand der Tabellenme
 [[review-the-database-table-listing]]
 == Überprüfen Sie die Auflistung der Datenbanktabellen.
 
+Hier werden die Datenbanktabellen angezeigt, die AI Data Engine auf Ihren verbundenen Datenbankservern erkannt hat.
+
 .Schritte
 . Wählen Sie in der AI Data Engine Benutzeroberfläche die Option *Investigation* aus.
 . Die Registerkarte *Structured* ist auszuwählen.
 +
-Die Tabelle zeigt den Namen der Datenbanktabelle, das Schema, den DB-Server, den Zeitpunkt der Erkennung, die Tabellendimensionen (Spalten × Zeilen) und die Tabellengröße an.
+Die Tabelle zeigt den Namen der Datenbanktabelle, das Schema, den DB-Server, den Zeitpunkt der Erkennung, die Tabellendimensionen und die Tabellengröße an.
 
 
 
@@ -39,23 +45,21 @@ Mithilfe von Filtern lässt sich die Liste auf Tabellen eingrenzen, die am ehest
 
 .Schritte
 . Wählen Sie *Filter hinzufügen* und anschließend *Erkennungszeitpunkt* aus.
-. Der Bereich wird so festgelegt, dass Tabellen angezeigt werden, die über mehrere Scanzyklen hinweg vorhanden waren, zum Beispiel Tabellen, die vor mehr als einem Jahr erstmals entdeckt wurden.
+. Der Bereich wird so festgelegt, dass Tabellen angezeigt werden, die über mehrere Scanzyklen hinweg vorhanden waren, z. B. Tabellen, die vor mehr als einem Jahr erstmals entdeckt wurden.
 . Zur weiteren Eingrenzung wird erneut *Filter hinzufügen* ausgewählt und nach DB-Server oder Schema gefiltert, um den Fokus auf ein bestimmtes System zu legen.
 +
 Angewendete Filter werden als Tags unterhalb der Filterleiste angezeigt. Die Ergebnisse werden aktualisiert, sobald Sie jeden Filter hinzufügen.
 
 
 
-Eine vollständige Liste der verfügbaren Filter ist unter link:use-filters.html["Arbeiten mit Filtern"] verfügbar.
-
 
 
 [[review-table-details]]
 == Details der Übersichtstabelle
 
-Wird eine Tabellenzeile ausgewählt, öffnet sich das Detailfenster, und es lässt sich beurteilen, ob die Tabelle ein Kandidat für die Rückgewinnung ist.
+Beurteilen, ob eine Tabelle für die Rückgewinnung infrage kommt. Eine Tabellenzeile auswählen, um das Detailfenster zu öffnen.
 
-Im Detailbereich werden der Datenbankserver, das Schema, die Tabellendimensionen, die Tabellengröße und der Zeitpunkt der Erkennung angezeigt. Anhand dieser Informationen lässt sich feststellen, ob die Tabelle seit der Erkennung gewachsen ist oder unverändert geblieben ist.
+Im Detailbereich werden der Datenbankserver, das Schema, die Tabellendimensionen, die Tabellengröße und der Zeitpunkt der Erkennung angezeigt. Anhand dieser Informationen können Sie überprüfen, ob die Tabelle seit der Erkennung gewachsen oder gleich geblieben ist.
 
 
 NOTE: Bevor Sie Maßnahmen an Datenbanktabellen ergreifen, stimmen Sie sich mit dem Datenbankeigentümer ab, um zu bestätigen, dass die Tabelle nicht mehr benötigt wird.
@@ -79,7 +83,6 @@ Um die gefilterten Ergebnisse von der Registerkarte „Strukturiert“ herunterz
 [[related-information]]
 == Verwandte Informationen
 
-* link:use-filters.html["Arbeiten mit Filtern"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
 * link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"]
 * link:understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]

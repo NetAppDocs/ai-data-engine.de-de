@@ -13,8 +13,12 @@ summary: Verzeichnisberechtigungen in Ihren Speichersystemen lassen sich prüfen
 [role="lead"]
 Wenn ermittelt werden muss, welche Verzeichnisse mehr Benutzern zugänglich sind als beabsichtigt, kann nach Berechtigungen gefiltert werden, um Ordner zu finden, die für die gesamte Organisation geöffnet sind. Beispielsweise kann ein Sicherheitsadministrator, der auf dem Dashboard als offengelegt markierte Verzeichnisse sieht, alle Verzeichnisse mit organisationsweitem Zugriff ermitteln, prüfen, wer über Lese- und Schreibberechtigungen verfügt, und eine Richtlinie erstellen, um nach jedem Scan neue Offenlegungen zu überwachen.
 
-.Bevor Sie beginnen
-* Mindestens eine Datenquelle muss verbunden sein und scannen. Informationen hierzu sind in link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"] enthalten.
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie haben mindestens eine Datenquelle verbunden, und sie wird gescannt. Weitere Informationen finden Sie unter link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"].
 
 
 
@@ -22,7 +26,7 @@ Wenn ermittelt werden muss, welche Verzeichnisse mehr Benutzern zugänglich sind
 [[find-broadly-accessible-directories]]
 == Allgemein zugängliche Verzeichnisse finden
 
-Berechtigungsfilter dienen dazu, Verzeichnisse zu identifizieren, die über die beabsichtigte Zielgruppe hinaus zugänglich sind.
+Verzeichnisse, die über die beabsichtigte Zielgruppe hinaus zugänglich sind, lassen sich durch Filtern nach Berechtigungen ermitteln.
 
 .Schritte
 . Wählen Sie in der AI Data Engine Benutzeroberfläche die Option *Investigation* aus.
@@ -37,14 +41,12 @@ Die Ergebnistabelle wird aktualisiert und zeigt Verzeichnisse an, die den Berech
 
 
 
-Eine vollständige Liste der verfügbaren Filter ist unter link:use-filters.html["Arbeiten mit Filtern"] verfügbar.
-
 
 
 [[review-directory-permissions]]
 == Überprüfung der Verzeichnisberechtigungen
 
-Durch Auswahl einer Verzeichniszeile lässt sich das Detailfenster öffnen und überprüfen, wer Zugriff hat.
+Sie können prüfen, wer Zugriff auf ein Verzeichnis hat und ob dieser Zugriff beabsichtigt ist. Mit der Auswahl einer Verzeichniszeile öffnet sich das Detailfenster.
 
 Im Detailbereich werden Verzeichnistyp, System, Verzeichnisinhaber und eine Berechtigungsübersicht angezeigt (z. B. „Für Organisation geöffnet“). Mit *Berechtigungen anzeigen* wird eine Aufschlüsselung der Lese- und Schreibzugriffe für jeden Benutzer oder jede Gruppe mit Zugriff auf das Verzeichnis angezeigt.
 
@@ -58,9 +60,11 @@ Diese Informationen dienen zur Bestätigung, ob die Zugangsstufe beabsichtigt is
 Nach dem Filtern zur Identifizierung allgemein zugänglicher Verzeichnisse werden die Kriterien als Richtlinie gespeichert, um nach jedem Scanzyklus neue Gefährdungen zu überwachen.
 
 .Schritte
-. Nachdem Ihre Berechtigungsfilter angewendet wurden, wählen Sie in der Filter-Symbolleiste *Create policy* aus.
+. Nach dem Anwenden Ihrer Berechtigungsfilter wählen Sie in der Filter-Symbolleiste *Create policy* aus.
 . Das Richtlinienformular ist auszufüllen. Verweis auf link:../policies/create-policy.html["Erstellung einer Richtlinie"].
 
+
+Informationen dazu, ob AI Data Engine Berechtigungen scannt, sind unter link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"] verfügbar.
 
 Zum Herunterladen der gefilterten Ergebnisse auf der Registerkarte „Verzeichnisse“ wählen Sie image:icon_download_file.png["Download"].
 
@@ -69,8 +73,8 @@ Zum Herunterladen der gefilterten Ergebnisse auf der Registerkarte „Verzeichni
 [[related-information]]
 == Verwandte Informationen
 
-* link:use-filters.html["Arbeiten mit Filtern"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+* link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"]
 * link:../administer/manage-users-roles.html["Verwaltung von Benutzern und Rollen"]
 * link:understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
 

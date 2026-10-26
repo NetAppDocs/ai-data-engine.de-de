@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: investigate/investigate-unstructured.html 
-keywords: investigate, unstructured, cold data, stale data, last accessed, file size, file owner, reclaimable storage, NFS, SMB, CIFS 
-summary: Mithilfe von Metadatenfiltern können Dateien in NFS- und SMB/CIFS-Volumes als kalt, veraltet oder groß gefunden und klassifiziert werden. Anschließend können die Ergebnisse überprüft, gegebenenfalls Maßnahmen ergriffen oder die Filterkriterien als wiederverwendbare Richtlinie gespeichert werden. 
+keywords: investigate, unstructured, cold data, stale data, last accessed, file size, file owner, reclaimable storage, NFS, SMB, CIFS, duplicates, duplicate files, file hash 
+summary: Mithilfe von Metadatenfiltern können Sie Dateien auf NFS- und SMB-Volumes als kalt, veraltet, groß oder dupliziert klassifizieren, die Ergebnisse überprüfen, gegebenenfalls Maßnahmen ergreifen oder Ihre Filterkriterien als wiederverwendbare Richtlinie speichern. 
 ---
 = Untersuchung unstrukturierter Daten in AI Data Engine
 :allow-uri-read: 
@@ -13,8 +13,12 @@ summary: Mithilfe von Metadatenfiltern können Dateien in NFS- und SMB/CIFS-Volu
 [role="lead"]
 Wenn der dateibasierte Speicher unerwartet anwächst, kann nach dem Zeitpunkt des letzten Zugriffs, der Dateigröße und dem Eigentümer gefiltert werden, um festzustellen, welche Dateien Kapazität belegen. So kann ein Speicheradministrator beispielsweise Terabytes an VM-Snapshots identifizieren, auf die seit über einem Jahr nicht mehr zugegriffen wurde, und beurteilen, ob sie archiviert, gelöscht oder aufbewahrt werden sollten.
 
-.Bevor Sie beginnen
-* Mindestens eine Datenquelle muss verbunden sein und scannen. Informationen hierzu sind in link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"] enthalten.
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie haben mindestens eine Datenquelle verbunden, und sie wird gescannt. Weitere Informationen finden Sie unter link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"].
 
 
 
@@ -22,7 +26,7 @@ Wenn der dateibasierte Speicher unerwartet anwächst, kann nach dem Zeitpunkt de
 [[find-cold-or-stale-files-by-last-access-time]]
 == Inaktive oder veraltete Dateien lassen sich anhand des letzten Zugriffszeitpunkts finden.
 
-Mithilfe datumsbasierter Filter lassen sich Dateien identifizieren, auf die innerhalb der Kalt- oder Veraltet-Daten-Schwellenwerte Ihrer Organisation nicht zugegriffen wurde. Die Schwellenwerte sind unter *Configuration* > *Settings* konfigurierbar. Siehe link:../administer/configure-settings.html["Schwellenwerte für kalte und veraltete Daten konfigurieren"].
+Mit datumsbasierten Filtern lassen sich Dateien finden, auf die innerhalb der in Ihrem Unternehmen festgelegten Schwellenwerte für kalte oder veraltete Daten nicht zugegriffen wurde. Sie definieren diese Schwellenwerte, einschließlich des Zeitstempels, den jeder davon verwendet, in den Einstellungen für die Datenklassifizierung. Weitere Informationen finden Sie unter link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"].
 
 .Schritte
 . Wählen Sie in der AI Data Engine Benutzeroberfläche die Option *Investigation* aus.
@@ -36,8 +40,6 @@ Die Registerkarte „Unstrukturiert“ ist standardmäßig ausgewählt.
 Angewendete Filter werden als Tags unterhalb der Filterleiste angezeigt. Die Ergebnistabelle und die Anzahl der Elemente werden aktualisiert, wenn Sie jeden Filter hinzufügen.
 
 
-
-Eine vollständige Liste der verfügbaren Filter ist unter link:use-filters.html["Arbeiten mit Filtern"] verfügbar.
 
 
 
@@ -59,9 +61,30 @@ Die Ergebnisse werden neu angeordnet und zeigen die Gesamtzahl der Dateien und d
 [[review-file-details]]
 == Dateidetails prüfen
 
-Durch Auswahl einer beliebigen Dateizeile lässt sich das Detailfenster öffnen, und es kann bestätigt werden, dass die Datei dem gewünschten Umfang entspricht, bevor Maßnahmen ergriffen werden.
+Vor dem Ergreifen von Maßnahmen ist sicherzustellen, dass eine Datei dem vorgesehenen Umfang entspricht. Das Detailfenster lässt sich durch Auswahl einer beliebigen Dateizeile öffnen.
 
-Im Detailbereich werden das Dateisystem, das Storage Repository, der Dateieigentümer sowie alle angewendeten Tags oder Richtlinien angezeigt. Vor dem Archivieren oder Löschen sollten System und Eigentümer überprüft werden.
+Im Detailbereich werden das System, das Storage Repository, der Pfad, die Größe, Zeitstempel, Zugriffsrechte, der Dateibesitzer sowie angewendete Tags oder Richtlinien der Datei angezeigt. Das Feld *Duplicates* zeigt die Anzahl der doppelten Kopien der Datei an. Vor dem Archivieren oder Löschen der Datei sollten System und Besitzer geprüft werden.
+
+
+
+[[find-duplicate-files]]
+== Doppelte Dateien ermitteln
+
+Sie sehen, wie weit verbreitet doppelte Dateien sind, bevor Sie entscheiden, wo Sie sie bereinigen möchten. Der Filter *Duplikate* listet alle Dateien auf, die an anderer Stelle im Katalog eine oder mehrere identische Kopien haben.
+
+.Schritte
+. Wählen Sie in der AI Data Engine Benutzeroberfläche die Option *Investigation* aus.
++
+Die Registerkarte „Unstrukturiert“ ist standardmäßig ausgewählt.
+
+. Die Auswahl erfolgt über *Add filter* und anschließend über *Duplicates*.
++
+Die Ergebnistabelle listet die Dateien auf, die doppelt vorhanden sind.
+
+. Zum Anzeigen aller Kopien einer bestimmten Datei und ihres Speicherorts den Dateinamen auswählen und anschließend neben *Duplikate* *Details anzeigen* auswählen.
+
+
+Informationen zum Überprüfen und Bereinigen der Kopien finden Sie unter link:take-actions.html["Doppelte Dateien untersuchen und bereinigen"].
 
 
 
@@ -81,9 +104,9 @@ Zum Herunterladen der gefilterten Ergebnisse auf der Registerkarte „Unstruktur
 [[related-information]]
 == Verwandte Informationen
 
-* link:use-filters.html["Arbeiten mit Filtern"]
 * link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
+* link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"]
 * link:../get-started/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
 * link:understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
 

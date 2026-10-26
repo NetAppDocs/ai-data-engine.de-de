@@ -1,0 +1,78 @@
+---
+sidebar: sidebar 
+permalink: administer/configure-kerberos-smb.html 
+keywords: kerberos, smb, cifs, keytab, krb5.conf, ktutil, kdc, realm, fqdn, dns, authentication, active directory, scan service account 
+summary: Es wird erläutert, wie AI Data Engine Kerberos verwendet, um SMB/CIFS-Freigaben zu scannen, ohne ein Passwort in der Datenquelle zu speichern, und welches Verfahren für Ihr Single-Node oder Multi-Node Deployment geeignet ist. 
+---
+= Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Das Scannen von SMB/CIFS-Freigaben erfolgt mithilfe der Kerberos-Authentifizierung, sodass kein Passwort in der Datenquelle gespeichert wird. AI Data Engine (AIDE) fungiert als Kerberos-Client. Es verwendet eine Keytab für ein Scan-Servicekonto, um Kerberos-Tickets von Ihrem vorhandenen Active Directory-Domänencontroller abzurufen.
+
+Die Kerberos-Authentifizierung gilt für SMB/CIFS-Datenquellen. Informationen zur Zuordnung von NFS-Benutzer- und Gruppen-IDs zu Active Directory-Namen finden Sie unter link:configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"].
+
+
+
+[[how-kerberos-scanning-works]]
+== Wie das Kerberos-Scannen funktioniert
+
+Nach der Einrichtung ruft AI Data Engine Kerberos-Tickets automatisch ab und aktualisiert sie, sodass Sie die Anmeldeinformationen nicht für jeden Scan managen müssen.
+
+. Sie erstellen drei Dateien: eine Kerberos Konfigurationsdatei, eine Keytab-Datei für das Scan-Dienstkonto und eine Principal-Datei, in der der Kontoname angegeben ist.
+. AI Data Engine verwendet die Keytab-Datei, um ein Kerberos-Ticket von Ihrem Active Directory-Domänencontroller zu erhalten, der als Kerberos-Schlüsselverteilungszentrum (KDC) fungiert. AI Data Engine aktualisiert das Ticket alle drei Stunden.
+. Wenn Sie eine SMB/CIFS-Freigabe hinzufügen und Kerberos als Authentifizierungsverfahren auswählen, scannt AI Data Engine die Freigabe mithilfe des Tickets.
+
+
+AI Data Engine findet Ihren Domänencontroller und Ihren Dateiserver anhand des Namens. Der Host bzw. die Knoten müssen beide Namen mithilfe eines DNS-Servers auflösen können, der Ihre Active Directory-Namen auflösen kann. Wenn Sie den Host bzw. die Knoten auf Ihren Active Directory-DNS-Server verweisen, muss dieser Server auch externe Namen auflösen. Bei einem Multi-Node Deployment muss er auf jedem Knoten der einzige Nameserver sein.
+
+Wenn Sie die Kerberos Konfigurationsdatei nach der Einrichtung ersetzen, verwendet AI Data Engine weiterhin die vorherige Datei, bis Sie die betroffenen Services neu starten. Die Schritte sind unter link:configure-kerberos-smb-single-node.html#update-kerberos-configuration["Aktualisierung der Kerberos Konfigurationsdatei"] für ein Single-Node-Deployment bzw. unter link:configure-kerberos-smb-multi-node.html#update-kerberos-configuration["Aktualisierung der Kerberos Konfigurationsdatei"] für ein Multi-Node-Deployment beschrieben.
+
+
+
+[[choose-a-procedure]]
+== Auswahl eines Verfahrens
+
+Die Kerberos-Dateien, die Host-Pakete und die Verifizierungsschritte hängen von Ihrem Deployment-Typ ab.
+
+[cols="1,2,2,2"]
+|===
+| Bereitstellung | Wo sich die Kerberos-Dateien befinden | Pakete | Verfahren 
+
+
+| Einzelknoten | Auf dem AI Data Engine Host. Die Kerberos Konfigurationsdatei ist `/etc/krb5.conf`. | Die Installation der Kerberos-Clienttools erfolgt auf dem Host. Das Installationsprogramm installiert `cifs-utils`. | link:configure-kerberos-smb-single-node.html["Konfiguration von Kerberos für SMB/CIFS-Freigaben auf einem Single-Node AI Data Engine Deployment"] 
+
+
+| Multi-Node | Auf dem gemeinsam genutzten NFS-Export, der die AI Data Engine Konfiguration enthält. Die Nodes verwenden `/etc/krb5.conf` nicht. | Auf einem Administrator-Host ist die Installation der Kerberos-Clienttools erforderlich. Die Installation  `cifs-utils` erfolgt auf jedem Knoten. | link:configure-kerberos-smb-multi-node.html["Konfiguration von Kerberos für SMB/CIFS-Freigaben in einem AI Data Engine Deployment mit mehreren Nodes"] 
+|===
+
+
+[[what-you-need]]
+== Was Sie brauchen
+
+Diese Details werden benötigt, damit Sie den Kerberos-Zugriff auf die SMB/CIFS-Freigaben konfigurieren können, die Sie scannen möchten.
+
+* Ein Scan-Dienstkonto in Active Directory mit Lesezugriff auf die SMB/CIFS-Freigaben, die gescannt werden sollen. Das Konto muss die AES256-Verschlüsselung unterstützen.
+* Die IP-Adresse und der FQDN eines Domänencontrollers, der als KDC fungiert.
+* Ihre Active Directory-Domäne und Ihr Kerberos-Realm. Der Realm ist die Domäne in Großbuchstaben.
+* Der FQDN und der Freigabename jedes Dateiservers, den Sie scannen möchten. Die Kerberos-Authentifizierung akzeptiert keine IP-Adresse für den Dateiserver.
+* Root-Zugriff auf den AI Data Engine Host für ein Einzelknoten-Deployment. Für ein Mehrknoten-Deployment sind Root-Zugriff auf jeden Knoten und auf den Admin-Host sowie `kubectl` Zugriff mit Cluster-Admin-Berechtigungen vom Admin-Host aus erforderlich.
+* Für ein Deployment mit mehreren Nodes ist der Zugriff von jedem Node auf den NFS-Server über TCP-Port 2049 erforderlich.
+
+
+Ihre Umgebung muss außerdem die Anforderungen link:../deploy/aide-requirements.html#networking-requirements["Netzwerkanforderungen"] und link:../deploy/aide-requirements.html#kerberos-ad-requirements["Anforderungen für Kerberos und Active Directory"] erfüllen, einschließlich Zeitsynchronisierung, DNS und Host-Paketen.
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:configure-kerberos-smb-single-node.html["Konfiguration von Kerberos für SMB/CIFS-Freigaben auf einem Single-Node AI Data Engine Deployment"]
+* link:configure-kerberos-smb-multi-node.html["Konfiguration von Kerberos für SMB/CIFS-Freigaben in einem AI Data Engine Deployment mit mehreren Nodes"]
+* link:../deploy/aide-requirements.html#kerberos-ad-requirements["Anforderungen für Kerberos und Active Directory"]
+* link:../data-sources/connect-data-source.html["Verbinden einer Datenquelle mit AI Data Engine"]
+* link:configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"]
+

@@ -27,7 +27,7 @@ Die Ansicht wird geöffnet, wenn in der linken Navigation *Investigation* ausgew
 | Tab | Verwendung, wenn Sie Folgendes möchten | Weitere Informationen 
 
 
-| *Unstrukturiert* | Kalte, veraltete oder doppelte dateibasierte Daten in NFS- und SMB/CIFS-Volumes finden | link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"] 
+| *Unstrukturiert* | Kalte, veraltete oder doppelte dateibasierte Daten in NFS- und SMB-Volumes finden | link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"] 
 
 
 | *Strukturiert* | Identifizierung übergroßer oder ungenutzter Datenbanktabellen, die Speicherplatz belegen | link:investigate-structured.html["Untersuchung strukturierter Daten"] 
@@ -45,6 +45,5 @@ Die Zusammenfassungsanzahl und die Gesamtgröße oben auf der Seite werden entsp
 * link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
 * link:investigate-structured.html["Untersuchung strukturierter Daten"]
 * link:investigate-directories.html["Verzeichnisse untersuchen"]
-* link:use-filters.html["Arbeiten mit Filtern"]
 * link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
 

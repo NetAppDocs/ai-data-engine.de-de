@@ -1,0 +1,45 @@
+---
+sidebar: sidebar 
+permalink: mcp/quick-start-mcp.html 
+keywords: quick start, mcp, governed ai access, identity provider, data collection, ai client, entra id 
+summary: Der kontrollierte KI-Zugriff mit AI Data Engine wird eingerichtet, indem Microsoft Entra ID vorbereitet, mit AI Data Engine verbunden, eine Datenerfassung für MCP konfiguriert sowie ein KI Client verbunden und validiert wird. 
+---
+= Schnellstart für geregelten KI-Zugriff mit AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit AI Data Engine (AIDE) lässt sich ein gesteuerter KI-Zugriff einrichten, damit KI-Clients Datensammlungen durchsuchen und Dateien über das Model Context Protocol (MCP) mit Tags versehen können. Die Vorbereitung des MCP-Hosts und von Microsoft Entra ID, die Konfiguration einer Datensammlung für MCP und die Verbindung eines KI-Clients sind erforderlich.
+
+Diese Kurzanleitung setzt voraus, dass Sie bereits link:../data-sources/connect-data-source.html["eine Datenquelle verbunden"] und dass AI Data Engine es gescannt und indiziert hat. Der MCP server wird zusammen mit AI Data Engine eingesetzt. Sie benötigen eine registrierte DNS Domäne, die in Ihrem Microsoft Entra ID Tenant verifiziert ist. Der Hostname des AIDE Clusters, den Sie verwenden, muss sich in dieser Domäne befinden. Außerdem benötigen Sie die Berechtigung, Applikationen zu registrieren und in Microsoft Entra ID Zustimmung zu erteilen, oder ein Entra ID Administrator muss die Entra ID Schritte für Sie abschließen.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Eins"] link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]
+[role="quick-margin-para"]
+Auf dem System, auf dem das AI Data Engine Installationsprogramm heruntergeladen wurde, wird link:prepare-mcp-host.html#run-the-ingress-script["Ingress-Skript"] ausgeführt, um das Zertifikat und den Hostnamen des AIDE Clusters einzurichten. Der Hostname muss sich in einer Domäne befinden, die in Ihrem Entra ID Mandanten verifiziert ist. Anschließend link:prepare-mcp-host.html#verify-the-host["Host überprüfen"].
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Zwei"] link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID (Entra ID-Administrator)"]
+[role="quick-margin-para"]
+Im Microsoft Entra admin center muss link:configure-entra-id-mcp.html#register-the-ai-data-engine-application["eine Applikation registrieren"] für diese AI Data Engine Instanz erfolgen, und ihre Application ID URI sowie ihr Scope müssen definiert werden. Anschließend muss link:configure-entra-id-mcp.html#create-and-assign-the-power-user-app-role["Erstellen der Power-User-App-Rolle"] und Ihren Benutzern zugewiesen werden, und link:configure-entra-id-mcp.html#add-redirect-uris-for-ai-clients["Umleitungs-URIs hinzufügen"] für Ihre AI Clients. Die Mandanten-ID und die Applikations-ID (Client-ID) sollten notiert werden.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Drei"] link:connect-entra-id-aide-mcp.html#set-up-an-identity-provider["Verbindung von Entra ID mit AI Data Engine (AI Data Engine Administrator)"]
+[role="quick-margin-para"]
+In NetApp Console wird Microsoft Entra ID mithilfe der Mandanten-ID und der Applikations-ID (Client-ID) als Identitätsanbieter in AI Data Engine hinzugefügt. Es ist sicherzustellen, dass der Anbieter verbunden ist.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-4.png["Vier"] link:manage-data-collections.html#create-a-data-collection["Optional: Eine Datensammlung erstellen"]
+[role="quick-margin-para"]
+Die Sammlung *Alle Dateien* ist standardmäßig vorhanden und enthält alle gescannten Dateien. In NetApp Console stehen weitere Sammlungen zur Verfügung, mit denen bestimmte Volumes AI Clients über den MCP Server bereitgestellt werden können.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-5.png["Fünf"] link:manage-data-collections.html#configure-a-collection-for-mcp["Konfiguration der Sammlung für MCP"]
+[role="quick-margin-para"]
+In NetApp Console link:maintain-mcp-setup.html#enable-or-disable-the-connection-to-mcp["die Verbindung zu MCP aktivieren"] lässt sich bestätigen, dass der MCP-Server ausgeführt wird. Die Verbindung ist standardmäßig deaktiviert. Anschließend können Sie eine Sammlung für MCP konfigurieren, indem Sie den Identitätsanbieter und den Power-User-Bereich auswählen und das MCP-Code-Snippet für Ihren KI-Client generieren.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-6.png["Sechs"] link:connect-ai-clients-mcp.html["Herstellen einer Verbindung mit einem KI-Client und Überprüfen der Verbindung"]
+[role="quick-margin-para"]
+Im AI Client erfolgt das Hinzufügen des Snippets sowie die Anmeldung mit Microsoft Entra ID. Falls AI Clients keine Verbindung herstellen können, sollte link:maintain-mcp-setup.html#enable-or-disable-the-connection-to-mcp["*Aktivierung der Verbindung zu MCP*"] aktiviert sein. Es ist zu bestätigen, dass die AI Data Engine tools verfügbar sind, und anschließend link:connect-ai-clients-mcp.html#sample-prompts["Beispielaufforderungen ausprobieren"].
+
+Die Werte, die Sie in Entra ID, NetApp Console und Ihrem AI Client eingeben, müssen exakt übereinstimmen. Eine vollständige Liste der zu prüfenden Punkte finden Sie unter link:connect-entra-id-aide-mcp.html#verify-your-configuration["Überprüfung Ihrer Konfiguration"].
+
+.Was kommt als Nächstes
+link:maintain-mcp-setup.html["Aktualisieren einer Sammlung, eines Identitätsanbieters, der Bereiche, die auf eine Sammlung zugreifen können, oder der MCP Servereinstellungen"]. Überprüfung der link:mcp-tools-reference.html["MCP tools für den von AI Data Engine gesteuerten KI-Zugriff"] und der link:../release-notes/known-limitations.html["bekannte Einschränkungen"].

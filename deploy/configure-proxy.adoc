@@ -1,0 +1,139 @@
+---
+sidebar: sidebar 
+permalink: deploy/configure-proxy.html 
+keywords: proxy, outbound proxy, forward proxy, HTTPS proxy, proxy certificate, proxy authentication, install, proxy host, proxy port, allowlist, CONNECT, installer download, container runtime 
+summary: Hier wird erläutert, wie AI Data Engine mit einem Forward Proxy arbeitet und welche Proxy-Typen und Parameter von AI Data Engine unterstützt werden. 
+---
+= Informationen zu Proxys für AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Wenn Ihr AI Data Engine (AIDE) Host oder Cluster nicht direkt auf das Internet zugreifen kann, erfolgt der Zugriff über einen Forward Proxy, damit das Installationsprogramm und AI Data Engine Komponenten herunterladen, Container Images abrufen und sich bei NetApp Console registrieren können. Die Proxyoptionen sind für Single-Node- und Multi-Node-Deployments identisch. Die Schritte zur Vorbereitung und Durchführung der Installation unterscheiden sich, daher hat jeder Deployment-Typ einen eigenen Workflow.
+
+Die Proxy-Einstellungen gelten nur für die k3s-Laufzeitumgebung und AI Data Engine, nicht für das Hostsystem.
+
+
+
+[[deploy-ai-data-engine-with-a-proxy]]
+== Deployment von AI Data Engine mit einem Proxy
+
+Jeder Deployment-Typ verfügt über ein eigenes Thema mit dem vollständigen Verfahren, von der Vorbereitung der Umgebung bis zur Ausführung des Installationsprogramms.
+
+* link:deploy-aide-single-node-proxy.html["Einsetzen von AI Data Engine als Einzelknoten Deployment mit einem Proxy"]: Das Installationsprogramm konfiguriert den Proxy für die k3s-Laufzeitumgebung und für AI Data Engine, einschließlich ihres Truststores.
+* link:deploy-aide-multi-node-proxy.html["Einsatz von AI Data Engine als Multi-Node Deployment mit einem Proxy"]: Sie konfigurieren den Container-Runtime-Proxy und die Vertrauensstellung für das CA-Zertifikat auf jedem Knoten, bevor Sie das Installationsprogramm ausführen.
+
+
+
+
+[[what-goes-through-the-proxy]]
+== Was läuft über den Proxy
+
+Nur internetgebundener Datenverkehr nutzt den Proxy. Alle AI Data Engine Internetziele verwenden HTTPS auf Port 443, daher muss Ihr Proxy `CONNECT` Verbindungen zu Port 443 für jeden Endpunkt in link:aide-requirements.html#outbound-internet-access["Ausgehender Internetzugang"] zulassen.
+
+Der Datenverkehr in Ihrem Netzwerk wird direkt geleitet und muss auch ohne Proxy erreichbar bleiben:
+
+* Der Console Agent (`--cm-host`)
+* NFS, CIFS/SMB, ONTAP und StorageGRID Datenquellen
+* Active Directory und LDAP
+* Der Kubernetes API server und die internen Netzwerke des Clusters
+
+
+
+
+[[supported-proxy-configurations]]
+== Unterstützte Proxy-Konfigurationen
+
+[cols="2,3,2"]
+|===
+| Konfiguration | Beschreibung | Authentifizierung 
+
+
+| Kein Proxy | Direkte Internetverbindung; es wird kein Proxy verwendet. | Keine 
+
+
+| HTTP-Forward-Proxy | AI Data Engine stellt über HTTP eine Verbindung zum Proxy her und tunnelt HTTPS-Ziele mit `CONNECT`. | Keine oder HTTP Basic Authentifizierung (Benutzername und Passwort) 
+
+
+| HTTPS-Forward-Proxy | AI Data Engine verbindet sich über TLS mit dem Proxy. Falls das Proxy-Zertifikat von einer privaten Zertifizierungsstelle (CA) signiert wurde, ist die Angabe des CA-Zertifikats erforderlich. | Keine oder HTTP Basic Authentifizierung (Benutzername und Passwort) 
+|===
+Sie können den Proxy über den Hostnamen oder die IPv4-Adresse ansprechen.
+
+
+IMPORTANT: AI Data Engine unterstützt Standard-Forward-Proxys, die Verbindungen über HTTP `CONNECT` tunneln, einschließlich HTTPS-Zielen. Wenn Ihr Proxy TLS-Datenverkehr prüft, ist für die Endpunkte in link:aide-requirements.html#outbound-internet-access["Ausgehender Internetzugang"], einschließlich des Download-Hosts des Installationsprogramms, eine Ausnahme von der Prüfung erforderlich. Proxys mit TLS-Inspektion und einige andere Proxy-Funktionen werden nicht unterstützt. Weitere Informationen unter link:../release-notes/known-limitations.html["Bekannte Einschränkungen"].
+
+Das Installationsprogramm verwendet einen Proxy für jedes Internetziel und jede AI Data Engine Komponente. Die Proxy-Einstellungen werden während der Installation festgelegt.
+
+
+
+[[proxy-configuration-parameters]]
+[[proxy-parameters]]
+== Proxy-Konfigurationsparameter
+
+[cols="2,1,3"]
+|===
+| Parameter | Standard | Beschreibung 
+
+
+| `--proxy-host <host[:port]>` | Keine | Hostname oder IPv4-Adresse des Forward-Proxys, ohne `http://` oder `https://`. Ermöglicht die Proxy-Konfiguration. Akzeptiert einen Inline-Port (`host:port`). Ein Port in `--proxy-host` hat Vorrang vor `--proxy-port`. 
+
+
+| `--proxy-port <port>` | `80` für HTTP, `443` für HTTPS | Der Port, auf dem der Proxy lauscht. Wird ignoriert, wenn der Port bereits in `--proxy-host` enthalten ist. 
+
+
+| `--proxy-scheme <http|https>` | `https` | Das Protokoll, das für die Verbindung mit dem Proxyserver selbst verwendet wird. Dies ist nicht das Schema der Ziele, die der Proxy erreicht. Die meisten Forward-Proxys verwenden unverschlüsseltes HTTP, daher wird für diese  `--proxy-scheme http` angegeben. 
+
+
+| `--proxy-ca-cert <path>` | Keine | Pfad zu einer PEM-Datei oder zu einem flachen Verzeichnis mit  `.crt`- und  `.pem`-Dateien, das das CA-Zertifikat enthält, mit dem das Proxy-Zertifikat signiert wurde. Das Installationsprogramm liest ein Verzeichnis, ohne Unterverzeichnisse zu durchsuchen, und führt die Dateien zu einem Bundle zusammen. Erforderlich für einen HTTPS-Proxy, dessen Zertifikat von einer privaten Zertifizierungsstelle signiert ist. Wird nicht für einen HTTP-Proxy verwendet. 
+
+
+| `--proxy-user <user>` | Keine | Benutzername für die Basisauthentifizierung. Bei Verwendung eines HTTP Proxyservers warnt das Installationsprogramm, dass die Anmeldeinformationen unverschlüsselt an den Proxy übertragen werden. Ein Passwort ist erforderlich, das mit `--proxy-password-file` angegeben oder bei der Eingabeaufforderung eingegeben wird. 
+
+
+| `--proxy-password-file <path>` | Keine | Pfad zu einer lokalen Datei, die nur das Proxy-Passwort enthält und deren Berechtigungen auf `0600` oder `0400` gesetzt sind. Wenn Sie ihn weglassen, fordert das Installationsprogramm zur Passworteingabe mit ausgeblendeter Eingabe auf. 
+
+
+| `--proxy-type <r>` | `r` | Proxy-Typ. `r` ist ein regulärer Forward Proxy und die Standardeinstellung. Diese Einstellung bleibt unverändert. TLS-inspektierende Proxys werden nicht unterstützt. 
+
+
+| `--no-proxy` | — | Deaktiviert explizit die Proxy-Konfiguration und überspringt Proxy-Abfragen. Die Verwendung dieser Option ist nur dann vorgesehen, wenn der Host über direkten Internetzugang verfügt. 
+|===
+
+NOTE: Das Installationsprogramm akzeptiert  `--proxy-password` oder die  `PROXY_PASSWORD` Umgebungsvariable nicht. Als Alternative dienen  `--proxy-password-file` oder die interaktive Eingabeaufforderung.
+
+
+
+[[the-installer-download]]
+== Der Download des Installers
+
+Der aus NetApp Console kopierte Installationsbefehl lädt das Installationsprogramm von einem Content Delivery Network (CDN) herunter und führt es anschließend in einem Schritt aus. Der Download verwendet keinen Proxy. Wenn der Zielhost das Internet nur über einen Proxyserver erreicht, erfolgt der Download des Installationsprogramms manuell, und der Installationsbefehl wird aus dem extrahierten Installationsprogramm ausgeführt. Die Deployment Themen beschreiben diese Schritte.
+
+
+
+[[proxy-verification]]
+== Proxy-Überprüfung
+
+Bevor das Installationsprogramm etwas herunterlädt, führt es vom Installationshost aus eine Überprüfung durch. Die Überprüfung bestätigt, dass der Proxy antwortet, dass der Proxy Ihre Anmeldeinformationen akzeptiert und dass das Proxy-Zertifikat für das gewählte Schema gültig ist. Wenn die Überprüfung fehlschlägt, wird die Installation abgebrochen und die Ursache angegeben, beispielsweise ein falscher Port, ein falsches Schema oder ein abgelehntes Passwort (HTTP 407).
+
+Bei Deployments mit mehreren Knoten umfasst die Prüfung nur den Proxy. Es wird nicht geprüft, ob die Clusterknoten den Proxy erreichen können.
+
+
+
+[[change-proxy-settings-after-installation]]
+== Änderung der Proxy-Einstellungen nach der Installation
+
+Die Proxy-Einstellungen werden während der Installation festgelegt. Auf einem installierten Cluster läuft das Installationsprogramm nicht erneut. Änderungen des Proxy-Hosts, des Ports, der Anmeldeinformationen oder des CA-Zertifikats nach der Installation sind über NetApp Support möglich.
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:aide-requirements.html["AIDE-Anforderungen"]
+* link:single-node-prerequisites.html["Voraussetzungen für das AIDE Single-Node Deployment"]
+* link:multi-node-prerequisites.html["Voraussetzungen für das AIDE Multi-Node Deployment"]
+* link:deploy-aide-single-node-proxy.html["Einsetzen von AI Data Engine als Einzelknoten Deployment mit einem Proxy"]
+* link:deploy-aide-multi-node-proxy.html["Einsatz von AI Data Engine als Multi-Node Deployment mit einem Proxy"]
+

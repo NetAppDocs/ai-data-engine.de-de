@@ -1,0 +1,132 @@
+---
+sidebar: sidebar 
+permalink: mcp/connect-entra-id-aide-mcp.html 
+keywords: mcp, governed ai access, microsoft entra id, identity provider, collections, verify configuration, netapp console, aide administrator 
+summary: Als AI Data Engine Administrator stellen Sie in der NetApp Console eine Verbindung von Microsoft Entra ID mit AI Data Engine als Identitätsanbieter her, konfigurieren Sammlungen für MCP und überprüfen Ihre Konfiguration für den kontrollierten KI-Zugriff. 
+---
+= Verbindung von AI Data Engine mit Microsoft Entra ID für kontrollierten KI-Zugriff
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Die Verbindung von Microsoft Entra ID mit AI Data Engine (AIDE) als Identitätsanbieter ermöglicht die Authentifizierung von Benutzern und die Steuerung der Sammlungen, mit denen sie über das Model Context Protocol (MCP) arbeiten können. Als AI Data Engine Administrator konfigurieren Sie den Identitätsanbieter, richten Sammlungen für MCP ein und überprüfen Ihre Konfiguration in NetApp Console.
+
+Der Governed AI Zugriff verwendet Entra ID zur Authentifizierung von Benutzern, und die Bereiche, die Sie für jede Sammlung einschließen, bestimmen, mit welchen Sammlungen ein Benutzer über MCP arbeiten kann.
+
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+* AI Data Engine ist im Einsatz und hat mindestens eine Datenquelle gescannt. Ein Verweis befindet sich in link:../data-sources/connect-data-source.html["Herstellen einer Verbindung mit einer Datenquelle"].
+* Der AIDE Cluster Hostname ist auf einer registrierten DNS-Domäne eingerichtet, die in Ihrem Entra ID Tenant verifiziert ist. Weitere Informationen finden Sie unter link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"].
+* Ein Microsoft Entra ID Administrator hat die AI Data Engine Applikation für diese AI Data Engine Instanz registriert und Ihnen die Directory (tenant) ID und die Application (client) ID mitgeteilt. Weitere Informationen finden Sie unter link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"].
+
+
+
+
+[[set-up-an-identity-provider]]
+== Einrichten eines Identitätsanbieters
+
+Die Verbindung von Microsoft Entra ID als Identitätsanbieter (IdP) dient der Authentifizierung und Autorisierung des Zugriffs auf die Datenressourcen in Ihren Datensammlungen.
+
+.Bevor Sie beginnen
+* Sie benötigen die Rolle „AI Data Engine administrator“.
+* Sie verfügen über die Mandanten-ID und die Applikations-ID (Client-ID) der AI Data Engine Applikation, die in Microsoft Entra ID für diese AI Data Engine Instanz registriert ist.
+
+
+.Schritte
+. In NetApp Console befindet sich *AI data hub* > *AI Data Engine*.
+. Die Auswahl erfolgt über *Configuration* > *Identity providers*.
+. Auszuwählen ist *Identitätsanbieter hinzufügen*.
++
+Das Panel *Identitätsanbieter hinzufügen* öffnet sich.
+
+. Unter *Identitätsanbieter auswählen* ist *Microsoft EntraID* auszuwählen.
+. In *Entra Tenant ID* erfolgt die Eingabe der Verzeichnis-ID (Tenant-ID) Ihres Entra ID Tenants.
+. Im Feld *Application (Client) ID* wird die Application (client) ID der AI Data Engine Applikation eingegeben.
++
+
+IMPORTANT: Die Applikations-ID (Client-ID) ist eine GUID. Die Applikations-ID-URI darf nicht eingegeben werden. Tokens identifizieren die AI Data Engine Applikation anhand ihrer GUID, daher führt eine URI zu Anmeldefehlern.
+
++
+Es sind die Kennungen aus Ihrer Microsoft Entra ID Konfiguration zu verwenden. AI Data Engine prüft das Format beider Werte und bestätigt, dass der Tenant vorhanden ist. Wenn die Meldung *Invalid identity* angezeigt wird, sind die Werte zu überprüfen und vor einem erneuten Versuch zu korrigieren.
+
+. Auszuwählen ist *Identitätsanbieter hinzufügen*.
+
+
+Nach Abschluss der Einrichtung zeigt AI Data Engine die Bestätigungsmeldung *Identitätsanbieter erfolgreich erstellt.* an. Der Anbieter erscheint in der Liste *Identitätsanbieter*. Vor dem Fortfahren muss bestätigt sein, dass der *Verbindungsstatus* *Verbunden* ist.
+
+In Ihren AI Clients dient dieselbe Applikations-ID (Client-ID) als Client-ID.
+
+Änderungen an den Einstellungen für Identitätsanbieter und die Erfassung werden möglicherweise nicht sofort wirksam, da NetApp Console sie asynchron auf den MCP Server anwendet.
+
+Das Hinzufügen eines Identitätsanbieters verknüpft ihn nicht automatisch mit einer Sammlung. Bei der Konfiguration der Sammlung ist der Identitätsanbieter auszuwählen, damit AI Applikationen mit Authentifizierung und Autorisierung auf seine Ressourcen zugreifen können. Siehe <<configure-collections-for-mcp,Sammlungen für MCP konfigurieren>>. Ein Identitätsanbieter kann nur gelöscht werden, wenn ihn keine Sammlung verwendet. Zum Bearbeiten siehe link:maintain-mcp-setup.html#update-an-identity-provider["Einen Identitätsanbieter aktualisieren"].
+
+
+
+[[configure-collections-for-mcp]]
+== Sammlungen für MCP konfigurieren
+
+Nachdem Sie einen Identitätsanbieter eingerichtet und eine Sammlung erstellt haben, erfolgt die Konfiguration der Sammlung für MCP in der NetApp Console. Dabei werden die Identitätsanbieter und Benutzerbereiche ausgewählt, die auf die Sammlung zugreifen können, und anschließend wird die MCP-Server-URL oder ein Client-spezifischer Konfigurationsausschnitt für Ihren AI Client kopiert. Siehe link:manage-data-collections.html#configure-a-collection-for-mcp["Konfiguration einer Sammlung für MCP"].
+
+
+
+[[verify-your-configuration]]
+== Überprüfung Ihrer Konfiguration
+
+Vor der Verbindung der Benutzer muss Folgendes zutreffen. Die Application ID URI, der Bereich, die tenant ID und die client ID müssen in Entra ID, NetApp Console und Ihren AI Clients exakt übereinstimmen.
+
+*AIDE Cluster-Host*
+
+* Der Hostname des AIDE Clusters befindet sich in einer Domäne, die in Entra ID verifiziert ist.
+* Der Hostname lässt sich von Benutzerrechnern aus auflösen.
+* Der Host legt ein Zertifikat vor, dem Client-Systeme vertrauen.
+* Der bekannte Endpunkt des MCP Servers liefert die erwartete Antwort. Informationen dazu finden Sie in link:prepare-mcp-host.html#verify-the-host["Überprüfung des Hosts"].
+
+
+*Microsoft Entra ID*
+
+* Für diese AI Data Engine Instanz ist eine dedizierte Applikation registriert.
+* Die Applikations-ID-URI lautet `\https://<host>/mcp/tools`.
+* Der `power_users` Gültigkeitsbereich existiert, und `requestedAccessTokenVersion` ist im Manifest auf `2` festgelegt.
+* Für jeden AI Client gibt es eine registrierte Redirect URI, und Public Client Flows sind zulässig.
+* Die `AIDEPowerUsers` App-Rolle wird Ihren Benutzern zugewiesen.
+
+
+*NetApp Console*
+
+* Der Entra ID-Identitätsanbieter verfügt über die Mandanten-ID und die Applikation (Client-)ID, und sein Verbindungsstatus ist *Connected*.
+* Die Option *Verbindung zu MCP aktivieren* ist unter *MCP Sammlungen* > *MCP Einstellungen* > *MCP Serververbindung* aktiviert.
+* Der MCP Server hat den Status *Running*.
+* Die Sammlung ist für MCP mit dem Identitätsanbieter und dem `power_users`Bereich konfiguriert.
+* Sie haben den MCP-Codeausschnitt generiert.
+
+
+*AI Client*
+
+* Sie haben den Codeausschnitt zum AI Client hinzugefügt.
+* Die Client-ID ist die Applikations-ID (Client-ID).
+* Der Gültigkeitsbereich umfasst die Application ID URI plus `/power_users`.
+* Nach der einmaligen Anmeldung werden die AI Data Engine Tools aufgelistet.
+
+
+.Was kommt als Nächstes
+link:manage-data-collections.html["Verwaltung von Datensammlungen"] und link:connect-ai-clients-mcp.html["Verbindung von AI Clients"].
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:learn-about-mcp.html["Informationen zum kontrollierten KI-Zugriff"]
+* link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]
+* link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
+* link:manage-data-collections.html["Verwaltung von Datensammlungen"]
+* link:connect-ai-clients-mcp.html["Verbindung von KI-Clients mit dem AI Data Engine MCP Server"]
+* link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"]
+* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
+

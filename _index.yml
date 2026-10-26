@@ -1,15 +1,16 @@
 ---
 indexpage:
   title: AI Data Engine Dokumentation
-  summary: Die Dokumentation zu AI Data Engine beschreibt, wie AI Data Engine bereitgestellt
-    wird, wie Datenquellen verbunden werden und wie AI Data Engine für Speicheroptimierung,
-    Metadatenanalyse und Data Governance genutzt wird.
+  summary: Die Dokumentation zu AI Data Engine behandelt das Deployment, das Verbinden
+    von Datenquellen und die Nutzung von AI Data Engine für Storage-Optimierung, Metadatenuntersuchung,
+    Daten-Governance und kontrollierten KI-Zugriff über MCP.
   keywords: ai data engine, aide, storage optimization, investigation, policies, data
-    governance, NetApp Console
+    governance, NetApp Console, governed ai access, mcp, model context protocol
   lead: AI Data Engine ist ein Metadaten-Intelligence-Service, der über NetApp Console
     verwaltet wird, Ihre verbundenen Systeme scannt, einen Metadatenkatalog erstellt
-    und Ihnen die Transparenz und Tools bietet, um Storage zu optimieren und Daten
-    im großen Maßstab zu steuern.
+    und Ihnen die Transparenz und Werkzeuge bietet, um Storage zu optimieren und Daten
+    im großen Maßstab zu verwalten. Mit Governance für den AI-Zugriff können AI-Clients
+    diese Metadaten über das Model Context Protocol (MCP) durchsuchen.
   tiles:
   - title: Los geht's
     links:
@@ -21,16 +22,22 @@ indexpage:
       url: "/get-started/quick-start.html"
     - title: Workflows zur Speicheroptimierung
       url: "/get-started/storage-optimization-workflows.html"
+    - title: Was ist neu
+      url: "/release-notes/whats-new.html"
+    - title: Bekannte Einschränkungen
+      url: "/release-notes/known-limitations.html"
   - title: Einsetzen
     links:
     - title: Bereitstellungsübersicht
       url: "/deploy/deployment-overview.html"
     - title: AIDE-Anforderungen
       url: "/deploy/aide-requirements.html"
-    - title: AIDE Lite bereitstellen
-      url: "/deploy/deploy-aide-lite.html"
-    - title: AIDE Enterprise bereitstellen
-      url: "/deploy/deploy-enterprise.html"
+    - title: AIDE als Einzelknoten-Deployment einsetzen
+      url: "/deploy/deploy-aide-single-node.html"
+    - title: Einsatz von AIDE als Multi-Node Deployment
+      url: "/deploy/deploy-aide-multi-node.html"
+    - title: Informationen zu Proxys für AIDE
+      url: "/deploy/configure-proxy.html"
   - title: Datenexploration
     links:
     - title: Herstellen einer Verbindung mit einer Datenquelle
@@ -41,8 +48,6 @@ indexpage:
       url: "/investigate/understand-dashboard.html"
     - title: Untersuchung Ihrer Daten
       url: "/investigate/investigate-data.html"
-    - title: Verwendung von Filtern
-      url: "/investigate/use-filters.html"
     - title: Maßnahmen für Daten ergreifen
       url: "/investigate/take-actions.html"
   - title: Richtlinien und Maßnahmen
@@ -51,13 +56,17 @@ indexpage:
       url: "/policies/create-policy.html"
     - title: Verwalten von Richtlinien
       url: "/policies/manage-policies.html"
+  - title: Governance für den KI-Zugriff (MCP)
+    links:
+    - title: Informationen zum kontrollierten KI-Zugriff
+      url: "/mcp/learn-about-mcp.html"
+    - title: Schnellstart für den gesteuerten AI-Zugriff
+      url: "/mcp/quick-start-mcp.html"
+    - title: Wartung Ihrer MCP-Konfiguration
+      url: "/mcp/maintain-mcp-setup.html"
   - title: Verwalten
     links:
     - title: Verwaltung von Benutzern und Rollen
       url: "/administer/manage-users-roles.html"
-    - title: Datenschwellenwerte konfigurieren
+    - title: Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans
       url: "/administer/configure-settings.html"
-    - title: Was ist neu
-      url: "/release-notes/whats-new.html"
-    - title: Bekannte Einschränkungen
-      url: "/release-notes/known-limitations.html"

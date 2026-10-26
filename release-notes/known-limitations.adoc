@@ -2,7 +2,7 @@
 sidebar: sidebar 
 permalink: release-notes/known-limitations.html 
 keywords: known limitations, limitations, restrictions, AI Data Engine 
-summary: Bekannte Einschränkungen kennzeichnen Funktionen, die in dieser Version der AI Data Engine nicht unterstützt werden. 
+summary: Bekannte Einschränkungen kennzeichnen Funktionen, die in AI Data Engine nicht unterstützt werden. 
 ---
 = Bekannte Einschränkungen in AI Data Engine
 :allow-uri-read: 
@@ -11,14 +11,30 @@ summary: Bekannte Einschränkungen kennzeichnen Funktionen, die in dieser Versio
 
 
 [role="lead"]
-Bekannte Einschränkungen kennzeichnen Funktionen, die in dieser Version der AI Data Engine nicht unterstützt werden oder nicht korrekt zusammenarbeiten. Diese Einschränkungen sollten vor der Bereitstellung oder Nutzung des Produkts geprüft werden.
+Bekannte Einschränkungen kennzeichnen Funktionen, die in der AI Data Engine (AIDE) nicht unterstützt werden oder nicht korrekt zusammenarbeiten. Diese Einschränkungen sollten vor dem Einsatz oder der Verwendung des Produkts geprüft werden.
 
 
 
 [[deployment]]
 == Bereitstellung
 
-Lite und Enterprise Bereitstellungen sind unabhängig:: AIDE Lite und AIDE Enterprise sind separate Bereitstellungsmodi. Es gibt keinen unterstützten Migrationspfad, um eine bestehende Bereitstellung von einem Modus in den anderen zu verschieben.
+Einzelknoten- und Mehrknoten-Deployments sind unabhängig:: Ein AIDE Single-Node Deployment und ein AIDE Multi-Node Deployment sind separate Deployment-Typen. Es gibt keinen unterstützten Migrationspfad, um ein bestehendes Deployment von einem Typ in den anderen zu verschieben.
+Die Proxy-Unterstützung ist eingeschränkt:: AI Data Engine lässt sich mit einem Forward Proxy einsetzen, jedoch werden die folgenden Proxy-Funktionen nicht unterstützt:
++
+--
+* TLS-inspektierende Proxys, die HTTPS-Datenverkehr mit einer benutzerdefinierten Zertifizierungsstelle entschlüsseln und neu signieren.
+* NTLM-, Kerberos- oder Clientzertifikatsauthentifizierung für den Proxy. Keine Authentifizierung oder einfache Authentifizierung.
+* SOCKS-Proxys.
+* Automatische Proxy-Konfiguration (PAC-Datei oder WPAD). Direkte Angabe von Proxy-Host und -Port an das Installationsprogramm.
+* Für verschiedene Ziele wird ein unterschiedlicher Proxy verwendet. Ein Proxy leitet den gesamten Internetverkehr von AI Data Engine.
+* Eine IPv6-Adresse als Proxy-Adresse. Stattdessen sollte ein Hostname verwendet werden; der Hostname kann in IPv6 aufgelöst werden.
+* Ein Proxy mit einer vom Internet getrennten Installation. Das Installationsprogramm lehnt Proxy-Optionen bei einer vom Internet getrennten Installation ab.
++
+Informationen zu unterstützten Proxy-Konfigurationen sind unter link:../deploy/configure-proxy.html["Informationen zu Proxys für AI Data Engine"] verfügbar.
+
+
+
+--
 
 
 
@@ -26,7 +42,7 @@ Lite und Enterprise Bereitstellungen sind unabhängig:: AIDE Lite und AIDE Enter
 [[policies-and-actions]]
 == Richtlinien und Maßnahmen
 
-Richtliniengesteuerte Aktionen sind begrenzt:: Beim Erstellen einer Richtlinie sind die verfügbaren automatisierten Aktionen auf die dauerhafte Löschung und die E-Mail-Benachrichtigung beschränkt. Automatisierte Archivierungs- und Tagging-Aktionen aus Richtlinien sind in dieser Version nicht verfügbar. Es kann eine Richtlinie ohne Aktion erstellt werden, um einen Datenzustand im Zeitverlauf zu überwachen.
+Richtliniengesteuerte Aktionen sind begrenzt:: Beim Erstellen einer Richtlinie sind die verfügbaren automatisierten Aktionen auf das dauerhafte Löschen und die E-Mail-Benachrichtigung beschränkt. Automatisierte Archivierungs- und Tag-Aktionen aus Richtlinien sind nicht verfügbar. Sie können eine Richtlinie ohne Aktion erstellen, um einen Datenzustand im Zeitverlauf zu überwachen.
 
 
 
@@ -34,7 +50,16 @@ Richtliniengesteuerte Aktionen sind begrenzt:: Beim Erstellen einer Richtlinie s
 [[tags]]
 == Tags
 
-Tags können nicht gelöscht oder umbenannt werden:: Die Tag-Verwaltung ist in dieser Version nicht verfügbar. Nach dem Erstellen eines Tags bleibt es im System verfügbar. Sie können ein Tag auf Elemente anwenden und von Elementen entfernen, aber die Tag-Definition selbst nicht löschen oder einen Tag-Namen korrigieren, der einen Tippfehler enthält.
+Tags können nicht gelöscht oder umbenannt werden:: Nachdem Sie ein Tag erstellt haben, bleibt es im System verfügbar. Sie können ein Tag Elementen zuweisen und es von Elementen entfernen, aber Sie können die Tag-Definition selbst nicht löschen, umbenennen oder einen Tag-Namen korrigieren, der einen Tippfehler enthält. Bei Tag-Namen wird zwischen Groß- und Kleinschreibung unterschieden, daher sind `Finance` und `finance` unterschiedliche Tags.
+
+
+
+
+[[governed-ai-access-mcp]]
+== Governance für den KI-Zugriff (MCP)
+
+Die Suchfilter von MCP sind begrenzt:: KI-Clients können Dateien nur anhand des Namenspräfixes, des Dateityps und des Eigentümers durchsuchen. Wenn Sie nach Dateien anhand der Größe, des Datums oder des Ordners suchen, muss der KI-Client die Ergebnisse seitenweise durchlaufen, und die Antwort ist möglicherweise unvollständig.
+MCP-Tag-Vorgänge sind begrenzt:: AI-Clients können die Dateien mit einem Tag nicht auflisten, und sie können jeweils nur einer Datei gleichzeitig ein Tag hinzufügen oder entfernen.
 
 
 
@@ -45,4 +70,5 @@ Tags können nicht gelöscht oder umbenannt werden:: Die Tag-Verwaltung ist in d
 * link:whats-new.html["Was ist neu"]
 * link:../deploy/deployment-overview.html["Bereitstellungsübersicht"]
 * link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+* link:../mcp/learn-about-mcp.html["Informationen zum kontrollierten KI-Zugriff"]
 

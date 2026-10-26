@@ -1,67 +1,98 @@
 ---
 sidebar: sidebar 
 permalink: administer/configure-settings.html 
-keywords: cold threshold, stale threshold, configuration, settings, data classification, cold data, stale data 
-summary: Die Zeitschwellenwerte werden so konfiguriert, dass AI Data Engine Daten in Ihrer Umgebung als kalt oder veraltet klassifiziert. 
+keywords: general settings, cold data, stale data, data classification, thresholds, permission scanning, Active Directory, LDAP, NFS identity mapping, access risk, configuration 
+summary: Die Definition, welche Dateien AI Data Engine als kalte oder veraltete Daten einstuft, die Aktivierung der Berechtigungsprüfung und die Verbindung mit Active Directory ermöglichen die Identifizierung von Storage-Optimierungsmöglichkeiten und Zugriffsrisiken. 
 ---
-= Konfiguration von Schwellenwerten für kalte und veraltete Daten in AI Data Engine
+= Konfiguration von Schwellenwerten für die Datenklassifizierung und für Zugriffsscans in AI Data Engine
 :allow-uri-read: 
 :icons: font
 :imagesdir: ../media/
 
 
 [role="lead"]
-AI Data Engine klassifiziert Dateien anhand von von Ihnen definierten Zeitschwellenwerten als inaktiv oder veraltet. Diese Schwellenwerte beeinflussen, welche Daten in Dashboard-Zusammenfassungen angezeigt werden, welche Dateien bei Anwendung von Filtern für inaktive oder veraltete Dateien in Investigation erscheinen und auf welche Dateien sich Richtlinien beziehen. Es sollten Schwellenwerte festgelegt werden, die den Datenklassifizierungs- und Aufbewahrungspraktiken Ihres Unternehmens entsprechen und dabei helfen, die Daten zu identifizieren, deren Überwachung als wichtig erachtet wird.
+Schwellenwerte für kalte und veraltete Daten helfen Ihnen, Storage zu finden, die Sie mit AI Data Engine (AIDE) optimieren können. Berechtigungsprüfungen und die Integration von Active Directory helfen Ihnen, Zugriffsrisiken zu erkennen und zu verstehen. Diese sollten den Datenklassifizierungs-, Aufbewahrungs- und Zugriffsrichtlinien Ihres Unternehmens entsprechen.
+
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+Sie benötigen die Rolle „AI Data Engine administrator“.
 
 
 
 [[what-is-cold-and-stale-data]]
 == Was sind kalte und veraltete Daten?
 
-Kalte Daten:: Dateien, auf die innerhalb des konfigurierten Schwellenwerts für selten genutzte Daten nicht zugegriffen wurde. Selten genutzte Daten sind eine wichtige Kennzahl, mit der Ihre Organisation Speicher identifizieren kann, der gemäß Ihren Aufbewahrungs- und Geschäftsrichtlinien optimiert werden könnte.
-Veraltete Daten:: Dateien, auf die innerhalb des konfigurierten Schwellenwerts für veraltete Daten nicht zugegriffen oder die nicht geändert wurden. Zu den veralteten Daten gehören Dateien, auf die gelegentlich zugegriffen, die aber in letzter Zeit nicht geändert wurden und die Ihre Organisation gemäß ihren Richtlinien überwachen oder verwalten kann.
+Kalte Daten:: Dateien, auf die innerhalb des Kaltdaten-Schwellenwerts nicht zugegriffen wurde. Kalte Daten sind eine wichtige Kennzahl, mit der Ihr Unternehmen Storage identifizieren kann, das gemäß Ihren Aufbewahrungs- und Geschäftsrichtlinien optimiert werden könnte.
+Veraltete Daten:: Dateien, die innerhalb des Schwellenwerts für veraltete Daten nicht geändert wurden. Veraltete Daten helfen Ihrem Unternehmen, Dateien zu identifizieren, die sich in letzter Zeit nicht geändert haben und die Sie gemäß Ihren Richtlinien überwachen oder managen können.
 
+
+Diese Schwellenwerte beeinflussen Dashboard-Zusammenfassungen, die angezeigten Dateien bei Anwendung von Cold- oder Stale-Filtern in Investigation sowie die von Richtlinien erfassten Dateien. Geeignet sind Schwellenwerte, die widerspiegeln, wie lange Daten ungenutzt oder unverändert bleiben können, bevor Ihr Unternehmen sie auswertet. Ein kürzerer Schwellenwert stuft mehr Daten als inaktiv oder veraltet ein, während ein längerer Schwellenwert die Ergebnisse auf die Daten beschränkt, die am längsten inaktiv waren.
 
 
 NOTE: Die Standard-Schwellenwerte sind Produktvorgaben, die als Ausgangspunkt dienen. Sie entsprechen nicht den gesetzlichen, regulatorischen oder branchenüblichen Aufbewahrungsfristen. Es sollten Schwellenwerte festgelegt werden, die den spezifischen Richtlinien und Anforderungen Ihres Unternehmens entsprechen.
 
-Änderungen an einem der Schwellenwerte werden nach Abschluss des nächsten Scanzyklus wirksam.
+Änderungen an den Schwellenwerten für kalt und veraltet werden nach Abschluss des nächsten Scanzyklus wirksam.
 
 
 
-[[configure-the-cold-data-threshold]]
-== Konfiguration des Schwellenwerts für kalte Daten
+[[set-the-cold-data-threshold]]
+== Festlegen des Schwellenwerts für kalte Daten
 
-.Bevor Sie beginnen
-* Sie benötigen die Rolle „AI Data Engine administrator“.
-
+Es lässt sich festlegen, wie lange auf Dateien nicht zugegriffen werden kann, bevor Ihr Unternehmen sie im Hinblick auf Archivierung, Löschung oder Überwachung bewertet. Die Klassifizierung lässt sich außerdem nach Dateigröße einschränken, und bestimmte Dateitypen oder Pfade lassen sich davon ausschließen.
 
 .Schritte
-. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
-. *Einstellungen* auswählen.
-. Für die Definition von Kaltdaten ist die Option *Bearbeiten* auszuwählen.
-. Die Dateieigenschaft wird auf *Zuletzt aufgerufen* oder *Zuletzt geändert* festgelegt.
-. Legen Sie den Zeitschwellenwert fest. Der Standardwert beträgt ein Jahr.
+. In der AI Data Engine UI erfolgt die Auswahl von *Configuration* > *General settings*.
+. Das Erweitern der *Definition kalter Daten* sowie das Aktivieren der Klassifizierung kalter Daten ist erforderlich, falls diese deaktiviert ist.
+. Unter *Alter basiert auf* wird der Zeitstempel ausgewählt, der das Alter bestimmt: *Letzter Zugriff* zum Ermitteln von Dateien, die in letzter Zeit nicht verwendet wurden, oder *Letzte Änderung* zum Ermitteln von Dateien, die in letzter Zeit nicht geändert wurden.
+. Der *Schwellenwert für Cold Age* wird festgelegt. Der Standardwert beträgt ein Jahr.
+. Die *minimale Dateigröße (MiB)* und die *Obergrenze für die maximale Dateigröße (MiB)* dienen dazu, den Fokus auf die für Sie wichtigen Dateien zu legen.
+. Optional: Zum Ausschluss bestimmter Dateien aus dieser Klassifizierung sind *Dateitypen ausschließen* und *Pfade ausschließen* einzugeben. Dateien und vollständige Pfade sind einzugeben; mehrere Einträge werden durch Kommas getrennt.
 . *Speichern* auswählen.
 
 
 
 
-[[configure-the-stale-data-threshold]]
-== Konfiguration des Schwellenwerts für veraltete Daten
+[[set-the-stale-data-threshold]]
+== Schwellenwert für veraltete Daten festlegen
 
-.Bevor Sie beginnen
-* Sie benötigen die Rolle „AI Data Engine administrator“.
-
+Dabei wird festgelegt, wie lange Dateien unverändert bleiben dürfen, bevor Ihr Unternehmen sie gemäß seinen Richtlinien für den Datenlebenszyklus überprüft. Außerdem lässt sich die Klassifizierung nach Dateigröße einschränken, und bestimmte Dateitypen oder Pfade lassen sich davon ausschließen.
 
 .Schritte
-. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
-. *Einstellungen* auswählen.
-. Für *Definition veralteter Daten* ist *Bearbeiten* auszuwählen.
-. Die Dateieigenschaft wird auf *Zuletzt aufgerufen* oder *Zuletzt geändert* festgelegt.
-. Legen Sie den Zeitschwellenwert fest. Der Standardwert beträgt drei Jahre.
+. In der AI Data Engine UI erfolgt die Auswahl von *Configuration* > *General settings*.
+. *Definition veralteter Daten* kann erweitert werden, und die Klassifizierung veralteter Daten sollte aktiviert werden, falls sie deaktiviert ist.
+. Unter *Alter basiert auf* wird der Zeitstempel ausgewählt, der das Alter bestimmt: *Zuletzt geändert* oder *Zuletzt aufgerufen*.
+. Die *Altersgrenze für veraltete Elemente* wird festgelegt. Der Standardwert beträgt drei Jahre.
+. Die *minimale Dateigröße (MiB)* und die *Obergrenze für die maximale Dateigröße (MiB)* dienen dazu, den Fokus auf die für Sie wichtigen Dateien zu legen.
+. Optional: Zum Ausschluss bestimmter Dateien aus dieser Klassifizierung sind *Dateitypen ausschließen* und *Pfade ausschließen* einzugeben. Dateien und vollständige Pfade sind einzugeben; mehrere Einträge werden durch Kommas getrennt.
 . *Speichern* auswählen.
 
+
+
+
+[[find-access-risks-with-permission-scanning]]
+== Zugriffsrisiken durch Berechtigungsprüfung erkennen
+
+Die Berechtigungsprüfung kann aktiviert werden, wenn Dateien und Ordner ermittelt werden müssen, auf die mehr Personen Zugriff haben, als Ihre Richtlinien zulassen. Zur Überprüfung der Ergebnisse siehe link:../investigate/investigate-directories.html["Verzeichnisse untersuchen"].
+
+.Schritte
+. In der AI Data Engine UI erfolgt die Auswahl von *Configuration* > *General settings*.
+. Nach dem Erweitern von *Berechtigungsprüfung* wird der Schalter aktiviert.
++
+Das Scannen von Berechtigungen wird beendet, wenn der Schalter deaktiviert ist.
+
+
+
+
+
+[[show-user-and-group-names-with-active-directory]]
+== Benutzer- und Gruppennamen mit Active Directory anzeigen
+
+Eine Verbindung von AI Data Engine mit Active Directory ist erforderlich, wenn bei der Überprüfung Ihrer Daten Benutzernamen und Berechtigungen anstelle von numerischen IDs angezeigt werden sollen. Wenn Ihre Umgebung NFS verwendet, können numerische Benutzer-IDs (UIDs) und Gruppen-IDs (GIDs) außerdem Verzeichnisbenutzern und -gruppen zugeordnet werden.
+
+Die Voraussetzungen und Schritte sind unter link:configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"] beschrieben.
 
 
 
@@ -69,6 +100,10 @@ NOTE: Die Standard-Schwellenwerte sind Produktvorgaben, die als Ausgangspunkt di
 == Verwandte Informationen
 
 * link:../investigate/understand-dashboard.html["Informationen zum AI Data Engine Dashboard"]
+* link:../investigate/investigate-directories.html["Verzeichnisse untersuchen"]
+* link:../investigate/investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
 * link:../get-started/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
+* link:../deploy/aide-requirements.html["AIDE-Anforderungen"]
 * link:manage-users-roles.html["Verwaltung von Benutzern und Rollen"]
+* link:configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"]
 

@@ -1,0 +1,66 @@
+---
+sidebar: sidebar 
+permalink: deploy/deploy-aide-single-node.html 
+keywords: deploy, install, single-node, single node, wizard, NetApp Console, deployment wizard, onboarding 
+summary: Die Bereitstellung von AIDE als Single-Node-Deployment erfolgt über NetApp Console mithilfe des Deployment-Assistenten. 
+---
+= Bereitstellung von AI Data Engine als Single-Node-Deployment
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+AI Data Engine (AIDE) kann als Einzelknoten-Deployment über NetApp Console mithilfe des Deployment-Assistenten eingesetzt werden. Der Assistent führt Sie durch die Auswahl des Installationsorts, die Wahl einer Konfigurationsgröße und das Ausführen des Installationsbefehls auf Ihrem Zielhost.
+
+
+IMPORTANT: Wenn der Zielhost das Internet nur über einen ausgehenden Proxy erreicht, ist stattdessen link:deploy-aide-single-node-proxy.html["Einsetzen von AI Data Engine als Einzelknoten Deployment mit einem Proxy"] die richtige Wahl.
+
+.Bevor Sie beginnen
+* Sie verfügen in der NetApp Console über mindestens _Organization admin_-Berechtigungen.
+* Sie verfügen auf dem Zielhost über sudo oder root Berechtigungen, um den Installationsbefehl auszuführen.
+* Ihre Umgebung erfüllt alle Voraussetzungen, wie in link:single-node-prerequisites.html["Voraussetzungen für das AIDE Single-Node Deployment"] und link:aide-requirements.html["AIDE-Anforderungen"] beschrieben.
+* Ein NetApp Console Agent https://docs.netapp.com/us-en/console-setup-admin/concept-agent-install-options.html#agent-console-deploy["ist eingesetzt"^] und vom AI Data Engine Host aus erreichbar. Die IP-Adresse des Console Agent ist zum Ausführen des Installationsbefehls erforderlich.
+
+
+
+NOTE: Das Installationsprogramm ist nur für die Erstinstallation von AIDE vorgesehen. Es dient nicht zum Upgrade von AIDE. Nach der Installation verwaltet der AIDE Operator die Upgrades. Informationen zu Upgrades sind beim NetApp Support erhältlich.
+
+.Schritte
+. Navigieren Sie in NetApp Console zu *AI data hub* > *AI Data Engine*.
++
+Die Landingpage von AI Data Engine wird angezeigt.
+
+. Wählen Sie *Deploy AI Data Engine*.
+. Zunächst erfolgt die Auswahl der Bereitstellungsoption *Single-node*, anschließend die Auswahl von *Next*.
+. Wählen Sie Ihre Konfigurationsgröße:
++
+** *Klein*: empfohlen für Umgebungen mit bis zu ca. 200 Millionen Dateien.
+** *Mittel (Standard)*: empfohlen für Umgebungen mit bis zu ca. 1 Milliarde Dateien.
+** *Groß*: empfohlen für Umgebungen mit bis zu ca. 3 Milliarden Dateien.
++
+Diese Größenangaben stellen empfohlene Richtwerte und keine festen Grenzwerte dar. Siehe link:aide-requirements.html#flexible-sizing-single-node["Richtlinien für flexible Größenanpassung"] wenn Ihre Umgebung außerhalb dieser Bereiche liegt.
+
+
+
+. Kopieren des im Installationsassistenten angezeigten Installationsbefehls in einen Editor.
++
+Der Assistent generiert den Installationsbefehl mit der von Ihnen ausgewählten Konfigurationsgröße.
+
+. Die Ausführung des Installationsbefehls erfolgt auf dem Zielhost.
++
+Wenn der Installer fragt, ob ein ausgehender Proxy konfiguriert werden soll, lautet die Eingabe `n`.
+
++
+
+NOTE: Die Installation dauert etwa 45 Minuten. Zeitüberschreitungen und Wiederholungsversuche sind normal.
+
+. Für die Fortsetzung der Installation ist eine Bestätigung in der Abfrage des Installationsprogramms erforderlich.
++
+Das Installationsprogramm erkennt die IP-Adresse des Knotens, auf dem der AI Data Engine NGINX Ingress ausgeführt wird, und fordert zur Bestätigung auf. Mit der Eingabetaste bleibt die angezeigte Adresse erhalten, alternativ kann eine andere Adresse eingegeben werden. Geeignet ist eine Adresse, die von außerhalb der VM erreichbar ist. Die eingegebene Adresse darf nicht die Console Agent-Adresse sein.
+
+. Den Fortschrittsbildschirm beobachten, bis die Erfolgsmeldung erscheint und bestätigt, dass die AIDE Installation abgeschlossen ist.
+
+
+.Ergebnis
+AI Data Engine ist bereitgestellt und mit NetApp Console verbunden. Der Scan kann jetzt link:../data-sources/connect-data-source.html["eine Datenquelle verbinden"] gestartet werden.

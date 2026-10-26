@@ -1,0 +1,74 @@
+---
+sidebar: sidebar 
+permalink: administer/monitor-deployment-health.html 
+keywords: health monitor, deployment health, system stability, pods, unhealthy pod, OOMKilled, CrashLoopBackOff, evicted, memory, disk, CPU, utilization, eviction threshold, scans paused, node health, troubleshooting 
+summary: Die Überwachung Ihres AI Data Engine Deployment dient dazu, Arbeitslasten mit Problemen und Ressourcenengpässe zu identifizieren, die den Scanvorgang unterbrechen könnten, und Informationen für die Fehlerbehebung zu erfassen. 
+---
+= Überwachung des Deployment Systemstatus und Untersuchung von Problemen in AI Data Engine
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Der Systemstatusmonitor von AI Data Engine (AIDE) unterstützt Sie dabei, ungesunde Workloads und Ressourcenengpässe zu identifizieren, die das Scannen unterbrechen könnten. Mithilfe der Systemstatusdetails können Sie die Auswirkungen eines Problems bewerten und Informationen für die Fehlerbehebung erfassen.
+
+
+
+[[monitor-deployment-health-and-investigate-issues]]
+== Deployment Systemstatus überwachen und Probleme untersuchen
+
+.Schritte
+. In NetApp Console befindet sich *AI data hub* > *AI Data Engine*.
+. Die Auswahl erfolgt über *Configuration* und anschließend über *Health monitor*.
+. Unter *Infrastrukturstatus* ist unter *Systemstabilität* erkennbar, ob Pods fehlerhaft sind.
++
+Ein ungesunder Pod kann seine Workload nicht wie erwartet ausführen. Zu den ungesunden Status gehören Pending, Failed, Evicted, Unknown, OOMKilled und CrashLoopBackOff.
+
+. Ressourcenbeschränkungen, die sich möglicherweise auf Ihr Deployment auswirken:
++
+--
+** Bei einem Single Node Deployment ist *Node health* zu überprüfen. Wenn der Knoten ein Problem mit dem Systemstatus anzeigt, sollten Sie die Auslastungsanzeigen für CPU, Arbeitsspeicher und Festplatte auf Anzeichen von Ressourcenengpässen prüfen.
+** Bei einem Multi-Node Deployment dient *Node health* dazu, Knoten mit dem Status „Kritisch“, „Warnung“ oder „Offline“ zu identifizieren. Ein Vergleich der verfügbaren Metriken zur Ressourcenauslastung zeigt Anzeichen von Ressourcenengpässen. Bei Offline-Knoten empfiehlt sich eine Untersuchung der Knotenverfügbarkeit.
+
+
+--
+. Bei einem Multi-Node-Deployment dient die Auswahl von *Details anzeigen* auf einer Auslastungskarte dazu, die Ressource zu untersuchen:
++
+--
+** *CPU-Auslastung*: Vergleich der aktuellen Auslastung mit den Warn- und kritischen Schwellenwerten.
+** *Speicherauslastung*: Aktuelle Nutzung, Risiko eines Speichermangels (OOM) und Eviction-Schwellenwert.
+** *Festplattennutzung*: Überprüfung von verfügbarem Speicherplatz, Risiko und Abbruchschwelle.
+
+
+--
++
+Warnungen zu Arbeitsspeicher und Festplatte sollten besonders beachtet werden, da diese Bedingungen den Scanvorgang unterbrechen können. Empfohlene Maßnahmen werden in den Details angezeigt.
+
+. Zur Identifizierung betroffener Workloads lässt sich die Liste mithilfe der Filter *Pod* und *Status* unter *Pod Systemstatus* eingrenzen.
++
+Für jeden betroffenen Pod lassen sich Workload, Status und Ressourcennutzung überprüfen. Anhand dieser Informationen lässt sich zwischen Ressourcendruck und Pods unterscheiden, die fehlschlagen, wiederholt neu starten oder auf die Ausführung warten.
+
+. Eine Überprüfung von *Problematische Workloads* hilft dabei, Workloads zu identifizieren, die angehalten wurden oder häufig neu starten. Die gemeldeten Zeiten helfen dabei, diese Ereignisse mit der Ressourcenauslastung in Zusammenhang zu bringen.
+. Anhand der Trends bei der Ressourcenauslastung lässt sich erkennen, ob der Ressourcendruck vorübergehend oder kontinuierlich ist:
++
+--
+** Bei einem Einzelknoten-Deployment empfiehlt sich für den relevanten Zeitraum die Prüfung der *Verteilung der Ressourcenauslastung*.
+** Bei einem Multi-Node Deployment ist *Top 20 Nodes (Utilization)* für den relevanten Zeitraum zu prüfen. Dabei hilft ein Vergleich der Auslastung über die einzelnen Knoten hinweg sowie eine Prüfung der CPU-, Speicher- und Festplattennutzung der betroffenen Knoten, um kurzfristige Spitzen oder kontinuierlich hohe Auslastung zu erkennen.
+
+
+--
+. Falls Hilfe bei der Problembehebung erforderlich ist, kann in *Pod Systemstatus* image:icon_download_file.png["Download"] ausgewählt werden, um die Pod-Informationen herunterzuladen. Die relevanten Details aus *Systeminformationen*, einschließlich Hostname, Betriebssystem, Kernel, Console version, Kubernetes-Version und Console account ID, können zur Weitergabe an den Administrator oder das Supportteam verwendet werden.
+
+
+.Ergebnis
+Nachdem Sie eine Korrekturmaßnahme ergriffen haben, kehren Sie zum *Systemzustandsmonitor* zurück und überprüfen *Systemstabilität*, *Pod Systemstatus*, *Knoten Systemstatus* und *Ressourcenauslastung*, um zu verifizieren, dass die gemeldeten Zustände nicht mehr bestehen. Falls der Scanvorgang unterbrochen wurde, ist unter *Datenquellen* zu verifizieren, dass er fortgesetzt wurde. Informationen dazu enthält link:../data-sources/manage-data-sources.html#view-scan-status-and-details["Anzeigen des Scanstatus und der Details"].
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:../data-sources/manage-data-sources.html["Datenquellen verwalten"]
+* link:../deploy/aide-requirements.html["AI Data Engine Anforderungen"]
+

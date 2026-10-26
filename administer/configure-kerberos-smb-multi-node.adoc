@@ -1,0 +1,641 @@
+---
+sidebar: sidebar 
+permalink: administer/configure-kerberos-smb-multi-node.html 
+keywords: kerberos, smb, cifs, multi-node, nfs export, keytab, krb5.conf, ktutil, kdc, realm, fqdn, dns, authentication, active directory, scan service account, cifs-utils 
+summary: Die Kerberos-Authentifizierung ist in einem AI Data Engine Deployment mit mehreren Nodes so zu konfigurieren, dass AI Data Engine SMB/CIFS-Freigaben mithilfe eines Scan-Servicekontos und einer auf dem gemeinsam genutzten NFS-Export gespeicherten Keytab scannen kann. 
+---
+= Konfiguration von Kerberos für SMB/CIFS-Freigaben in einem AI Data Engine Deployment mit mehreren Nodes
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Mit Kerberos-Authentifizierung lassen sich SMB/CIFS-Freigaben aus einem Multi-Node-Deployment von AI Data Engine (AIDE) scannen, sodass kein Passwort in der Datenquelle gespeichert wird. Jeder Knoten verwendet dieselbe Kerberos-Konfiguration, und AI Data Engine aktualisiert das Kerberos-Ticket automatisch.
+
+Wenn Sie über ein Einzelknoten-Deployment verfügen, finden Sie weitere Informationen unter link:configure-kerberos-smb-single-node.html["Konfiguration von Kerberos für SMB/CIFS-Freigaben auf einem Single-Node AI Data Engine Deployment"].
+
+
+
+[[before-you-begin]]
+== Bevor Sie beginnen
+
+.Berechtigungen und Zugriff
+* Sie besitzen Administratorrechte für die AI Data Engine.
+* Sie haben Root-Zugriff auf jeden Knoten und auf den Administrationshost. Der Administrationshost ist der Host, auf dem Sie den NFS-Export einbinden und das keytab erstellen. Es kann sich dabei um einer der Knoten handeln.
+* Sie haben `kubectl` Zugriff auf Ihren Kubernetes-Cluster vom Administrator-Host aus mit Cluster-Administratorrechten. Bei Verwendung einer kubeconfig-Datei zeigt die `KUBECONFIG` Umgebungsvariable auf deren Pfad.
+
+
+.Netzwerk- und Zeitsynchronisierung
+* Sie haben die link:../deploy/aide-requirements.html#networking-requirements["Netzwerkanforderungen"] und die link:../deploy/aide-requirements.html#kerberos-ad-requirements["Anforderungen für Kerberos und Active Directory"], einschließlich Zeitsynchronisierung und DNS, überprüft.
+* Sie haben überprüft, dass jeder Knoten den NFS-Server über TCP-Port 2049, den KDC über Port 88, den Fileserver über Port 445 und Ihren DNS-Server über Port 53 erreichen kann.
+* Sie haben überprüft, dass NTP auf jedem Knoten aktiv ist und dass jede Uhr mit Ihren Domänencontrollern synchronisiert ist. Zur Überprüfung können Sie  `timedatectl` ausführen.
+
+
+.Active Directory
+* Sie verfügen in Active Directory über ein Scan-Dienstkonto mit Lesezugriff auf die zu scannenden SMB/CIFS-Freigaben. Das Konto muss die AES256-Verschlüsselung unterstützen.
+
+
+.Zu sammelnde Informationen
+* Sie verfügen über folgende Informationen:
++
+[cols="2,4,2"]
+|===
+| Artikel | Beschreibung | Beispiel 
+
+
+| KDC IP-Adresse | IP-Adresse des Domänencontrollers, der als Kerberos-Schlüsselverteilungszentrum (KDC) fungiert | `10.0.1.50` 
+
+
+| KDC-FQDN | Vollqualifizierter Domänenname (FQDN) desselben Domänencontrollers | `dc.corp.example.com` 
+
+
+| Domäne | Active Directory Domäne, in Kleinbuchstaben | `corp.example.com` 
+
+
+| Realm | Kerberos-Realm, also die Domäne in Großbuchstaben | `CORP.EXAMPLE.COM` 
+
+
+| Scanbenutzer | Dienstkonto mit Lesezugriff auf die Freigabe | `svc-aide` 
+
+
+| Scan-Passwort | Passwort des Scan-Benutzers. Sie geben es nur beim Erstellen der Keytab ein. | Nicht zutreffend 
+
+
+| Dateiserver FQDN | Der vollqualifizierte Domänenname (FQDN) des Dateiservers, auf dem die Freigabe gehostet wird. Keine IP-Adresse verwenden. | `filer.corp.example.com` 
+
+
+| Freigabename | Name der SMB/CIFS-Freigabe | `sharename` 
+|===
+
+
+
+
+[[kerberos-files-that-ai-data-engine-uses]]
+[[kerberos-file-locations]]
+== Kerberos-Dateien, die AI Data Engine verwendet
+
+Sie erstellen die folgenden Dateien auf dem NFS-Export, der die AI Data Engine Konfiguration enthält. In der folgenden Tabelle ist  `<export>` das Stammverzeichnis dieses Exports.
+
+[cols="1,2"]
+|===
+| Datei | Speicherort im Export 
+
+
+| Kerberos Konfiguration | `<export>/kerberos/krb5.conf` 
+
+
+| Keytab | `<export>/kerberos/kerberos_refresher/datasense.keytab` 
+
+
+| Hauptdatei | `<export>/kerberos/kerberos_refresher/kerberos_creds.env` 
+
+
+| Ticket-Cache-Verzeichnis | `<export>/kerberos/kerberos_ccache` 
+|===
+
+
+[[install-the-required-packages]]
+[[install-packages]]
+== Installation der erforderlichen Pakete
+
+Die Kerberos-Prüfung einer SMB/CIFS-Freigabe schlägt auf allen Knoten fehl, die nicht über  `cifs-utils` verfügen. Die SMB/CIFS-Einbindung erfolgt innerhalb von AI Data Engine, jedoch ruft das Betriebssystem des Knotens eine  `cifs-utils` Komponente auf, um die Kerberos-Sitzung einzurichten. Die Installation des Pakets nur auf dem admin host reicht nicht aus.
+
+[cols="2,1,1"]
+|===
+| Paket | Admin-Host | Jeder Knoten 
+
+
+| `krb5-user` (Ubuntu oder Debian) oder `krb5-workstation` (RHEL, CentOS oder Rocky Linux) | Erforderlich | Nicht erforderlich 
+
+
+| `cifs-utils` | Erforderlich | Erforderlich 
+|===
+Die Kerberos Clienttools stellen die  `ktutil`,  `kinit` und  `klist` Befehle bereit, mit denen Sie die Keytab erstellen und testen können.
+
+.Schritte
+. Auf dem Administrator-Host erfolgt die Installation der Kerberos-Client-Tools sowie `cifs-utils`.
++
+.. Unter Ubuntu oder Debian werden die folgenden Befehle ausgeführt.
++
+[source, cli]
+----
+apt-get update -qq
+apt-get install -y krb5-user cifs-utils
+----
+.. Unter RHEL, CentOS oder Rocky Linux erfolgt die Ausführung des folgenden Befehls.
++
+[source, cli]
+----
+dnf -y install krb5-workstation cifs-utils
+----
+
+
+. Auf jedem anderen Knoten erfolgt die Installation `cifs-utils`.
++
+.. Unter Ubuntu oder Debian werden die folgenden Befehle ausgeführt.
++
+[source, cli]
+----
+apt-get update -qq
+apt-get install -y cifs-utils
+----
+.. Unter RHEL, CentOS oder Rocky Linux erfolgt die Ausführung des folgenden Befehls.
++
+[source, cli]
+----
+dnf -y install cifs-utils
+----
+
+
+. Die Installation auf jedem Knoten ist zu überprüfen.
++
+[source, cli]
+----
+which cifs.upcall
+----
+
+
+
+
+[[mount-the-nfs-export-on-the-admin-host]]
+[[mount-nfs-export]]
+== Einhängen des NFS-Exports auf dem Admin-Host
+
+Es ist Zugriff auf den gemeinsamen Konfigurationsexport vom Admin-Host erforderlich, damit die Kerberos-Dateien dort erstellt werden können, wo sie von jedem Knoten gelesen werden.
+
+.Schritte
+. Es ist der Namespace festzulegen, in dem AI Data Engine ausgeführt wird, und zu überprüfen, ob der Konfigurations-Volume-Claim gebunden ist. Der Standard-Namespace ist `aide`.
++
+[source, cli]
+----
+export NAMESPACE="<namespace>"
+kubectl -n "${NAMESPACE}" get pvc aide-config-pvc
+----
++
+Der Status muss `Bound` sein.
+
+. Der NFS-Server und der Exportpfad des Konfigurationsvolumes werden benötigt. Diese Werte wurden beim Deployment von AI Data Engine angegeben.
++
+[source, cli]
+----
+kubectl get pv aide-config-pv -o jsonpath='NFS server: {.spec.nfs.server}{"\n"}Export path: {.spec.nfs.path}{"\n"}'
+----
+. Den Export einhängen. Dabei `<nfs_server>` und `<export_path>` durch die Werte aus dem vorherigen Schritt ersetzen. Die Befehle verwenden `/mnt/aide-config` als Mountpunkt. Hierfür eignet sich jedes leere Verzeichnis.
++
+[source, cli]
+----
+mkdir -p /mnt/aide-config
+mount -t nfs <nfs_server>:<export_path> /mnt/aide-config
+----
+. Erstellung der Kerberos-Verzeichnisse.
++
+[source, cli]
+----
+export AIDE_CONFIG_ROOT="/mnt/aide-config"
+mkdir -p "${AIDE_CONFIG_ROOT}/kerberos/kerberos_refresher"
+mkdir -p "${AIDE_CONFIG_ROOT}/kerberos/kerberos_ccache"
+----
+
+
+
+
+[[create-the-kerberos-files]]
+[[create-kerberos-files]]
+== Erstellung der Kerberos-Dateien
+
+AI Data Engine benötigt die Konfiguration und die Anmeldeinformationen, die zum Abrufen von Kerberos-Tickets für das Scan-Dienstkonto erforderlich sind. Die folgenden Schritte erfolgen auf dem Admin-Host.
+
+.Schritte
+. Es sind die Variablen festzulegen, die die folgenden Befehle verwenden. Jeder Wert in spitzen Klammern ist durch den entsprechenden eigenen Wert zu ersetzen; die spitzen Klammern selbst sind nicht anzugeben. Das Realm ist in Großbuchstaben und die Domain in Kleinbuchstaben einzugeben.
++
+[source, cli]
+----
+export KDC_IP="<kdc_ip>"
+export KDC_FQDN="<kdc_fqdn>"
+export AD_DOMAIN="<domain>"
+export REALM="<REALM>"
+export SCAN_USER="<scan_user>"
+export FILE_SERVER_FQDN="<file_server_fqdn>"
+export SHARE_NAME="<share_name>"
+export KRB5_CONF_SOURCE="${AIDE_CONFIG_ROOT}/kerberos/krb5.conf"
+export KRB5_KEYTAB="${AIDE_CONFIG_ROOT}/kerberos/kerberos_refresher/datasense.keytab"
+export KRB5_CREDS="${AIDE_CONFIG_ROOT}/kerberos/kerberos_refresher/kerberos_creds.env"
+----
++
+.. Es ist zu überprüfen, ob die Variablen gesetzt sind.
++
+[source, cli]
+----
+echo "NAMESPACE=[${NAMESPACE}] AIDE_CONFIG_ROOT=[${AIDE_CONFIG_ROOT}] KDC_IP=[${KDC_IP}] REALM=[${REALM}] SCAN_USER=[${SCAN_USER}]"
+----
++
+
+NOTE: Die Variablen existieren nur in der aktuellen Shell-Sitzung. Wenn Sie eine neue Shell öffnen, müssen Sie sie erneut festlegen.
+
+
+
+. Die Kerberos Konfigurationsdatei wird auf dem NFS Export erstellt. AI Data Engine liest diese Datei vom Export. Die Datei darf nicht  `/etc/krb5.conf`auf den Knoten erstellt werden.
++
+[source, cli]
+----
+tee "${KRB5_CONF_SOURCE}" >/dev/null <<EOF
+[libdefaults]
+    default_realm = ${REALM}
+    dns_lookup_realm = false
+    dns_lookup_kdc = false
+    rdns = false
+    ticket_lifetime = 24h
+    renew_lifetime = 7d
+    forwardable = true
+
+[realms]
+    ${REALM} = {
+        kdc = ${KDC_IP}:88
+        admin_server = ${KDC_IP}:749
+    }
+
+[domain_realm]
+    .${AD_DOMAIN} = ${REALM}
+    ${AD_DOMAIN} = ${REALM}
+EOF
+chmod 644 "${KRB5_CONF_SOURCE}"
+----
++
+Die Datei verwendet die KDC-IP-Adresse, damit die Kerberos-Authentifizierung nicht von DNS abhängig ist.
+
+. Für das Scan-Dienstkonto ist eine Keytab-Datei zu erstellen.
++
+.. Ausführen `ktutil`.
+.. An der `ktutil` Eingabeaufforderung folgt die Eingabe des folgenden Befehls. Anstelle von `<scan_user>` und `<REALM>` werden Ihre Werte verwendet. Die `ktutil` Eingabeaufforderung verwendet keine Shell-Variablen.
++
+[source, cli]
+----
+addent -password -p <scan_user>@<REALM> -k 1 -e aes256-cts-hmac-sha1-96
+----
+.. Wenn `ktutil` zur Eingabe eines Passworts auffordert, ist das Passwort des Scan-Benutzers zu verwenden.
+.. An der `ktutil` Eingabeaufforderung erfolgt die Eingabe der folgenden Befehle.
++
+[source, cli]
+----
+wkt /tmp/krb5.keytab
+quit
+----
+
+
+. Test der Keytab-Datei. Die `KRB5_CONFIG` Variable verweist die Kerberos-Tools auf die Datei auf dem Export.
++
+[source, cli]
+----
+export KRB5_CONFIG="${KRB5_CONF_SOURCE}"
+klist -kt /tmp/krb5.keytab
+kinit -kt /tmp/krb5.keytab "${SCAN_USER}@${REALM}"
+klist
+kdestroy
+----
++
+Der zweite `klist` Befehl muss ein gültiges Ticket für den Scan-Benutzer anzeigen. Ein Ticket bestätigt, dass die keytab und die Verbindung zum KDC funktionieren. Wenn  `kinit` fehlschlägt, finden Sie weitere Informationen unter <<troubleshoot-kerberos,Fehlerbehebung bei der Kerberos-Authentifizierung>>.
+
+. Nach der Installation der Keytab-Datei wird die temporäre Kopie gelöscht.
++
+[source, cli]
+----
+install -m 640 -g 4321 /tmp/krb5.keytab "${KRB5_KEYTAB}"
+rm -f /tmp/krb5.keytab
+----
+. Das Ticket-Cache-Verzeichnis muss für den Ticket-Refresher mit Schreibzugriff verfügbar sein.
++
+[source, cli]
+----
+chown root:4321 "${AIDE_CONFIG_ROOT}/kerberos/kerberos_ccache"
+chmod 770 "${AIDE_CONFIG_ROOT}/kerberos/kerberos_ccache"
+----
++
+Der Ticket-Refresher wird als Root-Benutzer mit der Gruppen-ID 4321 ausgeführt. Er muss in der Lage sein, die Keytab-Datei und die Principal-Datei zu lesen und in das Ticket-Cache-Verzeichnis zu schreiben.
+
+. Die Principal-Datei wird erstellt. Der `KRB5_RENEW_INTERVAL_H` Wert ist das Ticketverlängerungsintervall in Stunden.
++
+[source, cli]
+----
+tee "${KRB5_CREDS}" >/dev/null <<EOF
+KRB5_USER=${SCAN_USER}
+KRB5_REALM=${REALM}
+KRB5_RENEW_INTERVAL_H=3
+EOF
+chmod 640 "${KRB5_CREDS}"
+chgrp 4321 "${KRB5_CREDS}"
+----
+. Es ist zu prüfen, ob die Dateien vorhanden sind.
++
+[source, cli]
+----
+ls -l "${KRB5_CONF_SOURCE}" "${KRB5_KEYTAB}" "${KRB5_CREDS}"
+----
+
+
+
+
+[[verify-name-resolution]]
+== Überprüfung der Namensauflösung
+
+AI Data Engine löst den Dateiserver und den KDC anhand der DNS-Einstellungen jedes Knotens auf. Zunächst sollte die Namensauflösung überprüft werden; die DNS-Einstellungen sollten nur geändert werden, wenn ein Name auf einem Knoten nicht aufgelöst wird.
+
+.Schritte
+. Auf jedem Knoten ist zu überprüfen, ob der Dateiserver und der KDC per FQDN aufgelöst werden. Die Werte sind durch den FQDN Ihres Dateiservers und den FQDN Ihres KDC zu ersetzen.
++
+[source, cli]
+----
+nslookup <file_server_fqdn>
+nslookup <kdc_fqdn>
+----
+. Überprüfung des Ergebnisses.
++
+.. Wenn beide Namen auf jedem Knoten in die korrekten IP-Adressen aufgelöst werden, wird mit <<start-first-ticket-refresh,Start der ersten Ticketaktualisierung>> fortgefahren.
+.. Wenn ein Name auf keinem Knoten aufgelöst werden kann, muss <<fix-name-resolution,Korrektur der Namensauflösung>> abgeschlossen werden, anschließend kann zu diesem Verfahren zurückgekehrt werden.
+
+
+
+
+
+
+[[start-the-first-ticket-refresh]]
+[[start-first-ticket-refresh]]
+== Start der ersten Ticketaktualisierung
+
+AI Data Engine aktualisiert das Kerberos-Ticket für das Scan-Dienstkonto alle drei Stunden. Für das sofortige Scannen von Freigaben ist das Starten der ersten Aktualisierung erforderlich.
+
+
+NOTE: Die Crontab des Hosts darf kein `kinit`en Eintrag enthalten. AI Data Engine aktualisiert Tickets automatisch.
+
+.Schritte
+. Auf dem Admin-Host wird ein Aktualisierungsauftrag gestartet, sein Abschluss abgewartet und anschließend das zugehörige Protokoll angezeigt.
++
+[source, cli]
+----
+JOB="kerberos-refresh-$(date +%s)"
+kubectl -n "${NAMESPACE}" create job "${JOB}" --from=cronjob/ds-krb5-ticket-refresher
+kubectl -n "${NAMESPACE}" wait --for=condition=complete "job/${JOB}" --timeout=120s
+kubectl -n "${NAMESPACE}" logs "job/${JOB}"
+----
+. Es sollte geprüft werden, ob der gemeinsam genutzte Ticket-Cache vorhanden ist und einen aktuellen Zeitstempel aufweist.
++
+[source, cli]
+----
+ls -l "${AIDE_CONFIG_ROOT}/kerberos/kerberos_ccache/krb5cc_shared"
+----
+
+
+.Ergebnis
+Im Jobprotokoll ist ersichtlich, dass für den Scan-Benutzer ein Ticket abgerufen wurde.
+
+
+
+[[verify-the-kerberos-configuration]]
+[[verify-kerberos-configuration]]
+== Überprüfung der Kerberos-Konfiguration
+
+Vor dem Hinzufügen der Freigabe ist sicherzustellen, dass AI Data Engine die Kerberos-Dateien verwenden und Namen auflösen kann. Da der Mount Service auf mehr als einem Knoten ausgeführt werden kann, sollten die Prüfungen für einen Pod auf jedem Knoten wiederholt werden. Wenn eine neue Shell geöffnet wurde, müssen die `NAMESPACE`, `FILE_SERVER_FQDN` und `SHARE_NAME` Variablen erneut gesetzt werden.
+
+.Schritte
+. Auflistung der Mount Service Pods und der Knoten, auf denen sie ausgeführt werden.
++
+[source, cli]
+----
+kubectl -n "${NAMESPACE}" get pods -l app.kubernetes.io/name=ds-mount-server -o wide
+----
+. Für jeden Pod sind die folgenden Befehle auszuführen. Dabei ist  `<pod_name>` durch den Namen des Pods zu ersetzen.
++
+[source, cli]
+----
+POD=<pod_name>
+kubectl -n "${NAMESPACE}" exec "${POD}" -- nslookup "${FILE_SERVER_FQDN}"
+kubectl -n "${NAMESPACE}" exec "${POD}" -- klist
+kubectl -n "${NAMESPACE}" exec "${POD}" -- cat /etc/krb5.conf
+----
+. (Optional) Ein Test der Einbindung der Freigabe mithilfe von Kerberos ist möglich.
++
+[source, cli]
+----
+kubectl -n "${NAMESPACE}" exec "${POD}" -- sh -c "mount -t cifs -o sec=krb5,multiuser //${FILE_SERVER_FQDN}/${SHARE_NAME} /mnt && ls -l /mnt && umount /mnt"
+----
+
+
+.Ergebnis
+Auf jedem Knoten wird der Dateiserver zur richtigen IP-Adresse aufgelöst, `klist` zeigt ein Ticket für den Scan-Benutzer an und `/etc/krb5.conf` zeigt den Inhalt der Kerberos Konfigurationsdatei an.
+
+
+
+[[add-an-smbcifs-data-source-that-uses-kerberos]]
+== Hinzufügen einer SMB/CIFS-Datenquelle, die Kerberos verwendet
+
+Nach dem Hinzufügen der Freigabe als Datenquelle und dem Starten von Scans kann AI Data Engine mit der Analyse der Daten beginnen.
+
+.Schritte
+. In der Benutzeroberfläche der AI Data Engine wird *Konfiguration* ausgewählt.
+. Auf der Registerkarte *Gescannte Systeme* ist *System hinzufügen* auszuwählen.
+. Die *Dateifreigabegruppe* wird ausgewählt.
+. Geben Sie einen Namen für die Gruppe an.
+. Die Eingabe des Freigabepfads erfolgt im Format `<file_server_fqdn>/<share_name>`. Anstelle der Platzhalter werden Ihre Werte verwendet. Für diese Eingabe wird keine IP-Adresse verwendet.
+. Als Authentifizierungsverfahren wird *Kerberos* verwendet. Die Felder für Benutzername und Passwort bleiben leer.
+. Nach der Überprüfung Ihrer Auswahl erfolgt die Auswahl von *Bestätigen*.
+. Für das neue System erfolgt die Auswahl der Option *Scans aktivieren*.
+
+
+Weitere Informationen zum Verbinden von Datenquellen sind unter link:../data-sources/connect-data-source.html["Verbinden einer Datenquelle mit AI Data Engine"] verfügbar.
+
+
+
+[[fix-name-resolution]]
+== Korrektur der Namensauflösung
+
+Dieses Verfahren ist nur dann abzuschließen, wenn der Dateiserver oder der KDC auf einem Knoten nicht über den FQDN aufgelöst werden kann. Dadurch wird Ihr Active Directory DNS-Server auf jedem Knoten als einziger Nameserver festgelegt.
+
+
+CAUTION: Auf jedem Knoten sollte Ihr Active Directory DNS server als einziger Nameserver festgelegt sein. Der Cluster wählt nach dem Zufallsprinzip einen der aufgeführten Nameserver aus, sodass ein Nameserver, der Active Directory-Namen nicht auflösen kann, zu intermittierenden Ausfällen führt.
+
+.Schritte
+. Es ist sicherzustellen, dass Ihr Active Directory DNS-Server auch externe Namen auflöst.
++
+.. Der folgende Befehl muss ausgeführt werden.  `<external_fqdn>` ist durch einen Namen außerhalb Ihrer Domäne zu ersetzen, den AI Data Engine erreichen muss. Als Beispiel eignet sich ein Endpunkt, der in link:../deploy/aide-requirements.html#outbound-internet-access["Ausgehender Internetzugang"] aufgeführt ist.
++
+[source, cli]
+----
+nslookup <external_fqdn> "${KDC_IP}"
+----
+.. Falls der Befehl fehlschlägt, sollte Ihr Active Directory-Administrator die DNS-Weiterleitung aktivieren; anschließend kann dieser Schritt erneut ausgeführt werden.
+
+
+. Auf jedem Knoten wird ein Backup `/etc/resolv.conf` erstellt, und Ihr Active Directory DNS-Server wird als einziger Nameserver festgelegt. Beim Öffnen einer neuen Shell auf einem Knoten muss die  `KDC_IP` Variable erneut gesetzt werden.
++
+[source, cli]
+----
+export KDC_IP="<kdc_ip>"
+cp /etc/resolv.conf /etc/resolv.conf.bak
+ORIG_SEARCH=$(grep '^search' /etc/resolv.conf.bak | head -1 | cut -d' ' -f2-)
+printf 'search %s\nnameserver %s\n' "${ORIG_SEARCH}" "${KDC_IP}" > /etc/resolv.conf
+----
+. Auf jedem Knoten ist sicherzustellen, dass der Netzwerkmanager die DNS-Einstellungen nach einem Neustart nicht überschreibt.
++
+.. Unter RHEL mit NetworkManager kommen die folgenden Befehle zum Einsatz.
++
+[source, cli]
+----
+mkdir -p /etc/NetworkManager/conf.d
+printf '[main]\ndns=none\n' > /etc/NetworkManager/conf.d/90-dns-none.conf
+systemctl reload NetworkManager
+----
+.. Unter Ubuntu mit systemd-resolved kommen die folgenden Befehle zum Einsatz. An die Stelle von `<domain>` tritt Ihre Domain.
++
+[source, cli]
+----
+export AD_DOMAIN="<domain>"
+mkdir -p /etc/systemd/resolved.conf.d
+printf '[Resolve]\nDNS=%s\nDomains=%s\n' "${KDC_IP}" "${AD_DOMAIN}" > /etc/systemd/resolved.conf.d/ad-dns.conf
+systemctl restart systemd-resolved
+----
+
+
+. Vom Administrator-Host aus erfolgt der Neustart von CoreDNS, damit AI Data Engine die neuen DNS-Einstellungen verwendet. Dieser Schritt ist einmalig für den gesamten Cluster erforderlich. CoreDNS leitet Anfragen für Namen außerhalb des Clusters an die in der `/etc/resolv.conf`Datei des Knotens hinterlegten Nameserver weiter, daher ist ein Neustart erforderlich, damit die Änderung übernommen wird.
++
+.. Sie finden das CoreDNS Deployment.
++
+[source, cli]
+----
+kubectl -n kube-system get deployments | grep -i coredns
+----
+.. Das Deployment neu starten. Dabei  `<coredns_deployment>` durch den Namen aus dem vorherigen Befehl ersetzen.
++
+[source, cli]
+----
+kubectl -n kube-system rollout restart deployment <coredns_deployment>
+kubectl -n kube-system rollout status deployment <coredns_deployment> --timeout=120s
+----
+
+
+. Erneute Überprüfung der Namensauflösung. Weitere Informationen hierzu enthält <<verify-name-resolution,Überprüfung der Namensauflösung>>.
+
+
+
+
+[[update-the-kerberos-configuration-file]]
+[[update-kerberos-configuration]]
+== Aktualisierung der Kerberos Konfigurationsdatei
+
+Wenn Sie  `krb5.conf` im NFS Export nach der Einrichtung ersetzen, beispielsweise indem Sie eine neue Datei darüberkopieren, verwendet AI Data Engine weiterhin die vorherige Datei, bis Sie die betroffenen Services neu starten.
+
+.Schritte
+. Auf dem Admin-Host ist ein Neustart des Mount-Dienstes sowie das Löschen der vorherigen Ticket-Aktualisierungsaufträge erforderlich.
++
+[source, cli]
+----
+kubectl -n "${NAMESPACE}" rollout restart daemonset ds-mount-server
+kubectl -n "${NAMESPACE}" delete job -l app.kubernetes.io/name=ds-krb5-ticket-refresher --ignore-not-found
+----
+. Eine neue Ticketaktualisierung starten. Weitere Informationen finden Sie in <<start-first-ticket-refresh,Start der ersten Ticketaktualisierung>>.
+
+
+
+
+[[troubleshoot-kerberos-authentication]]
+[[troubleshoot-kerberos]]
+== Fehlerbehebung bei der Kerberos-Authentifizierung
+
+So können Sie die Ursache eines Kerberos-Fehlers ermitteln und das Scannen Ihrer SMB/CIFS-Freigaben wiederherstellen.
+
+[cols="2,3,3"]
+|===
+| Symptom | Mögliche Ursache | Auflösung 
+
+
+| Beim Hinzufügen einer Freigabe erscheint die Fehlermeldung *IP not allowed with Kerberos*. | Der Freigabepfad verwendet eine IP-Adresse. | Der Freigabepfad ist als FQDN anzugeben. 
+
+
+| `kinit` fehlschlägt, wenn Sie die Keytab testen, oder kein Ticket ausgegeben wird. | Das Passwort oder der Realm ist falsch, der Realm ist nicht in Großbuchstaben, das Scan-Konto unterstützt keine AES256-Verschlüsselung, der Admin-Host oder ein Knoten kann den KDC nicht über Port 88 erreichen, oder die Uhr auf einem Knoten weicht um mehr als die zulässige Abweichung vom KDC ab. | Erforderlich sind die Überprüfung des Passworts und des Realm sowie die Bestätigung, dass das Konto AES256-Verschlüsselung unterstützt. Erforderlich sind ein offener Port 88 zum KDC sowie die Bestätigung, dass NTP auf jedem Knoten aktiv ist. Anschließend erfolgt die erneute Erstellung der Keytab-Datei. 
+
+
+| Der Ticketaktualisierungsjob schlägt fehl, oder es wird kein Ticket-Cache erstellt. | Die Keytab-Datei, die Principal-Datei oder `krb5.conf` fehlt oder ist leer, oder die Gruppenbesitzverhältnisse und Berechtigungen sind falsch. | Zu prüfen ist, ob die Dateien an den in <<kerberos-file-locations,Kerberos-Dateien, die AI Data Engine verwendet>> aufgeführten Speicherorten vorhanden sind. Zu prüfen ist, ob die Keytab-Datei und die Principal-Datei die Berechtigungen 640 und die Gruppe 4321 haben. Zu prüfen ist, ob das Ticket-Cache-Verzeichnis dem Benutzer  `root:4321` mit den Berechtigungen 770 gehört. 
+
+
+| Namen werden zeitweise nicht aufgelöst oder auf einem Knoten, jedoch nicht innerhalb von AI Data Engine, aufgelöst. | Ein Knoten listet mehr als einen Nameserver auf, und einer davon kann Active Directory-Namen nicht auflösen, oder CoreDNS wurde nicht neu gestartet, nachdem Sie `/etc/resolv.conf` geändert haben. | Auf jedem Knoten entfernen Sie alle Nameserver außer Ihrem Active Directory-DNS-Server und starten anschließend CoreDNS neu. Weitere Informationen finden Sie unter <<fix-name-resolution,Korrektur der Namensauflösung>>. 
+
+
+| Externe Namen werden in AI Data Engine nicht aufgelöst, nachdem Sie Ihren Active Directory DNS-Server festgelegt haben. | Der Active Directory DNS-Server leitet keine externen Anfragen weiter. | Zu prüfen ist, ob  `nslookup <external_fqdn> "${KDC_IP}"` ein Ergebnis zurückgibt. Ist dies nicht der Fall, ist Ihr Active Directory-Administrator um die Aktivierung der DNS-Weiterleitung zu bitten. 
+
+
+| Das Kerberos-Scanning funktioniert von einem Knoten aus, schlägt aber bei anderen fehl. Die Fehlermeldung *mount error(2)* wird angezeigt, und `dmesg` auf dem Knoten erscheint *failed to create a new SMB session with Kerberos*. | `cifs-utils` ist nicht auf jedem Knoten installiert. | Die Installation von `cifs-utils` erfolgt auf jedem Knoten. Zur Überprüfung der Installation können Sie `which cifs.upcall` ausführen. 
+
+
+| Es erscheint die Fehlermeldung *mount error(126)*. | AI Data Engine kann nicht `krb5.conf` aus dem NFS-Export lesen. | Zu überprüfen ist, ob  `<export>/kerberos/krb5.conf` vorhanden ist und ob  `+kubectl -n "${NAMESPACE}" exec <pod_name> -- cat /etc/krb5.conf+` seinen Inhalt anzeigt. 
+
+
+| Änderungen an `krb5.conf` werden nicht wirksam. | Die Datei wurde nach der Einrichtung ersetzt, und AI Data Engine verwendet weiterhin die vorherige Datei. | Weitere Informationen unter <<update-kerberos-configuration,Aktualisierung der Kerberos Konfigurationsdatei>>. 
+
+
+| Der Befehl  `ktutil`,  `kinit` oder  `klist` wurde nicht gefunden. | Die Kerberos-Client-Tools sind auf dem Admin-Host nicht installiert. | Die Kerberos-Clienttools werden installiert. Weitere Informationen finden Sie unter <<install-packages,Installation der erforderlichen Pakete>>. 
+
+
+| Die `/etc/resolv.conf` Datei auf einem Knoten weist nach einem Neustart wieder ihre vorherigen Einstellungen auf. | Der Netzwerkmanager überschreibt die Datei. | Der Netzwerkmanager sollte die DNS-Einstellungen nicht überschreiben. Weitere Informationen finden Sie unter <<fix-name-resolution,Korrektur der Namensauflösung>>. 
+|===
+
+
+[[remove-the-kerberos-configuration]]
+[[remove-kerberos-configuration]]
+== Kerberos-Konfiguration entfernen
+
+Falls SMB/CIFS-Freigaben nicht mehr mit Kerberos gescannt werden, ist das Entfernen der Datenquelle und der Kerberos-Dateien erforderlich.
+
+.Schritte
+. In der AI Data Engine UI ist die SMB/CIFS-Datenquelle, die Kerberos verwendet, zu löschen.
+. Auf dem Admin-Host, auf dem der NFS-Export unter `/mnt/aide-config` gemountet ist, werden die Kerberos-Dateien gelöscht.
++
+[source, cli]
+----
+rm -f /mnt/aide-config/kerberos/kerberos_refresher/datasense.keytab
+rm -f /mnt/aide-config/kerberos/kerberos_refresher/kerberos_creds.env
+rm -f /mnt/aide-config/kerberos/krb5.conf
+rm -f /mnt/aide-config/kerberos/kerberos_ccache/krb5cc_shared
+umount /mnt/aide-config
+----
+. Wenn Sie die DNS-Einstellungen geändert haben, ist eine Wiederherstellung der ursprünglichen Einstellungen erforderlich.
++
+.. Auf jedem Knoten muss das Backup von `/etc/resolv.conf` wiederhergestellt werden.
++
+[source, cli]
+----
+cp /etc/resolv.conf.bak /etc/resolv.conf
+----
+.. Entfernen Sie auf RHEL-Knoten, auf denen Sie eine NetworkManager Konfiguration hinzugefügt haben, diese Konfiguration.
++
+[source, cli]
+----
+rm -f /etc/NetworkManager/conf.d/90-dns-none.conf
+systemctl reload NetworkManager
+----
+.. Auf Ubuntu-Knoten, auf denen Sie eine systemd-resolved-Konfiguration hinzugefügt haben, sollte diese entfernt werden.
++
+[source, cli]
+----
+rm -f /etc/systemd/resolved.conf.d/ad-dns.conf
+systemctl restart systemd-resolved
+----
+.. Auf dem Administrator-Host erfolgt ein Neustart von CoreDNS. Anstelle von  `<coredns_deployment>` ist der Name des CoreDNS Deployment zu verwenden.
++
+[source, cli]
+----
+kubectl -n kube-system rollout restart deployment <coredns_deployment>
+----
+
+
+
+
+
+
+[[related-information]]
+== Verwandte Informationen
+
+* link:configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"]
+* link:configure-kerberos-smb-single-node.html["Konfiguration von Kerberos für SMB/CIFS-Freigaben auf einem Single-Node AI Data Engine Deployment"]
+* link:../deploy/aide-requirements.html#kerberos-ad-requirements["Anforderungen für Kerberos und Active Directory"]
+* link:../data-sources/connect-data-source.html["Verbinden einer Datenquelle mit AI Data Engine"]
+* link:../data-sources/manage-data-sources.html["Datenquellen verwalten"]
+

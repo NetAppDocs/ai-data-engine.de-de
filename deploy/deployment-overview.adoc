@@ -1,8 +1,8 @@
 ---
 sidebar: sidebar 
 permalink: deploy/deployment-overview.html 
-keywords: deployment, aide lite, aide enterprise, kubernetes, vm, deployment modes, sizing 
-summary: AI Data Engine kann als AIDE Lite oder als AIDE Enterprise bereitgestellt werden, wenn Ihre Umgebung eine auf Kubernetes basierende Hochverfügbarkeit erfordert. 
+keywords: deployment, aide single-node, aide multi-node, single node, multi node, kubernetes, vm, deployment types, sizing 
+summary: AI Data Engine kann als AIDE Einzelknoten Deployment auf einer Linux VM eingesetzt werden, die das Installationsprogramm automatisch einrichtet, oder als AIDE Mehrknoten Deployment auf einem Kubernetes Cluster, den Sie bereitstellen. 
 ---
 = Informationen zur Bereitstellung von AI Data Engine
 :allow-uri-read: 
@@ -11,62 +11,91 @@ summary: AI Data Engine kann als AIDE Lite oder als AIDE Enterprise bereitgestel
 
 
 [role="lead"]
-AI Data Engine kann als AIDE Lite, eine Einzel-VM-Installation, bereitgestellt werden. Wenn Ihre Umgebung Kubernetes-basierte Hochverfügbarkeit in großem Umfang erfordert, kann stattdessen AIDE Enterprise bereitgestellt werden.
+AI Data Engine (AIDE) kann als AIDE Einzelknoten Deployment eingesetzt werden, wobei der Installer alles auf einer einzelnen Linux VM einrichtet, die Sie bereitstellen. Wenn Ihre Umgebung Kubernetes-basierte Hochverfügbarkeit in großem Umfang erfordert, können Sie ein AIDE Mehrknoten Deployment auf einem Kubernetes-Cluster einsetzen, den Sie bereitstellen.
 
 
 
-[[aide-lite]]
-== AIDE Lite
+[[aide-single-node-deployment]]
+== AIDE Einzelknoten-Deployment
 
-AIDE Lite wird auf einer einzelnen Linux VM installiert. Kubernetes-Kenntnisse sind nicht erforderlich, da das Installationsprogramm k3s automatisch bereitstellt.
+Ein AIDE Single-Node Deployment läuft auf einer einzelnen Linux-VM, die Sie bereitstellen. Der Installer provisioniert alles Weitere automatisch, einschließlich k3s, der Kubernetes-Laufzeitumgebung sowie der unterstützenden Tools und der Hostkonfiguration, die AI Data Engine benötigt. Sie müssen Kubernetes weder installieren noch managen und benötigen auch keine Kubernetes-Kenntnisse.
 
-AIDE Lite ist in drei Größen, Small, Medium und Large, für Umgebungen mit bis zu ca. 200 Millionen, 1 Milliarde bzw. 3 Milliarden Dateien verfügbar. Vollständige Informationen zur VM-Dimensionierung und zu den Betriebssystemanforderungen finden sich unter link:aide-requirements.html["AIDE-Anforderungen"]. Diese Größen sind empfohlene Richtwerte, keine festen Obergrenzen; link:aide-requirements.html#flexible-sizing-lite["Richtlinien für flexible Größenanpassung"] enthält Informationen dazu, was die Dimensionierung bestimmt und wie eine weitere Skalierung möglich ist.
+Ein AIDE Deployment ist in drei Größen verfügbar, Small, Medium und Large, für Umgebungen mit bis zu ca. 200 Millionen, 1 Milliarde bzw. 3 Milliarden Dateien. Vollständige Informationen zur VM-Dimensionierung und zu den Betriebssystemanforderungen enthält link:aide-requirements.html["AIDE-Anforderungen"]. Diese Größen sind empfohlene Ausgangswerte, keine festen Obergrenzen; link:aide-requirements.html#flexible-sizing-single-node["Richtlinien für flexible Größenanpassung"] enthält Informationen dazu, welche Faktoren die Dimensionierung bestimmen und was bei Überschreitung einer Größe zu tun ist.
 
 
 
-[[aide-enterprise]]
-== AIDE Enterprise
+[[aide-multi-node-deployment]]
+== AIDE Multi-Node Deployment
 
-AIDE Enterprise ist bereitzustellen, wenn Ihre Umgebung Hochverfügbarkeit, Fehlertoleranz, fortlaufende Upgrades oder horizontale Skalierung über die größte Größe von AIDE Lite hinaus erfordert. AIDE Enterprise wird als Multi-Node Kubernetes-Cluster auf einem vom Kunden bereitgestellten und verwalteten RKE2-Cluster bereitgestellt.
+Ein AIDE Multi Node Deployment ist einzusetzen, wenn Ihre Umgebung Hochverfügbarkeit, Fehlertoleranz, Rolling Upgrades oder eine Kapazität erfordert, die über die Größe des größten Single Node Deployments hinausgeht. Ein AIDE Multi Node Deployment wird auf einem vorhandenen Kubernetes Cluster eingesetzt. Ein eigener Kubernetes Cluster (RKE2, OpenShift oder AKS) ist erforderlich. Sie provisionieren und managen den Cluster selbst; er kann mit anderen Workloads gemeinsam genutzt oder AI Data Engine dediziert werden. Das Installationsprogramm erstellt oder managt den Cluster nicht. Der Rechner, von dem aus das Installationsprogramm ausgeführt wird, ist ein schlanker Management Host und führt keine AI Data Engine Workloads aus.
 
-AIDE Enterprise ist in drei Größen, Small, Medium und Large, für Umgebungen mit bis zu ca. 1 Milliarde, 3 Milliarden bzw. 6 Milliarden Dateien verfügbar. Vollständige Informationen zur Dimensionierung der Knoten und zu den Clusteranforderungen sind unter link:aide-requirements.html["AIDE-Anforderungen"] verfügbar. Diese Größen sind empfohlene Richtwerte, keine festen Obergrenzen: Umgebungen mit mehr als 6 Milliarden Dateien werden durch horizontale Skalierung unterstützt. Details sind unter link:aide-requirements.html#flexible-sizing-enterprise["Richtlinien für flexible Größenanpassung"] verfügbar.
+Ein AIDE Multi-Node Deployment ist in drei Größen verfügbar: Small, Medium und Large, für Umgebungen mit bis zu ca. 1 Milliarde, 3 Milliarden bzw. 6 Milliarden Dateien. Vollständige Informationen zur Node-Dimensionierung und zu den Clusteranforderungen enthält link:aide-requirements.html["AIDE-Anforderungen"]. Diese Größen sind empfohlene Richtwerte, keine festen Obergrenzen: Umgebungen mit mehr als 6 Milliarden Dateien erfordern eine kundenspezifische Dimensionierung mit NetApp. Details enthält link:aide-requirements.html#flexible-sizing-multi-node["Richtlinien für flexible Größenanpassung"].
 
+
+
+[[compare-deployment-types]]
+== Vergleich von Deployment Typen
+
+[cols="1h,2,2"]
+|===
+|  | AIDE Einzelknoten-Deployment | AIDE Multi-Node Deployment 
+
+
+| Bereitstellungstyp | Eine einzelne, von Ihnen bereitgestellte Linux-VM. Das Installationsprogramm provisioniert k3s automatisch. | Kubernetes Cluster mit mehreren Nodes. Sie verwenden einen eigenen Cluster auf Basis von RKE2, OpenShift oder AKS. 
+
+
+| Nodes | Eine Linux VM | Drei bis neun Knoten (klein bis groß) 
+
+
+| Scan-Rate | 50 Millionen bis 1 Milliarde Dateien pro Tag, je nach Größe | 250 Millionen bis 2 Milliarden Dateien pro Tag, je nach Größe 
+
+
+| Ungefähre Dateien (klein bis groß) | 200 Millionen bis 3 Milliarden | 1 Milliarde bis 6 Milliarden 
+
+
+| Compute | 16 bis 96 vCPU, 64 bis 192 GB RAM | 32 bis 64 vCPU, 128 bis 256 GB RAM pro Knoten 
+
+
+| Storage | 500 GB bis 6 TB SSD-Block-Storage, 8.000 bis 16.000 IOPS, 1.000 bis 2.000 MB/s Durchsatz | 4 bis 24 TB Gesamtkapazität des Clusters, 8.000 bis 16.000 IOPS pro Knoten, 1.000 bis 2.000 MB/s Durchsatz pro Knoten 
+
+
+| Netzwerk | 1 GbE (10 GbE empfohlen für Large) | 1 bis 10 GbE 
+
+
+| Hochverfügbarkeit | Nicht unterstützt | Unterstützt über Knoten hinweg 
+
+
+| Wann diese Option die richtige Wahl ist | Sie haben einen einzelnen Standort, wünschen sich einen schnellen Start und benötigen keine hohe Verfügbarkeit | Produktionsmaßstab oder HA ist erforderlich 
+|===
 
 
 [[deployment-process]]
 == Bereitstellungsprozess
 
+AI Data Engine kann direkt über NetApp Console eingesetzt werden. AI Data Engine kann über *AI data hub > AI Data Engine* eingesetzt werden. Mit dem Assistenten lässt sich ein Deployment-Typ auswählen, anschließend wird der Installationsbefehl in einer Umgebung ausgeführt, die die link:aide-requirements.html["AIDE-Anforderungen"] erfüllt.
 
-NOTE: AI Data Engine ist als private Vorschau in NetApp Console verfügbar. Für die Anforderung des Zugriffs, damit Sie AI Data Engine bereitstellen können, ist die Kontaktaufnahme mit Ihrem NetApp Ansprechpartner erforderlich.
+NetApp Console provisioniert die Infrastruktur für AI Data Engine nicht. Für ein Einzelknoten Deployment wird eine Linux VM vorbereitet, und der Installer richtet den Rest ein. Für ein Mehrknoten Deployment wird ein Kubernetes Cluster vorbereitet. In beiden Fällen muss die Infrastruktur die Anforderungen erfüllen. Anschließend lässt sich der vorab generierte Installationsbefehl aus NetApp Console kopieren und auf dem Zielhost ausführen. Der Befehl initialisiert die Laufzeitumgebung und setzt den AI Data Engine Stack automatisch ein.
 
-NetApp Console stellt die Infrastruktur für AI Data Engine nicht bereit. Sie bereiten einen Linux-Rechner oder -Cluster vor, der die Anforderungen erfüllt, kopieren dann den vorab generierten Installationsbefehl aus NetApp Console und führen ihn auf dem Zielhost aus. Der Befehl initialisiert die Laufzeitumgebung und installiert den AI Data Engine Stack automatisch. Während der Installation fordert das Installationsprogramm Sie auf, die IP-Adresse und die Benutzer-ID des Zielhosts zu bestätigen, bevor die Installation fortgesetzt wird.
+Einzelknoten-Deployments sind in der Regel innerhalb von 45 Minuten abgeschlossen. Mehrknoten-Deployments sind in der Regel innerhalb von 30 Minuten abgeschlossen. Das Installationsprogramm enthält integrierte Timeouts und Wiederholungsversuche, um vorübergehende Probleme während des Starts der Komponenten zu bewältigen.
 
-AIDE Lite Installationen sind in der Regel innerhalb von 45 Minuten abgeschlossen. AIDE Enterprise Installationen sind in der Regel innerhalb von 30 Minuten abgeschlossen. Das Installationsprogramm enthält integrierte Timeouts und Wiederholungen, um vorübergehende Probleme beim Starten der Komponenten zu bewältigen.
-
-
-
-[[deployment-mode-reference]]
-== Referenz zum Bereitstellungsmodus
-
-[cols="1h,2,2"]
-|===
-|  | AIDE Lite | AIDE Enterprise 
+Die vollständigen Schritte finden sich unter link:deploy-aide-single-node.html["Bereitstellung von AI Data Engine als Single-Node-Deployment"] und link:deploy-aide-multi-node.html["Bereitstellung von AI Data Engine als Multi-Node Deployment"].
 
 
-| Bereitstellungsmodell | Einzelne Linux VM | Multi-Node Kubernetes Cluster (vom Kunden bereitgestelltes RKE2) 
 
+[[deployment-with-a-proxy]]
+== Deployment mit einem Proxy
 
-| Scan-Rate | 50 Millionen bis 1 Milliarde Dateien pro Tag, je nach Größe unterschiedlich | 250 Millionen bis 2 Milliarden Dateien/Tag, je nach Größe 
+Wenn Ihr Host oder Cluster nur über einen ausgehenden Proxy auf das Internet zugreifen kann, erfolgt das Deployment von AI Data Engine mit einem Proxy. Die Proxy-Schritte unterscheiden sich je nach Deployment-Typ, daher gibt es für jeden Typ ein eigenes vollständiges Thema, das das Standardthema zum Deployment ersetzt.
 
+Die vollständigen Schritte sind in link:configure-proxy.html["Informationen zu Proxys für AI Data Engine"] für die unterstützten Proxy-Typen und in link:aide-requirements.html#outbound-internet-access["Ausgehender Internetzugang"] für die Endpunkte beschrieben, die auf Ihrem Proxy zugelassen werden müssen.
 
-| Max. Dateien (große Größe) | Ungefähr 3 Milliarden | Ungefähr 6 Milliarden 
-|===
 
 
 [[related-information]]
 == Verwandte Informationen
 
 * link:aide-requirements.html["AIDE-Anforderungen"]
-* link:deploy-aide-lite.html["AI Data Engine Lite bereitstellen"]
-* link:deploy-enterprise.html["AI Data Engine – Enterprise"]
+* link:single-node-prerequisites.html["Voraussetzungen für das AIDE Single-Node Deployment"]
+* link:multi-node-prerequisites.html["Voraussetzungen für das AIDE Multi-Node Deployment"]
+* link:configure-proxy.html["Informationen zu Proxys für AI Data Engine"]
 

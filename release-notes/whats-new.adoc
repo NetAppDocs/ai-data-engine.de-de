@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: release-notes/whats-new.html 
-keywords: 'what"s new, release notes, AI Data Engine, storage optimization' 
+keywords: 'what"s new, release notes, AI Data Engine, general availability, ga, version 1.3, storage optimization' 
 summary: Informationen zu neuen Funktionen in AI Data Engine. 
 ---
 = Was ist neu in AI Data Engine
@@ -11,24 +11,66 @@ summary: Informationen zu neuen Funktionen in AI Data Engine.
 
 
 [role="lead"]
-Informationen zu neuen Funktionen in AI Data Engine.
+Informationen zu neuen Funktionen in AI Data Engine (AIDE).
 
 
 
-[[ai-data-engine-1-1-0]]
-== AI Data Engine 1.1.0
+[[26-october-2026]]
+== 26. Oktober 2026
 
-AI Data Engine ist ein Metadaten-Intelligence-Service, der über NetApp Console verwaltet wird, Ihre verbundenen Systeme scannt, einen Metadatenkatalog erstellt und Ihnen die Transparenz und Tools bietet, um Storage zu optimieren und Daten im großen Maßstab zu steuern. AI Data Engine kann als link:../deploy/deployment-overview.html["AIDE Lite"] oder als AIDE Enterprise bereitgestellt werden, wenn Ihre Umgebung eine Kubernetes-basierte Hochverfügbarkeit in großem Maßstab erfordert.
+*Version 1.3*
 
-Neue Funktionen:
+AI Data Engine ist ein Metadaten-Intelligence-Service, der über NetApp Console verwaltet wird, Ihre verbundenen Systeme scannt, einen Metadatenkatalog erstellt und Ihnen die Transparenz und Werkzeuge bietet, um Storage zu optimieren und Daten im großen Maßstab zu verwalten. AI Data Engine kann als link:../deploy/deployment-overview.html["AIDE Einzelknoten-Deployment"] oder als AIDE Multi-Node-Deployment eingesetzt werden, wenn Ihre Umgebung Kubernetes-basierte Hochverfügbarkeit im großen Maßstab erfordert.
+
+AI Data Engine 1.3 ist die erste allgemein verfügbare (GA) Version.
+
+
+
+[[deploy-and-connect-your-data]]
+=== Deployment und Anbindung Ihrer Daten
+
+link:../deploy/deployment-overview.html["In dem Umfang einsetzen, den Ihre Umgebung erfordert"]:: Zur Auswahl stehen ein AIDE Single-Node Deployment für einen schnellen Start auf einer einzelnen VM oder ein AIDE Multi-Node Deployment auf Ihrem eigenen Kubernetes Cluster für Hochverfügbarkeit und größere Skalierbarkeit. Wenn Ihre Umgebung einen Proxy für den Internetzugang erfordert, link:../deploy/configure-proxy.html["Informationen zu Proxys für AIDE"] erfolgt das Deployment über einen Proxy.
+link:../data-sources/connect-data-source.html["Ihre Daten in den Fokus rücken"]:: Dateifreigaben, Datenbankserver und StorageGRID Systeme verbinden und auswählen, welche Datenressourcen gescannt werden sollen.
+link:../administer/monitor-deployment-health.html["Scans in gutem Zustand halten"]:: Der Systemstatus Ihres Deployments kann überwacht werden, um Probleme zu identifizieren, die den Scanvorgang unterbrechen könnten, und die Details zu erfassen, die zu deren Behebung erforderlich sind.
+
+
+
+
+[[optimize-storage-and-investigate-your-data]]
+=== Storage optimieren und Ihre Daten analysieren
 
 link:../investigate/understand-dashboard.html["Speicherkapazität wiederherstellen"]:: Kalte, veraltete und doppelte Daten in Ihren verbundenen Systemen werden anhand Ihrer konfigurierten Schwellenwerte identifiziert, und es wird angezeigt, welche Systeme und Dateneigentümer die höchste Konzentration dieser Daten aufweisen.
+link:../administer/configure-settings.html["Kalte und veraltete Daten für Ihr Unternehmen definieren"]:: Die Schwellenwerte, die festlegen, welche Daten als kalt oder veraltet eingestuft werden, sollten auf Ihre Aufbewahrungsrichtlinien abgestimmt sein.
+link:../investigate/understand-dashboard.html["Ermitteln, an wen Sie sich bezüglich der Daten wenden können"]:: Im Dashboard lässt sich ermitteln, welche Dateneigentümer die höchsten Konzentrationen an kalten, veralteten oder doppelten Daten aufweisen. Anschließend lässt sich in der Untersuchungsansicht nach Eigentümer oder Gruppe filtern, um die Ergebnisse zu prüfen und festzustellen, wer zu kontaktieren ist.
 link:../investigate/investigate-data.html["Senkung von Kosten und Risiken"]:: Verbundene Systeme können nach Zugriffszeit, Änderungsdatum, Erstellungsdatum, Dateigröße, Duplikatstatus und weiteren Kriterien gefiltert werden, um Dateien zu finden, die den Datenmanagementzielen Ihres Unternehmens entsprechen. Auf Grundlage der Ergebnisse können direkt Maßnahmen ergriffen oder die Kriterien als Richtlinie gespeichert werden.
-link:../policies/create-policy.html["Daten kontinuierlich verwalten"]:: Filterkriterien lassen sich als benannte Richtlinien speichern, um wiederkehrende Datenzustände im Zeitverlauf nachzuverfolgen, z. B. selten genutzte oder übergroße Dateien, und Benachrichtigungen zu erhalten, wenn sich die Anzahl der betroffenen Dateien ändert.
-link:../investigate/take-actions.html["Speicherkosten senken"]:: Die Durchsetzung der Datenlebenszyklusrichtlinien Ihrer Organisation erfolgt durch das Kopieren und Archivieren von Dateien auf NFS- oder SMB/CIFS-Ziele, das Kennzeichnen von Elementen zur Nachverfolgung oder das endgültige Löschen von Dateien gemäß Ihren Aufbewahrungsanforderungen.
+link:../investigate/investigate-data.html["Duplizierte Daten werden eliminiert"]:: Dateien finden, die in Ihren verbundenen Systemen doppelt vorhanden sind. Nach dem Attribut „Duplikate“ oder nach dem Dateihash filtern, um Duplikatgruppen zu überprüfen und anschließend die doppelten Kopien zu bereinigen.
+link:../investigate/investigate-directories.html["Zugriffsrisiken ermitteln"]:: Verzeichnisse mit offenen Berechtigungen können so identifiziert werden, dass sie für eine Berechtigungsprüfung priorisiert werden können.
+link:../investigate/investigate-structured.html["Untersuchung strukturierter Daten"]:: Übergroße oder ungenutzte Datenbanktabellen auf Ihren verbundenen Datenbankservern finden.
+
+
+
+
+[[act-on-data-and-monitor-over-time]]
+=== Auf Basis der Daten handeln und diese im Laufe der Zeit überwachen
+
+link:../investigate/take-actions.html["Speicherkosten senken"]:: Die Datenlebenszyklusrichtlinien Ihres Unternehmens lassen sich durch Kopieren und Archivieren von Dateien auf NFS- oder SMB-Ziele, durch Kennzeichnen von Elementen zur Nachverfolgung oder durch dauerhaftes Löschen von Dateien gemäß Ihren Aufbewahrungsanforderungen durchsetzen.
+link:../policies/create-policy.html["Datenbedingungen kontinuierlich überwachen"]:: Filterkriterien lassen sich als benannte Richtlinien speichern, um wiederkehrende Datenzustände im Zeitverlauf nachzuverfolgen, z. B. selten genutzte oder übergroße Dateien, und Benachrichtigungen zu erhalten, wenn sich die Anzahl der betroffenen Dateien ändert.
+
+
+
+
+[[governed-ai-access]]
+=== KI-Zugriff mit Governance
+
+link:../mcp/learn-about-mcp.html["KI-Clients erhalten Governance-konformen Zugriff auf Ihre Metadaten"]:: Sie können Claude Code, Claude Desktop, Cursor oder OpenCode über das Model Context Protocol (MCP) mit AI Data Engine verbinden. Sie können die Sammlungen aktivieren, die AI Clients durchsuchen können, und Microsoft Entra ID Scopes verwenden, um zu steuern, wer die einzelnen Sammlungen durchsuchen kann. AI Clients können Metadaten und Tag-Dateien durchsuchen.
+
+
+
+
+[[administration]]
+=== Verwaltung
+
 link:../administer/manage-users-roles.html["Zuweisung von Administrator- und Betrachterrollen"]:: Sie können steuern, wer Daten untersuchen und Maßnahmen ergreifen darf, indem Sie Benutzern in Ihrer Organisation die Administrator- oder Viewer-Rolle für AI Data Engine zuweisen.
-link:../investigate/use-filters.html["Duplizierte Daten werden eliminiert"]:: Dateien mit doppelten Kopien in Ihren verbundenen Systemen. Filterung nach dem Attribut „Duplikate“ oder nach dem Dateihash, um Duplikatgruppen direkt zu prüfen und Maßnahmen zu ergreifen.
-link:../investigate/understand-dashboard.html["Datenverantwortliche in die Verantwortung nehmen"]:: Im Dashboard lässt sich ermitteln, welche Dateneigentümer die höchste Konzentration an kalten, veralteten oder doppelten Daten aufweisen. Anschließend können die Ergebnisse in der Untersuchungsansicht nach Eigentümer oder Gruppe gefiltert sowie gemäß Ihren Richtlinien überprüft und verwaltet werden.
 
 
 
