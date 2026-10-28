@@ -2452,4 +2452,11 @@
   <block id="d76d64858ff00ec6f65866ed6c6641f4" category="sidebar">Verbindung von AIDE mit Microsoft Entra ID</block>
   <block id="156586dd7dceda9f103091b3c0beb1e6" category="sidebar">AIDE MCP Tools</block>
   <block id="7da93123cf77bf1f1d116b04b8d380c2" category="paragraph"><block ref="7da93123cf77bf1f1d116b04b8d380c2" category="inline-link-macro-rx"></block></block>
+  <block id="702209553c340514b23674486ae4fd31" category="doc">AI Data Engine 1.3</block>
+  <block id="10c8a7570aaedaffab9ef063fe9b43c3" category="paragraph">AI Data Engine 1.3 ist die erste allgemein verfügbare Version (GA) von AI Data Engine (AIDE), einem Metadaten-Intelligenzdienst, den Sie über die NetApp Console verwalten. AIDE scannt Ihre verbundenen Systeme, erstellt einen Metadatenkatalog und bietet Ihnen die Transparenz und Werkzeuge, um Storage zu optimieren und Daten in großem Umfang zu verwalten. Weitere Informationen finden sich unter<block ref="c8f75516a94493ffe7fe6bb96c5067bf" category="inline-link-rx"></block>.</block>
+  <block id="b678323232cf97a3768c22969e93b6bc" category="inline-link">Was ist neu in AI Data Engine</block>
+  <block id="e0a0ca8d3c0ba674ddda1dadea6576a3" category="paragraph">Sie können kalte, veraltete und doppelte Daten in Ihren verbundenen Systemen identifizieren, Verzeichnisse mit offenen Berechtigungen finden und übergroße oder ungenutzte Datenbanktabellen untersuchen. Sie können direkt auf Ergebnisse reagieren oder Filterkriterien als Richtlinien speichern, die Datenbedingungen im Zeitverlauf überwachen. Weitere Informationen sind unter<block ref="c9aabe1555970ff471e651fab11a16f7" category="inline-link-rx"></block> zu finden.</block>
+  <block id="5bb02905e466f0b51d8900b860f2d83c" category="section-title">Steuerung des KI-Zugriffs auf Ihre Metadaten</block>
+  <block id="9499e52a968a6337905b279c7aa8beb4" category="inline-link">Informationen zu MCP in AI Data Engine</block>
+  <block id="4edb79b33148e0f3f7c2ed02c6ba39c5" category="paragraph">Sie können AI clients über das Model Context Protocol (MCP) mit AI Data Engine verbinden und mithilfe von Microsoft Entra ID Scopes steuern, wer die einzelnen Sammlungen durchsuchen darf. Weitere Informationen sind unter<block ref="705649344f29bd334d650738c1e5f0f1" category="inline-link-rx"></block> verfügbar.</block>
 </blocks>

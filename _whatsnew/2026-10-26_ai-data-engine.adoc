@@ -1,0 +1,24 @@
+= AI Data Engine 1.3
+:allow-uri-read: 
+
+
+
+
+[[ai-data-engine-1-3]]
+=== AI Data Engine 1.3
+
+AI Data Engine 1.3 ist die erste allgemein verfügbare Version (GA) von AI Data Engine (AIDE), einem Metadaten-Intelligenzdienst, den Sie über die NetApp Console verwalten. AIDE scannt Ihre verbundenen Systeme, erstellt einen Metadatenkatalog und bietet Ihnen die Transparenz und Werkzeuge, um Storage zu optimieren und Daten in großem Umfang zu verwalten. Weitere Informationen finden sich unter https://docs.netapp.com/us-en/ai-data-engine/get-started/learn-about.html["Erfahren Sie mehr über AI Data Engine"^].
+
+
+
+[[optimize-storage-and-investigate-your-data]]
+=== Storage optimieren und Ihre Daten analysieren
+
+Sie können kalte, veraltete und doppelte Daten in Ihren verbundenen Systemen identifizieren, Verzeichnisse mit offenen Berechtigungen finden und übergroße oder ungenutzte Datenbanktabellen untersuchen. Sie können direkt auf Ergebnisse reagieren oder Filterkriterien als Richtlinien speichern, die Datenbedingungen im Zeitverlauf überwachen. Weitere Informationen sind unter https://docs.netapp.com/us-en/ai-data-engine/release-notes/whats-new.html["Was ist neu in AI Data Engine"^] zu finden.
+
+
+
+[[govern-ai-access-to-your-metadata]]
+=== Steuerung des KI-Zugriffs auf Ihre Metadaten
+
+Sie können AI clients über das Model Context Protocol (MCP) mit AI Data Engine verbinden und mithilfe von Microsoft Entra ID Scopes steuern, wer die einzelnen Sammlungen durchsuchen darf. Weitere Informationen sind unter https://docs.netapp.com/us-en/ai-data-engine/mcp/learn-about-mcp.html["Informationen zu MCP in AI Data Engine"^] verfügbar.
