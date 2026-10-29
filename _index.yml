@@ -23,7 +23,7 @@ indexpage:
     - title: Workflows zur Speicheroptimierung
       url: "/get-started/storage-optimization-workflows.html"
     - title: Was ist neu
-      url: "/release-notes/whats-new.html"
+      url: "/whats-new.html"
     - title: Bekannte Einschränkungen
       url: "/release-notes/known-limitations.html"
   - title: Einsetzen

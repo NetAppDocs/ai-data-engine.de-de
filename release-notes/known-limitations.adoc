@@ -67,7 +67,7 @@ MCP-Tag-Vorgänge sind begrenzt:: AI-Clients können die Dateien mit einem Tag n
 [[related-information]]
 == Verwandte Informationen
 
-* link:whats-new.html["Was ist neu"]
+* link:../whats-new.html["Was ist neu"]
 * link:../deploy/deployment-overview.html["Bereitstellungsübersicht"]
 * link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
 * link:../mcp/learn-about-mcp.html["Informationen zum kontrollierten KI-Zugriff"]
