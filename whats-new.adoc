@@ -7,7 +7,7 @@ summary: Informationen zu neuen Funktionen in AI Data Engine.
 = Was ist neu in AI Data Engine
 :allow-uri-read: 
 :icons: font
-:imagesdir: media/
+:imagesdir: ./media/
 
 
 [role="lead"]

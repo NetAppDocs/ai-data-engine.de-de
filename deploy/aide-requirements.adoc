@@ -471,6 +471,4 @@ Die aktive Version von AI Data Engine sowie die Kontaktinformationen des NetApp 
 * link:deployment-overview.html["AIDE Bereitstellungsübersicht"]
 * link:single-node-prerequisites.html["Voraussetzungen für das AIDE Single-Node Deployment"]
 * link:multi-node-prerequisites.html["Voraussetzungen für das AIDE Multi-Node Deployment"]
-* link:deploy-aide-single-node.html["Bereitstellung von AI Data Engine als Single-Node-Deployment"]
-* link:deploy-aide-multi-node.html["Bereitstellung von AI Data Engine als Multi-Node Deployment"]
 

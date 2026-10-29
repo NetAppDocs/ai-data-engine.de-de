@@ -94,7 +94,8 @@ NetApp Console Rollen steuern, wer den verwalteten KI-Zugriff in AI Data Engine 
 Rollen werden in der NetApp Console zugewiesen, nicht innerhalb von AI Data Engine selbst.
 
 .Schritte
-. Wechseln Sie in der NetApp Console zu *Members*.
+. In der NetApp Console erfolgt die Auswahl von *Administration > Identität und Zugriff*.
+. Zum Bereich *Members* wechseln.
 . Führen Sie einen der folgenden Schritte aus:
 +
 ** Zum Hinzufügen eines neuen Benutzers wählen Sie *Benutzer hinzufügen* aus und geben die E-Mail-Adresse des Benutzers ein.
@@ -103,7 +104,7 @@ Rollen werden in der NetApp Console zugewiesen, nicht innerhalb von AI Data Engi
 
 . Wählen Sie die Organisation, den Ordner oder das Projekt aus und dann die Kategorie *Data Service*.
 . Zuweisung der Rolle *AI Data Engine administrator* oder *AI Data Engine viewer*.
-. Speichern Sie Ihre Änderungen.
+. Die neue Rolle wird hinzugefügt.
 
 
 Der Nutzer erhält eine E-Mail-Einladung und kann nach deren Annahme auf AI Data Engine zugreifen.

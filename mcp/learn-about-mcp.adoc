@@ -18,7 +18,7 @@ Gesteuerter KI-Zugriff ermöglicht es KI-Clients, mithilfe des Model Context Pro
 [[what-governed-ai-access-does]]
 == Was regulierter KI-Zugriff bewirkt
 
-Das Model Context Protocol (MCP) ist ein offener Standard, der es KI-Clients ermöglicht, Verbindungen zu externen Datenquellen und Tools herzustellen. AI Data Engine stellt einen MCP-Server, das sogenannte Governed Access Gateway, bereit, sodass KI-Clients den Metadatenkatalog von AI Data Engine abfragen können, anstatt direkt auf Ihre Storage Systeme zuzugreifen.
+Das Model Context Protocol (MCP) ist ein offener Standard, der es KI-Clients ermöglicht, sich mit externen Datenquellen und Tools zu verbinden. AI Data Engine stellt einen MCP Server, das sogenannte Governed Access Gateway, bereit, sodass KI-Clients den AI Data Engine Metadatenkatalog abfragen können, anstatt direkt auf Ihre Storage Systeme zuzugreifen.
 
 Über MCP kann ein vernetzter AI Client Folgendes tun:
 
@@ -125,12 +125,9 @@ Die vollständige Liste der Einschränkungen finden Sie unter link:../release-no
 == Verwandte Informationen
 
 * link:manage-data-collections.html["Verwaltung von Datensammlungen"]
-* link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"]
 * link:quick-start-mcp.html["Schnellstart für geregelten KI-Zugriff mit AI Data Engine"]
 * link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]
 * link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
-* link:connect-entra-id-aide-mcp.html["AI Data Engine mit Microsoft Entra ID verbinden"]
 * link:connect-ai-clients-mcp.html["Verbindung von KI-Clients mit dem AI Data Engine MCP Server"]
 * link:mcp-tools-reference.html["MCP tools für den von AI Data Engine gesteuerten KI-Zugriff"]
-* link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
 

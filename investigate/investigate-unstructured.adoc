@@ -107,6 +107,6 @@ Zum Herunterladen der gefilterten Ergebnisse auf der Registerkarte „Unstruktur
 * link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
 * link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"]
-* link:../get-started/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
+* link:storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
 * link:understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
 

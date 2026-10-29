@@ -20,8 +20,6 @@ indexpage:
       url: "/get-started/architecture.html"
     - title: Schnellstart
       url: "/get-started/quick-start.html"
-    - title: Workflows zur Speicheroptimierung
-      url: "/get-started/storage-optimization-workflows.html"
     - title: Was ist neu
       url: "/whats-new.html"
     - title: Bekannte Einschränkungen
@@ -50,6 +48,8 @@ indexpage:
       url: "/investigate/investigate-data.html"
     - title: Maßnahmen für Daten ergreifen
       url: "/investigate/take-actions.html"
+    - title: Workflows zur Speicheroptimierung
+      url: "/investigate/storage-optimization-workflows.html"
   - title: Richtlinien und Maßnahmen
     links:
     - title: Erstellung einer Richtlinie

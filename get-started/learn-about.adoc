@@ -80,5 +80,5 @@ AI Data Engine scannt die unterstützten Datenquellen, die Sie verbinden. Weiter
 * link:architecture.html["AI Data Engine Architektur"]
 * link:quick-start.html["Schnellstart"]
 * link:../mcp/learn-about-mcp.html["Informationen zum kontrollierten KI-Zugriff"]
-* link:storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
+* link:../investigate/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
 

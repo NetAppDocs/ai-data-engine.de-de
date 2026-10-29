@@ -11,14 +11,14 @@ summary: Verbindung von Datenquellen mit AI Data Engine sowie Konfiguration der 
 
 
 [role="lead"]
-Die Datenquellen, die AI Data Engine (AIDE) analysieren soll, werden verbunden, und es wird ausgewählt, welche ihrer Datenressourcen gescannt werden sollen. AI Data Engine scannt verbundene Datenquellen, um Metadaten zu erfassen, und das Verbindungsverfahren hängt vom Quelltyp ab.
+Die Datenquellen, die AI Data Engine (AIDE) analysieren soll, werden verbunden, und es wird ausgewählt, welche ihrer Datenressourcen gescannt werden sollen. AI Data Engine scannt verbundene Datenquellen, um Metadaten zu erfassen, und das Verbindungsverfahren hängt vom Quelltyp ab. Diese Aufgaben erfolgen in NetApp Console.
 
 
 
 [[before-you-begin]]
 == Bevor Sie beginnen
 
-* Sie müssen über _AI Data Engine Administrator_-Berechtigungen verfügen, um Datenquellen zu verbinden und zu konfigurieren.
+* Sie müssen in NetApp Console über die Rolle „AI Data Engine Administrator“ verfügen, um Datenquellen zu verbinden und zu konfigurieren.
 * Für Systeme, die über die NetApp Console Erkennung verbunden sind, ist vor dem Hinzufügen zu AI Data Engine die Erkennung der Speichersysteme in NetApp Console durch einen Console Agent erforderlich. Dies gilt für alle unterstützten Storage Typen, einschließlich lokaler ONTAP Cluster, Cloud Volumes ONTAP, Amazon FSx for NetApp ONTAP, Google Cloud NetApp Volumes und Azure NetApp Files. Für lokale ONTAP Cluster finden Sie unter link:https://docs.netapp.com/us-en/storage-management-ontap-onprem/task-discovering-ontap.html["Lokale ONTAP Cluster entdecken"] in der NetApp Console Dokumentation weitere Informationen. Die direkte Erkennung aktiviert keine Datenservices wie AI Data Engine.
 * Vergewissern Sie sich, dass die Netzwerkverbindungen geöffnet sind, die AI Data Engine für den Zugriff auf Ihre Datenquellen benötigt. Weitere Informationen finden Sie unter link:../deploy/aide-requirements.html["AI Data Engine Anforderungen"].
 * Zum Scannen von SMB/CIFS-Freigaben mit Kerberos-Authentifizierung ist zunächst das Verfahren für Ihren Deployment-Typ in link:../administer/configure-kerberos-smb.html["Kerberos Authentifizierung für SMB/CIFS-Freigaben in AI Data Engine"] durchzuführen.

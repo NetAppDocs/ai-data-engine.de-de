@@ -13,6 +13,8 @@ summary: Mit der Untersuchungsansicht können Sie dateibasierte Speicher, Datenb
 [role="lead"]
 Wenn Sie nachvollziehen müssen, was Speicherplatz belegt, welche Datenbanktabellen unkontrolliert wachsen oder in welchen Verzeichnissen die Zugriffsrechte zu weit gefasst sind, verwenden Sie Metadatenfilter, um Ihre Daten über alle verbundenen Systeme hinweg zu untersuchen.
 
+image::aide_mo_ga_investigation_page.png[AI Data Engine Untersuchungsansicht]
+
 
 
 [[choose-a-starting-point]]
@@ -20,7 +22,7 @@ Wenn Sie nachvollziehen müssen, was Speicherplatz belegt, welche Datenbanktabel
 
 Die Ansicht wird geöffnet, wenn in der linken Navigation *Investigation* ausgewählt wird. Die Investigation Ansicht kann auch über das Dashboard geöffnet werden, wenn in der Tabelle _Top data resources by reclaimable storage_ *Investigate* ausgewählt wird; dadurch wird automatisch ein Filter für diese Ressource angewendet.
 
-*Investigation* ist in drei Registerkarten unterteilt. Die Registerkarte ist entsprechend dem Datentyp auszuwählen, der untersucht wird.
+*Investigation* ist in drei Registerkarten unterteilt: *Unstructured*, *Directories* und *Structured*. Die passende Registerkarte ist diejenige, die dem Datentyp entspricht, den Sie untersuchen.
 
 [cols="1,2,1"]
 |===
@@ -30,12 +32,12 @@ Die Ansicht wird geöffnet, wenn in der linken Navigation *Investigation* ausgew
 | *Unstrukturiert* | Kalte, veraltete oder doppelte dateibasierte Daten in NFS- und SMB-Volumes finden | link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"] 
 
 
-| *Strukturiert* | Identifizierung übergroßer oder ungenutzter Datenbanktabellen, die Speicherplatz belegen | link:investigate-structured.html["Untersuchung strukturierter Daten"] 
-
-
 | *Verzeichnisse* | Prüfung der Berechtigungen auf Verzeichnisebene und Ermittlung allgemein zugänglicher Pfade | link:investigate-directories.html["Verzeichnisse untersuchen"] 
+
+
+| *Strukturiert* | Identifizierung übergroßer oder ungenutzter Datenbanktabellen, die Speicherplatz belegen | link:investigate-structured.html["Untersuchung strukturierter Daten"] 
 |===
-Die Zusammenfassungsanzahl und die Gesamtgröße oben auf der Seite werden entsprechend der aktiven Registerkarte aktualisiert (z. B. „Unstructured (400M) | 5.7 PiB“).
+Jede Registerkartenbezeichnung zeigt eine Zusammenfassung der Elemente dieses Typs (zum Beispiel „Unstructured (30.4M)“).
 
 
 

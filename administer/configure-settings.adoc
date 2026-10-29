@@ -13,6 +13,8 @@ summary: Die Definition, welche Dateien AI Data Engine als kalte oder veraltete 
 [role="lead"]
 Schwellenwerte für kalte und veraltete Daten helfen Ihnen, Storage zu finden, die Sie mit AI Data Engine (AIDE) optimieren können. Berechtigungsprüfungen und die Integration von Active Directory helfen Ihnen, Zugriffsrisiken zu erkennen und zu verstehen. Diese sollten den Datenklassifizierungs-, Aufbewahrungs- und Zugriffsrichtlinien Ihres Unternehmens entsprechen.
 
+image::aide_mo_ga_configuration_page.png[Allgemeine Einstellungen für AI Data Engine]
+
 
 
 [[before-you-begin]]
@@ -102,8 +104,7 @@ Die Voraussetzungen und Schritte sind unter link:configure-ad-nfs.html["Konfigur
 * link:../investigate/understand-dashboard.html["Informationen zum AI Data Engine Dashboard"]
 * link:../investigate/investigate-directories.html["Verzeichnisse untersuchen"]
 * link:../investigate/investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
-* link:../get-started/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
-* link:../deploy/aide-requirements.html["AIDE-Anforderungen"]
+* link:../investigate/storage-optimization-workflows.html["Workflows zur Speicheroptimierung"]
 * link:manage-users-roles.html["Verwaltung von Benutzern und Rollen"]
 * link:configure-ad-nfs.html["Konfigurieren der Active Directory-Identitätszuordnung für NFS"]
 

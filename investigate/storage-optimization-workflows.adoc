@@ -1,6 +1,6 @@
 ---
 sidebar: sidebar 
-permalink: get-started/storage-optimization-workflows.html 
+permalink: investigate/storage-optimization-workflows.html 
 keywords: storage optimization, cold data, stale data, retention, workflow, dashboard, investigate, policy 
 summary: Durchgängige Arbeitsabläufe dienen dazu, einen Dashboard-Befund von der Untersuchung über Maßnahmen bis hin zur laufenden Überwachung von Richtlinien zu begleiten. 
 ---
@@ -22,9 +22,9 @@ Diese AI Data Engine (AIDE) Workflows führen von der Identifizierung eines Stor
 Im Dashboard sehen Sie, dass eine Storage Ressource eine große Menge an als kalt gekennzeichneten Daten enthält. Auf diese kalten Dateien wurde innerhalb des konfigurierten Schwellenwerts für kalte Daten, der standardmäßig ein Jahr beträgt, nicht zugegriffen. Sie können diesen Schwellenwert in link:../administer/configure-settings.html["Einstellungen zur Datenklassifizierung"] ändern.
 
 .Schritte
-. Wählen Sie in link:../investigate/understand-dashboard.html["das Dashboard"] die Ressource mit der höchsten Konzentration an kalten Daten aus, und wählen Sie dann *Investigate*.
-. In link:../investigate/investigate-unstructured.html["Untersuchung"] wird der Filter *Zuletzt aufgerufen* so eingestellt, dass er dem konfigurierten Schwellenwert für kalte Daten entspricht (Standard: *1+ Jahr*), und die Ressourcen werden bestätigt.
-. Die Ergebnisse werden geprüft, um link:../investigate/take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]die passenden Dateien zu ermitteln.
+. Wählen Sie in link:understand-dashboard.html["das Dashboard"] die Ressource mit der höchsten Konzentration an kalten Daten aus, und wählen Sie dann *Investigate*.
+. In link:investigate-unstructured.html["Untersuchung"] wird der Filter *Zuletzt aufgerufen* so eingestellt, dass er dem konfigurierten Schwellenwert für kalte Daten entspricht (Standard: *1+ Jahr*), und die Ressourcen werden bestätigt.
+. Die Ergebnisse werden geprüft, um link:take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]die passenden Dateien zu ermitteln.
 . Wenn sich eine fortlaufende Überwachung dieser Ressourcen lohnt, link:../policies/create-policy.html["Der Filtersatz kann als Richtlinie gespeichert werden"] damit Sie benachrichtigt werden, wenn neue Dateien kalt werden.
 
 
@@ -40,9 +40,9 @@ AI Data Engine stuft Dateien als veraltet ein, wenn sie länger nicht geändert 
 NOTE: Sie können diesen Schwellenwert in der link:../administer/configure-settings.html["Einstellungen zur Datenklassifizierung"] ändern.
 
 .Schritte
-. Anhand von link:../investigate/understand-dashboard.html["das Dashboard"] lässt sich eine Ressource mit signifikanten veralteten Daten identifizieren.
-. Wenden Sie in link:../investigate/investigate-unstructured.html["Untersuchung"] den Filter *Zuletzt geändert* an, der auf Ihren Schwellenwert für veraltete Daten festgelegt ist (Standardwert *3+ Jahre*).
-. Die Ergebnisse werden geprüft, um link:../investigate/take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]die passenden Dateien zu ermitteln.
+. Anhand von link:understand-dashboard.html["das Dashboard"] lässt sich eine Ressource mit signifikanten veralteten Daten identifizieren.
+. Wenden Sie in link:investigate-unstructured.html["Untersuchung"] den Filter *Zuletzt geändert* an, der auf Ihren Schwellenwert für veraltete Daten festgelegt ist (Standardwert *3+ Jahre*).
+. Die Ergebnisse werden geprüft, um link:take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]die passenden Dateien zu ermitteln.
 . link:../policies/create-policy.html["Der Filtersatz kann als Richtlinie gespeichert werden"] um diese Ressourcen über nachfolgende Scans hinweg zu verfolgen.
 
 
@@ -58,7 +58,7 @@ Ihre Organisation verlangt, dass Dateien, die älter als ein bestimmtes Alter si
 NOTE: Dieser Schwellenwert lässt sich unter *Konfiguration* > *Allgemeine Einstellungen* konfigurieren.
 
 .Schritte
-. Wenden Sie in link:../investigate/investigate-unstructured.html["Untersuchung"] den Filter *Zuletzt erstellt* an, der auf Ihren Aufbewahrungsschwellenwert (Standard: *7+ Jahre*) festgelegt ist.
+. Wenden Sie in link:investigate-unstructured.html["Untersuchung"] den Filter *Zuletzt erstellt* an, der auf Ihren Aufbewahrungsschwellenwert (Standard: *7+ Jahre*) festgelegt ist.
 . Die Ergebnisse sollten vor dem weiteren Vorgehen mit den relevanten Beteiligten abgestimmt werden. Dateien, die mit einer Aufbewahrungskennzeichnung versehen sind, werden häufig überwacht, anstatt automatisch gelöscht zu werden.
 . link:../policies/create-policy.html["Erstellung einer Richtlinie"] mit einer reinen Überwachungs- oder E-Mail-Benachrichtigungsaktion, sodass Sie eine Warnung erhalten, wenn neue Dateien den Aufbewahrungsschwellenwert erreichen.
 
@@ -72,11 +72,11 @@ NOTE: Dieser Schwellenwert lässt sich unter *Konfiguration* > *Allgemeine Einst
 Mehrere identische Kopien derselben Dateien befinden sich auf verschiedenen Volumes oder Freigaben, ein häufiges Problem in Umgebungen mit Backup-Aufträgen, Datenmigrationen oder gemeinsam genutzten Projektordnern.
 
 .Schritte
-. In link:../investigate/investigate-unstructured.html["Untersuchung"] wird *Unstructured* ausgewählt, und anschließend werden die Details einer Datei geöffnet, bei der Kopien vermutet werden, beispielsweise einer Datei aus einer kürzlich durchgeführten Datenmigration.
+. In link:investigate-unstructured.html["Untersuchung"] wird *Unstructured* ausgewählt, und anschließend werden die Details einer Datei geöffnet, bei der Kopien vermutet werden, beispielsweise einer Datei aus einer kürzlich durchgeführten Datenmigration.
 . Über *Details anzeigen* neben *Duplikate* werden jede Kopie der Datei und ihr Speicherort angezeigt.
 . Anhand der übereinstimmenden Dateien und ihrer Speicherorte lässt sich feststellen, welche Kopien redundant sind.
 . Nach Auswahl der redundanten Dateien folgt die Auswahl von *Duplikate bereinigen*.
-. Unter *Aktion* ist die Option *Löschen* auszuwählen. Die Kopie ist mit der Option *Zuletzt geändert* beizubehalten, am ursprünglichen Speicherort ist ein Breadcrumb zu hinterlassen, und *Senden* ist auszuwählen. Anschließend ist die Löschung im Dialogfeld zu bestätigen. Einzelheiten finden sich unter link:../investigate/take-actions.html["Doppelte Dateien untersuchen und bereinigen"].
+. Unter *Aktion* erfolgt die Auswahl über *Löschen*. Die Kopie ist mit der Option *Zuletzt geändert* beizubehalten, am ursprünglichen Speicherort ist ein Breadcrumb zu hinterlassen, und *Senden* ist auszuwählen. Anschließend ist die Löschung im Dialogfeld zu bestätigen. Einzelheiten sind unter link:take-actions.html["Doppelte Dateien untersuchen und bereinigen"] zu finden.
 . link:../policies/create-policy.html["Erstellung einer Richtlinie"] um die Ansammlung von Duplikaten im Laufe der Zeit zu verfolgen und Benachrichtigungen zu erhalten, wenn die Anzahl zunimmt.
 
 
@@ -89,9 +89,9 @@ Mehrere identische Kopien derselben Dateien befinden sich auf verschiedenen Volu
 Daten, die die Grenzwerte für veraltete und nicht mehr verwendete Daten in Ihrem Unternehmen erfüllen, sind auf viele Eigentümer verteilt. Die Identifizierung der Dateneigentümer mit den meisten Dateien in diesen Kategorien hilft Ihnen dabei, die Datenbereinigung zu priorisieren.
 
 .Schritte
-. Unter link:../investigate/understand-dashboard.html["das Dashboard"] ist die Tabelle „Top consumers by reclaimable storage“ zu finden.
-. Durch Auswahl einer Besitzerzeile wird link:../investigate/investigate-unstructured.html["Untersuchung"] geöffnet, gefiltert nach den Dateien dieses Besitzers.
-. Die Ergebnisse prüfen und über link:../investigate/take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]Dateien entscheiden.
+. Unter link:understand-dashboard.html["das Dashboard"] ist die Tabelle „Top consumers by reclaimable storage“ zu finden.
+. Durch Auswahl einer Besitzerzeile wird link:investigate-unstructured.html["Untersuchung"] geöffnet, gefiltert nach den Dateien dieses Besitzers.
+. Die Ergebnisse prüfen und über link:take-actions.html["ob es getaggt, archiviert oder gelöscht werden soll"]Dateien entscheiden.
 . link:../policies/create-policy.html["Der Filtersatz kann als Richtlinie gespeichert werden"] zur Überwachung, wie sich die potenziell rückforderbaren Daten dieses Eigentümers im Laufe der Zeit verändern.
 
 
@@ -100,9 +100,9 @@ Daten, die die Grenzwerte für veraltete und nicht mehr verwendete Daten in Ihre
 [[related-information]]
 == Verwandte Informationen
 
-* link:../investigate/understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
-* link:../investigate/investigate-data.html["Untersuchung Ihrer Daten"]
-* link:../investigate/investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
-* link:../investigate/take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
+* link:understand-dashboard.html["Die Speicherauslastung kann über das Dashboard beurteilt werden."]
+* link:investigate-data.html["Untersuchung Ihrer Daten"]
+* link:investigate-unstructured.html["Untersuchung unstrukturierter Daten"]
+* link:take-actions.html["Maßnahmen auf Grundlage Ihrer Daten"]
 * link:../policies/create-policy.html["Erstellung einer Richtlinie"]
 

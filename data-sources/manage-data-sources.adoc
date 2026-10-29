@@ -20,12 +20,14 @@ Die Scanabdeckung sollte auf die Daten abgestimmt bleiben, die analysiert werden
 
 Anhand des Scanstatus lässt sich erkennen, wie der Scan fortschreitet und welche Ressourcen Aufmerksamkeit erfordern. Die Fortschritte auf Systemebene und die Details auf Ressourcenebene ermöglichen die Unterscheidung zwischen noch laufenden Scans und Scans, die angehalten wurden oder Fehler aufweisen.
 
+image::aide_mo_ga_data_sources_page.png[AI Data Engine Datenquellen und Scanstatus]
+
 Bei unerwartetem Anhalten oder Pausieren von Scans empfiehlt sich eine Prüfung des Deployment Systemstatus. Weitere Informationen enthält link:../administer/monitor-deployment-health.html["Deployment Systemstatus überwachen und Probleme untersuchen"].
 
 .Schritte
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Das System, das Sie überprüfen möchten, auswählen.
-. Die Systemzeile auswählen und die Detailansicht öffnen.
+. In der Systemzeile ist *Details anzeigen* auszuwählen.
 +
 Die Detailansicht zeigt:
 
@@ -50,7 +52,8 @@ Sie können den Scanvorgang eines Systems vorübergehend unterbrechen, wenn AI D
 .Schritte
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Das System lokalisieren, das angehalten werden soll.
-. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. In der Systemzeile ist *Details anzeigen* auszuwählen.
+. Das Aktionsmenü neben der Datenressource auswählen.
 . Wählen Sie *Pause*.
 
 
@@ -64,7 +67,8 @@ Sobald AI Data Engine ein pausiertes System erneut scannen soll, kann der Scanvo
 .Schritte
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Lokalisierung des pausierten Systems.
-. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. In der Systemzeile ist *Details anzeigen* auszuwählen.
+. Das Aktionsmenü neben der Datenressource auswählen.
 . *Resume* wird ausgewählt.
 
 
@@ -79,7 +83,7 @@ Metadaten werden im gesamten System nach wesentlichen Datenänderungen aktualisi
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Das System, das gescannt werden soll, wird gesucht.
 . Das Aktionsmenü neben dem System ist auszuwählen.
-. *Alle Volumes scannen* kann ausgewählt werden (eine entsprechende Option gibt es im Aktionsmenü für Freigaben und Buckets).
+. Hierfür steht die Option *Scan all volumes* zur Verfügung (eine entsprechende Option ist im Aktionsmenü für Freigaben, Buckets oder Schemata verfügbar).
 
 
 
@@ -109,7 +113,7 @@ NOTE: Wenn die Freigabe Kerberos-Authentifizierung verwendet, authentifiziert si
 .Schritte
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Das SMB-System lokalisieren.
-. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. In der Systemzeile ist *Details anzeigen* auszuwählen.
 . *CIFS-Anmeldeinformationen bearbeiten* wird ausgewählt.
 . Geben Sie den aktualisierten Benutzernamen und das aktualisierte Passwort ein und wählen Sie dann *Save*.
 
@@ -124,7 +128,7 @@ Sie können replizierte Daten in Ihre Scan-Abdeckung ein- oder ausschließen, in
 .Schritte
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Das System lokalisieren.
-. Die Systemzeile wird ausgewählt, um die Detailansicht zu öffnen.
+. In der Systemzeile ist *Details anzeigen* auszuwählen.
 . *Zugriff auf DP Volumes aktivieren* oder *Zugriff auf DP Volumes deaktivieren* auswählen.
 
 
@@ -145,16 +149,16 @@ Der Scan kann auf die Datenressourcen konzentriert werden, die analysiert werden
 
 
 
-[[deactivate-ai-data-engine-for-a-system]]
-== Deaktivierung von AI Data Engine für ein System
+[[remove-ai-data-engine-for-a-system]]
+== AI Data Engine für ein System entfernen
 
-Ein System wird aus der aktiven Scanabdeckung entfernt, wenn AI Data Engine nicht mehr zum Scannen dieses Systems benötigt wird. Die Deaktivierung eines Systems stoppt alle Scans und behält seine Konfiguration bei. Damit das System wieder einbezogen wird, ist in der Systemzeile *Activate scans* auszuwählen.
+Wenn AI Data Engine ein System nicht mehr scannen soll, kann es aus der aktiven Scanabdeckung entfernt werden. Durch das Deaktivieren eines Systems werden alle Scans beendet, und seine Konfiguration bleibt erhalten. Zum erneuten Hinzufügen des Systems dient in der Systemzeile die Option *Activate scans*.
 
 .Schritte
 . In der Benutzeroberfläche von AI Data Engine erfolgt die Auswahl von *Datenquellen*.
 . Das System ermitteln, das deaktiviert werden soll.
 . Das Aktionsmenü neben dem System ist auszuwählen.
-. Die Option *Deactivate AI Data Engine* ist auszuwählen.
+. Die Option *System entfernen* auswählen.
 
 
 

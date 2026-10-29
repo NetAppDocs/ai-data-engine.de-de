@@ -357,7 +357,5 @@ TIP: Suchfilter für Dateinamenpräfix, Dateityp und Eigentümer. Wenn Dateien n
 * link:prepare-mcp-host.html["Vorbereitung des MCP Hosts"]
 * link:manage-data-collections.html["Verwaltung von Datensammlungen"]
 * link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"]
-* link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
-* link:connect-entra-id-aide-mcp.html["AI Data Engine mit Microsoft Entra ID verbinden"]
 * link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
 

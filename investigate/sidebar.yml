@@ -14,3 +14,5 @@ entries:
   url: "/investigate/investigate-directories.html"
 - title: Maßnahmen für Daten ergreifen
   url: "/investigate/take-actions.html"
+- title: Workflows zur Speicheroptimierung
+  url: "/investigate/storage-optimization-workflows.html"

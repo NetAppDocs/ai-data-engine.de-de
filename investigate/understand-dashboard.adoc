@@ -1,7 +1,7 @@
 ---
 sidebar: sidebar 
 permalink: investigate/understand-dashboard.html 
-keywords: dashboard, overview, reclaimable storage, cold data, stale data, storage health, capacity risk, data owners, investigate, access exposure, open permissions, structured data, duplicates, file types 
+keywords: dashboard, overview, reclaimable storage, cold data, stale data, storage health, capacity risk, data owners, investigate, permissions, open permissions, structured data, duplicates, file types 
 summary: Sie können den Storage Systemstatus in Ihrer gesamten Umgebung beurteilen, erkennen, wo sich potenziell zurückgewinnbarer Speicherplatz konzentriert, Verzeichnisse mit offenen Berechtigungen und strukturierte Daten überprüfen und entscheiden, welche Systeme oder Dateneigentümer zuerst untersucht werden sollten. 
 ---
 = Bewertung des Storage-Zustands mit dem AI Data Engine Dashboard
@@ -13,7 +13,9 @@ summary: Sie können den Storage Systemstatus in Ihrer gesamten Umgebung beurtei
 [role="lead"]
 Bevor Sie entscheiden können, was Sie untersuchen, müssen Sie den Zustand Ihres Speichers verstehen. Wie viel Speicherplatz erfüllt die Schwellenwerte Ihrer Organisation für kalte und veraltete Daten, und welche Systeme oder Verantwortlichen enthalten die meisten Daten in diesen Kategorien? Beispielsweise kann ein Speicheradministrator, der auf eine Kapazitätswarnung reagiert, feststellen, dass ein großer Teil des gescannten Speichers aus kalten Daten besteht, und dann das System mit den größten Auswirkungen genauer untersuchen, um sofort mit der Analyse zu beginnen.
 
-Die Auswahl erfolgt in NetApp Console über *AI data hub* > *AI Data Engine*. Standardmäßig öffnet sich das Dashboard. Das Dashboard gliedert seine Einblicke in drei Registerkarten: *Speicheroptimierung*, *Zugriffsexposition* und *strukturierte Daten*.
+In NetApp Console lässt sich *AI data hub* > *AI Data Engine* auswählen. Standardmäßig öffnet sich das Dashboard. Das Dashboard gliedert seine Erkenntnisse in drei Registerkarten: *Speicheroptimierung*, *Berechtigungen* und *Strukturierte Daten*.
+
+image::aide_mo_ga_overview_page.png[AI Data Engine Dashboard Überblick]
 
 
 
@@ -45,7 +47,7 @@ Sie sehen, wo Sie den meisten Storage zurückgewinnen können. Die Registerkarte
 * _Aktiver versus zurückgewinnbarer Storage_: Zeigt den Anteil aktiver Daten im Vergleich zu kalten und veralteten Daten über alle gescannten Ressourcen hinweg. Ein hoher Anteil kalter, veralteter oder duplizierter Daten kann auf ein erhebliches Potenzial zur Storage Optimierung hinweisen.
 * _Top-Datenressourcen nach zurückgewinnbarem Storage_: Zeigt die Datenressourcen mit der größten zurückgewinnbaren Kapazität an.
 * _Top-Verbraucher nach zurückgewinnbarem Storage_: Zeigt die Dateneigentümer, ihren zurückgewinnbaren Storage und ihre Dateianzahl.
-* _Duplikatgrößenverteilung_: Zeigt, wie duplizierte Daten über verschiedene Größenbereiche verteilt sind.
+* _Größenverteilung doppelter Daten_: Zeigt, wie doppelte Daten über verschiedene Größenbereiche verteilt sind.
 * _Alter der Assets_: Zeigt Elemente nach Alter an. Mit dem Dropdown-Menü lässt sich das Zeitstempelkriterium für das Diagramm auswählen.
 * _Häufigste Dateitypen_: Zeigt die am häufigsten vorkommenden Dateitypen an.
 
@@ -58,10 +60,10 @@ Mithilfe des Übersichtsbereichs und dieser Diagramme lassen sich Möglichkeiten
 
 
 
-[[review-access-exposure]]
-== Überprüfung der Zugriffsexposition
+[[review-permissions]]
+== Überprüfung der Berechtigungen
 
-Die Verzeichnisse, die für eine Überprüfung der Berechtigungen priorisiert werden sollen, können ermittelt werden. Die Registerkarte *Access exposure* zeigt das Diagramm _Directories with open permissions_ an, in dem Verzeichnispfade und ihre Dateianzahl aufgeführt sind. Ausführliche Informationen zu diesen Verzeichnissen enthält link:investigate-directories.html["Verzeichnisse untersuchen"]. Informationen dazu, wie gesteuert wird, ob AI Data Engine Berechtigungen scannt, enthält link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"].
+Die Verzeichnisse, die für eine Überprüfung der Berechtigungen priorisiert werden sollten. Die Registerkarte *Permissions* zeigt das Diagramm _Directories with open permissions_, in dem Verzeichnispfade und ihre Dateianzahlen aufgeführt sind. Ausführliche Informationen zu diesen Verzeichnissen sind unter link:investigate-directories.html["Verzeichnisse untersuchen"] verfügbar. Informationen dazu, ob AI Data Engine Berechtigungen scannt, sind unter link:../administer/configure-settings.html["Konfiguration von Datenklassifizierungsschwellenwerten und Zugriffsscans"] verfügbar.
 
 
 
@@ -77,9 +79,9 @@ Sie sehen, welche Schemas und Tabellen in Ihren gescannten Daten enthalten sind,
 
 Sobald Sie eine Ressource oder einen Eigentümer identifiziert haben, die bzw. der näher untersucht werden soll, ermöglichen die Tabellen auf der Registerkarte *Speicheroptimierung* den direkten Wechsel zu den Details.
 
-Die Tabelle „Top-Datenressourcen nach zurückforderbarem Speicherplatz“ listet Ihre gescannten Speicherressourcen auf, eingestuft nach dem Anteil der Daten, die dupliziert sind oder die Schwellenwerte Ihrer Organisation für kalte und veraltete Daten erfüllen. Durch Auswählen einer beliebigen Zeile wird die Untersuchungsansicht geöffnet, gefiltert nach dieser Ressource. Dort kann die Registerkarte link:investigate-unstructured.html["Unstrukturiert"] verwendet werden, um kalte oder veraltete Dateien zu identifizieren, oder die Registerkarte link:investigate-directories.html["Verzeichnisse"], um die Berechtigungsfreigabe zu prüfen.
+Die Tabelle „Top-Datenressourcen nach zurückgewinnbarem Storage“ listet Ihre gescannten Storage-Ressourcen auf, sortiert nach dem Anteil der Daten, die dupliziert sind oder die Kalt- und Veraltet-Schwellenwerte Ihres Unternehmens erfüllen. Über die Registerkarte link:investigate-unstructured.html["Unstrukturiert"] lassen sich kalte oder veraltete Dateien identifizieren, über die Registerkarte link:investigate-directories.html["Verzeichnisse"] lässt sich die Offenlegung von Berechtigungen prüfen.
 
-Die Tabelle „Top-Verbraucher nach rückforderbarem Storage“ zeigt, welche Dateneigentümer potenziell rückforderbare Daten besitzen. Die Auswahl einer beliebigen Zeile öffnet die link:investigate-unstructured.html["Untersuchung"] Ansicht, die nach den Dateien dieses Eigentümers gefiltert ist. Dort können Sie die Ergebnisse überprüfen, Maßnahmen ergreifen oder sie als Richtlinie speichern.
+Die Tabelle „Top-Verbraucher nach rückforderbarem Storage“ zeigt, welche Dateneigentümer potenziell rückforderbare Daten besitzen. Mit *Investigate* wird die link:investigate-unstructured.html["Untersuchung"] Ansicht geöffnet, die nach den Dateien dieses Eigentümers gefiltert ist. Dort können Sie die Ergebnisse prüfen, Maßnahmen dazu ergreifen oder sie als Richtlinie speichern.
 
 Die Überprüfung des Dashboards archiviert oder löscht keine Daten und ändert auch keine Verzeichnisberechtigungen.
 

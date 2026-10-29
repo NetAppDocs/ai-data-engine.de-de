@@ -127,6 +127,5 @@ link:manage-data-collections.html["Verwaltung von Datensammlungen"] und link:con
 * link:configure-entra-id-mcp.html["Konfiguration von Microsoft Entra ID für den kontrollierten KI-Zugriff"]
 * link:manage-data-collections.html["Verwaltung von Datensammlungen"]
 * link:connect-ai-clients-mcp.html["Verbindung von KI-Clients mit dem AI Data Engine MCP Server"]
-* link:maintain-mcp-setup.html["Wartung Ihrer MCP-Konfiguration"]
 * link:../release-notes/known-limitations.html["Bekannte Einschränkungen"]
 

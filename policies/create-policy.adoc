@@ -57,7 +57,7 @@ Anhand der Ergebnistabelle lässt sich bestätigen, dass der Filtersatz die beab
 . Zum Anhängen einer Aktion steht unter *Action* eine der folgenden Optionen zur Verfügung:
 +
 ** *Nur überwachen (keine Aktion)* (Standard): Speichert die Richtlinie als Bedingung „Nur überwachen“.
-** *E-Mail-Benachrichtigung senden*: Es wird eine E-Mail-Benachrichtigung an den von Ihnen angegebenen Empfänger gesendet.
+** *E-Mail-Benachrichtigung senden*: Sendet eine E-Mail-Benachrichtigung an die von Ihnen angegebenen Empfänger und ermöglicht die Konfiguration der Benachrichtigungsintervalle.
 ** *Endgültig löschen*: Erfordert keine weitere Eingabe.
 +
 
@@ -65,7 +65,7 @@ CAUTION: Die Aktion „Endgültig löschen“ löscht nach jedem Scanvorgang aut
 
 
 
-. *Erstellen* auswählen.
+. *Speichern* auswählen.
 
 
 .Ergebnis
@@ -85,8 +85,8 @@ Das folgende Beispiel erstellt eine Richtlinie, die eine E-Mail-Benachrichtigung
 
 . *Richtlinie erstellen* auswählen.
 . Der Name der Richtlinie lautet: *Cold Files - Unaccessed 1 Year*.
-. Die Aktion *E-Mail-Benachrichtigung senden* sowie die E-Mail-Adresse des Empfängers sind auszuwählen.
-. *Erstellen* auswählen.
+. Auszuwählen sind die Aktion *Send email notification*, das Benachrichtigungsintervall und die E-Mail-Adresse des Empfängers.
+. *Speichern* auswählen.
 
 
 
